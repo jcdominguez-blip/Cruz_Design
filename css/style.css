@@ -5,10 +5,7 @@
     font-family: 'neue-haas-grotesk-display', 'cofo-sans-mono-variable', 'chivo',  sans-serif;
    
 
-
-
-
-
+}
 
 body {
 
@@ -1271,6 +1268,5 @@ color: #838383;
 #language-toggle {
     padding: 6px 12px; /* Reducir el espaciado interno */
     font-size: 12px; /* Reducir el tamaño de la fuente */
-}
 }
 }
