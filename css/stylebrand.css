@@ -1,0 +1,446 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "neue-haas-grotesk-display", "cofo-sans-mono-variable", sans-serif;
+}
+
+body {
+    overflow-x: hidden; /* Evita el desbordamiento horizontal */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #FFFDF3;
+    color: #000;
+}
+
+/*navbarstyle---------------------------------------------------------*/
+.logo {
+  
+    font-size: 24px; /* Tamaño del texto del logo */
+    color: #FFFDF3; /* Color del logo */
+    font-family: "Chivo";
+    font-weight: 700;
+    position: absolute; /* Permite moverlo a la esquina */
+    left: 40px; /* Espaciado desde la izquierda */
+    top: 20px; /* Espaciado desde la parte superior */  
+    text-decoration: none;        
+    transition: color 0.3s;
+    
+}
+
+
+.logo a :hover {
+    
+    color: #FFFDF3; /* Color cuando está activo o en foco */
+    outline: none; /* Eliminar el borde de enfoque predeterminado */
+    
+}
+
+.navbar-brand {
+    display: flex; /* Usar flexbox */
+    justify-content: space-between; /* Distribuir espacio entre logo y enlaces */
+    align-items: center; /* Alinear verticalmente */
+    padding: 20px;
+    background-color: #1D1E1C; /* Color de fondo oscuro */
+    width: 100%; /* Ocupar el ancho completo */
+}
+
+.containerNav {
+    max-width: 1800px; /* Ancho máximo */
+    margin: 0 auto; /* Centrar el contenedor */
+    width: 100%; /* Ocupar el ancho completo */
+    display: flex; /* Usar flexbox */
+    align-items: center; /* Alinear verticalmente */
+}
+
+.nav-links-brands {
+    margin-top: 24px;
+    list-style: none; /* Eliminar viñetas */
+    display: flex; /* Mantener los enlaces en línea */
+    align-items: center; /* Alinear verticalmente */
+    margin-left: auto; /* Empujar los enlaces hacia la derecha */
+}
+
+
+.nav-links-brands li {
+    margin: 0 100px; /* Espaciado horizontal entre los enlaces */
+}
+
+.nav-links-brands a {
+    font-family: "cofo-sans-mono-variable";
+    text-decoration: none;
+    color: #FFFDF3;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav-links-brands a:hover {
+    color: #FFFDF3; /* Mantener el color al hacer hover */
+}
+
+
+/* ----- WORKS-BRAND SECTION ----- */
+
+
+.work-brand {
+    flex-grow: 1; /* Permite que el contenido principal ocupe el espacio restante */
+}
+
+.titulo-proyecto{
+    
+    font-weight: 500;    
+    font-family: "cofo-sans-mono-variable";
+    
+}
+
+.subtitulo {
+    
+    text-align: left; /* Alinear el título a la izquierda */
+    margin: 40px;
+    font-family: "neue-haas-grotesk-display"; /* Tipografía específica */
+    font-size: 24px;
+    font-weight: 700;
+    color: #1D1E1C; /* Sin margen para que se alinee con la lista */
+}
+
+.data-title{
+    
+    font-size: 0.9em;
+    color: #555;
+    
+
+}
+
+.works-section-brand {
+        
+    display: flex;
+    justify-content: space-between; /* Asegura que haya espacio entre la lista y la imagen */
+}
+
+.works-list-brand {
+    margin-left: 1%;
+    padding-right: 20px; /* Espacio entre lista y imagen */
+    flex-grow: 1; /* Permitir que la lista crezca */
+    
+}
+
+ul {
+    list-style: none; /* Eliminar viñetas */
+    padding: 0; /* Eliminar padding */
+    
+}
+
+.accordion {
+    
+    cursor: pointer;    
+    padding: 10px; /* Espacio alrededor del texto */
+    transition: background-color 0.3s; /* Efecto de transición */
+    
+}
+
+.accordion:hover {
+    background-color: #1D1E1C; /* Color de fondo al pasar el mouse */
+}
+
+.accordion-content {
+    display: none; /* Ocultar contenido por defecto */
+}
+
+
+.lectura {
+    font-size: 20px;
+    color: #555;
+    margin: 10px 0; /* Espacio superior e inferior */
+}
+
+.cintillo{
+    color: #838383;
+    font-size: 0.8em;
+    font-weight: 400;
+    margin-bottom: 4px;
+}
+
+.decorative-line {
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    margin: 20px 0; /* Espacio entre elementos */
+}
+
+
+
+.works-image {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinear a la izquierda */
+    justify-content: center; /* Centrar verticalmente */
+}
+
+#project-image {
+    max-width: 100%;
+    height: auto;
+    transition: opacity 0.5s; /* Efecto de transición */
+}
+
+#project-title {
+    margin-top: 20px; /* Espacio superior para el título */
+    font-size: 24px; /* Ajusta el tamaño del texto */
+    font-weight: bold; /* Negrita para el título */
+}
+
+
+#project-description {
+    margin-bottom: 20px; /* Espacio inferior para la descripción */
+    font-size: 16px; /* Ajusta el tamaño del texto */
+    color: #555; /* Color para la descripción */
+}
+ /* CSS para la galería */
+ .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Tamaño mínimo de las imágenes */
+    gap: 10px;
+    width: 100%;
+}
+
+.gallery img {
+    width: 96%; /* Se ajusta al ancho del contenedor */
+    height: auto; /* Mantiene la proporción */
+    border-radius: 5px; /* Esquinas redondeadas */
+    cursor: pointer; /* Cambia el cursor al pasar sobre la imagen */
+}
+
+/* Opciones de tamaño de video */
+
+#project-video {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0; /* Espaciado superior e inferior */
+}
+
+#video-iframe {
+    max-width: 100%; /* Asegura que no sobrepase el ancho del contenedor */
+    height: 400px; /* Altura ajustada */
+}
+
+/* Opciones de tamaño de imagen */
+.small {
+    max-width: 100px; /* Ajusta según lo necesites */
+}
+
+.medium {
+    max-width: 150px; /* Ajusta según lo necesites */
+}
+
+.large {
+    max-width: 250px; /* Ajusta según lo necesites */
+}
+
+/* Modal styles */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    max-width: 60%; /* Asegúrate de que no exceda el ancho de la ventana */
+    max-height: 90%; /* Limitar la altura del contenido */
+    overflow: auto; /* Permitir desplazamiento si es necesario */
+}
+
+.modal-content img {
+    max-width: 100%; /* La imagen no excederá el ancho del contenedor */
+    height:fit-content; /* Mantiene la proporción de la imagen */
+    display: block; /* Elimina el espacio en la parte inferior */
+}
+
+/* Close button styles */
+.close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #FFFDF3;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/*footer*/
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-top: 1px solid #ccc;
+}
+
+.footer-left, .footer-center, .footer-right {
+    display: flex;
+    align-items: center;
+}
+
+.footer-left span, .footer-right span {
+    margin-left: 5px;
+}
+
+.footer-center {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center; /* Centra los enlaces horizontalmente */
+    gap: 20px; /* Espacio entre los enlaces */
+}
+
+.social-link {
+    text-decoration: none;
+    color: #838383;
+}
+
+.social-link:hover {
+    text-decoration: underline;
+}
+
+.material-symbols-outlined {
+    font-size: 20px;
+    vertical-align: middle;
+    color: #838383;
+}
+
+.footer-right {
+    flex-direction: column; /* Alinear elementos verticalmente */
+    align-items: flex-end; /* Alinear a la derecha */
+}
+
+.footer-right .copyright {
+    font-family: "cofo-sans-mono-variable";
+    font-weight:600; /* Negrita */
+    color: #838383;
+    font-size: 18px;
+}
+
+.footer-right .year {
+    font-family: "cofo-sans-mono-variable";
+    font-weight: 400; 
+    color: #838383;
+    margin-top: 1px; /* Espacio entre copyright y año */
+}
+
+.text-footer{
+
+    font-family: "cofo-sans-mono-variable";
+    color: #838383;
+
+}
+
+.clock {
+    font-family: "cofo-sans-mono-variable";
+    font-size: 14px; /* Ajusta el tamaño de la fuente según sea necesario */
+    color: #838383;
+}
+
+/*video*/
+
+
+
+iframe {
+    display: block; /* Asegura que el iframe se muestre correctamente */
+    max-width: 100%; /* Asegura que no se desborde */
+    height: auto; /* Mantiene la proporción */
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+   
+   
+    /* Ocultar logo en responsive */
+    .logo {
+     display: none; /* Oculta el logo en dispositivos pequeños */
+ }
+ 
+ 
+ 
+     .navbar-brand {
+         flex-direction: row; /* Alinear elementos en fila */
+         justify-content: space-between; /* Espacio entre logo y menú */
+         
+     }
+ 
+     .containerNav {
+         justify-content: space-between; /* Espacio entre el logo y el menú */
+         
+     }
+ 
+     .nav-links-brands {
+         display: none; /* Ocultar enlaces por defecto */
+         flex-direction: column; /* Colocar enlaces en columna */
+         position: absolute; /* Posicionar en relación a su contenedor */
+         top: 10px; /* Espacio desde el navbar */
+         left: 0;
+         right: 0;
+         background-color: #1D1E1C; /* Fondo oscuro */
+         z-index: 1000; /* Asegurar que esté por encima */
+         flex-wrap: wrap; /* Permitir que los enlaces se envuelvan si es necesario */
+     }
+ 
+     .nav-links-brands.active {
+         display: flex; /* Mostrar enlaces cuando el menú hamburguesa esté activo */
+     }
+ 
+     .menu-toggle {
+         display: flex; /* Mostrar el menú hamburguesa */
+         cursor: pointer;
+     }
+ 
+     .menu-toggle .bar {
+         display: block; /* Asegurarse de que las barras se muestren */
+         width: 25px; /* Ancho de las barras */
+         height: 3px; /* Altura de las barras */
+         background-color: #FFFDF3; /* Color de las barras */
+         margin: 5px auto; /* Espaciado entre las barras */
+         transition: all 0.3s; /* Transición suave */
+     }
+ 
+     .works-section-brand {
+         flex-direction: column; /* Cambiar a vertical */
+         align-items: center; /* Centrar contenido */
+     }
+ 
+     .works-list-brand {
+         margin: 0; 
+         width: 100%; /* Ocupar el ancho completo */
+     }
+ 
+     .works-image {
+         width: 100%; 
+         text-align: center; /* Centrar la imagen */
+     }
+ 
+     
+ 
+     
+     
+     .titulo-proyecto {
+         
+         width: 100%; /* Asegura que el título ocupe el ancho completo */
+     }
+     
+     .lectura { /* Supongo que esta es la clase de la descripción */
+         text-align: left; /* Justifica la descripción a la izquierda */
+         width: 100%; /* Asegura que la descripción ocupe el ancho completo */
+     }
+ }   
