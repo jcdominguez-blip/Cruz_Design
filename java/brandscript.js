@@ -1,7 +1,16 @@
-// Función para mostrar/ocultar el menú hamburguesa
-document.getElementById('mobile-menu').addEventListener('click', function() {
-    const navLinks = document.getElementById('nav-links');
-    navLinks.classList.toggle('active'); // Alternar la clase activa
+
+//responsive hamburguer funcion//
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const menuToggle = document.getElementById("mobile-menu");
+    const navLinks = document.getElementById("nav-links");
+    const logo = document.querySelector(".logo");
+
+    menuToggle.addEventListener("click", function () {
+        navLinks.classList.toggle("active");
+        logo.classList.toggle("hidden"); // Agrega o quita la clase para ocultar el logo
+    });
 });
 
 

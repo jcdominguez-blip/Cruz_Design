@@ -367,53 +367,99 @@ iframe {
 @media (max-width: 768px) {
    
    
-    /* Ocultar logo en responsive */
-    .logo {
-     display: none; /* Oculta el logo en dispositivos pequeños */
- }
- 
- 
- 
-     .navbar-brand {
-         flex-direction: row; /* Alinear elementos en fila */
-         justify-content: space-between; /* Espacio entre logo y menú */
-         
-     }
- 
-     .containerNav {
-         justify-content: space-between; /* Espacio entre el logo y el menú */
-         
-     }
- 
-     .nav-links-brands {
-         display: none; /* Ocultar enlaces por defecto */
-         flex-direction: column; /* Colocar enlaces en columna */
-         position: absolute; /* Posicionar en relación a su contenedor */
-         top: 10px; /* Espacio desde el navbar */
-         left: 0;
-         right: 0;
-         background-color: #1D1E1C; /* Fondo oscuro */
-         z-index: 1000; /* Asegurar que esté por encima */
-         flex-wrap: wrap; /* Permitir que los enlaces se envuelvan si es necesario */
-     }
- 
-     .nav-links-brands.active {
-         display: flex; /* Mostrar enlaces cuando el menú hamburguesa esté activo */
-     }
- 
-     .menu-toggle {
-         display: flex; /* Mostrar el menú hamburguesa */
-         cursor: pointer;
-     }
- 
-     .menu-toggle .bar {
-         display: block; /* Asegurarse de que las barras se muestren */
-         width: 25px; /* Ancho de las barras */
-         height: 3px; /* Altura de las barras */
-         background-color: #FFFDF3; /* Color de las barras */
-         margin: 5px auto; /* Espaciado entre las barras */
-         transition: all 0.3s; /* Transición suave */
-     }
+   /* Navbar */
+   .navbar-brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #1D1E1C;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative; /* Relación con el menú */
+}
+
+.logo {
+    position: static;
+    margin: 0;
+    order: 1;
+    text-align: left;
+    transition: opacity 0.3s ease-in-out; /* Transición suave */
+}
+
+/* Oculta el logo cuando el menú está activo */
+.hidden {
+opacity: 0;
+pointer-events: none;
+}
+
+/* Contenedor del navbar */
+.containerNav {
+display: flex;
+flex-direction: row;
+align-items: center;
+width: 100%;
+padding: 0 20px;
+box-sizing: border-box;
+justify-content: space-between;
+}
+
+
+/* Botón de menú hamburguesa */
+.menu-toggle {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+}
+
+.menu-toggle .bar {
+display: block;
+width: 25px;
+height: 3px;
+margin: 5px auto;
+background-color: #FFFDF3;
+transition: 0.3s;
+}
+
+
+/* Ocultar menú por defecto */
+.nav-links-brands {
+display: none;
+flex-direction: column;
+align-items: center;
+width: 100%;
+background-color: #1D1E1C;
+padding: 10px 0;
+margin: 0;
+box-sizing: border-box;
+}
+
+/* Mostrar menú cuando está activo */
+.nav-links-brands.active {
+display: flex;
+}
+
+
+
+.nav-links-brands li {
+    margin: 10px 0; /* Espaciado entre los enlaces */
+    text-align: center;
+}
+
+.nav-links-brands a {
+    color: #FFFDF3;
+    font-size: 16px;
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+}
+
+.navbar-brand, .containerNav, .menu-toggle, .nav-links-brands {
+    max-width: 100%; /* Asegura que no excedan el ancho de la pantalla */
+    overflow-x: hidden; /* Evita contenido que se desborde horizontalmente */
+}
  
      .works-section-brand {
          flex-direction: column; /* Cambiar a vertical */
