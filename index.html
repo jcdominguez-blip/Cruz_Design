@@ -23,6 +23,7 @@
     <title>Cruz Diseño</title>
 </head>
 <body>
+
   <!--Navbar-->
   <nav class="navbar-brand">
     <div class="containerNav">
@@ -73,7 +74,19 @@
     </div>
 
 <!-- Carrusel de imágenes -->
-<div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="2000">
+<div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="1800" data-wrap="true">
+    <!-- Indicadores -->
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExample" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExample" data-slide-to="1"></li>
+        <li data-target="#carouselExample" data-slide-to="2"></li>
+        <li data-target="#carouselExample" data-slide-to="3"></li>
+        <li data-target="#carouselExample" data-slide-to="4"></li>
+        <li data-target="#carouselExample" data-slide-to="5"></li>
+        <li data-target="#carouselExample" data-slide-to="6"></li>
+        <li data-target="#carouselExample" data-slide-to="7"></li>
+    </ol>
+
     <div class="carousel-inner">
         <div class="carousel-item active">
             <img class="d-block w-100" src="https://i.ibb.co/357FqBCw/tp1.jpg" alt="Primera imagen">
@@ -83,6 +96,21 @@
         </div>
         <div class="carousel-item">
             <img class="d-block w-100" src="https://i.ibb.co/d02tVYsp/img2.jpg" alt="Tercera imagen">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="https://i.ibb.co/2YChXbhZ/tp2.jpg" alt="Cuarta imagen">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="https://i.ibb.co/YF2vhdQx/8M.jpg" alt="Quinta imagen">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="https://i.ibb.co/0R1HxFm5/uf1.jpg" alt="Sexta imagen">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="https://i.ibb.co/gb4PTXst/img4.jpg" alt="Séptima imagen">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="https://i.ibb.co/qMGYg1Vs/TAC.jpg" alt="Octava imagen">
         </div>
     </div>
     <!-- Controles del carrusel -->
@@ -94,48 +122,51 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Siguiente</span>
     </a>
-    
 </div>
 
 <!-- Trabajos Destacados Section -->
- 
+
+
 <section class="featured-works">
     <h2 class="subtitulo" data-en="Featured works" data-es="Trabajos destacados">Trabajos destacados</h2>
     <hr class="decorative-line">
-    <ul class="featured-works-list">
-        <li class="featured-work-item">
-            <p class="work-year">[2022]</p>
-            <h2 class="work-title">RUNAKAY</h2>
-            <p class="work-category">/BRAND DESIGN</p>
-            <hr class="decorative-line">
-        </li>
-        <li class="featured-work-item">
-            <p class="work-year">[2022]</p>
-            <h2 class="work-title">Trabajo 2</h2>
-            <p class="work-category">/Brand design</p>
-            <hr class="decorative-line">
-        </li>
-        <li class="featured-work-item">
-            <p class="work-year">[2022]</p>
-            <h2 class="work-title">Trabajo 2</h2>
-            <p class="work-category">/Brand design</p>
-            <hr class="decorative-line">
-        </li>
-        <li class="featured-work-item">
-            <p class="work-year">[2022]</p>
-            <h2 class="work-title">Trabajo 2</h2>
-            <p class="work-category">/Brand design</p>
-            <hr class="decorative-line">
-        </li>
-        <li class="featured-work-item">
-            <p class="work-year">[2022]</p>
-            <h2 class="work-title">Trabajo 2</h2>
-            <p class="work-category">/Brand design</p>
-            <hr class="decorative-line">
-        </li>
-        <!-- Repite la estructura para más trabajos -->
-    </ul>
+    <div class="featured-works-container">
+        <ul class="featured-works-list">
+            <li class="featured-work-item" data-url="./pages/runakay.html" onclick="redirectWithAnimation(this)">
+                <p class="work-year">[2022]</p>
+                <h2 class="work-title">RUNAKAY</h2>
+                <p class="work-category">/BRAND DESIGN</p>
+                <hr class="decorative-line">
+                <div class="project-details">
+                    <p class="project-description">RUNAKAY es un proyecto de branding enfocado en la identidad cultural...</p>
+                    <img class="project-image" src="https://i.ibb.co/2YChXbh/tp2.jpg" alt="RUNAKAY">
+                </div>
+            </li>
+            <li class="featured-work-item" data-url="./pages/runakay.html" onclick="redirectWithAnimation(this)">
+                <p class="work-year">[2022]</p>
+                <h2 class="work-title">RUNAKAY</h2>
+                <p class="work-category">/BRAND DESIGN</p>
+                <hr class="decorative-line">
+                <div class="project-details">
+                    <p class="project-description">RUNAKAY es un proyecto de branding enfocado en la identidad cultural...</p>
+                    <img class="project-image" src="https://i.ibb.co/2YChXbh/tp2.jpg" alt="RUNAKAY">
+                </div>
+            </li>
+            <li class="featured-work-item" data-url="./pages/runakay.html" onclick="redirectWithAnimation(this)">
+                <p class="work-year">[2022]</p>
+                <h2 class="work-title">RUNAKAY</h2>
+                <p class="work-category">/BRAND DESIGN</p>
+                <hr class="decorative-line">
+                <div class="project-details">
+                    <p class="project-description">RUNAKAY es un proyecto de branding enfocado en la identidad cultural...</p>
+                    <img class="project-image" src="https://i.ibb.co/2YChXbh/tp2.jpg" alt="RUNAKAY">
+                </div>
+            </li>
+        </ul>
+    </div>
 </section>
+            
+
 
     <!-- WORKS SECTION -->
 <section class="work" id="work">

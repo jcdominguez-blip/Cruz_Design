@@ -552,54 +552,68 @@ background-color: #444; /* Color al pasar el ratón */
     height: 50px; /* Ajusta el tamaño del icono */
 }
 
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%; /* Ajusta el ancho del área de control */
+}
+
+
+/*Bullets------------------*/
+
+.carousel-indicators li {
+    width: 12px;
+    height: 12px;    
+    background-color: #f0f0f0; /* Color de los bullets */
+    border: 1px solid #000000; /* Borde de los bullets */
+}
+
+.carousel-indicators .active {
+    background-color: #1D1E1C; /* Color del bullet activo */
+}
+
+
+
 
 /*----- Trabajos Destacados -----*/
+
+
 
 .featured-works {
     padding: 50px;
     background-color: #f7f7f7;
     color: #1D1E1C;
-    
-}
-
-.section-title {
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: 10px;
-    
-}
-
-.section-divider {
-    width: 100%;
-    color: #000;
-    margin-bottom: 20px;
 }
 
 .featured-works-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    
 }
 
 .featured-work-item {
     margin-bottom: 20px;
-    
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+
+.featured-work-item:hover {
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Añade sombra */
+}
+
+/* Texto de los ítems */
 .work-year {
     font-size: 16px;
-    text-align: center;
-    margin-bottom: 5px;
+    text-align: right;
     color: #1D1E1C;
     font-family: "cofo-sans-mono-variable";
-    text-align: right;
 }
 
 .work-title {
     font-size: 20px;
-    text-align: center;
-    margin-bottom: 5px;
     color: #1D1E1C;
     font-family: 'neue-haas-grotesk-display';
     font-weight: 600;
@@ -608,25 +622,48 @@ background-color: #444; /* Color al pasar el ratón */
 
 .work-category {
     font-size: 12px;
-    text-align: center;
-    margin-bottom: 10px;
     color: #1D1E1C;
     font-family: "cofo-sans-mono-variable";
     text-align: left;
-    
 }
 
-.work-divider {
+/* Contenedor de la imagen y descripción */
+.project-details {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.project-details.show {
+    max-height: 800px; /* Ajusta según el contenido */
+    opacity: 1;
+}
+
+
+
+.project-description {
+    margin: 10px 0;
+}
+
+.project-image {
     width: 100%;
-    height: 1px; /* Ajusta la altura para hacer la línea más fina */
-    color: #1D1E1C;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 
+/* Configuración inicial del elemento para el movimiento */
+.featured-work-item {
+    transition: transform 1s ease-out, opacity 1s ease-out;
+    opacity: 1;
+}
 
-
-
-
+/* Configuración de la animación para cuando se active el evento */
+.featured-work-item.animate {
+    transform: translateY(-30px);
+    opacity: 0;
+}
 
 
 /*----- Sección About Me -----*/
@@ -1071,7 +1108,7 @@ color: #838383;
 
 .clock {
 font-family: "cofo-sans-mono-variable";
-font-size: 16px; /* Ajusta el tamaño de la fuente según sea necesario */
+font-size: 12px; /* Ajusta el tamaño de la fuente según sea necesario */
 color: #838383;
 }
 

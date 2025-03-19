@@ -309,6 +309,47 @@ document.addEventListener("DOMContentLoaded", function() {
 
 $(document).ready(function(){
     $('#carouselExample').carousel({
-        interval: 1100 // Intervalo de 2 segundos
+        interval: 1800 // Intervalo de 2 segundos
     });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Código existente...
+
+    // Prevenir el comportamiento predeterminado de los controles del carrusel
+    document.querySelectorAll('.carousel-control-prev, .carousel-control-next').forEach(function(control) {
+        control.addEventListener('click', function(event) {
+            event.preventDefault();
+        });
+    });
+});
+
+
+//Imagen trabajos destacados//
+
+document.addEventListener("DOMContentLoaded", function () {
+    const featuredItems = document.querySelectorAll(".featured-work-item");
+
+    featuredItems.forEach(item => {
+        item.addEventListener("click", function () {
+            const projectUrl = item.getAttribute("data-url");
+            if (projectUrl) {
+                window.location.href = projectUrl; // Redirige a la página especificada
+            }
+        });
+    });
+});
+
+//transiciona animada//
+
+function redirectWithAnimation(element) {
+    // Añadir clase de animación de movimiento hacia arriba
+    element.style.transform = 'translateY(-30px)';
+    element.style.opacity = 0;
+    element.style.transition = 'transform 1s ease-out, opacity 1s ease-out';
+
+    // Esperar a que la animación termine (1 segundo en este caso) antes de redirigir
+    setTimeout(function() {
+        window.location.href = element.getAttribute('data-url');
+    }, 1000);  // El tiempo debe coincidir con la duración de la animación
+}
