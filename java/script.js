@@ -304,3 +304,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     type();
 });
+
+//Carrousel//
+
+$(document).ready(function(){
+    $('#carouselExample').carousel({
+        interval: 1100 // Intervalo de 2 segundos
+    });
+});
