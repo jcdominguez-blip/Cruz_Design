@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'neue-haas-grotesk-display', 'cofo-sans-mono-variable', 'chivo',  sans-serif;
-   
+    
 
 
 
@@ -21,6 +21,8 @@ font-synthesis: none; /* Evita que Chrome cambie las fuentes al traducir */
 background-color: #1D1E1C;
 color: #1D1E1C;
 cursor: crosshair; /*cursor + */
+overflow-x: hidden;
+
 }
 
 
@@ -224,7 +226,39 @@ cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" wid
 }
 
 
+/* Estilos para la animación de la cruz */
+.menu-toggle.open .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-toggle.open .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.open .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Estilos para el menú desplegable */
+.nav-links-brands {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links-brands li {
+    margin-left: 20px;
+}
+
+.nav-links-brands a {
+    color: #FFFDF3;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+
 /* Hero Section */
+
+
 .hero {
     background-color: #1D1E1C;
     color: #fff;
@@ -427,64 +461,6 @@ opacity: 1; /* Mostrar el número al hacer hover */
 }
 
 
-/*-----Fin animación*/
-
-
-/*--.hero {
-background-image: url('');
-background-size: cover;
-background-position: center;
-display: flex;
-align-items: center;
-justify-content: center;
-height: 100vh;
-text-align: center;
-background-color: #1D1E1C;
-}
-
-
-.container {
-max-width: 800px;
-padding: 20px;
-}
-
-
-.hero-title {
-
-
-font-weight: 700;
-font-size: 150px;
-margin-bottom: 10px;
-color: #FFFDF3;
-}
-
-
-.tipe {
-
-
-font-family: 'Chivo',
-}
-
-
-.hero-subtitle {
-font-weight: 200;
-font-size: 24px;
-margin-bottom: 20px;
-color: #FFFDF3;
-}
-
-
-.hero-button {
-display: inline-block;
-padding: 10px 20px;
-font-size: 16px;
-color: #1D1E1C;
-background-color: #FFFDF3;
-text-decoration: none;
-border-radius: 5px;
-transition: background-color 0.3s, color 0.3s;
-}--*/
-
 
 .hero-button:hover {
 background-color: #444; /* Color de fondo al pasar el mouse */
@@ -520,6 +496,7 @@ background-color: #444; /* Color al pasar el ratón */
 }
 
 /*----- Carrusell -----*/
+
 #carouselExample {
     width: 100%;
     max-height: 600px; /* Ajusta la altura del carrusel según sea necesario */
@@ -577,11 +554,9 @@ background-color: #444; /* Color al pasar el ratón */
 /*----- Trabajos Destacados -----*/
 
 
-
 .featured-works {
     padding: 50px;
     background-color: #f7f7f7;
-    color: #1D1E1C;
 }
 
 .featured-works-list {
@@ -590,26 +565,38 @@ background-color: #444; /* Color al pasar el ratón */
     margin: 0;
 }
 
-.featured-work-item {
-    margin-bottom: 20px;
-    padding: 10px;
+.work-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr 50px;
+    gap: 40px;
+    padding: 20px 0;
     cursor: pointer;
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
+    align-items: start;
 }
 
-
-.featured-work-item:hover {
-    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Añade sombra */
+.work-image {
+    width: 300px;
+    height: 200px;
+    overflow: hidden;
 }
 
-/* Texto de los ítems */
-.work-year {
-    font-size: 16px;
-    text-align: right;
-    color: #1D1E1C;
-    font-family: "cofo-sans-mono-variable";
+.work-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.work-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.work-meta {
+    display: flex;
+    gap: 15px;
+    align-items: center;
 }
 
 .work-title {
@@ -617,52 +604,66 @@ background-color: #444; /* Color al pasar el ratón */
     color: #1D1E1C;
     font-family: 'neue-haas-grotesk-display';
     font-weight: 600;
-    text-align: left;
+    margin: 0;
+    line-height: 1.2;
 }
 
 .work-category {
     font-size: 12px;
     color: #1D1E1C;
     font-family: "cofo-sans-mono-variable";
-    text-align: left;
+    margin: 0;
+    text-transform: uppercase;
 }
 
-/* Contenedor de la imagen y descripción */
-.project-details {
-    max-height: 0;
-    overflow: hidden;
+.work-year {
+    font-size: 16px;
+    color: #1D1E1C;
+    font-family: "cofo-sans-mono-variable";
+    margin: 0;
+}
+
+.work-description{
+
+    font-size: 16px;
+    color: #1D1E1C;
+    font-family: "cofo-sans-mono-variable";
+    margin: 0;
+    max-width: 600px;
+
+}
+
+.arrow-icon {
+    font-size: 24px;
     opacity: 0;
-    transition: max-height 0.5s ease, opacity 0.5s ease;
+    transform: translateX(-20px);
+    transition: all 0.3s ease;
+    align-self: flex-end;
+    margin-top: 10px;
 }
 
-.project-details.show {
-    max-height: 800px; /* Ajusta según el contenido */
+.work-layout:hover {
+    background-color: #1D1E1C;
+}
+
+.work-layout:hover .work-title,
+.work-layout:hover .work-category,
+.work-layout:hover .work-description,
+.work-layout:hover .work-year {
+    color: #FFFDF3;
+}
+
+.work-layout:hover .arrow-icon {
     opacity: 1;
+    transform: translateX(0);
+    color: #FFFDF3;
 }
 
-
-
-.project-description {
-    margin: 10px 0;
-}
-
-.project-image {
-    width: 100%;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-
-/* Configuración inicial del elemento para el movimiento */
-.featured-work-item {
-    transition: transform 1s ease-out, opacity 1s ease-out;
-    opacity: 1;
-}
-
-/* Configuración de la animación para cuando se active el evento */
-.featured-work-item.animate {
-    transform: translateY(-30px);
-    opacity: 0;
+.decorative-line {
+    border: none;
+    height: 1px;
+    background-color: rgba(29, 30, 28, 0.2);
+    margin: 0;
 }
 
 
@@ -1119,10 +1120,11 @@ color: #838383;
 
     /* Ajustes generales */
     body {
-        
+        max-width: 100%;
         margin: 0;
         padding: 0;
-        overflow-x: hidden; /* Evita desplazamiento horizontal */
+        overflow-x: hidden;
+        box-sizing: border-box;
     }
 
 
@@ -1165,6 +1167,8 @@ color: #838383;
     justify-content: space-between;
 }
 
+
+
     
 /* Botón de menú hamburguesa */
 .menu-toggle {
@@ -1196,6 +1200,8 @@ color: #838383;
     margin: 0;
     box-sizing: border-box;
 }
+
+
 
 /* Mostrar menú cuando está activo */
 .nav-links-brands.active {
@@ -1298,6 +1304,24 @@ color: #838383;
 
         font-size: 20px; /* Tamaño de fuente ajustado */  
     }
+
+
+
+/* Trabajos destacados  */
+
+
+
+
+    .work-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .work-image {
+        width: 100%;
+    }
+
+
 
 /* About Me Section */
 .about-me {
