@@ -9,77 +9,190 @@ body {
 
 h1, h2 {
     font-family: 'neue-haas-grotesk-display', sans-serif;
-    color: #e4e4e4;
+    color: #1D1E1C;
 }
 
 p {
     font-family: "cofo-sans-mono-variable", monospace;
-    color: #858585;
+    color: #1D1E1C;
 }
 
 /* Estilos del proyecto */
-.project-header {
-    text-align: center;
-    padding: 50px 20px;
-    background-color: #1D1E1C;
-    color: #FFFDF3;
+
+/* Estilos para la sección project-hero */
+.project-hero {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.project-hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 50px; /* Ajusta el padding según sea necesario */
+    box-sizing: border-box;
+}
+
+.hero-image {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 60vh; /* Ajusta la altura máxima */
+    object-fit: cover; /* Asegura que la imagen cubra el contenedor */
+}
+
+.project-meta {
+    text-align: left;
+    margin-top: 20px;
 }
 
 .project-title {
-    font-size: 36px;
-    margin: 0;
+    font-family: 'neue-haas-grotesk-display';
+    font-weight: 600;
+    font-size: 3rem;
+    text-align: left; /* Justifica el título a la izquierda */
+    margin-top: 20px;
+    width: 100%;
+    text-transform: uppercase; /* Asegura que el texto esté en mayúsculas */
 }
 
 .project-subtitle {
-    font-size: 18px;
-    margin: 0;
+    font-family: 'neue-haas-grotesk-display';
+    font-weight: 400;
+    font-size: 2rem;
+    text-align: left; /* Justifica el subtítulo a la izquierda */
+    margin-top: 10px;
+    width: 100%;
+    text-transform: uppercase; /* Asegura que el texto esté en mayúsculas */
 }
 
-.project-intro {
-    padding: 20px;
-    text-align: center;
+.project-overview {
+    padding: 50px 20px;
+    background-color: #f7f7f7;
 }
 
-.project-intro-text {
-    font-size: 18px;
-    margin: 0 auto;
-    max-width: 800px;
-}
-
-.project-details {
-    display: flex;
-    justify-content: space-between;
+.overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
     padding: 50px 20px;
 }
 
-.project-description {
-    width: 50%;
-    padding-right: 20px;
+.overview-text,
+.overview-description {
+    text-align: left; /* Justifica el texto a la izquierda */
 }
 
-.project-image-container {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.overview-text h3 {
+    font-family: 'neue-haas-grotesk-display';
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
 }
 
-.project-image {
-    max-width: 100%;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+.overview-text ul {
+    list-style: none;
+    padding: 0;
+    
 }
 
-.project-signature {
-    padding: 50px 20px;
-    background-color: #1D1E1C;
-    color: #FFFDF3;
-    text-align: center;
+.overview-text ul li {
+    font-family: 'cofo-sans-mono-variable';
+    font-size: 1rem;
+    margin-bottom: 10px;
+    font-size: 12px;
 }
 
-.project-footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #1D1E1C;
-    color: #FFFDF3;
+.overview-description p {
+    font-family: 'cofo-sans-mono-variable';
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    padding: 50px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.half-width {
+    grid-column: span 1;
+}
+
+.next-project {
+    padding: 100px 50px;
+    background-color: #f7f7f7;
+}
+
+.next-project-link {
+    display: block;
+    text-decoration: none;
+    color: #1D1E1C;
+    transition: color 0.3s ease;
+}
+
+.next-label {
+    font-family: "cofo-sans-mono-variable";
+    font-size: 16px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.next-title {
+    font-family: 'neue-haas-grotesk-display';
+    font-size: 32px;
+    font-weight: 600;
+}
+
+/* Estilos para la galería de imágenes */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0; /* Elimina el espacio entre las imágenes */
+    padding: 0; /* Elimina el padding */
+}
+
+.gallery img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0; /* Elimina el borde redondeado */
+    box-shadow: none; /* Elimina la sombra */
+    margin: 0; /* Elimina el margen */
+}
+
+@media (max-width: 768px) {
+    .overview-grid,
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-hero {
+        padding: 0; /* Elimina el padding para dispositivos móviles */
+    }
+
+    .project-title,
+    .project-subtitle {
+        padding: 0 10px; /* Ajusta el padding para dispositivos móviles */
+    }
+
+    .hero-image img {
+        max-height: none; /* Elimina la altura máxima en dispositivos móviles */
+    }
 }
