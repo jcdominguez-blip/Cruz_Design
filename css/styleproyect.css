@@ -296,4 +296,10 @@ p {
         grid-column: span 2 !important;
         height: auto !important;
     }
+    .gallery-item video {
+        width: 100%; /* Asegura que el video ocupe todo el ancho del contenedor */
+        height: auto; /* Mantiene las proporciones del video */
+        border-radius: 8px; /* Opcional: bordes redondeados */
+        object-fit: cover; /* Asegura que el video se ajuste correctamente al contenedor */
+    }
 }
