@@ -71,7 +71,7 @@ body {
     font-family: "cofo-sans-mono-variable";
     text-decoration: none;
     color: #FFFDF3;
-    font-size: 16px;
+    font-size: 14px;
     transition: color 0.3s;
 }
 
@@ -450,7 +450,7 @@ display: flex;
 
 .nav-links-brands a {
     color: #FFFDF3;
-    font-size: 16px;
+    font-size: 14px;
     padding: 10px;
     display: block;
     text-decoration: none;

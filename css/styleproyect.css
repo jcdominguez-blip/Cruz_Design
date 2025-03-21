@@ -161,20 +161,110 @@ p {
 }
 
 /* Estilos para la galería de imágenes */
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0; /* Elimina el espacio entre las imágenes */
-    padding: 0; /* Elimina el padding */
+
+.gallery-container {
+    width: 100%;
+    padding: 0;
+    margin: 0;
 }
 
-.gallery img {
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background-color: #f5f5f5;
+}
+
+.gallery-item {
+    
+    position: relative;
+    overflow: hidden;
+}
+
+.gallery-item img {
     width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 0; /* Elimina el borde redondeado */
-    box-shadow: none; /* Elimina la sombra */
-    margin: 0; /* Elimina el margen */
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Specific item styles */
+
+
+.text-green {
+    font-family: "cofo-sans-mono-variable"; /* Asegura que esta tipografía se aplique */
+    grid-column: span 2;    
+    color: #8383838f;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.landscape {
+    grid-column: span 3;
+    height: 400px;
+}
+
+.eye {
+    grid-column: span 1;
+    height: 400px;
+}
+
+.small-image {
+    grid-column: span 1;
+    height: 250px;
+}
+
+.text-green-small {
+    grid-column: span 1;
+    background-color: #2B5B3B;
+    color: white;
+    padding: 1.5rem;
+}
+
+.brand {
+    grid-column: span 1;
+    height: 250px;
+}
+
+.building,
+.products
+ {
+    grid-column: span 1;
+    height:700px;
+}
+
+.vr{
+    grid-column: span 1;
+    height:700px;
+}
+
+.text-yellow {
+    grid-column: span 2;
+    background-color: #FFD700;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.full-width {
+    grid-column: span 2;
+    height: 400px;
+}
+
+/* Text styles */
+.gallery-item p {
+    color: #838383;
+    font-family: "cofo-sans-mono-variable";
+    font-size: 16px;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.gallery-item video {
+    width: 100%; /* Asegura que el video ocupe todo el ancho del contenedor */
+    height: auto; /* Mantiene las proporciones del video */
+    border-radius: 8px; /* Opcional: bordes redondeados */
+    box-shadow: none; /* Opcional: elimina sombras */
 }
 
 @media (max-width: 768px) {
@@ -194,5 +284,16 @@ p {
 
     .hero-image img {
         max-height: none; /* Elimina la altura máxima en dispositivos móviles */
+    }
+
+    /*galeria*/
+
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .gallery-item {
+        grid-column: span 2 !important;
+        height: auto !important;
     }
 }

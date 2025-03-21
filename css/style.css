@@ -249,7 +249,7 @@ cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" wid
     font-family: "cofo-sans-mono-variable";
     text-decoration: none;
     color: #FFFDF3;
-    font-size: 16px;
+    font-size: 14px;
     transition: color 0.3s;
     position: relative; /* Necesario para los pseudo-elementos */
 }
@@ -316,7 +316,7 @@ cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" wid
 .nav-links-brands a {
     color: #FFFDF3;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 
