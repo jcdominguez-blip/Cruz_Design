@@ -54,27 +54,6 @@ function changeImage() {
 
 
 
-// ... existing JavaScript ...
-
-function redirectWithAnimation(element) {
-    const url = element.dataset.url;
-    
-    // Create transition overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'page-transition';
-    document.body.appendChild(overlay);
-    document.body.classList.add('transitioning');
-
-    // Trigger animation after a small delay
-    setTimeout(() => {
-        overlay.classList.add('sliding');
-    }, 50);
-
-    // Redirect after animation completes
-    setTimeout(() => {
-        window.location.href = url;
-    }, 800);
-}
 
 
 
