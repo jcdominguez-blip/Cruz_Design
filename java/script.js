@@ -53,6 +53,32 @@ function changeImage() {
 }
 
 
+
+// ... existing JavaScript ...
+
+function redirectWithAnimation(element) {
+    const url = element.dataset.url;
+    
+    // Create transition overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'page-transition';
+    document.body.appendChild(overlay);
+    document.body.classList.add('transitioning');
+
+    // Trigger animation after a small delay
+    setTimeout(() => {
+        overlay.classList.add('sliding');
+    }, 50);
+
+    // Redirect after animation completes
+    setTimeout(() => {
+        window.location.href = url;
+    }, 800);
+}
+
+
+
+
 function toggleAccordion(element) {
     const accordion = element.classList.toggle('active'); // Cambia la clase activa
     const content = element.nextElementSibling; // Obtiene el contenido del acordeón
