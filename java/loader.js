@@ -38,42 +38,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ANIMACION Page transition functions
 
+$(document).ready(function() {
+    $('#carouselExample').carousel({
+        interval: 1800,
+        wrap: true,
+        transition: 'none'
+    });
+});
+
 
 function redirectWithAnimation(element) {
     const url = element.dataset.url;
-    const overlay = document.createElement('div');
-    overlay.className = 'page-transition';
-    document.body.appendChild(overlay);
-    document.body.classList.add('transitioning');
-
+    const transition = document.querySelector('.page-transition');
+    
+    transition.classList.add('active');
+    
     setTimeout(() => {
-        overlay.classList.add('sliding-in');
-        
-        // Preload the next page
-        fetch(url)
-            .then(response => response.text())
-            .then(() => {
-                setTimeout(() => {
-                    window.location.href = url;
-                }, 400);
-            });
-    }, 50);
+        window.location.href = url;
+    }, 600);
 }
 
-// Add this to handle return transitions
+// Add this when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.createElement('div');
-    overlay.className = 'page-transition-out';
-    document.body.appendChild(overlay);
-
-    // Small delay to ensure page is ready
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            overlay.classList.add('sliding');
-            setTimeout(() => {
-                overlay.remove();
-                document.body.classList.remove('transitioning');
-            }, 800);
+    const transition = document.querySelector('.page-transition');
+    transition.classList.remove('active'); // Asegura que la transición esté desactivada al cargar la página
+    
+    // Add transition to all navigation links
+    document.querySelectorAll('a:not([target="_blank"])').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if (!this.hasAttribute('data-no-transition')) {
+                e.preventDefault(); // Previene la redirección inmediata
+                const href = this.getAttribute('href');
+                
+                // Activa la animación de salida
+                transition.classList.add('active');
+                
+                // Redirige después de que la animación termine
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 600); // Ajusta el tiempo según la duración de tu animación CSS
+            }
         });
     });
 });

@@ -216,7 +216,7 @@ p {
 
 .text-green-small {
     grid-column: span 1;
-    background-color: #2B5B3B;
+    background-color: #1D1E1C;
     color: white;
     padding: 1.5rem;
 }
@@ -233,6 +233,16 @@ p {
     height:700px;
 }
 
+.suuam{
+
+    grid-column: span 1;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
 .vr{
     grid-column: span 1;
     height:700px;
@@ -240,7 +250,7 @@ p {
 
 .text-yellow {
     grid-column: span 2;
-    background-color: #FFD700;
+    background-color: #1D1E1C;
     padding: 1.5rem;
     display: flex;
     align-items: center;
@@ -253,7 +263,7 @@ p {
 
 /* Text styles */
 .gallery-item p {
-    color: #838383;
+    color: #ffffff;
     font-family: "cofo-sans-mono-variable";
     font-size: 16px;
     line-height: 1.4;
@@ -265,6 +275,20 @@ p {
     height: auto; /* Mantiene las proporciones del video */
     border-radius: 8px; /* Opcional: bordes redondeados */
     box-shadow: none; /* Opcional: elimina sombras */
+}
+
+.gallery-item.building {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Oculta cualquier parte de la imagen que exceda el contenedor */
+}
+
+.gallery-item.building img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta la imagen para que cubra el contenedor sin distorsión */
+    display: block; /* Elimina espacios blancos alrededor de la imagen */
 }
 
 @media (max-width: 768px) {
