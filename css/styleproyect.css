@@ -135,16 +135,31 @@ p {
     grid-column: span 1;
 }
 
+/* Próximo proyecto */
+
 .next-project {
-    padding: 100px 50px;
-    background-color: #f7f7f7;
+    position: relative;
+    overflow: hidden;
+    background-color: #ffffff; /* Color de fondo inicial */
+    transition: background-color 0.3s ease; /* Transición suave para el fondo */
+    margin: 50px 0; /* Restaura el espacio superior e inferior */
+    padding: 20px; /* Opcional: agrega espacio interno */
+}
+
+.next-project:hover {
+    background-color: #000; /* Cambia el fondo a negro al hacer hover */
 }
 
 .next-project-link {
     display: block;
-    text-decoration: none;
+    text-decoration: none; /* Elimina el subrayado por defecto */
     color: #1D1E1C;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease; /* Transición suave para el color del texto */
+}
+
+.next-project-link:hover {
+    text-decoration: none; /* Asegura que no aparezca subrayado al hacer hover */
+    color: #fff; /* Cambia el color del texto a blanco al hacer hover */
 }
 
 .next-label {
@@ -152,12 +167,27 @@ p {
     font-size: 16px;
     display: block;
     margin-bottom: 10px;
+    transition: color 0.3s ease; /* Transición suave para el color */
 }
 
 .next-title {
     font-family: 'neue-haas-grotesk-display';
     font-size: 32px;
     font-weight: 600;
+    transition: color 0.3s ease; /* Transición suave para el color */
+}
+
+.arrow-icon {
+    font-size: 24px;
+    font-weight: bold;
+    opacity: 0; /* Inicialmente invisible */
+    color: #fff; /* Color de la flecha */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Transición suave para la opacidad y el movimiento */
+}
+
+.next-project:hover .arrow-icon {
+    opacity: 1; /* Hace visible la flecha al hacer hover */
+    transform: translateX(10px); /* Mueve la flecha ligeramente hacia la derecha */
 }
 
 /* Estilos para la galería de imágenes */
