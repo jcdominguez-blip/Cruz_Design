@@ -63,7 +63,7 @@ p {
     text-align: left; /* Justifica el título a la izquierda */
     margin-top: 20px;
     width: 100%;
-    text-transform: uppercase; /* Asegura que el texto esté en mayúsculas */
+    /*text-transform: uppercase; /* Asegura que el texto esté en mayúsculas */
 }
 
 .project-subtitle {
@@ -73,7 +73,7 @@ p {
     text-align: left; /* Justifica el subtítulo a la izquierda */
     margin-top: 10px;
     width: 100%;
-    text-transform: uppercase; /* Asegura que el texto esté en mayúsculas */
+   /* text-transform: uppercase; /* Asegura que el texto esté en mayúsculas */
 }
 
 .project-overview {

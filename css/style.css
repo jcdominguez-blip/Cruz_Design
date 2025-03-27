@@ -594,7 +594,7 @@ cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" wid
     font-size: 24px;
     position: absolute;
     bottom: 100px;
-    right: 190px; /* Alineado con hero-links */
+    right: 231px; /* Alineado con hero-links */
     text-align: left;
    
 
@@ -646,6 +646,10 @@ background-color: #444; /* Color de fondo al pasar el mouse */
 color: #FFFDF3; /* Cambia el color del texto al pasar el mouse */
 text-decoration: none;
 }}
+
+
+
+
 
 
 /*----boton lenguaje style----*/
@@ -1490,14 +1494,13 @@ color: #838383;
     .hero-footer {
         position: static;
         margin-top: 20px;
+        margin-left: 5rem; 
         text-align: center;
         width: 100%;
-        
     }
-
-    .hero-fecha{
-
-        font-size: 20px; /* Tamaño de fuente ajustado */  
+    
+    .hero-fecha {
+        font-size: 20px; /* Tamaño de fuente ajustado */        
     }
 
 

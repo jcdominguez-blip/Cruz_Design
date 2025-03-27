@@ -210,7 +210,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Función para el efecto de máquina de escribir
 function typeWriterEffect() {
     const typewriterElement = document.getElementById('typewriter');
-    const texts = ["HELLO WORLD", "Cruz Diseño"]; // Textos a mostrar
+    const texts = ["Cruz Diseño"]; // Textos a mostrar
     let textIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
