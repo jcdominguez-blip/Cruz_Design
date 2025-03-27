@@ -59,7 +59,7 @@ p {
 .project-title {
     font-family: 'neue-haas-grotesk-display';
     font-weight: 600;
-    font-size: 3rem;
+    font-size: 70px;
     text-align: left; /* Justifica el título a la izquierda */
     margin-top: 20px;
     width: 100%;
@@ -69,7 +69,7 @@ p {
 .project-subtitle {
     font-family: 'neue-haas-grotesk-display';
     font-weight: 400;
-    font-size: 2rem;
+    font-size: 38px;
     text-align: left; /* Justifica el subtítulo a la izquierda */
     margin-top: 10px;
     width: 100%;
@@ -164,7 +164,7 @@ p {
 
 .next-label {
     font-family: "cofo-sans-mono-variable";
-    font-size: 16px;
+    font-size: 12px;
     display: block;
     margin-bottom: 10px;
     transition: color 0.3s ease; /* Transición suave para el color */
@@ -172,7 +172,7 @@ p {
 
 .next-title {
     font-family: 'neue-haas-grotesk-display';
-    font-size: 32px;
+    font-size: 38px;
     font-weight: 600;
     transition: color 0.3s ease; /* Transición suave para el color */
 }

@@ -1,0 +1,186 @@
+/* Estilos generales */
+body {
+    font-family: 'neue-haas-grotesk-display', sans-serif;
+    color: #fff; /* Change text color to white */
+    background-color: #000; /* Change background color to black */
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    font-family: 'neue-haas-grotesk-display', sans-serif;
+    color: #fff; /* Change text color to white */
+}
+
+p {
+    font-family: "cofo-sans-mono-variable", monospace;
+    color: #fff; /* Change text color to white */
+}
+
+/* Estilos del proyecto */
+
+.about-hero {
+    background-color: #1D1E1C; /* Change background color to black */
+    color: #fff; /* Change text color to white */
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.about-title {
+    font-family: 'neue-haas-grotesk-display';
+    font-weight: 600;
+    font-size: 70px;
+    text-align: left; /* Justifica el título a la izquierda */
+    margin-top: 20px;
+    width: 100%;
+}
+
+.overview-description{
+    
+    text-align: right; /* Alinea el texto a la derecha */
+    margin-left: auto; /* Empuja el contenido hacia la derecha */
+    margin-right: 20px; /* Espaciado desde el borde derecho */
+    max-width: 50%; /* Limita el ancho del contenido */
+}
+
+.about-subtitle {
+    font-family: 'neue-haas-grotesk-display';
+    font-weight: 400;
+    font-size: 24px;
+    text-align: left; /* Justifica el subtítulo a la izquierda */
+    margin-top: 10px;
+    width: 100%;
+}
+
+.description {
+    background-color: #1D1E1C; /* Fondo negro */
+    color: #fff; /* Tipografía blanca */
+    
+    margin: 0; /* Elimina márgenes externos */
+    padding: 20px; /* Agrega espacio interno */
+    width: 100%; /* Asegura que la sección ocupe todo el ancho */
+    box-sizing: border-box; /* Incluye padding en el ancho total */
+}
+
+.texto-about p {
+    font-family: "cofo-sans-mono-variable", monospace;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6; /* Mejora la legibilidad */
+    margin: 0; /* Elimina márgenes adicionales */
+    color: #fff; /* Asegura que el texto sea blanco */
+    max-width: 50%; /* Limita el ancho del contenido */
+    margin-left: auto; /* Empuja el contenido hacia la derecha */
+    margin-right: 18px; /* Espaciado desde el borde derecho */
+}
+
+
+
+
+
+/* Team Section */
+.team-section {
+    background-color: #1D1E1C;
+    color: #FFF;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.team-title {
+    font-family: 'neue-haas-grotesk-display', sans-serif;
+    font-size: 40px;
+    margin-bottom: 40px;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-items: center;
+}
+
+.team-member {
+    text-align: center;
+}
+
+.team-member img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.member-name {
+    font-family: 'neue-haas-grotesk-display', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.member-role {
+    font-family: 'cofo-sans-mono-variable', monospace;
+    font-size: 14px;
+    color: #AAA;
+}
+
+/* Details Section */
+.about-details {
+    background-color: #1D1E1C;
+    color: #FFF;
+    padding: 50px 20px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.details-item h3 {
+    font-family: 'neue-haas-grotesk-display', sans-serif;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.details-item p {
+    font-family: 'cofo-sans-mono-variable', monospace;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .overview-grid,
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-hero {
+        padding: 0; /* Elimina el padding para dispositivos móviles */
+    }
+
+    .project-title,
+    .project-subtitle {
+        padding: 0 10px; /* Ajusta el padding para dispositivos móviles */
+    }
+
+    .hero-image img {
+        max-height: none; /* Elimina la altura máxima en dispositivos móviles */
+    }
+
+    /*galeria*/
+
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .gallery-item {
+        grid-column: span 2 !important;
+        height: auto !important;
+    }
+    .gallery-item video {
+        width: 100%; /* Asegura que el video ocupe todo el ancho del contenedor */
+        height: auto; /* Mantiene las proporciones del video */
+        border-radius: 8px; /* Opcional: bordes redondeados */
+        object-fit: cover; /* Asegura que el video se ajuste correctamente al contenedor */
+    }
+}
