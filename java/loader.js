@@ -89,3 +89,21 @@ document.addEventListener('DOMContentLoaded', function() {
      });
  });
 
+//service section//
+
+document.querySelectorAll('.accordion-button-service').forEach(button => {
+    button.addEventListener('click', () => {
+        const accordionItem = button.parentElement;
+        const accordionContent = accordionItem.querySelector('.accordion-content-service');
+
+        // Toggle the active class on the accordion item
+        accordionItem.classList.toggle('active');
+
+        // Toggle the display of the accordion content
+        if (accordionItem.classList.contains('active')) {
+            accordionContent.style.display = 'block';
+        } else {
+            accordionContent.style.display = 'none';
+        }
+    });
+});

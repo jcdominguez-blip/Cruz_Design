@@ -17,6 +17,14 @@ p {
     color: #fff; /* Change text color to white */
 }
 
+
+
+
+.about{
+
+    color: rgba(163, 163, 163, 0.685);
+}
+
 /* Estilos del proyecto */
 
 .about-hero {
@@ -83,18 +91,28 @@ p {
     background-color: #1D1E1C;
     color: #FFF;
     padding: 50px 20px;
-    text-align: center;
+    text-align: left;
 }
 
 .team-title {
     font-family: 'neue-haas-grotesk-display', sans-serif;
-    font-size: 40px;
+    font-size: 38px;
     margin-bottom: 40px;
+}
+.team-arrow {
+    position: relative; /* Necesario para que .team-arrow se posicione correctamente */
+    right: 0; /* Mantiene la flecha en la parte derecha */
+    transform: translate(120px, -60px); /* Ajusta la posición vertical hacia arriba */
+}
+
+.team-section {
+    position: relative; /* Asegura que la posición absoluta de .hero-arrow sea relativa a esta sección */
+    padding-bottom: 50px; /* Agrega espacio para que la flecha no se superponga al contenido */
 }
 
 .team-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     justify-items: center;
 }
@@ -105,9 +123,9 @@ p {
 
 .team-member img {
     width: 100%;
-    max-width: 200px;
+    max-width: 300px;
     height: auto;
-    border-radius: 50%;
+    border-radius: 0%;
     margin-bottom: 10px;
 }
 
@@ -118,10 +136,27 @@ p {
 }
 
 .member-role {
-    font-family: 'cofo-sans-mono-variable', monospace;
+    font-family: 'cofo-sans-mono-variable', monospace;    
     font-size: 14px;
     color: #AAA;
 }
+
+.icon-links {
+    display: flex;
+    gap: 10px; /* Space between icons */
+    justify-content: center; /* Center the icons */
+    margin-top: 10px; /* Space above the icons */
+}
+
+.linkedin-icon img, .mail-icon img {
+    width: 24px; /* Adjust the size of the icons */
+    height: 24px; /* Ensure the icons maintain their aspect ratio */
+}
+
+.linkedin-icon:hover img, .mail-icon:hover img {
+    opacity: 0.8; /* Slightly dim the icon on hover for effect */
+}
+
 
 /* Details Section */
 .about-details {
@@ -147,6 +182,58 @@ p {
     font-size: 16px;
     line-height: 1.6;
 }
+
+
+
+/*service section*/
+
+.services-section {
+    padding: 50px 0;
+    background-color: #f7f7f7;
+}
+
+.services-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.accordion-service {
+    width: 100%; /* Full width */
+    margin: 0 auto;
+}
+
+.accordion-item-service {
+    border-bottom: 1px solid #ddd;
+}
+
+.accordion-button-service {
+    width: 100%;
+    padding: 15px;
+    text-align: left;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+}
+
+.accordion-button-service:hover {
+    background-color: #f0f0f0;
+}
+
+.accordion-content-service {
+    display: none;
+    padding: 15px;
+    background-color: #fff;
+}
+
+.accordion-item-service.active .accordion-content-service {
+    display: block;
+}
+
+
 
 @media (max-width: 768px) {
     .overview-grid,

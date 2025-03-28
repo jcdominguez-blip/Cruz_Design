@@ -405,6 +405,14 @@ cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" wid
 }
 
 
+.nav-links-brands .active {
+    color: #9b9b9ae1; /* Change text color to gold */
+    font-weight: bold; /* Make the text bold */
+    border-bottom: 2px solid #9b9b9ae1; /* Add a bottom border to indicate active state */
+    text-decoration: none;
+}
+
+
 /* Estilos para la animación de la cruz */
 .menu-toggle.open .bar:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
