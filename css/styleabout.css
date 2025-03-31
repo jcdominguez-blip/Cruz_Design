@@ -1,7 +1,7 @@
 /* Estilos generales */
 body {
     font-family: 'neue-haas-grotesk-display', sans-serif;
-    color: #fff; /* Change text color to white */
+    color: #FFFDF3; /* Change text color to white */
     background-color: #000; /* Change background color to black */
     margin: 0;
     padding: 0;
@@ -9,13 +9,13 @@ body {
 
 h1, h2 {
     font-family: 'neue-haas-grotesk-display', sans-serif;
-    color: #fff; /* Change text color to white */
+    color: #FFFDF3; /* Change text color to white */
 }
 
 p {
     font-family: "cofo-sans-mono-variable", monospace;
     font-weight: 300;
-    color: #fff; /* Change text color to white */
+    color: #FFFDF3; /* Change text color to white */
 }
 
 
@@ -30,7 +30,7 @@ p {
 
 .about-hero {
     background-color: #1D1E1C; /* Change background color to black */
-    color: #fff; /* Change text color to white */
+    color: #FFFDF3; /* Change text color to white */
     padding: 100px 20px;
     text-align: center;
 }
@@ -65,7 +65,7 @@ p {
 
 .description {
     background-color: #1D1E1C; /* Fondo negro */
-    color: #fff; /* Tipografía blanca */
+    color: #FFFDF3; /* Tipografía blanca */
     
     margin: 0; /* Elimina márgenes externos */
     padding: 20px; /* Agrega espacio interno */
@@ -79,7 +79,7 @@ p {
     font-size: 16px;
     line-height: 1.6; /* Mejora la legibilidad */
     margin: 0; /* Elimina márgenes adicionales */
-    color: #fff; /* Asegura que el texto sea blanco */
+    color: #FFFDF3; /* Asegura que el texto sea blanco */
     max-width: 34%; /* Limita el ancho del contenido */
     margin-left: auto; /* Empuja el contenido hacia la derecha */
     margin-right: 145px; /* Espaciado desde el borde derecho */
@@ -92,7 +92,7 @@ p {
 /* Team Section */
 .team-section {
     background-color: #1D1E1C;
-    color: #FFF;
+    color: #FFFDF3;
     padding: 50px 20px;
     text-align: left;
 }
@@ -164,7 +164,7 @@ p {
 /* Details Section */
 .about-details {
     background-color: #1D1E1C;
-    color: #FFF;
+    color: #FFFDF3;
     padding: 50px 20px;
 }
 
@@ -202,7 +202,7 @@ p {
     padding: 0 20px;
     font-family: 'neue-haas-grotesk-display', sans-serif;
     font-size: 38px;    
-    color: #fff;
+    color: #FFFDF3;
 }
 
 .accordion-service {
@@ -227,7 +227,7 @@ p {
     cursor: pointer;
     text-align: left;
     transition: all 0.3s ease;
-    color: #fff;
+    color: #FFFDF3;
 }
 
 .service-number {
@@ -240,13 +240,13 @@ p {
     flex-grow: 1;
     font-size: 24px;
     font-weight: 400;
-    color: #fff;
+    color: #FFFDF3;
 }
 
 .accordion-icon {
     font-size: 1.5rem;
     transition: transform 0.3s ease;
-    color: #fff;
+    color: #FFFDF3;
 }
 
 .accordion-content-service {
@@ -256,7 +256,7 @@ p {
     padding: 0 50px;
     opacity: 0;
     transition: all 0.3s ease;
-    color: #fff;
+    color: #FFFDF3;
 }
 
 .accordion-item-service.active .accordion-content-service {
@@ -326,7 +326,7 @@ p {
         font-size: 24px;
         line-height: 1.8; /* Mejora la legibilidad */
         margin: 0; /* Elimina márgenes adicionales */
-        color: #fff; /* Asegura que el texto sea blanco */
+        color: #FFFDF3; /* Asegura que el texto sea blanco */
         max-width: none; /* Elimina la limitación del ancho del contenido */
         width: 100%; /* Asegura que el texto ocupe todo el ancho disponible */
         padding:  15px; /* Agrega espacio interno para los lados */
@@ -347,7 +347,7 @@ p {
         font-size: 16px;
         line-height: 1.6; /* Mejora la legibilidad */
         margin: 0; /* Elimina márgenes adicionales */
-        color: #fff; /* Asegura que el texto sea blanco */
+        color: #FFFDF3; /* Asegura que el texto sea blanco */
         max-width: none; /* Elimina la limitación del ancho del contenido */
         width: 100%; /* Asegura que el texto ocupe todo el ancho disponible */
         padding: 0 15px; /* Agrega espacio interno para los lados */
