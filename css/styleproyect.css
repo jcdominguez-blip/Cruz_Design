@@ -333,11 +333,17 @@ p {
 
     .project-title,
     .project-subtitle {
+        font-size: 55px;
         padding: 0 10px; /* Ajusta el padding para dispositivos móviles */
     }
 
     .hero-image img {
         max-height: none; /* Elimina la altura máxima en dispositivos móviles */
+    }
+
+    .project-subtitle{
+
+        font-size: 45px;
     }
 
     /*galeria*/
