@@ -185,54 +185,86 @@ p {
 
 
 
-/*service section*/
-
+/* Services Section */
 .services-section {
-    padding: 50px 0;
-    background-color: #f7f7f7;
+    width: 100%;
+    background-color: #1D1E1C;
+    padding: 80px 0;
+    margin: 0;
 }
 
 .services-title {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    text-align: center;
+    max-width: 1900px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #fff;
 }
 
 .accordion-service {
-    width: 100%; /* Full width */
+    max-width: 1600px;
     margin: 0 auto;
+    padding: 0 20px;
+    border-top: 1px solid #333;
 }
 
 .accordion-item-service {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #333;
 }
 
 .accordion-button-service {
     width: 100%;
-    padding: 15px;
-    text-align: left;
-    background-color: #fff;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
     border: none;
-    outline: none;
     cursor: pointer;
-    font-size: 1.2rem;
-    transition: background-color 0.3s ease;
+    text-align: left;
+    transition: all 0.3s ease;
+    color: #fff;
 }
 
-.accordion-button-service:hover {
-    background-color: #f0f0f0;
+.service-number {
+    font-size: 1rem;
+    color: #666;
+    width: 50px;
+}
+
+.service-name {
+    flex-grow: 1;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #fff;
+}
+
+.accordion-icon {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+    color: #fff;
 }
 
 .accordion-content-service {
-    display: none;
-    padding: 15px;
-    background-color: #fff;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 50px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    color: #fff;
 }
 
 .accordion-item-service.active .accordion-content-service {
-    display: block;
+    max-height: 500px;
+    opacity: 1;
+    padding: 20px 50px;
 }
 
+.accordion-item-service.active .accordion-icon {
+    transform: rotate(45deg);
+}
 
 
 @media (max-width: 768px) {
@@ -269,5 +301,39 @@ p {
         height: auto; /* Mantiene las proporciones del video */
         border-radius: 8px; /* Opcional: bordes redondeados */
         object-fit: cover; /* Asegura que el video se ajuste correctamente al contenedor */
+    }
+
+    .about-hero-content {
+        padding: 40px 15px;
+    }
+
+    .about-title {
+        font-size: 2rem;
+    }
+
+    .about-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .team-member {
+        padding: 15px;
+    }
+
+    .member-name {
+        font-size: 1.1rem;
+    }
+
+    .member-role {
+        font-size: 0.9rem;
     }
 }

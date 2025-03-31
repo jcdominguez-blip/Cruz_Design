@@ -88,22 +88,26 @@ document.addEventListener('DOMContentLoaded', function() {
          }
      });
  });
+ //service section//
 
-//service section//
-
-document.querySelectorAll('.accordion-button-service').forEach(button => {
-    button.addEventListener('click', () => {
-        const accordionItem = button.parentElement;
-        const accordionContent = accordionItem.querySelector('.accordion-content-service');
-
-        // Toggle the active class on the accordion item
-        accordionItem.classList.toggle('active');
-
-        // Toggle the display of the accordion content
-        if (accordionItem.classList.contains('active')) {
-            accordionContent.style.display = 'block';
-        } else {
-            accordionContent.style.display = 'none';
-        }
+// Accordion functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const accordionButtons = document.querySelectorAll('.accordion-button-service');
+    
+    accordionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const accordionItem = this.parentElement;
+            const isActive = accordionItem.classList.contains('active');
+            
+            // Close all accordion items
+            document.querySelectorAll('.accordion-item-service').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                accordionItem.classList.add('active');
+            }
+        });
     });
 });

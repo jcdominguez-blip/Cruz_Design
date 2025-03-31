@@ -396,3 +396,4 @@ document.addEventListener('DOMContentLoaded', () => {
         percentage.textContent = `${progress}%`;
     }, 30); // Se actualiza cada 30ms para una animación fluida
 });
+
