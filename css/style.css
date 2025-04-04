@@ -1441,8 +1441,8 @@ color: #838383;
         text-decoration: none;
         transition: color 0.3s ease;
         width: fit-content; /* Prevent links from occupying full width */
-        left: 150px;
-        top: 0px;
+        left: 130px;
+        top: -160px;
     }
 
     .nav-links-brands a:hover,

@@ -333,6 +333,7 @@ p {
 
     .project-title,
     .project-subtitle {
+        margin-left: -20px;
         font-size: 55px;
         padding: 0 10px; /* Ajusta el padding para dispositivos móviles */
     }
