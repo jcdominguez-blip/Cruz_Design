@@ -88,17 +88,24 @@ function toggleAccordion(element) {
 
 //responsive hamburguer funcion//
 
+const menuToggle = document.getElementById("mobile-menu");
+const navLinks = document.getElementById("nav-links");
 
-document.addEventListener("DOMContentLoaded", function () {
-    const menuToggle = document.getElementById("mobile-menu");
-    const navLinks = document.getElementById("nav-links");
-    const logo = document.querySelector(".logo");
-
-    menuToggle.addEventListener("click", function () {
-        navLinks.classList.toggle("active");
-        logo.classList.toggle("hidden"); // Agrega o quita la clase para ocultar el logo
-    });
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+  menuToggle.classList.toggle("open");
+  document.body.classList.toggle("menu-open");
 });
+
+document.querySelectorAll('.nav-links-brands a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove("active");
+    menuToggle.classList.remove("open");
+    document.body.classList.remove("menu-open");
+  });
+});
+
+
 
 
 

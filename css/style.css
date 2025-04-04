@@ -1336,104 +1336,128 @@ color: #838383;
 
     
    
-    /* Navbar */
+    
+    /*Navbar*/
+
+   
     .navbar-brand {
+        border-bottom: none; /* Elimina la línea blanca */
+        background-color: #1D1E1C; /* Mantiene el fondo oscuro */
+        padding: 10px 20px;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        background-color: #1D1E1C;
         width: 100%;
         box-sizing: border-box;
-        position: relative; /* Relación con el menú */
+        
+    }
+
+    
+
+    .containerNav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 1.5rem;
+        width: 100%;
+        
     }
 
     .logo {
-        position: static;
-        margin: 0;
-        order: 1;
-        text-align: left;
-        transition: opacity 0.3s ease-in-out; /* Transición suave */
+        font-size: 20px;
+        color: #FFFDF3;
+        text-decoration: none;
+        z-index: 1100;
     }
 
-    /* Oculta el logo cuando el menú está activo */
-.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
+    .menu-toggle {
+        position: absolute;
+        top: 1.2rem;
+        right: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1100;
+        width: 30px;
+        height: 30px;
+    }
 
+    .bar {
+        height: 3px;
+        width: 100%;
+        background-color: #FFFDF3;
+        margin: 4px 0;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
 
-/* Contenedor del navbar */
-.containerNav {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    padding: 0 20px;
-    box-sizing: border-box;
-    justify-content: space-between;
-}
+    .menu-toggle.open .bar:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
 
+    .menu-toggle.open .bar:nth-child(2) {
+        opacity: 0;
+    }
 
+    .menu-toggle.open .bar:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+    }
 
-    
-/* Botón de menú hamburguesa */
-.menu-toggle {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
+    /* NAV LINKS - Perfectly Centered */
+    .nav-links-brands {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100%;
+        background-color: #1D1E1C;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Center elements vertically */
+        align-items: center; /* Center elements horizontally */
+        text-align: center; /* Ensure text is centered */
+        gap: 1.5rem; /* Adjust spacing */
+        transform: translateY(-100%);
+        transition: transform 0.5s ease;
+        z-index: 1000;
+        padding-top: 20px; /* Adjust padding to move links up */
+    }
 
-.menu-toggle .bar {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px auto;
-    background-color: #FFFDF3;
-    transition: 0.3s;
-}
-
-
- /* Ocultar menú por defecto */
-.nav-links-brands {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    background-color: #1D1E1C;
-    padding: 10px 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-
-
-/* Mostrar menú cuando está activo */
-.nav-links-brands.active {
-    display: flex;
-}
-
-    
+    .nav-links-brands.active {
+        transform: translateY(0);
+    }
 
     .nav-links-brands li {
-        margin: 10px 0; /* Espaciado entre los enlaces */
-        text-align: center;
+        list-style: none;
+        width: 100%;
     }
 
     .nav-links-brands a {
-        color: #FFFDF3;
-        font-size: 16px;
-        padding: 10px;
         display: block;
+        color: #FFFDF3;
+        font-size: 24px; /* Increase size for balance */
+        font-weight: 500;
         text-decoration: none;
+        transition: color 0.3s ease;
+        width: fit-content; /* Prevent links from occupying full width */
+        left: 150px;
+        top: 0px;
     }
 
-    .navbar-brand, .containerNav, .menu-toggle, .nav-links-brands {
-        max-width: 100%; /* Asegura que no excedan el ancho de la pantalla */
-        overflow-x: hidden; /* Evita contenido que se desborde horizontalmente */
+    .nav-links-brands a:hover,
+    .nav-links-brands a:active {
+        color: #FFD700; /* Change color on hover or touch */
     }
+    
+    /* Prevent scrolling when menu is open */
+    body.menu-open {
+        overflow: hidden;
+        height: 100vh;
+        position: fixed;
+        width: 100%;
+    }
+      
 
 
     /* Hero Section */
