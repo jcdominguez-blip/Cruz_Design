@@ -219,6 +219,30 @@ p {
 
 /* Specific item styles */
 
+title-white {
+    padding: 0px;
+    color: white;
+    margin-bottom: 90px; /* Espaciado entre el título y el texto */
+    text-align: left; /* Alineación del título a la izquierda */
+}
+
+.gallery-item.text-yellow {
+    color: white; /* Asegura que el texto también sea blanco */
+    display: flex; /* Usa flexbox para centrar el contenido */
+    flex-direction: column; /* Asegura que el título y el texto estén en columna */
+    justify-content: center; /* Centra verticalmente el contenido */
+    align-items: flex-start; /* Alinea el contenido a la izquierda */
+    padding: 20px; /* Agrega un padding interno para mayor separación visual */
+    background-color: #1D1E1C; /* Asegura el fondo oscuro */
+    height: 100%; /* Asegura que el contenedor ocupe toda la altura disponible */
+}
+
+.gallery-item.text-yellow p {
+    margin-top: 0; /* Elimina márgenes superiores innecesarios */
+    margin-bottom: 10px; /* Espaciado entre párrafos */
+    line-height: 1.6; /* Mejora la legibilidad del texto */
+    text-align: left; /* Alinea el texto a la izquierda */
+}
 
 .text-green {
     font-family: "cofo-sans-mono-variable"; /* Asegura que esta tipografía se aplique */
