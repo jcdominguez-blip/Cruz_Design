@@ -3,34 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--Tipografía-->
     <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
-    <!--Descripcion-->
     <meta name="description" content="Soy diseñador gráfico especializado en identidades corporativas, con experiencia en proyectos destacados como la Municipalidad de San Cristóbal y sub-marcas de Unión Ferroviaria y Trenes Argentinos. Desde 2018, trabajo como freelance, integrando branding, comunicación y diseño de aplicaciones. Mi formación en la Universidad de Buenos Aires, combinada con habilidades en UX/UI y Desarrollo Front End, me permite ofrecer soluciones creativas y efectivas que destacan la esencia de cada marca." >
-    <!--SEO-->
     <meta name="keywords" content="diseño, marcas, branding, diseño grafico, instagram, corporativo, empresas, brand design, diseño ux ui, diseño web">
      
-    <!--Style-->
-    
     <link rel="stylesheet" href="./css/style.css">
-    <!--Favicon-->
     <link rel="icon"  sizes="32x32" href="./img/favicon-32x32.png">
-    <!--ICONOS-->  
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
-     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Cruz Diseño</title>
 </head>
 <body>
 
-<!-- Animacion -->
 <div class="page-transition"></div>
 
-<!-- Loader -->
 <div class="loader">
     <div class="loader-content">
-        <!--<div class="loader-text">CRUZ DESIGN</div>-->
         <div class="loader-percentage">1%</div>
         <div class="loader-progress">
             
@@ -40,10 +29,11 @@
 </div>
 
 
-  <!--Navbar-->
-  <nav class="navbar-brand">
+<nav class="navbar-brand">
     <div class="containerNav">
-        <a href="../index.html" class="logo link-location" data-es="Cruz Diseño ®" data-en="Cruz Design ®">Cruz Diseño<sup>®</sup></a>
+        <a href="../index.html" class="logo link-location">
+            <img src="./img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
+        </a>
         <div class="menu-toggle" id="mobile-menu">
             <span class="bar"></span>
             <span class="bar"></span>
@@ -51,47 +41,73 @@
         </div>
         <ul class="nav-links-brands" id="nav-links">
             <li><a href="#work" class="link-location" data-en="/WORKS" data-es="/TRABAJOS">/TRABAJOS</a></li>
-            <li><a href="./pages/about.html" class="link-location" data-en="/ABOUT US" data-es="/QUIENES SOMOS" >/QUIENES SOMOS</a></li>               
+            <li><a href="./pages/about.html" class="link-location" data-en="/STUDIO" data-es="/ESTUDIO" >/ESTUDIO</a></li>               
             <li><a href="#contact" class="link-location" data-en="/CONTACT" data-es="/CONTACTOS">/CONTACTOS</a></li>
         </ul>
     </div>
 </nav>
 
 <header class="hero">
-    <div class="container hero-container">
+    <div id="hero-3d-background"></div>
+
+    <div class="hero-main-wrapper">
         <div class="hero-left">
             <h1 class="hero-title" id="hero-title"></h1>
-            <p class="hero-subtitle" data-es=" Nos especializamos en branding, diseño UX/UI y frontdesign. Diseñamos marcas sólidas y sistemas visuales que potencian negocios, diferenciándolos en un mercado competitivo. Transformamos la comunicación en un activo estratégico, alineando diseño y visión para generar impacto y valor." data-en="We specialize in branding, UX/UI design, and front-end design. We create strong brands and visual systems that enhance businesses, differentiating them in a competitive market. We transform communication into a strategic asset, aligning design and vision to generate impact and value.">
-               Nos especializamos en branding, diseño UX/UI y frontdesign. Diseñamos marcas sólidas y sistemas visuales que potencian negocios, diferenciándolos en un mercado competitivo. Transformamos la comunicación en un activo estratégico, alineando diseño y visión para generar impacto y valor.
+            <p class="hero-subtitle" 
+               data-es="Transformamos negocios diseñando ecosistemas de marca globales: desde la identidad hasta la estrategia que impulsa su rendimiento en el mercado." 
+               data-en="We transform businesses by designing global brand ecosystems: from identity to the strategy that drives their market performance.">
+               Transformamos negocios diseñando ecosistemas de marca globales: desde la identidad hasta la estrategia que impulsa su rendimiento en el mercado.
             </p>
             <div class="hero-arrow">
                 <img src="./img/south_east_300dp_E3E3E3_FILL0_wght200_GRAD0_opsz48.svg" alt="Arrow">
             </div>
         </div>
+
         <div class="hero-right">
-            <div class="hero-links">
-                <a href="./pages/brandworks.html" class="hero-link" >[BRAND DESIGN]</a>
+            <nav class="hero-links">
+                <a href="./pages/brandworks.html" class="hero-link">[BRAND DESIGN]</a>
+                <a href="./pages/frontdesign.html" class="hero-link">[DISEÑO AUDIOVISUAL]</a>
                 <a href="./pages/productdesign.html" class="hero-link">[DISEÑO UX/UI]</a>
+                <a href="./pages/productdesign.html" class="hero-link">[MARKETING DIGITAL]</a>
                 <a href="./pages/frontdesign.html" class="hero-link">[FRONT END DESIGN]</a>
-            </div>
+            </nav>
         </div>
     </div>
+
+    <a href="#studio-intro" class="scroll-down-btn" aria-label="Scroll down">
+        <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40">
+            <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/>
+        </svg>
+    </a>
+
     <div class="hero-footer">
         <p class="hero-fecha">2018-2025<sup>®</sup></p>
     </div>
 </header>
 
-
-    <!--Boton lenguaje-->
-
-
-    <div class="language-switch">
+<div class="language-switch">
         <button id="language-toggle" >Español</button>
     </div>
 
-<!-- Carrusel de imágenes -->
+<section id="studio-intro" class="studio-section">
+    <div class="studio-video-container">
+        <video autoplay muted loop playsinline class="studio-video">
+            <source src="./video/videoStudio.mp4" type="video/mp4">
+            Tu navegador no soporta video HTML5.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+   <div class="studio-text-container">
+    <h2 class="studio-statement">
+        <span class="reveal-text">
+            En Cruz Diseño no estamos para cambiar quién sos ni para disfrazar tu empresa. Nuestro trabajo es traducir y generar valor a tu organización.
+        </span>
+    </h2>
+</div>
+</section>
+
+
 <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="1800" data-wrap="true">
-    <!-- Indicadores -->
     <ol class="carousel-indicators">
         <li data-target="#carouselExample" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExample" data-slide-to="1"></li>
@@ -129,7 +145,6 @@
             <img class="d-block w-100" src="https://i.ibb.co/qMGYg1Vs/TAC.jpg" alt="Octava imagen">
         </div>
     </div>
-    <!-- Controles del carrusel -->
     <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Anterior</span>
@@ -140,96 +155,55 @@
     </a>
 </div>
 
-<!-- Trabajos Destacados Section -->
-
-
 <section class="featured-works">
-    <h2 class="subtitulo" data-en="Featured works" data-es="Trabajos destacados" >Trabajos destacados</h2>
-    <hr class="decorative-line">
+    <div class="works-header">
+        <h2 class="subtitulo" data-en="Featured works" data-es="Trabajos destacados">Trabajos destacados</h2>
+        <hr class="decorative-line">
+    </div>
+
     <div class="featured-works-container">
+        <div class="works-preview">
+            <div class="preview-inner">
+                <img id="project-image-1" src="https://i.ibb.co/dmkbM0K/tac.jpg" class="active" alt="Trenes Argentinos">
+                <img id="project-image-2" src="https://i.ibb.co/gb4PTXst/img4.jpg" alt="San Cristobal">
+                <img id="project-image-3" src="https://i.ibb.co/357FqBCw/tp1.jpg" alt="SUUAM">
+                <img id="project-image-4" src="https://i.ibb.co/2YChXbhZ/tp2.jpg" alt="RUNAKAY">
+            </div>
+        </div>
+
         <ul class="featured-works-list">
-            
-            <!-- Repeat for other items -->
-            <li class="featured-work-item" data-url="./pages/trenescargas.html" onclick="redirectWithAnimation(this)">
-                <div class="work-layout">
-                    <div class="work-image">
-                        <img src="https://i.ibb.co/dmkbM0K/tac.jpg" alt="RUNAKAY">
-                    </div>
-                    <div class="work-content">
-                        <div class="work-meta">
-                            <p class="work-category">//Branding</p>                            
-                        </div>
-                        <h2 class="work-title">Trenes Argentinos Cargas</h2>
-                        <div class="work-meta">
-                            <p class="work-description" data-es="Con una impresionante red de 9,100 kilómetros de vía que abarca 15 provincias y la Ciudad Autónoma de Buenos Aires, Trenes Argentinos Cargas (TAC) se posiciona como la principal operadora ferroviaria de Argentina." data-en="With an impressive network of 9,100 kilometers of track spanning 15 provinces and the Autonomous City of Buenos Aires, Trenes Argentinos Cargas (TAC) stands as the leading railway operator in Argentina.">Con una impresionante red de 9,100 kilómetros de vía que abarca 15 provincias y la Ciudad Autónoma de Buenos Aires, Trenes Argentinos Cargas (TAC) se posiciona como la principal operadora ferroviaria de Argentina.</p>                            
-                        </div>
-                        <p class="work-year">[2025]</p>
-                        <span class="arrow-icon">→</span>
-                        
-                    </div>
+            <li class="featured-work-item" data-project="1" data-url="./pages/trenescargas.html" onclick="redirectWithAnimation(this)">
+                <div class="work-item-content">
+                    <span class="work-category">// Branding</span>
+                    <h3 class="work-title">Trenes Argentinos Cargas</h3>
+                    <span class="work-year">[2025]</span>
                 </div>
                 <hr class="decorative-line">
             </li>
 
-             <!-- Repeat for other items -->
-           <li class="featured-work-item" data-url="./pages/sc.html" onclick="redirectWithAnimation(this)">
-            <div class="work-layout">
-                <div class="work-image">
-                    <img src="https://i.ibb.co/gb4PTXst/img4.jpg" alt="RUNAKAY">
+            <li class="featured-work-item" data-project="2" data-url="./pages/sc.html" onclick="redirectWithAnimation(this)">
+                <div class="work-item-content">
+                    <span class="work-category">// Branding</span>
+                    <h3 class="work-title">Municipalidad de San Cristobal</h3>
+                    <span class="work-year">[2024]</span>
                 </div>
-                <div class="work-content">
-                    <div class="work-meta">
-                        <p class="work-category">//Branding</p>                            
-                    </div>
-                    <h2 class="work-title">Municipalidad de San Cristobal</h2>
-                    <div class="work-meta">
-                        <p class="work-description" data-en="San Cristóbal, with its deep historical roots and modern essence, deserved a redesign that honored its rich past. This project focused on creating a management brand and revitalizing its traditional heraldic shield." data-es="San Cristóbal, con sus profundas raíces históricas y una esencia moderna, merecía un rediseño que reivindicara su rico pasado. Este proyecto se enfocó en la creación de una marca gestión y en la revitalización de su escudo heráldico tradicional." >San Cristóbal, con sus profundas raíces históricas y una esencia moderna, merecía un rediseño que reivindicara su rico pasado. Este proyecto se enfocó en la creación de una marca gestión y en la revitalización de su escudo heráldico tradicional.</p>                            
-                    </div>
-                    <p class="work-year">[2024]</p>
-                    <span class="arrow-icon">→</span>
-                </div>
-            </div>
-            <hr class="decorative-line">
-        </li>
+                <hr class="decorative-line">
+            </li>
 
-           <!-- Repeat for other items -->
-           <li class="featured-work-item" data-url="./pages/suuam.html" onclick="redirectWithAnimation(this)">
-            <div class="work-layout">
-                <div class="work-image">
-                    <img src="https://i.ibb.co/357FqBCw/tp1.jpg" alt="RUNAKAY">
+            <li class="featured-work-item" data-project="3" data-url="./pages/suuam.html" onclick="redirectWithAnimation(this)">
+                <div class="work-item-content">
+                    <span class="work-category">// UI/UX Design</span>
+                    <h3 class="work-title">SUUAM</h3>
+                    <span class="work-year">[2024]</span>
                 </div>
-                <div class="work-content">
-                    <div class="work-meta">
-                        <p class="work-category">//Branding</p>                            
-                    </div>
-                    <h2 class="work-title">SUUAM (sistema único y universal de auxilio mecánico)</h2>
-                    <div class="work-meta">
-                        <p class="work-description" data-en="SUUAM is an innovative super app designed to transform the automotive ecosystem in Argentina, enabling users to manage their vehicles, request mechanical assistance, and purchase spare parts." data-es="SUUAM es una innovadora super app diseñada para transformar el ecosistema automotriz en Argentina, permitiendo a los usuarios administrar sus vehículos, solicitar auxilio mecánico y adquirir repuestos." >SUUAM es una innovadora super app diseñada para transformar el ecosistema automotriz en Argentina, permitiendo a los usuarios administrar sus vehículos, solicitar auxilio mecánico y adquirir repuestos.</p>                            
-                    </div>
-                    <p class="work-year">[2024]</p>
-                    <span class="arrow-icon">→</span>
-                </div>
-            </div>
-            <hr class="decorative-line">
-        </li>
+                <hr class="decorative-line">
+            </li>
 
-            <!-- Repeat for other items -->
-            <li class="featured-work-item" data-url="./pages/runakay.html" onclick="redirectWithAnimation(this)">
-                <div class="work-layout">
-                    <div class="work-image">
-                        <img src="https://i.ibb.co/2YChXbhZ/tp2.jpg" alt="RUNAKAY">
-                    </div>
-                    <div class="work-content">
-                        <div class="work-meta">
-                            <p class="work-category">//Branding</p>                            
-                        </div>
-                        <h2 class="work-title">RUNAKAY</h2>
-                        <div class="work-meta">
-                            <p class="work-description" data-en="Runakay is a company dedicated to selling merchandise, particularly t-shirts, hoodies, and caps, featuring themes centered on outdoor activities and environmental conservation." data-es="Runakay es una empresa dedicada a la venta de merchandising, especialmente remeras, buzos y gorras, con temáticas de actividades al aire libre y cuidado ambiental.">Runakay es una empresa dedicada a la venta de merchandising, especialmente remeras, buzos y gorras, con temáticas de actividades al aire libre y cuidado ambiental.</p>                            
-                        </div>
-                        <p class="work-year">[2023]</p>
-                        <span class="arrow-icon">→</span>
-                    </div>
+            <li class="featured-work-item" data-project="4" data-url="./pages/runakay.html" onclick="redirectWithAnimation(this)">
+                <div class="work-item-content">
+                    <span class="work-category">// Branding</span>
+                    <h3 class="work-title">RUNAKAY</h3>
+                    <span class="work-year">[2023]</span>
                 </div>
                 <hr class="decorative-line">
             </li>
@@ -239,9 +213,7 @@
             
 
 
-    <!-- WORKS SECTION -->
-
-<section class="work" id="work">
+    <section class="work" id="work">
     <h2 class="subtitulo" data-en="Works" data-es="Trabajos">Trabajos</h2>
     <div class="works-section">
         <div class="works-image">
@@ -291,44 +263,11 @@
     </div>
 </section>
 
-    <!--Aboutme
-    <section class="about-me" id="about-me">
-        <div class="about-image">
-            <img src="./img/portfolio copy_2.jpg" alt="About Me Image">
-        </div>
-        <div class="about-content">
-            <h2 class="subtitulo" data-en="About Me" data-es="Sobre Mí">Sobre Mí</h2>
-            <hr class="decorative-line">
-            <p class="lectura" data-en="From a young age, I developed a strong affinity for design and art, which led me to study Graphic Design at the “Universidad de Buenos Aires” (FADU), specializing in corporate identities. As a freelance designer since 2018, I have worked on various projects, including identity brand for 'Municipalidad de San Cristobal’ and sub-brands for renowned companies like “Unión Ferroviaria” and “Trenes Argentinos”, where I focused on branding, communication, and application design." data-es="Desde una edad temprana, desarrollé una fuerte afinidad por el diseño y el arte, lo que me llevó a estudiar Diseño Gráfico en la “Universidad de Buenos Aires” (FADU), especializándome en identidades corporativas. Como diseñador freelance desde 2018, he trabajado en varios proyectos, incluyendo la identidad de marca para la 'Municipalidad de San Cristóbal’ y sub-marcas para empresas reconocidas como “Unión Ferroviaria” y “Trenes Argentinos”, donde me enfoqué en branding, comunicación y diseño de aplicaciones.">Desde una edad temprana, desarrollé una fuerte afinidad por el diseño y el arte, lo que me llevó a estudiar Diseño Gráfico en la “Universidad de Buenos Aires” (FADU), especializándome en identidades corporativas. Como diseñador freelance desde 2018, he trabajado en varios proyectos, incluyendo la identidad de marca para la 'Municipalidad de San Cristóbal’ y sub-marcas para empresas reconocidas como “Unión Ferroviaria” y “Trenes Argentinos”, donde me enfoqué en branding, comunicación y diseño de aplicaciones.</p>
-            <p class="lectura" data-en="My education and passion for design have allowed me to acquire skills in UX/UI, Community Management, and Front End Development. This portfolio reflects my commitment to creativity and the pursuit of effective solutions." data-es="Mi educación y pasión por el diseño me han permitido adquirir habilidades en UX/UI, Community Management y Desarrollo Front End. Este portafolio refleja mi compromiso con la creatividad y la búsqueda de soluciones efectivas.">Mi educación y pasión por el diseño me han permitido adquirir habilidades en UX/UI, Community Management y Desarrollo Front End. Este portafolio refleja mi compromiso con la creatividad y la búsqueda de soluciones efectivas.</p>
-            <p class="subtitulosIconos" data-en="Skills" data-es="Habilidades">Habilidades<img class="iconSkills" src="./img/arrow.svg" alt="AI Icon"></p>
-            <div class="icons">
-                <img class="icon2" src="./img/ai.svg" alt="AI Icon">
-                <img class="icon2" src="./img/ps.svg" alt="AI Icon">
-                <img class="icon2" src="./img/id.svg" alt="AI Icon">
-                <img class="icon2" src="./img/ae.svg" alt="AI Icon">                
-            </div>
-            <div class="icons">
-                <img class="icon2" src="./img/figma.svg" alt="AI Icon">
-                <img class="icon2" src="./img/studiocode.svg" alt="AI Icon">
-                <img class="icon2" src="./img/git.svg" alt="AI Icon">                              
-            </div>
-            <div class="icons">
-                <img class="icon2" src="./img/html.svg" alt="AI Icon">
-                <img class="icon2" src="./img/css.svg" alt="AI Icon">
-                <img class="icon2" src="./img/js.svg" alt="AI Icon">                              
-            </div>
-        </div>
-    </section>-->
-
-
-<!-- Sección de Contacto -->
 <section class="contact" id="contact">
     <div class="container">
         <h2 class="subtitulo-contacto" data-en="Contact" data-es="Contacto">Contacto</h2>
         <p class="lectura-contacto" data-en="Would you like to get in touch with us?" data-es="¿Deseas ponerte en contacto con nosotros?">¿Deseas ponerte en contacto con nosotros?</p>
        
-        <!-- Formulario de Contacto -->
         <form action="https://formspree.io/f/xrbekqeb" method="POST" class="contact-form">
             <div class="form-group">
                 <label for="nombre" data-en="Name" data-es="Nombre">Nombre</label>
@@ -351,8 +290,7 @@
     </div>
 </section>
    
-    <!--Footer-->
-<footer class="footer">
+    <footer class="footer">
     <div class="footer-left">
         <span class="material-symbols-outlined">pin_drop</span>
         <span class="text-footer" data-en="Headquarters in Buenos Aires, Argentina" data-es="Sede en Buenos Aires, Argentina">Sede en Buenos Aires, Argentina</span>
@@ -372,11 +310,19 @@
 </footer>
 
 
-  <!-- JavaScript -->
-    <script src="./java/script.js"></script>
-    <script src="./java/loader.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
+  <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+        }
+    }
+</script>
+
+<script src="./java/loader.js"></script> 
+<script src="./java/script.js" defer></script>
+<script type="module" src="./java/hero-3d.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

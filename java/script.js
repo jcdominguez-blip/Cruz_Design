@@ -1,406 +1,224 @@
-function toggleAccordion(element) {
-    const content = element.nextElementSibling;
-    const isVisible = content.style.display === "block";
 
 
-    // Oculta todos los contenidos de acordeón
-    const allContents = document.querySelectorAll('.accordion-content');
-    allContents.forEach((item) => {
-        item.style.display = 'none';
-    });
-
-
-    // Muestra el contenido correspondiente al elemento clicado
-    content.style.display = isVisible ? "none" : "block";
-
-
-    // Cambiar la imagen y el texto
-    const imgSrc = element.querySelector('span').getAttribute('data-img');
-    const title = element.querySelector('span').getAttribute('data-title');
-    const description = element.querySelector('span').getAttribute('data-description');
-
-
-    const projectImage = document.getElementById('project-image');
-    const projectTitle = document.getElementById('project-title');
-    const projectDescription = document.getElementById('project-description');
-
-
-    projectImage.src = imgSrc;
-    projectTitle.textContent = title;
-    projectDescription.textContent = description;
-}
-
-
-function changeContent(element) {
-    document.getElementById('project-description').innerText = element.getAttribute('data-description');
-}
-
-
-//transicion automatica en imagenes//
-
-
+// --- GESTIÓN DE ACORDEÓN Y PROYECTOS (Unificada) ---
 let currentIndex = 0;
-let images = [];
-let intervalId;
+let projectImages = [];
+let projectInterval;
 
+window.toggleAccordion = function(element) {
+    const allAccordions = document.querySelectorAll('.accordion');
+    const content = element.nextElementSibling;
+    const isNowActive = element.classList.contains('active');
 
-function changeImage() {
-    const imgElement = document.getElementById('project-image');
-    if (images.length > 0) {
-        imgElement.src = images[currentIndex];
-        currentIndex = (currentIndex + 1) % images.length;
-    }
-}
+    // Resetear otros
+    allAccordions.forEach(acc => {
+        acc.classList.remove('active');
+        acc.nextElementSibling.style.display = "none";
+    });
 
+    if (intervalId) clearInterval(intervalId);
 
-
-
-
-
-
-function toggleAccordion(element) {
-    const accordion = element.classList.toggle('active'); // Cambia la clase activa
-    const content = element.nextElementSibling; // Obtiene el contenido del acordeón
-   
-    if (accordion) {
-        // Si el acordeón se activa, obtén las imágenes y comienza el cambio
-        const span = element.querySelector('span');
-        images = JSON.parse(span.getAttribute('data-images'));
-        currentIndex = 0; // Reinicia el índice al cambiar de proyecto
-        changeImage(); // Muestra la primera imagen inmediatamente
-       
-        // Reiniciar el intervalo si ya hay uno
-        if (intervalId) clearInterval(intervalId);
-        intervalId = setInterval(changeImage, 2000); // Cambia la imagen cada 2 segundos
-    } else {
-        // Si se desactiva, puedes detener el intervalo
-        clearInterval(intervalId);
-    }
-   
-    // Mostrar u ocultar el contenido
-    if (content.style.display === "block") {
-        content.style.display = "none";
-    } else {
+    if (!isNowActive) {
+        element.classList.add('active');
         content.style.display = "block";
+
+        // Cargar galería de imágenes del proyecto
+        const span = element.querySelector('span');
+        projectImages = JSON.parse(span.getAttribute('data-images'));
+        currentIndex = 0;
+        
+        if (projectImages && projectImages.length > 0) {
+            updateProjectImage();
+            intervalId = setInterval(updateProjectImage, 2500);
+        }
+    }
+};
+
+function updateProjectImage() {
+    const imgElement = document.getElementById('project-image');
+    if (projectImages.length > 0) {
+        imgElement.style.opacity = 0.5; // Efecto transición simple
+        setTimeout(() => {
+            imgElement.src = projectImages[currentIndex];
+            imgElement.style.opacity = 1;
+            currentIndex = (currentIndex + 1) % projectImages.length;
+        }, 300);
     }
 }
 
-
-//responsive hamburguer funcion//
-
-const menuToggle = document.getElementById("mobile-menu");
-const navLinks = document.getElementById("nav-links");
-
-menuToggle.addEventListener("click", () => {
-  navLinks.classList.toggle("active");
-  menuToggle.classList.toggle("open");
-  document.body.classList.toggle("menu-open");
-});
-
-document.querySelectorAll('.nav-links-brands a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove("active");
-    menuToggle.classList.remove("open");
-    document.body.classList.remove("menu-open");
-  });
-});
-
-
-
-
-
-
-//footer-clock//
-
-
-
-
-        function updateClock() {
-            const now = new Date();
-            const options = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
-            document.getElementById('clock').textContent = now.toLocaleTimeString('es-AR', options);
-        }
-        setInterval(updateClock, 1000);
-        updateClock(); // Update clock immediately on load
- 
-
-
-
-
-//boton lenguaje//
-
-
-document.addEventListener('DOMContentLoaded', function() {
+// --- TRADUCCIÓN (Consolidada) ---
+document.addEventListener('DOMContentLoaded', () => {
     const languageToggle = document.getElementById('language-toggle');
-    const elementsToTranslate = document.querySelectorAll('[data-en], [data-es]');
+    
+    languageToggle.addEventListener('click', () => {
+        const isEsp = languageToggle.textContent.trim().toLowerCase() === 'español';
+        languageToggle.textContent = isEsp ? 'English' : 'Español';
+        document.documentElement.lang = isEsp ? 'en' : 'es';
 
-
-    // Función para cambiar el idioma
-    function toggleLanguage() {
-        const currentLanguage = languageToggle.textContent.trim().toLowerCase();
-        const newLanguage = currentLanguage === 'español' ? 'english' : 'español';
-
-
-        // Cambiar el texto del botón
-        languageToggle.textContent = newLanguage.charAt(0).toUpperCase() + newLanguage.slice(1);
-
-
-        // Cambiar el contenido de los elementos
-        elementsToTranslate.forEach(element => {
-            if (currentLanguage === 'español') {
-                element.textContent = element.getAttribute('data-en');
-            } else {
-                element.textContent = element.getAttribute('data-es');
-            }
+        document.querySelectorAll('[data-en], [data-es]').forEach(el => {
+            el.textContent = isEsp ? el.getAttribute('data-en') : el.getAttribute('data-es');
         });
-    }
-
-
-    // Evento para cambiar el idioma al hacer clic en el botón//
-    languageToggle.addEventListener('click', toggleLanguage);
-});
-
-
-// Traduccion formulario//
-
-
-function toggleLanguage() {
-    const currentLanguage = languageToggle.textContent.trim().toLowerCase();
-    const newLanguage = currentLanguage === 'español' ? 'english' : 'español';
-
-
-    // Cambiar el texto del botón
-    languageToggle.textContent = newLanguage.charAt(0).toUpperCase() + newLanguage.slice(1);
-
-
-    // Cambiar el contenido de los elementos
-    document.querySelectorAll('[data-en], [data-es]').forEach(element => {
-        if (currentLanguage === 'español') {
-            element.textContent = element.getAttribute('data-en');
-        } else {
-            element.textContent = element.getAttribute('data-es');
-        }
-    });
-
-
-    // Cambiar los placeholders y labels del formulario
-    const formLabels = document.querySelectorAll('.form-group label');
-    formLabels.forEach(label => {
-        if (currentLanguage === 'español') {
-            label.textContent = label.getAttribute('data-en');
-        } else {
-            label.textContent = label.getAttribute('data-es');
-        }
-    });
-}
-
-
-// Smooth Scroll para enlaces internos
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault(); // Evita el comportamiento predeterminado del enlace
-        const targetId = this.getAttribute('href'); // Obtiene el ID del objetivo
-        const targetElement = document.querySelector(targetId); // Selecciona el elemento objetivo
-
-
-        if (targetElement) {
-            // Desplazamiento suave
-            targetElement.scrollIntoView({
-                behavior: 'smooth', // Desplazamiento suave
-                block: 'start' // Alinea el elemento en la parte superior de la ventana
-            });
-        }
+        
+        // Actualizar labels del formulario
+        document.querySelectorAll('.form-group label').forEach(label => {
+            label.textContent = isEsp ? label.getAttribute('data-en') : label.getAttribute('data-es');
+        });
     });
 });
 
-
-// Función para el efecto de máquina de escribir
-function typeWriterEffect() {
-    const typewriterElement = document.getElementById('typewriter');
-    const texts = ["Cruz Diseño"]; // Textos a mostrar
-    let textIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-
+// --- TYPEWRITER HERO (Identidad Cruz) ---
+document.addEventListener("DOMContentLoaded", () => {
+    const texts = ["Sistematizamos marcas", "Diseñamos estrategias", "Creamos valor visual"];
+    let idx = 0, charIdx = 0, isDeleting = false;
+    const target = document.getElementById("hero-title");
 
     function type() {
-        const currentText = texts[textIndex];
+        const fullText = texts[idx];
+        target.textContent = isDeleting 
+            ? fullText.substring(0, charIdx--) 
+            : fullText.substring(0, charIdx++);
 
+        let speed = isDeleting ? 50 : 100;
 
-        if (!isDeleting) {
-            // Escribir el texto
-            typewriterElement.textContent = currentText.substring(0, charIndex + 1);
-            charIndex++;
-
-
-            // Si se ha escrito todo el texto, comenzar a borrar
-            if (charIndex === currentText.length) {
-                isDeleting = true;
-                setTimeout(type, 1000); // Esperar 1 segundo antes de borrar
-            } else {
-                setTimeout(type, 100); // Velocidad de escritura
-            }
-        } else {
-            // Borrar el texto
-            typewriterElement.textContent = currentText.substring(0, charIndex - 1);
-            charIndex--;
-
-
-            // Si se ha borrado todo el texto, pasar al siguiente texto
-            if (charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % texts.length; // Cambiar al siguiente texto
-                setTimeout(type, 500); // Esperar 0.5 segundos antes de escribir el siguiente texto
-            } else {
-                setTimeout(type, 50); // Velocidad de borrado
-            }
+        if (!isDeleting && charIdx > fullText.length) {
+            isDeleting = true;
+            speed = 1500; // Pausa al terminar de escribir
+        } else if (isDeleting && charIdx < 0) {
+            isDeleting = false;
+            idx = (idx + 1) % texts.length;
+            speed = 500;
         }
+
+        setTimeout(type, speed);
     }
-
-
-    // Iniciar la animación
-    type();
-}
-
-
-// Ejecutar la función cuando la página esté cargada //////////////
-document.addEventListener('DOMContentLoaded', typeWriterEffect);
-
-
-// Cursor //////////////////////////////////////////////
-
-
-const links = document.querySelectorAll('.nav-links a');
-
-
-links.forEach(link => {
-    link.addEventListener('mouseenter', () => {
-        document.body.classList.add('link-location');
-    });
-
-
-    link.addEventListener('mouseleave', () => {
-        document.body.classList.remove('link-location');
-    });
+    if(target) type();
 });
 
-
-document.addEventListener("DOMContentLoaded", function() {
-    const texts = ["Impulsamos", "Diseñamos", "Creamos marcas"];
-    let currentTextIndex = 0;
-    let currentCharIndex = 0;
-    let isDeleting = false;
-    const heroTitle = document.getElementById("hero-title");
-
-
-    function type() {
-        const currentText = texts[currentTextIndex];
-        if (isDeleting) {
-            heroTitle.textContent = currentText.substring(0, currentCharIndex--);
-            if (currentCharIndex < 0) {
-                isDeleting = false;
-                currentTextIndex = (currentTextIndex + 1) % texts.length;
-                currentCharIndex = 0;
-            }
-        } else {
-            heroTitle.textContent = currentText.substring(0, currentCharIndex++);
-            if (currentCharIndex > currentText.length) {
-                isDeleting = true;
-                setTimeout(type, 900); // Pausa antes de empezar a borrar
-                return;
-            }
-        }
-        setTimeout(type, isDeleting ? 100 : 100);
-    }
-
-
-    type();
-});
-
-//Carrousel//
-
-$(document).ready(function(){
-    $('#carouselExample').carousel({
-        interval: 1800 // Intervalo de 2 segundos
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    // Código existente...
-
-    // Prevenir el comportamiento predeterminado de los controles del carrusel
-    document.querySelectorAll('.carousel-control-prev, .carousel-control-next').forEach(function(control) {
-        control.addEventListener('click', function(event) {
-            event.preventDefault();
-        });
-    });
-});
-
-
-//Imagen trabajos destacados//
-
-document.addEventListener("DOMContentLoaded", function () {
-    const featuredItems = document.querySelectorAll(".featured-work-item");
-
-    featuredItems.forEach(item => {
-        item.addEventListener("click", function () {
-            const projectUrl = item.getAttribute("data-url");
-            if (projectUrl) {
-                window.location.href = projectUrl; // Redirige a la página especificada
-            }
-        });
-    });
-});
-
-//transiciona animada//
-
-function redirectWithAnimation(element) {
-    // Añadir clase de animación de movimiento hacia arriba
-    element.style.transform = 'translateY(-30px)';
-    element.style.opacity = 0;
-    element.style.transition = 'transform 1s ease-out, opacity 1s ease-out';
-
-    // Esperar a que la animación termine (1 segundo en este caso) antes de redirigir
-    setTimeout(function() {
-        window.location.href = element.getAttribute('data-url');
-    }, 1000);  // El tiempo debe coincidir con la duración de la animación
-}
-
-
-//loader//
-
-
+// --- LOADER (Fluidez de Sistema) ---
 document.addEventListener('DOMContentLoaded', () => {
     const loader = document.querySelector('.loader');
     const progressBar = document.querySelector('.progress-bar');
     const percentage = document.querySelector('.loader-percentage');
-    let progress = 1; // Inicia en 1%
+    let progress = 0;
 
-    // Bloquear scroll mientras carga
-    document.body.style.overflow = 'hidden';
-
-    const interval = setInterval(() => {
-        progress += 1; // Aumento gradual
-
-        if (progress > 100) {
+    const loadInterval = setInterval(() => {
+        progress += Math.floor(Math.random() * 5) + 1;
+        if (progress >= 100) {
             progress = 100;
-            clearInterval(interval); // Detener contador en 100%
-
+            clearInterval(loadInterval);
             setTimeout(() => {
-                loader.classList.add('hidden'); // Oculta loader con transición
-                document.body.style.overflow = ''; // Reactiva scroll
-
-                // Suavizar la transición hacia la página
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth"
-                });
-
-            }, 800); // Espera antes de ocultar
+                loader.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 500);
         }
-
         progressBar.style.width = `${progress}%`;
         percentage.textContent = `${progress}%`;
-    }, 30); // Se actualiza cada 30ms para una animación fluida
+    }, 40);
 });
 
+/**
+ * SISTEMA DE NAVEGACIÓN ESTRATÉGICA - CRUZ ESTUDIO
+ * Manejo de desplazamiento suave con compensación de Navbar
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    const scrollBtn = document.querySelector('.scroll-down-btn');
+    const navbar = document.querySelector('.navbar-brand');
+
+    if (scrollBtn && navbar) {
+        scrollBtn.addEventListener('click', function(e) {
+            // 1. Prevenimos el salto brusco original
+            e.preventDefault();
+
+            // 2. Identificamos el destino (el id del href, ej: #work)
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+                // 3. Calculamos la altura dinámica del Navbar para el offset
+                const navHeight = navbar.offsetHeight;
+
+                // 4. Calculamos la posición final: (Distancia al tope) - (Altura Navbar)
+                const targetPosition = targetElement.offsetTop - navHeight;
+
+                // 5. Ejecutamos el desplazamiento cinematográfico
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
+});
+
+/**
+ * SISTEMA DE INTERACCIÓN CRUZ DISEÑO ®
+ * Gestiona el bloqueo de scroll, la transición fluida y el reveal de texto.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    const body = document.body;
+    const scrollBtn = document.querySelector('.scroll-down-btn');
+    const studioSection = document.querySelector('#studio-intro');
+    const navbar = document.querySelector('.navbar-brand');
+
+    // 1. BLOQUEO DE SEGURIDAD
+    // Evita que el usuario scrollee antes de interactuar con el Hero.
+    body.classList.add('scroll-locked');
+
+    if (scrollBtn) {
+        scrollBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // 2. DESBLOQUEO DE EXPERIENCIA
+            // Permite el movimiento libre una vez presionado el botón circular.
+            body.classList.remove('scroll-locked');
+
+            if (studioSection) {
+                // 3. CÁLCULO DE POSICIÓN DINÁMICA
+                // Restamos la altura del navbar para una alineación milimétrica.
+                const navHeight = navbar ? navbar.offsetHeight : 0;
+                const targetPosition = studioSection.offsetTop - navHeight;
+
+                // 4. TRANSICIÓN CINEMATOGRÁFICA (DROP)
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+
+                // 5. DISPARO DE MANIFIESTO (REVEAL UP)
+                // Delay estratégico para que la tipografía aparezca durante el desplazamiento.
+                setTimeout(() => {
+                    studioSection.classList.add('visible');
+                }, 600); // 600ms es el punto óptimo de sincronización visual.
+            }
+        });
+    }
+
+    // Opcional: Re-bloqueo al volver al inicio (Home/Logo)
+    const logo = document.querySelector('.logo');
+    if (logo) {
+        logo.addEventListener('click', () => {
+            // Si el usuario vuelve al Hero, se puede restaurar el bloqueo si se desea.
+            // body.classList.add('scroll-locked');
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const workItems = document.querySelectorAll('.featured-work-item');
+    const previewImages = document.querySelectorAll('.preview-inner img');
+
+    workItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            const projectId = item.getAttribute('data-project');
+            
+            // Ocultar todas las imágenes
+            previewImages.forEach(img => img.classList.remove('active'));
+            
+            // Mostrar la imagen correspondiente
+            const targetImage = document.getElementById(`project-image-${projectId}`);
+            if (targetImage) {
+                targetImage.classList.add('active');
+            }
+        });
+    });
+});

@@ -267,56 +267,38 @@ cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" wid
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-/* Navbar Style */
+/* --- ESTILO DEL LOGO (FIX) --- */
 .logo {
-    display: block;
-    font-size: 24px;
-    color: #FFFDF3;
-    font-family: "Chivo";
-    font-weight: 700;
-    position: absolute;
-    left: 40px;
-    top: 20px;
-    margin-bottom: 5px; /* Espacio entre el logo y la tagline */
+    display: flex;
+    align-items: center;
     text-decoration: none;
-    transition: color 0.3s;
+    z-index: 1001;
 }
 
-
-
-
-.logo a:hover {
-    color: #FFFDF3;
-    outline: none;
+.logo-vectorial {
+    /* Si no defines altura, el SVG no se visualiza */
+    height: 20px; 
+    width: auto;
+    display: block;
+    /* Mantenemos la pureza del color crema de Cruz Diseño */
+    filter: brightness(1.1); 
 }
 
-
+/* --- NAVBAR BRAND (ESPACIADO) --- */
 .navbar-brand {
-    border-bottom: 1px solid white;
+    /* Cambiamos 0px por 30px arriba/abajo para que respire */
+    padding: 0px 45px !important; 
+    border-bottom: 1px solid rgba(255, 255, 243, 0.1);
+    background-color: #1D1E1C;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #1D1E1C;
-    width: 100%;
-    padding: 10px 20px;
-    box-sizing: border-box;
-    position: relative;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
 }
 
-
-/* Contenedor del menú */
 .containerNav {
     display: flex;
     align-items: center;
@@ -345,71 +327,64 @@ cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" wid
 }
 
 
+/* --- EL MENÚ DERECHO --- */
 .nav-links-brands {
-    margin-top: 24px;
     list-style: none;
     display: flex;
     align-items: center;
-    margin-left: auto;
-    padding-right: 150px; /* Ajusta el valor según sea necesario para correr más a la derecha */
+    margin-left: auto; /* Empuja todo hacia la derecha */
+    margin-top: 0;     /* Alineamos verticalmente con el logo */
+    padding-right: 0;  /* Eliminamos el exceso de 150px */
 }
-
 
 .nav-links-brands li {
-    margin: 0 100px;
+    /* Reducimos el margen entre links para que no se amontonen pero respiren */
+    margin-left: 50px; 
+    margin-right: 0;
 }
-
 
 .nav-links-brands a {
-    font-family: "cofo-sans-mono-variable";
-    text-decoration: none;
-    color: #FFFDF3;
+    font-family: "cofo-sans-mono-variable", monospace;
     font-size: 14px;
-    transition: color 0.3s;
-    position: relative; /* Necesario para los pseudo-elementos */
+    color: #FFFDF3;
+    text-decoration: none !important;
+    
+    /* Aumentamos el padding vertical para mejorar el área de clic (UX) */
+    /* El 15px arriba/abajo le da el "aire" que buscabas */
+    padding: 30px 0; 
+    
+    display: inline-block;
+    line-height: 1;
+    transition: opacity 0.3s ease;
 }
 
 
+/* --- EFECTO DE CORCHETES EN HOVER --- */
 .nav-links-brands a::before,
 .nav-links-brands a::after {
-    content: ''; /* Contenido inicial */
+    content: '';
     position: absolute;
-    opacity: 0; /* Oculto inicialmente */
-    transition: opacity 0.3s, transform 0.3s; /* Transición suave */
+    opacity: 0;
+    transition: all 0.3s ease;
 }
 
-
-.nav-links-brands a::before {
-    content: '['; /* Contenido inicial */
-    left: -15px; /* Ajusta la posición según sea necesario */
-    transform: translateX(-10px); /* Mueve el corchete hacia la izquierda */
+.nav-links-brands a:hover::before {
+    content: '[';
+    left: -15px;
+    opacity: 1;
 }
 
-
-.nav-links-brands a::after {
-    content: ']'; /* Contenido inicial */
-    right: -15px; /* Ajusta la posición según sea necesario */
-    transform: translateX(10px); /* Mueve el corchete hacia la derecha */
-}
-
-
-.nav-links-brands a:hover::before,
 .nav-links-brands a:hover::after {
-    opacity: 1; /* Muestra los corchetes al hacer hover */
-    transform: translateX(0); /* Resetea la posición */
+    content: ']';
+    right: -15px;
+    opacity: 1;
+    text-decoration: none !important;
 }
 
-
-.nav-links-brands a:hover {
-    color: #FFFDF3; /* Mantiene el color del texto al hacer hover */
-}
-
-
+/* Ajuste para el estado activo */
 .nav-links-brands .active {
-    color: #9b9b9ae1; /* Change text color to gold */
-    font-weight: bold; /* Make the text bold */
-    border-bottom: 2px solid #9b9b9ae1; /* Add a bottom border to indicate active state */
-    text-decoration: none;
+    color: rgba(255, 253, 243, 0.5);
+    font-weight: bold;
 }
 
 
@@ -442,169 +417,135 @@ cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" wid
     font-size: 14px;
 }
 
-
-/* Hero Section */
-
-
+/* --- HERO BASE --- */
 .hero {
     background-color: #1D1E1C;
-    color: #fff;
-    text-align: left;
-    padding: 100px 20px;
+    height: 100vh;
+    width: 100%;
     position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center; 
+    z-index: 1;
 }
 
+/* --- MALLA 3D --- */
+#hero-3d-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
 
-.hero-container {
+/* --- CONTENEDOR HERO ALINEADO --- */
+
+.hero-main-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    padding-top: 10%;
+
+    /* --- AJUSTE DE POSICIÓN --- */
+    /* Cambiamos de -22vh a -12vh para bajarlo un poco */
+    /* Puedes probar con -10vh o -8vh si lo quieres aún más abajo */
+    transform: translateY(-12vh) !important; 
+
+    pointer-events: none;
+    z-index: 2;
+    box-sizing: border-box;
     position: relative;
 }
 
-
+/* --- BLOQUE IZQUIERDO --- */
 .hero-left {
-    max-width: 60%;
-    margin-left: 40px; /* Alinea con el logo */
-    padding-top: 20px;
-}
-
-
-.hero-title {
-    font-family: 'neue-haas-grotesk-display';
-    font-weight: 600;
-    font-size: 100px;
-    margin-left: -400px;
-    padding-top: 0px;    
-    white-space: nowrap;
-    overflow: hidden;
-    height: 100px; /* Mantiene el espacio del título */
-    position: relative; /* Asegura que la posición sea relativa */
-    margin-bottom: 40px; /* Añade espacio debajo del título */
-}
-
-
-@keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
-}
-
-
-@keyframes blink-caret {
-    from, to { border-color: transparent; }
-    50% { border-color: #FFFDF3; }
-}
-
-
-@keyframes deleting {
-    from { width: 100%; }
-    to { width: 0; }
-}
-
-
-.hero-subtitle {
-    font-family: 'cofo-sans-mono-variable';
-    font-weight: 200;
-    font-size: 20px;
-    margin-left: -399px; /* Ajusta el valor según sea necesario para cortar antes la oración */
-    text-align: left;
-    max-width: 800px;
-     /* Ajusta el ancho máximo del contenedor */
-}
-
-
-.hero-arrow {
-    color: #FFFDF3;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center; /* Centra la flecha horizontalmente */
-    position: relative; /* Permite el uso de left y right */
-    left: 145%; /* Ajusta el valor según sea necesario para centrar */
-    transform: translateX(-50%); /* Centra la flecha horizontalmente */
-}
-
-
-.hero-arrow img {
-    width: 400px; /* Ajusta el tamaño de la imagen según sea necesario */
-    height: auto;
-}
-
-
-
-
-
-
-/* Hero Links */
-
-
-.hero-right {
-    display: flex;
-    flex-direction: row; /* Cambia a fila para alinear horizontalmente */
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 150px; /* Alinear con el hero-title */
-    right: -200px; /* Alineado al margen derecho de la pantalla */
-}
-
-
-.hero-links {
+    pointer-events: auto;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
+    text-align: left;
 }
 
+.hero-title {
+    font-family: 'neue-haas-grotesk-display', sans-serif;
+    font-size: clamp(3.5rem, 11vw, 130px);
+    font-weight: 700;
+    color: #FFFDF3;
+    line-height: 0.85;
+    margin-bottom: 2rem;
+    margin-left: -5px; 
+    min-height: 1.1em; 
+    display: flex;
+    align-items: baseline;
+    text-transform: none;
+    letter-spacing: -0.03em;
+}
+
+.hero-subtitle {
+    font-family: 'cofo-sans-mono-variable', monospace;
+    font-size: 28px;
+    max-width: 900px;
+    color: rgba(255, 253, 243, 0.8);
+    line-height: 1.;
+    text-align: left;
+    margin-left: 0 !important;
+}
+
+/* --- BLOQUE DERECHO --- */
+.hero-right {
+    pointer-events: auto;
+
+    text-align: right;
+    /* Ajustamos el padding-top para que los links sigan nivelados con el H1 */
+    padding-top: 35px; 
+}
 
 .hero-link {
-    color: #FFFDF3;
-    text-decoration: none;
-    font-size: 16px;
-    font-family: "cofo-sans-mono-variable";
-    text-align: left;
+    color: #FFFDF3 !important; /* Limpieza de azul Bootstrap */
+    text-decoration: none !important;
+    font-family: 'cofo-sans-mono-variable', monospace;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 12px;
+    transition: opacity 0.3s;
 }
 
-.hero-links a {
-    position: relative; /* Necesario para posicionar el círculo */
-    color: #FFFDF3; /* Color del texto */
-    text-decoration: none; /* Elimina subrayados */
-    font-size: 16px; /* Tamaño de fuente */
-    padding: 5px 10px; /* Espaciado interno */
-    display: inline-block; /* Asegura que el enlace sea tratado como un bloque */
-    transition: color 0.3s ease; /* Transición para el color del texto */
+.hero-link:hover {
+    opacity: 0.5;
+    color: #FFFDF3 !important;
 }
 
-.hero-links a:hover {
-    color: #FFFFFF; /* Cambia el color del texto al pasar el cursor */
+/* --- FLECHA --- */
+.hero-arrow img {
+    width: 250px; /* Tamaño según referencia visual */
+    height: auto;
+    margin-top: 40px;
 }
 
-.hero-links a::before {
-    content: ''; /* Crea el círculo */
-    position: absolute;
-    left: -20px; /* Posiciona el círculo a la izquierda del enlace */
-    top: 50%; /* Centra el círculo verticalmente */
-    transform: translateY(-50%) scale(0); /* Escala inicial del círculo */
-    width: 10px; /* Ancho del círculo */
-    height: 10px; /* Alto del círculo */
-    background-color: #FFFFFF; /* Color del círculo */
-    border-radius: 50%; /* Hace que el elemento sea un círculo */
-    transition: transform 0.3s ease; /* Transición para la animación */
-}
 
-.hero-links a:hover::before {
-    transform: translateY(-50%) scale(1); /* Escala el círculo al tamaño completo */
-}
 
-/* Hero Footer */
+/* --- FOOTER (Copyright y Año) --- */
 .hero-footer {
-    font-family: 'neue-haas-grotesk-display';
-    font-weight: 700;
-    font-size: 24px;
     position: absolute;
-    bottom: 100px;
-    right: 231px; /* Alineado con hero-links */
-    text-align: left;
-   
+    bottom: 140px;
+    right: 30px;
+    z-index: 2;
+    text-align: right;
+}
+
+.hero-fecha {
+    color: #FFFDF3;
+    font-family: 'cofo-sans-mono-variable', monospace;
+    font-size: 20px;
+    font-weight: 700;
+}
 
 
 
@@ -653,7 +594,7 @@ opacity: 1; /* Mostrar el número al hacer hover */
 background-color: #444; /* Color de fondo al pasar el mouse */
 color: #FFFDF3; /* Cambia el color del texto al pasar el mouse */
 text-decoration: none;
-}}
+}
 
 
 
@@ -684,6 +625,174 @@ transition: background-color 0.3s;
 
 .language-switch button:hover {
 background-color: #444; /* Color al pasar el ratón */
+}
+
+/* ==========================================================================
+   4. BOTÓN SCROLL DOWN (EFECTO DROP)
+   ========================================================================== */
+.scroll-down-btn {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgba(255, 253, 243, 0.4);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: all 0.3s ease;
+    /* Animación de invitación */
+    animation: bounce-drop 3s infinite;
+}
+
+.scroll-down-btn svg {
+    fill: #FFFDF3;
+    width: 30px;
+    height: 30px;
+}
+
+.scroll-down-btn:hover {
+    border-color: #FFFDF3;
+    background-color: rgba(255, 253, 243, 0.1);
+}
+
+@keyframes bounce-drop {
+    0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+    40% { transform: translateX(-50%) translateY(10px); }
+    60% { transform: translateX(-50%) translateY(5px); }
+}
+
+/* ==========================================================================
+   5. MEDIA QUERIES (ADAPTACIÓN MOBILE)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .navbar-brand { padding: 20px !important; }
+    
+    .hero-main-wrapper {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transform: translateY(-5vh);
+        padding: 0 20px !important;
+    }
+
+    .hero-title { font-size: 3.5rem; text-align: center; margin-left: 0; }
+    .hero-subtitle { text-align: center; margin: 0 auto; }
+    .hero-right { text-align: center; padding-top: 40px; width: 100%; }
+    
+    .nav-links-brands { display: none; } /* Ocultar para menú móvil */
+    
+    .scroll-down-btn { bottom: 80px; }
+}
+
+/* ==========================================================================
+   CLASE DE UTILIDAD: BLOQUEO DE SCROLL
+   ========================================================================== */
+/* Esta clase se añade vía JS al cargar la página */
+body.scroll-locked {
+    overflow: hidden !important;
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   SECCIÓN STUDIO INTRO (VIDEO + REVEAL)
+   ========================================================================== */
+
+/* Contenedor Maestro: Ocupa el 100% de la pantalla sin scroll interno */
+.studio-section {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #1D1E1C; /* Fondo negro puro según referencia visual */
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+}
+
+/* --- BLOQUE DE VIDEO (60% de la altura) --- */
+.studio-video-container {
+    flex: 6; /* Proporción ajustada para dar más aire al texto inferior */
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.studio-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que el video llene el área cinematográficamente */
+    display: block;
+}
+
+/* --- BLOQUE DE TEXTO (40% de la altura) --- */
+.studio-text-container {
+    flex: 4; /* Espacio ampliado para evitar desbordes de texto */
+    background-color: #1D1E1C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 45px; /* Alineación milimétrica con el logo de 45px */
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* --- TIPOGRAFÍA CON EFECTO REVEAL (Dots and Lines Style) --- */
+.studio-statement {
+    overflow: hidden; /* Actúa como máscara para el efecto de emergencia */
+    display: block;
+    width: 100%;
+    max-width: 1200px; /* Limita el ancho de línea para mejorar la legibilidad */
+}
+
+.reveal-text {
+    display: inline-block;
+    /* DINÁMICA DE ENCUADRE: El uso de 'vh' asegura que la letra se 
+       ajuste a la altura de la pantalla, evitando que se corte abajo */
+    font-size: clamp(1.9rem, 5.0vh, 3.8rem); 
+    font-family: 'neue-haas-grotesk-display', sans-serif;
+    font-weight: 700;
+    color: #FFFDF3; /* Color crema institucional */
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    
+    /* Estado Inicial: Oculto bajo la máscara */
+    transform: translateY(110%); 
+    opacity: 0;
+    
+    /* Curva de transición profesional (Cubic Bezier) */
+    transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), 
+                opacity 1s ease;
+}
+
+/* --- ESTADO ACTIVO: Gatillado por el botón Drop --- */
+.studio-section.visible .reveal-text {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ==========================================================================
+   ADAPTACIÓN PARA DISPOSITIVOS MÓVILES
+   ========================================================================== */
+@media (max-width: 768px) {
+    .studio-video-container {
+        flex: 4; /* En móvil priorizamos el espacio para el texto */
+    }
+    .studio-text-container {
+        flex: 6;
+        padding: 20px 30px;
+    }
+    .reveal-text {
+        /* Ajuste de tamaño para lectura vertical cómoda */
+        font-size: clamp(1.2rem, 3.8vh, 1.8rem);
+        line-height: 1.2;
+    }
 }
 
 /*----- Carrusell -----*/
@@ -758,116 +867,114 @@ background-color: #444; /* Color al pasar el ratón */
 /*----- Trabajos Destacados -----*/
 
 
+/* --- TRABAJOS DESTACADOS REFORMADO --- */
 .featured-works {
-    padding: 50px;
     background-color: #f7f7f7;
+    padding: 100px 45px; /* Alineado a tu cuadrícula de 45px */
 }
 
-.featured-works-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.works-header {
+    margin-bottom: 60px;
 }
 
-.work-layout {
-    display: grid;
-    grid-template-columns: 300px 1fr 50px;
-    gap: 40px;
-    padding: 20px 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    align-items: start;
+.featured-works-container {
+    display: flex;
+    gap: 80px;
+    align-items: flex-start;
 }
 
-.work-image {
-    width: 300px;
-    height: 200px;
+/* Columna Izquierda: Imagen Fija */
+.works-preview {
+    flex: 1;
+    position: sticky;
+    top: 150px; /* Se queda quieta al scrollear */
+    height: 500px;
     overflow: hidden;
+    border-radius: 2px; /* Minimalismo puro */
 }
 
-.work-image img {
+.preview-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.preview-inner img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0;
+    transform: scale(1.05);
+    transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-.work-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.preview-inner img.active {
+    opacity: 1;
+    transform: scale(1);
 }
 
-.work-meta {
+/* Columna Derecha: Lista */
+.featured-works-list {
+    flex: 1;
+    list-style: none;
+    padding: 0;
+}
+
+.featured-work-item {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.work-item-content {
     display: flex;
-    gap: 15px;
+    justify-content: space-between;
     align-items: center;
-}
-
-.work-title {
-    font-size: 24px;
-    color: #1D1E1C;
-    font-family: 'neue-haas-grotesk-display';
-    font-weight: 600;
-    margin: 0;
-    line-height: 1.2;
+    padding: 40px 0;
+    transition: transform 0.3s ease;
 }
 
 .work-category {
+    font-family: "cofo-sans-mono-variable", monospace;
     font-size: 12px;
-    color: #1D1E1C;
-    font-family: "cofo-sans-mono-variable";
-    margin: 0;
+    color: rgba(29, 30, 28, 0.5);
     text-transform: uppercase;
 }
 
+.work-title {
+    font-family: 'neue-haas-grotesk-display', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: #1D1E1C;
+    flex-grow: 1;
+    margin: 0 40px;
+}
+
 .work-year {
-    font-size: 12px;
+    font-family: "cofo-sans-mono-variable", monospace;
+    font-size: 14px;
     color: #1D1E1C;
-    font-family: "cofo-sans-mono-variable";
-    margin: 0;
 }
 
-.work-description{
+/* Hover Effects */
+.featured-work-item:hover .work-item-content {
+    transform: translateX(20px);
+}
 
-    font-size: 16px;
+.featured-work-item:hover .work-title {
     color: #1D1E1C;
-    font-family: "cofo-sans-mono-variable";
-    margin: 0;
-    max-width: 600px;
-
 }
 
-.arrow-icon {
-    font-size: 24px;
-    opacity: 0;
-    transform: translateX(-20px);
-    transition: all 0.3s ease;
-    align-self: flex-end;
-    margin-top: 10px;
-}
-
-.work-layout:hover {
-    background-color: #1D1E1C;
-}
-
-.work-layout:hover .work-title,
-.work-layout:hover .work-category,
-.work-layout:hover .work-description,
-.work-layout:hover .work-year {
-    color: #FFFDF3;
-}
-
-.work-layout:hover .arrow-icon {
-    opacity: 1;
-    transform: translateX(0);
-    color: #FFFDF3;
+.featured-work-item:hover .work-category {
+    color: #1D1E1C;
 }
 
 .decorative-line {
     border: none;
     height: 1px;
-    background-color: rgba(29, 30, 28, 0.2);
-    margin: 0;
+    background-color: rgba(29, 30, 28, 0.1);
 }
 
 
@@ -1368,6 +1475,9 @@ color: #838383;
         color: #FFFDF3;
         text-decoration: none;
         z-index: 1100;
+        position: absolute;
+        left: 40px; /* EL PUNTO CLAVE: El texto debe empezar exactamente aquí */
+        top: 20px;
     }
 
     .menu-toggle {

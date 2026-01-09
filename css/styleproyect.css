@@ -1,390 +1,118 @@
-/* Estilos generales */
+/* ==========================================================================
+   MAESTRO CRUZ DISEÑO ® - VERSIÓN REFINADA
+   ========================================================================== */
+
+:root {
+    --bg-dark: #1D1E1C;
+    --crema: #FFFDF3;
+    --grid-margin: 45px; /* Tu margen técnico constante */
+    --reveal-curve: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
-    font-family: 'neue-haas-grotesk-display', sans-serif;
-    color: #1D1E1C;
-    background-color: #f7f7f7;
-    margin: 0;
-    padding: 0;
+    background-color: var(--bg-dark);
+    color: var(--crema);
+    font-family: "neue-haas-grotesk-display", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    cursor: crosshair;
 }
 
-h1, h2 {
-    font-family: 'neue-haas-grotesk-display', sans-serif;
-    color: #1D1E1C;
+/* --- NAVBAR GLOBAL (Alineación 45px) --- */
+.navbar-brand {
+    padding: 30px var(--grid-margin) !important;
+    background-color: var(--bg-dark);
+    width: 100%; position: fixed; top: 0; z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 243, 0.1);
 }
 
-p {
+.containerNav { display: flex; justify-content: space-between; align-items: center; }
+.logo-vectorial { height: 20px; width: auto; filter: brightness(1.1); }
+.nav-links-brands { display: flex; list-style: none; gap: 50px; }
+.nav-links-brands a { 
+    font-family: "cofo-sans-mono-variable", monospace; 
+    font-size: 13px; color: var(--crema); text-decoration: none; 
+}
+
+/* --- HERO (Titular Redimensionado) --- */
+.gretel-hero {
+    height: 100vh; width: 100%; position: relative;
+    display: flex; align-items: flex-end; padding: 80px var(--grid-margin);
+    overflow: hidden;
+}
+
+.hero-visual { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+.bg-video { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+.hero-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(0deg, rgba(29,30,28,0.9) 0%, transparent 60%);
+    z-index: 1;
+}
+
+.display-title {
+    /* AJUSTE: Tamaño reducido para mayor elegancia técnica */
+    font-size: clamp(2rem, 9vw, 7rem); 
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-tagline {
+    font-family: "cofo-sans-mono-variable", monospace; font-size: 14px;
+    margin-top: 20px; position: relative; z-index: 2; opacity: 0.7;
+}
+
+/* --- BRIEF COLUMNA ÚNICA --- */
+.gretel-brief-column {
+    display: flex; flex-direction: column;
+    padding: 120px var(--grid-margin); gap: 80px;
+}
+
+.brief-meta-list { display: flex; flex-direction: column; gap: 35px; }
+
+.mono-label {
     font-family: "cofo-sans-mono-variable", monospace;
-    color: #1D1E1C;
+    font-size: 11px; color: rgba(255, 253, 243, 0.4);
+    text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 8px;
 }
 
-/* Estilos del proyecto */
+.meta-item p { font-size: 18px; font-weight: 500; }
 
-/* Estilos para la sección project-hero */
-.project-hero {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+.lectura-proyect {
+    font-size: clamp(1.4rem, 3.2vw, 2.5rem); line-height: 1.1;
+    font-weight: 600; letter-spacing: -0.02em; max-width: 1000px;
 }
 
-.project-hero-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    width: 100%;
-    padding: 20px 50px; /* Ajusta el padding según sea necesario */
-    box-sizing: border-box;
+/* --- GRILLA MODULAR (Estilo Barco) --- */
+.modular-grid-gallery {
+    padding: 0 var(--grid-margin) 100px; 
+    display: flex; flex-direction: column; gap: 45px;
 }
 
-.hero-image {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+.reveal-frame { width: 100%; margin: 0; overflow: hidden; }
+.reveal-frame img { width: 100%; height: auto; display: block; transition: transform 1.2s var(--reveal-curve); }
+.reveal-frame:hover img { transform: scale(1.03); }
 
-.hero-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-    max-height: 60vh; /* Ajusta la altura máxima */
-    object-fit: cover; /* Asegura que la imagen cubra el contenedor */
-}
+.gallery-row.full { width: 100%; }
+.gallery-row.split-equal { display: grid; grid-template-columns: repeat(2, 1fr); gap: 45px; }
+.gallery-row.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 45px; }
 
-.project-meta {
-    text-align: left;
-    margin-top: 20px;
-}
+/* --- BREAK & FOOTER --- */
+.gretel-break { padding: 20vh var(--grid-margin); text-align: center; }
+.break-text { font-size: clamp(2rem, 6vw, 4.5rem); line-height: 1; text-transform: uppercase; }
 
-.project-title {
-    font-family: 'neue-haas-grotesk-display';
-    font-weight: 600;
-    font-size: 70px;
-    text-align: left; /* Justifica el título a la izquierda */
-    margin-top: 20px;
-    width: 100%;
-    /*text-transform: uppercase; /* Asegura que el texto esté en mayúsculas */
-}
+.footer-project-nav { padding: 100px var(--grid-margin); border-top: 1px solid rgba(255,255,243,0.1); }
+.next-link { text-decoration: none; display: block; }
+.next-title-display { font-size: clamp(2rem, 8vw, 6rem); color: var(--crema); transition: transform 0.4s var(--reveal-curve); }
+.next-link:hover .next-title-display { transform: translateX(25px); }
 
-.project-subtitle {
-    font-family: 'neue-haas-grotesk-display';
-    font-weight: 400;
-    font-size: 38px;
-    text-align: left; /* Justifica el subtítulo a la izquierda */
-    margin-top: 10px;
-    width: 100%;
-   /* text-transform: uppercase; /* Asegura que el texto esté en mayúsculas */
-}
-
-.project-overview {
-    padding: 50px 20px;
-    background-color: #f7f7f7;
-}
-
-.overview-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    padding: 50px 20px;
-}
-
-.overview-text,
-.overview-description {
-    text-align: left; /* Justifica el texto a la izquierda */
-}
-
-.overview-text h3 {
-    font-family: 'neue-haas-grotesk-display';
-    font-weight: 600;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-}
-
-.overview-text ul {
-    list-style: none;
-    padding: 0;
-    
-}
-
-.overview-text ul li {
-    font-family: 'cofo-sans-mono-variable';
-    font-size: 1rem;
-    margin-bottom: 10px;
-    font-size: 12px;
-}
-
-.overview-description p {
-    font-family: 'cofo-sans-mono-variable';
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
-
-.content-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-    padding: 50px;
-}
-
-.full-width {
-    grid-column: 1 / -1;
-}
-
-.half-width {
-    grid-column: span 1;
-}
-
-/* Próximo proyecto */
-
-.next-project {
-    position: relative;
-    overflow: hidden;
-    background-color: #ffffff; /* Color de fondo inicial */
-    transition: background-color 0.3s ease; /* Transición suave para el fondo */
-    margin: 50px 0; /* Restaura el espacio superior e inferior */
-    padding: 20px; /* Opcional: agrega espacio interno */
-}
-
-.next-project:hover {
-    background-color: #000; /* Cambia el fondo a negro al hacer hover */
-}
-
-.next-project-link {
-    display: block;
-    text-decoration: none; /* Elimina el subrayado por defecto */
-    color: #1D1E1C;
-    transition: color 0.3s ease; /* Transición suave para el color del texto */
-}
-
-.next-project-link:hover {
-    text-decoration: none; /* Asegura que no aparezca subrayado al hacer hover */
-    color: #fff; /* Cambia el color del texto a blanco al hacer hover */
-}
-
-.next-label {
-    font-family: "cofo-sans-mono-variable";
-    font-size: 12px;
-    display: block;
-    margin-bottom: 10px;
-    transition: color 0.3s ease; /* Transición suave para el color */
-}
-
-.next-title {
-    font-family: 'neue-haas-grotesk-display';
-    font-size: 38px;
-    font-weight: 600;
-    transition: color 0.3s ease; /* Transición suave para el color */
-}
-
-.arrow-icon {
-    font-size: 24px;
-    font-weight: bold;
-    opacity: 0; /* Inicialmente invisible */
-    color: #fff; /* Color de la flecha */
-    transition: opacity 0.3s ease, transform 0.3s ease; /* Transición suave para la opacidad y el movimiento */
-}
-
-.next-project:hover .arrow-icon {
-    opacity: 1; /* Hace visible la flecha al hacer hover */
-    transform: translateX(10px); /* Mueve la flecha ligeramente hacia la derecha */
-}
-
-/* Estilos para la galería de imágenes */
-
-.gallery-container {
-    width: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background-color: #f5f5f5;
-}
-
-.gallery-item {
-    
-    position: relative;
-    overflow: hidden;
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Specific item styles */
-
-title-white {
-    padding: 0px;
-    color: white;
-    margin-bottom: 90px; /* Espaciado entre el título y el texto */
-    text-align: left; /* Alineación del título a la izquierda */
-}
-
-.gallery-item.text-yellow {
-    color: white; /* Asegura que el texto también sea blanco */
-    display: flex; /* Usa flexbox para centrar el contenido */
-    flex-direction: column; /* Asegura que el título y el texto estén en columna */
-    justify-content: center; /* Centra verticalmente el contenido */
-    align-items: flex-start; /* Alinea el contenido a la izquierda */
-    padding: 20px; /* Agrega un padding interno para mayor separación visual */
-    background-color: #1D1E1C; /* Asegura el fondo oscuro */
-    height: 100%; /* Asegura que el contenedor ocupe toda la altura disponible */
-}
-
-.gallery-item.text-yellow p {
-    margin-top: 0; /* Elimina márgenes superiores innecesarios */
-    margin-bottom: 10px; /* Espaciado entre párrafos */
-    line-height: 1.6; /* Mejora la legibilidad del texto */
-    text-align: left; /* Alinea el texto a la izquierda */
-}
-
-.text-green {
-    font-family: "cofo-sans-mono-variable"; /* Asegura que esta tipografía se aplique */
-    grid-column: span 2;    
-    color: #8383838f;
-    padding: 2rem;
-    display: flex;
-    align-items: center;
-}
-
-.landscape {
-    grid-column: span 3;
-    height: 400px;
-}
-
-.eye {
-    grid-column: span 1;
-    height: 400px;
-}
-
-.small-image {
-    grid-column: span 1;
-    height: 250px;
-}
-
-.text-green-small {
-    grid-column: span 1;
-    background-color: #1D1E1C;
-    color: white;
-    padding: 1.5rem;
-}
-
-.brand {
-    grid-column: span 1;
-    height: 250px;
-}
-
-.building,
-.products
- {
-    grid-column: span 1;
-    height:700px;
-}
-
-.suuam{
-
-    grid-column: span 1;
-    height: 700px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-.vr{
-    grid-column: span 1;
-    height:700px;
-}
-
-.text-yellow {
-    grid-column: span 2;
-    background-color: #1D1E1C;
-    padding: 1.5rem;
-    display: flex;
-    align-items: center;
-}
-
-.full-width {
-    grid-column: span 2;
-    height: 400px;
-}
-
-/* Text styles */
-.gallery-item p {
-    color: #ffffff;
-    font-family: "cofo-sans-mono-variable";
-    font-size: 16px;
-    line-height: 1.4;
-    margin: 0;
-}
-
-.gallery-item video {
-    width: 100%; /* Asegura que el video ocupe todo el ancho del contenedor */
-    height: auto; /* Mantiene las proporciones del video */
-    border-radius: 8px; /* Opcional: bordes redondeados */
-    box-shadow: none; /* Opcional: elimina sombras */
-}
-
-.gallery-item.building {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Oculta cualquier parte de la imagen que exceda el contenedor */
-}
-
-.gallery-item.building img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ajusta la imagen para que cubra el contenedor sin distorsión */
-    display: block; /* Elimina espacios blancos alrededor de la imagen */
-}
-
-@media (max-width: 768px) {
-    .overview-grid,
-    .content-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .project-hero {
-        padding: 0; /* Elimina el padding para dispositivos móviles */
-    }
-
-    .project-title,
-    .project-subtitle {
-        margin-left: -20px;
-        font-size: 55px;
-        padding: 0 10px; /* Ajusta el padding para dispositivos móviles */
-    }
-
-    .hero-image img {
-        max-height: none; /* Elimina la altura máxima en dispositivos móviles */
-    }
-
-    .project-subtitle{
-
-        font-size: 45px;
-    }
-
-    /*galeria*/
-
-    .gallery-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .gallery-item {
-        grid-column: span 2 !important;
-        height: auto !important;
-    }
-    .gallery-item video {
-        width: 100%; /* Asegura que el video ocupe todo el ancho del contenedor */
-        height: auto; /* Mantiene las proporciones del video */
-        border-radius: 8px; /* Opcional: bordes redondeados */
-        object-fit: cover; /* Asegura que el video se ajuste correctamente al contenedor */
-    }
+/* --- RESPONSIVE --- */
+@media (max-width: 992px) {
+    .navbar-brand { padding: 20px !important; }
+    .nav-links-brands { display: none; }
+    .gallery-row.split-equal, .gallery-row.grid-3 { grid-template-columns: 1fr; gap: 20px; }
 }
