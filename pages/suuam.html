@@ -1,197 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--Tipografía-->
-    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
+    <title>SUUAM — Cruz Diseño ®</title>
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
-    <!--Descripcion-->
-    <meta name="description" content="Soy diseñador gráfico especializado en identidades corporativas, con experiencia en proyectos destacados como la Municipalidad de San Cristóbal y sub-marcas de Unión Ferroviaria y Trenes Argentinos. Desde 2018, trabajo como freelance, integrando branding, comunicación y diseño de aplicaciones. Mi formación en la Universidad de Buenos Aires, combinada con habilidades en UX/UI y Desarrollo Front End, me permite ofrecer soluciones creativas y efectivas que destacan la esencia de cada marca." >
-    <!--SEO-->
-    <meta name="keywords" content="diseño, marcas, branding, diseño grafico, instagram, corporativo, empresas, brand design, diseño ux ui, diseño web">
-     
-    <!--Style-->
+    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/styleproyect.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <!--Favicon-->
-    <link rel="icon"  sizes="32x32" href="../img/favicon-32x32.png">
-    <!--ICONOS-->  
-    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
-     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Suuam</title>
+    <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png">
 </head>
-<body>
-    <!--transicion animada-->
-        <div class="page-transition"></div>
+<body class="project-page">
+    <div class="page-transition"></div>
 
-    <!--Navbar-->
     <nav class="navbar-brand">
         <div class="containerNav">
-            <a href="../index.html"  onclick="redirectToIndex(this); return false;" class="logo link-location" data-es="Cruz Diseño ®" data-en="Cruz Design ®">Cruz Diseño<sup>®</sup></a>
+            <a href="../index.html" class="logo link-location">
+                <img src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
+            </a>
             <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </div>
-            <ul class="nav-links-brands" id="nav-links">                
-                <li><a href="../pages/brandworks.html" class="link-location" data-en="[01]BRANDING" data-es="[01]DISEÑO MARCAS">[01]DISEÑO MARCAS</a></li>
-                <li><a href="../pages/productdesign.html" class="link-location" data-en="[02]DESIGN UX/UI" data-es="[02]DISEÑO UX/UI">[02]DISEÑO UX/UI</a></li>
-                <li><a href="../pages/frontdesign.html" class="link-location" data-en="[03]FRONTEND DESIGN" data-es="[03]FRONTEND">[03]DISEÑO FRONT</a></li>               
-                
+            <ul class="nav-links-brands" id="nav-links">
+                <li><a href="../index.html#work" class="link-location" data-en="/WORKS" data-es="/TRABAJOS">/TRABAJOS</a></li>
+                <li><a href="./about.html" class="link-location" data-en="/STUDIO" data-es="/ESTUDIO" >/ESTUDIO</a></li>               
+                <li><a href="../index.html#contact" class="link-location" data-en="/CONTACT" data-es="/CONTACTOS">/CONTACTOS</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="project-hero">
-        <div class="hero-image">
-            <img src="https://i.ibb.co/357FqBCw/tp1.jpg" alt="RUNAKAY Hero Image">
-        </div>
-        <div class="project-hero-content">
-           
-            <div class="project-meta">
-                <p class="work-category">/BRAND DESIGN</p>
-                <p class="work-year">[2024]</p>
+    <main class="gretel-container">
+        <header class="gretel-hero">
+            <div class="hero-visual">
+                <img src="https://i.ibb.co/357FqBCw/tp1.jpg" alt="SUUAM Hero" class="bg-video" style="object-fit: cover; width: 100%; height: 100%;">
+                <div class="hero-overlay"></div>
             </div>
-            <h1 class="project-title">Asistencia vehicular al instante.</h1>
-            <h2 class="project-subtitle">Una identidad visual para la evolución del auxilio mecánico.</h2>
-        </div>    
-    </section>
+            <div class="hero-content">
+                <h1 class="display-title">SUUAM<br></h1>
+                <p class="hero-tagline">// ASISTENCIA VEHICULAR AL INSTANTE</p>
+            </div>
+        </header>
 
-        <!-- Project Overview -->
-        <section class="project-overview">
-            <div class="overview-grid">
-                <div class="overview-text">
-                    <h3>Tareas</h3>
-                    <ul>
-                        <li>/Investigación & Análisis</li>
-                        <li>/Estrategia</li>
-                        <li>/Ilustraciones</li>
-                        <li>/Branding</li>
-                    </ul>
+        <section class="gretel-brief-column">
+            <div class="brief-meta-list">
+                <div class="meta-item">
+                    <span class="mono-label">CLIENTE</span>
+                    <p>SUUAM ARGENTINA</p>
                 </div>
-                <div class="overview-description">
-                    <p class="lectura">SUUAM es la primera super app diseñada para transformar el ecosistema automotriz en Argentina. Desde la identidad visual hasta la experiencia digital, desarrollamos una marca que refleja su innovación, confiabilidad y visión de crecimiento. A través de un enfoque estratégico, creamos un sistema de diseño adaptable que acompaña su expansión y posicionamiento en el mercado, facilitando la conexión entre usuarios y prestadores de servicios automotrices.</p>
+                <div class="meta-item">
+                    <span class="mono-label">AÑO</span>
+                    <p>2024 — 2025</p>
                 </div>
+                <div class="meta-item">
+                    <span class="mono-label">SERVICIOS</span>
+                    <p>BRANDING / ESTRATEGIA</p>
+                </div>
+            </div>
+
+            <div class="brief-description scroll-reveal">
+                <h2 class="mono-label">NUESTRO ENFOQUE</h2>
+                <p class="lectura-proyect">Transformamos el ecosistema automotriz diseñando una identidad que refleja innovación y confianza. Desde la estrategia de marca hasta la interfaz digital, creamos un sistema adaptable que conecta de forma humana y eficiente a usuarios con servicios de auxilio.</p>
             </div>
         </section>
 
-    <!-- Project Details -->
-    
+        <section class="modular-grid-gallery">
+            <div class="gallery-row full">
+                <figure class="reveal-frame">
+                    <img src="https://i.ibb.co/8BbCKvj/1.jpg" alt="SUUAM Brand Landscape">
+                </figure>
+            </div>
 
-    <!-- Gallery Section -->
-<section class="gallery-container">
-    <div class="gallery-grid">
-        <!-- Row 1 -->
-        
-       <!-- <div class="gallery-item text-green">
-            <p>Runakay es una marca global e innovadora, alineada con la identidad cultural y la conciencia ambiental</p>
-        </div>-->
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/k2V6qRc/simbolo.jpg" alt="SUUAM Symbol"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/MDn31W8/6.jpg" alt="App Preview"></figure>
+            </div>
 
-        <!-- Row 2 -->
-        <div class="gallery-item landscape">
-            <img src="https://i.ibb.co/8BbCKvj/1.jpg" alt="Landscape">
-        </div>
-        <div class="gallery-item eye">
-            <img src="https://i.ibb.co/k2V6qRc/simbolo.jpg" alt="Eye">
-        </div>
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/NYhNbjn/8.jpg" alt="Interface Detail"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/XbVQSXX/3.jpg" alt="Branding piece"></figure>
+            </div>
 
-        <!-- Row 3 -->
-        <div class="gallery-item small-image">
-            <img src="https://i.ibb.co/MDn31W8/6.jpg" alt="Product 1">
-        </div>
-        <div class="gallery-item small-image">
-            <img src="https://i.ibb.co/NYhNbjn/8.jpg" alt="Product 2">
-        </div>
-        <div class="gallery-item text-green-small">
-            <p> En un mercado fragmentado, saturado de soluciones parciales, SUUAM nace con una ambición concreta: transformar la relación entre las personas y sus vehículos. El objetivo inicial —conectar usuarios con prestadores de auxilio mecánico de forma simple y efectiva— es apenas el primer paso de una plataforma que busca integrar todo el universo automotor en un solo lugar.
+            <div class="gallery-row full">
+                <figure class="reveal-frame long-frame">
+                    <video autoplay muted loop playsinline style="width: 100%; display: block;">
+                        <source src="../video/suuam00.mp4" type="video/mp4">
+                    </video>
+                </figure>
+            </div>
 
-            </p>
-        </div>
-        <div class="gallery-item brand">
-            <img src="https://i.ibb.co/XbVQSXX/3.jpg" alt="Brand">
-        </div>
+            <div class="gallery-row full">
+                <figure class="reveal-frame long-frame"><img src="https://i.ibb.co/CNVbY9w/ilustraciones.png" alt="SUUAM Illustrations"></figure>
+            </div>
 
-        <!-- Row 4 -->
-        <div class="gallery-item suuam">
-            <video autoplay muted loop playsinline>
-                <source src="../video/suuam00.mp4" type="video/mp4">
-                Tu navegador no soporta la reproducción de videos.
-            </video>
-        </div>
-        <div class="gallery-item products">
-            <img src="https://i.ibb.co/CNVbY9w/ilustraciones.png" alt="Products">
-        </div>
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/5Lk0Jxp/4.jpg" alt="VR Experience"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/5gPsHQcR/screen1.png" alt="App Screens Detail"></figure>
+            </div>
+        </section>
 
-        <div class="gallery-item text-yellow">
-            <h3 class="title-white">//Un Sistema de Marca que Evoluciona con Confianza</h3>
-            <p>
-                Creamos un sistema de marca que respira tecnología, movilidad y confianza. El isologo sintetiza movimiento y asistencia. La paleta cromática combina el azul institucional —símbolo de protección, fiabilidad y tecnología— con acentos energéticos, y se adapta a diferentes etapas del roadmap: desde el auxilio mecánico inmediato, hasta la futura integración de coberturas, repuestos y gestión total del vehículo. La voz de la marca es directa, profesional y humana. Porque en situaciones de urgencia, lo esencial es transmitir claridad y respaldo.
-            </p>
-            <p>
-                El ecosistema SUUAM está diseñado para crecer. La marca se implementa con precisión tanto en la app como en soportes físicos, plataformas sociales, señalética vial y piezas de comunicación institucional. Cada contacto refuerza un único mensaje: “Estés donde estés, estamos con vos."
-            </p>
-        </div>
+        <section class="gretel-break">
+            <h3 class="break-text">"Un sistema de diseño que evoluciona con el roadmap del negocio."</h3>
+        </section>
+    </main>
 
-        <div class="gallery-item vr">
-            <img src="https://i.ibb.co/5Lk0Jxp/4.jpg" alt="VR Experience">
-        </div>
-        <div class="gallery-item building">
-            <img src="https://i.ibb.co/N6RCnz6Y/suuam12.png" alt="Building">
-        </div>
-        <div class="gallery-item building">
-            <img src="https://i.ibb.co/5gsBWb1Y/screen.png" alt="Building">
-        </div>
-        <div class="gallery-item building">
-            <img src="https://i.ibb.co/5gPsHQcR/screen1.png" alt="Building">
-        </div>
-        
-        
-      
+    <footer class="footer-project-nav">
+        <a href="./trenescargas.html" class="next-link">
+            <span class="mono-label-footer">SIGUIENTE PROYECTO</span>
+            <h2 class="next-title-display">Trenes Argentinos Cargas →</h2>
+        </a>
+    </footer>
 
-        <!-- Row 5 -->
-        <!--<div class="gallery-item full-width">
-            <img src="path-to-team.jpg" alt="Team Photo">
-        </div>-->
-    </div>
-</section>
-
-  <!-- Next Project Section -->
-  <section class="next-project">
-    <a href="./trenescargas.html" class="next-project-link">
-        <span class="next-label">[Próximo proyecto]</span>
-        <span class="next-title">Trenes Argentinos Cargas</span>
-        <span class="arrow-icon">→</span>
-    </a>
-</section>
-
-      <!--Footer-->
-<footer class="footer">
-    <div class="footer-left">
-        <span class="material-symbols-outlined">pin_drop</span>
-        <span class="text-footer" data-en="Headquarters in Buenos Aires, Argentina" data-es="Sede en Buenos Aires, Argentina">Sede en Buenos Aires, Argentina</span>
-    </div>
-    <div class="footer-center">
-        <div class="social-links">
-            <a href="#"  class="social-link text-footer link-location">Instagram</a>
-            <a href="#"  class="social-link text-footer link-location">LinkedIn</a>
-            <a href="mailto:jcdominguezbarco@gmail.com" class="social-link text-footer link-location">Email</a>
-        </div>
-    </div>
-    <div class="footer-right">
-        <span class="copyright">Cruz Diseño<sup>®</sup></span>
-        <span class="year">2018-2025</span>
-        <span id="clock" class="clock"></span>
-    </div>
-</footer>
-
-    <!-- JavaScript -->
-    <script src="../java/loader.js"></script>
     <script src="../java/script.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animación de aparición (Scroll Reveal)
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.scroll-reveal, .reveal-frame').forEach((el) => observer.observe(el));
+        });
+    </script>
 </body>
 </html>

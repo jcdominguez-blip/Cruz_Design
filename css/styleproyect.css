@@ -1,11 +1,11 @@
 /* ==========================================================================
-   MAESTRO CRUZ DISEÑO ® - VERSIÓN REFINADA
+   MAESTRO CRUZ DISEÑO ® - VERSIÓN FINAL REPARADA
    ========================================================================== */
 
 :root {
     --bg-dark: #1D1E1C;
     --crema: #FFFDF3;
-    --grid-margin: 45px; /* Tu margen técnico constante */
+    --grid-margin: 45px;
     --reveal-curve: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
@@ -17,10 +17,21 @@ body {
     font-family: "neue-haas-grotesk-display", sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
-    cursor: crosshair;
 }
 
-/* --- NAVBAR GLOBAL (Alineación 45px) --- */
+/* --- EFECTO REVEAL SCROLL --- */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s var(--reveal-curve);
+}
+
+.scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- NAVBAR GLOBAL --- */
 .navbar-brand {
     padding: 30px var(--grid-margin) !important;
     background-color: var(--bg-dark);
@@ -36,43 +47,64 @@ body {
     font-size: 13px; color: var(--crema); text-decoration: none; 
 }
 
-/* --- HERO (Titular Redimensionado) --- */
+/* --- HERO REPARADO: FULL SCREEN --- */
 .gretel-hero {
-    height: 100vh; width: 100%; position: relative;
-    display: flex; align-items: flex-end; padding: 80px var(--grid-margin);
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--grid-margin);
     overflow: hidden;
+    background-color: #000;
 }
 
-.hero-visual { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-.bg-video { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
-.hero-overlay {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(0deg, rgba(29,30,28,0.9) 0%, transparent 60%);
+.hero-visual {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     z-index: 1;
 }
 
-.display-title {
-    /* AJUSTE: Tamaño reducido para mayor elegancia técnica */
-    font-size: clamp(2rem, 9vw, 7rem); 
-    line-height: 0.9;
-    letter-spacing: -0.04em;
-    font-weight: 700;
-    position: relative;
+.bg-video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.7;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(0deg, rgba(29,30,28,0.9) 0%, transparent 50%);
     z-index: 2;
 }
 
-.hero-tagline {
-    font-family: "cofo-sans-mono-variable", monospace; font-size: 14px;
-    margin-top: 20px; position: relative; z-index: 2; opacity: 0.7;
+.hero-content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
 }
 
-/* --- BRIEF COLUMNA ÚNICA --- */
+.display-title {
+    font-size: clamp(2.5rem, 9vw, 7rem); 
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+    
+}
+
+.hero-tagline {
+    font-family: "cofo-sans-mono-variable", monospace;
+    font-size: 14px; margin-top: 20px; opacity: 0.7;
+}
+
+/* --- BRIEF & LECTURA --- */
 .gretel-brief-column {
     display: flex; flex-direction: column;
     padding: 120px var(--grid-margin); gap: 80px;
 }
-
-.brief-meta-list { display: flex; flex-direction: column; gap: 35px; }
 
 .mono-label {
     font-family: "cofo-sans-mono-variable", monospace;
@@ -87,32 +119,30 @@ body {
     font-weight: 600; letter-spacing: -0.02em; max-width: 1000px;
 }
 
-/* --- GRILLA MODULAR (Estilo Barco) --- */
+/* --- GALERÍA MODULAR --- */
 .modular-grid-gallery {
     padding: 0 var(--grid-margin) 100px; 
     display: flex; flex-direction: column; gap: 45px;
 }
 
-.reveal-frame { width: 100%; margin: 0; overflow: hidden; }
-.reveal-frame img { width: 100%; height: auto; display: block; transition: transform 1.2s var(--reveal-curve); }
+.reveal-frame { width: 100%; overflow: hidden; background-color: #151515; }
+.aspect-framed { aspect-ratio: 16 / 10; }
+.long-frame { aspect-ratio: auto; }
+.reveal-frame img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.2s var(--reveal-curve); }
 .reveal-frame:hover img { transform: scale(1.03); }
-
-.gallery-row.full { width: 100%; }
 .gallery-row.split-equal { display: grid; grid-template-columns: repeat(2, 1fr); gap: 45px; }
-.gallery-row.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 45px; }
 
-/* --- BREAK & FOOTER --- */
+/* --- BREAK & FOOTER REFINADO --- */
 .gretel-break { padding: 20vh var(--grid-margin); text-align: center; }
-.break-text { font-size: clamp(2rem, 6vw, 4.5rem); line-height: 1; text-transform: uppercase; }
+.break-text { font-size: clamp(1.8rem, 6vw, 4.2rem); line-height: 1; font-weight: 700; }
 
-.footer-project-nav { padding: 100px var(--grid-margin); border-top: 1px solid rgba(255,255,243,0.1); }
-.next-link { text-decoration: none; display: block; }
-.next-title-display { font-size: clamp(2rem, 8vw, 6rem); color: var(--crema); transition: transform 0.4s var(--reveal-curve); }
+.footer-project-nav { padding: 100px var(--grid-margin); border-top: 1px solid rgba(255,255,243,0.1); background-color: var(--bg-dark); }
+.next-link { text-decoration: none !important; color: var(--crema); display: block; }
+.mono-label-footer { font-family: "cofo-sans-mono-variable", monospace; font-size: 11px; opacity: 0.4; text-transform: uppercase; display: block; margin-bottom: 20px; }
+.next-title-display { font-size: clamp(2rem, 5vw, 4rem); line-height: 1; transition: transform 0.4s var(--reveal-curve); }
 .next-link:hover .next-title-display { transform: translateX(25px); }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 992px) {
+@media (max-width: 768px) {
     .navbar-brand { padding: 20px !important; }
-    .nav-links-brands { display: none; }
-    .gallery-row.split-equal, .gallery-row.grid-3 { grid-template-columns: 1fr; gap: 20px; }
+    .gallery-row.split-equal { grid-template-columns: 1fr; gap: 20px; }
 }

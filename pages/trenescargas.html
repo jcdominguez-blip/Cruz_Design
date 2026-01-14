@@ -13,29 +13,26 @@
     <div class="page-transition"></div>
 
     <nav class="navbar-brand">
-    <div class="containerNav">
-        <a href="../index.html" class="logo link-location">
-            <img src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
-        </a>
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
+        <div class="containerNav">
+            <a href="../index.html" class="logo link-location">
+                <img src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
+            </a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+            <ul class="nav-links-brands" id="nav-links">
+                <li><a href="../index.html#work" class="link-location" data-en="/WORKS" data-es="/TRABAJOS">/TRABAJOS</a></li>
+                <li><a href="./about.html" class="link-location" data-en="/STUDIO" data-es="/ESTUDIO" >/ESTUDIO</a></li>               
+                <li><a href="../index.html#contact" class="link-location" data-en="/CONTACT" data-es="/CONTACTOS">/CONTACTOS</a></li>
+            </ul>
         </div>
-        <ul class="nav-links-brands" id="nav-links">
-            <li><a href="#work" class="link-location" data-en="/WORKS" data-es="/TRABAJOS">/TRABAJOS</a></li>
-            <li><a href="./pages/about.html" class="link-location" data-en="/STUDIO" data-es="/ESTUDIO" >/ESTUDIO</a></li>               
-            <li><a href="#contact" class="link-location" data-en="/CONTACT" data-es="/CONTACTOS">/CONTACTOS</a></li>
-        </ul>
-    </div>
-</nav>
+    </nav>
 
     <main class="gretel-container">
         <header class="gretel-hero">
             <div class="hero-visual">
-               <video autoplay muted loop playsinline class="bg-video">
+                <video autoplay muted loop playsinline class="bg-video">
                     <source src="../video/tac-video-proyecto.mp4" type="video/mp4">
-                    Tu navegador no soporta video.
                 </video>
                 <div class="hero-overlay"></div>
             </div>
@@ -48,7 +45,7 @@
         <section class="gretel-brief-column">
             <div class="brief-meta-list">
                 <div class="meta-item">
-                    <span class="mono-label">[CLIENTE]</span>
+                    <span class="mono-label">CLIENTE</span>
                     <p>TAC / Mº TRANSPORTE</p>
                 </div>
                 <div class="meta-item">
@@ -61,9 +58,9 @@
                 </div>
             </div>
 
-            <div class="brief-description">
-                <h2 class="mono-label">01 // EL DESAFÍO</h2>
-                <p class="lectura-proyect">Rediseñamos el ecosistema visual de la principal operadora ferroviaria de carga del país. El desafío fue traducir la potencia logística en un sistema modular capaz de convivir en entornos digitales y señalética industrial de alto rendimiento.</p>
+            <div class="brief-description scroll-reveal">
+                <h2 class="mono-label">NUESTRO ENFOQUE</h2>
+                <p class="lectura-proyect">Transformamos negocios diseñando ecosistemas de marca globales: desde la identidad hasta la estrategia que impulsa su rendimiento en el mercado.</p>
             </div>
         </section>
 
@@ -71,14 +68,22 @@
             <div class="gallery-row full">
                 <figure class="reveal-frame"><img src="https://i.ibb.co/qMGYg1Vs/TAC.jpg" alt="TAC Cover"></figure>
             </div>
+
             <div class="gallery-row split-equal">
-                <figure class="reveal-frame"><img src="https://i.ibb.co/dmkbM0K/tac.jpg" alt="Detail 1"></figure>
-                <figure class="reveal-frame"><img src="https://i.ibb.co/rw5zDHP/1-tac.jpg" alt="Detail 2"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="../img/tac-1.jpg" alt="TAC 1"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="../img/tac-2.png" alt="TAC 2"></figure>
             </div>
-            <div class="gallery-row grid-3">
-                <figure class="reveal-frame"><img src="https://i.ibb.co/Bj2RsVk/5-tac.jpg" alt="Grid 1"></figure>
-                <figure class="reveal-frame"><img src="https://i.ibb.co/ygMRfn4/4-tac.jpg" alt="Grid 2"></figure>
-                <figure class="reveal-frame"><img src="https://i.ibb.co/RvWXn0M/7-tac.jpg" alt="Grid 3"></figure>
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed"><img src="../img/tac-3.png" alt="TAC 3"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="../img/tac-4.jpg" alt="TAC 4"></figure>
+            </div>
+
+            <div class="gallery-row full">
+                <figure class="reveal-frame long-frame"><img src="https://i.ibb.co/zHnDpqtv/locomotoras.png" alt="Locomotoras"></figure>
+            </div>
+
+            <div class="gallery-row full">
+                <figure class="reveal-frame long-frame"><img src="https://i.ibb.co/7xMyV0wq/vagones1.png" alt="Vagones"></figure>
             </div>
         </section>
 
@@ -89,11 +94,23 @@
 
     <footer class="footer-project-nav">
         <a href="./sc.html" class="next-link">
-            <span class="mono-label">SIGUIENTE PROYECTO</span>
+            <span class="mono-label-footer">SIGUIENTE PROYECTO</span>
             <h2 class="next-title-display">San Cristóbal →</h2>
         </a>
     </footer>
 
     <script src="../java/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
+        });
+    </script>
 </body>
 </html>

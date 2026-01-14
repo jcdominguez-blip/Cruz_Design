@@ -1,27 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
+    <title>San Cristóbal — Cruz Diseño ®</title>
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <title>En Construcción - Cruz Diseño</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styleproyect.css">
+    <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png">
+    <style>
+        /* Estilos específicos para el embed de Vimeo como Hero */
+        .vimeo-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .vimeo-wrapper iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 56.25vw; /* Aspect ratio 16:9 */
+            min-height: 100vh;
+            min-width: 177.77vh; /* Aspect ratio 16:9 */
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+    </style>
 </head>
-<body>
-    <!-- Animacion -->
+<body class="project-page">
     <div class="page-transition"></div>
 
-    <div class="construction-container">
-        <div class="construction-icon">⚙️</div>
-        <h1 class="construction-title">Página en Construcción</h1>
-        <p class="construction-text">
-            Estamos trabajando en algo increíble. Pronto podrás ver todo el contenido de esta sección.
-        </p>
-        <a href="../index.html" class="return-link">Volver al inicio</a>
-    </div>
+    <nav class="navbar-brand">
+        <div class="containerNav">
+            <a href="../index.html" class="logo link-location">
+                <img src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
+            </a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+            <ul class="nav-links-brands" id="nav-links">
+                <li><a href="../index.html#work" class="link-location" data-en="/WORKS" data-es="/TRABAJOS">/TRABAJOS</a></li>
+                <li><a href="./about.html" class="link-location" data-en="/STUDIO" data-es="/ESTUDIO" >/ESTUDIO</a></li>               
+                <li><a href="../index.html#contact" class="link-location" data-en="/CONTACT" data-es="/CONTACTOS">/CONTACTOS</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <script src="../java/loader.js"></script>
+    <main class="gretel-container">
+        <header class="gretel-hero">
+            <div class="hero-visual">
+                <div class="vimeo-wrapper">
+                    <iframe src="https://player.vimeo.com/video/997792523?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                </div>
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="display-title">Municipio de<br>San Cristóbal</h1>
+                <p class="hero-tagline">// PUERTA DEL NORTE SANTAFESINO</p>
+            </div>
+        </header>
+
+        <section class="gretel-brief-column">
+            <div class="brief-meta-list">
+                <div class="meta-item">
+                    <span class="mono-label">CLIENTE</span>
+                    <p>GOBIERNO DE SAN CRISTÓBAL</p>
+                </div>
+                <div class="meta-item">
+                    <span class="mono-label">AÑO</span>
+                    <p>2018 — 2025</p>
+                </div>
+                <div class="meta-item">
+                    <span class="mono-label">SERVICIOS</span>
+                    <p>REBRANDING / COMUNICACIÓN / SISTEMAS</p>
+                </div>
+            </div>
+
+            <div class="brief-description scroll-reveal">
+                <h2 class="mono-label">NUESTRO ENFOQUE</h2>
+                <p class="lectura-proyect">Desarrollamos una transición estratégica desde la heráldica tradicional hacia un sistema de identidad dinámico y moderno. El objetivo fue profesionalizar la comunicación institucional, creando una marca ciudad que convive con la gestión municipal y destaca el valor histórico de la "Puerta del Norte Santafesino".</p>
+            </div>
+        </section>
+
+        <section class="modular-grid-gallery">
+            
+            <div class="gallery-row full">
+                <figure class="reveal-frame">
+                    <img src="../img/1-SC.jpg" alt="Evolución de Marca San Cristóbal">
+                </figure>
+            </div>
+
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed">
+                    <img src="../img/gif-sancristobal.gif" alt="Escudo Histórico" style="object-fit: contain; padding: 20px;">
+                </figure>
+                <figure class="reveal-frame aspect-framed">
+                    <img src="../img/SC.jpg" alt="Marca Municipal Actual" style="object-fit: contain; padding: 20px; background-color: #005a9c;">
+                </figure>
+            </div>
+
+            <div class="gallery-row full">
+                <figure class="reveal-frame long-frame">
+                    <img src="../img/3-SC.jpg" alt="Ecosistema de Comunicación San Cristóbal">
+                </figure>
+            </div>
+
+            <div class="gallery-row full">
+                <figure class="reveal-frame long-frame">
+                    <img src="../img/4-SC.png" alt="Mockup App Municipal">
+                </figure>
+            </div>
+
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed">
+                    <img src="../img/5-SC.png" alt="Cartelería en Parque">
+                </figure>
+                <figure class="reveal-frame aspect-framed">
+                    <img src="../img/6-SC.png" alt="Billboard San Cristóbal">
+                </figure>
+            </div>
+
+        </section>
+
+        <section class="gretel-break">
+            <h3 class="break-text">"La ciudad que merecemos: un sistema visual que traduce el orgullo de nuestra identidad."</h3>
+        </section>
+    </main>
+
+    <footer class="footer-project-nav">
+        <a href="./trenescargas.html" class="next-link">
+            <span class="mono-label-footer">SIGUIENTE PROYECTO</span>
+            <h2 class="next-title-display">Trenes Argentinos Cargas →</h2>
+        </a>
+    </footer>
+
+    <script src="../java/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.scroll-reveal, .reveal-frame').forEach((el) => observer.observe(el));
+        });
+    </script>
 </body>
 </html>
