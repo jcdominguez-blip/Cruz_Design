@@ -976,8 +976,84 @@ body.scroll-locked {
     height: 1px;
     background-color: rgba(29, 30, 28, 0.1);
 }
+/* --- FORZAR VISIBILIDAD DEL BOTÓN TRABAJOS --- */
+.works-preview {
+    flex: 1;
+    position: sticky;
+    top: 150px;
+    height: auto !important; /* Permite que el contenedor crezca para mostrar el botón */
+    display: flex;
+    flex-direction: column;
+    gap: 35px; /* Espacio entre imagen y botón */
+    overflow: visible !important; /* EVITA QUE EL BOTÓN SE CORTE */
+    z-index: 10;
+}
 
+.preview-inner {
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 2px;
+    position: relative;
+    background-color: #eee; /* Color de carga */
+}
 
+.works-cta {
+    display: flex !important; /* Forzamos visualización */
+    justify-content: flex-start;
+    padding-left: 5px;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.view-all-link {
+    font-family: "cofo-sans-mono-variable", monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #1D1E1C !important;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px solid rgba(29, 30, 28, 0.2);
+    transition: all 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.view-all-link .btn-icon {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.4s ease;
+}
+
+/* EFECTO HOVER */
+.view-all-link:hover {
+    color: #1D1E1C !important; /* Amarillo institucional en hover */
+    border-bottom-color: #1D1E1C;
+    gap: 25px;
+}
+
+.view-all-link:hover .btn-icon {
+    transform: translate(4px, -4px);
+}
+
+/* Ajuste para móvil: Si no lo ves en el celular es por esto */
+@media (max-width: 768px) {
+    .works-preview {
+        position: static !important;
+        margin-bottom: 50px;
+    }
+    .preview-inner {
+        height: 350px;
+    }
+    .works-cta {
+        margin-top: 15px;
+    }
+}
 /*----- Sección About Me -----*/
 
 
@@ -1446,6 +1522,7 @@ color: #838383;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+         margin-bottom: -10rem;
     }
 
     /* Título reducido para que no se corte en 13 pulgadas */
@@ -1454,7 +1531,7 @@ color: #838383;
         line-height: 0.85;
         margin-bottom: 2rem;
         min-height: 1.1em; /* Reserva de espacio vertical para el typewriter */
-        letter-spacing: -0.04em;
+        letter-spacing: 0rem;
         white-space: nowrap; /* Fuerza a que no se corte en dos palabras */
     }
 
