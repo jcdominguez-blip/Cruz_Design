@@ -1,4 +1,63 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. LOADER & PERCENTAGE
+    const loader = document.querySelector('.loader');
+    const percentage = document.querySelector('.loader-percentage');
+    const progressBar = document.querySelector('.progress-bar');
+    let progress = 0;
 
+    const loadInterval = setInterval(() => {
+        progress += Math.floor(Math.random() * 10) + 1;
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(loadInterval);
+            setTimeout(() => {
+                loader?.classList.add('hidden');
+                document.body.classList.add('scroll-locked');
+            }, 500);
+        }
+        if (percentage) percentage.textContent = `${progress}%`;
+        if (progressBar) progressBar.style.width = `${progress}%`;
+    }, 50);
+
+    // 2. NAV TOGGLE (HAMBURGER TO X)
+    const menuBtn = document.getElementById('mobile-menu');
+    const navLinks = document.getElementById('nav-links');
+
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('open');
+            navLinks.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+    }
+
+    // 3. TYPEWRITER EFFECT
+    const texts = ["Sistematizamos marcas", "Diseñamos estrategias", "Creamos valor visual"];
+    let idx = 0, charIdx = 0, isDeleting = false;
+    const target = document.getElementById("hero-title");
+
+    function type() {
+        if (!target) return;
+        const fullText = texts[idx];
+        target.textContent = isDeleting ? fullText.substring(0, charIdx--) : fullText.substring(0, charIdx++);
+        let speed = isDeleting ? 50 : 100;
+
+        if (!isDeleting && charIdx > fullText.length) { isDeleting = true; speed = 1500; }
+        else if (isDeleting && charIdx < 0) { isDeleting = false; idx = (idx + 1) % texts.length; speed = 500; }
+        setTimeout(type, speed);
+    }
+    type();
+
+    // 4. SCROLL & REVEAL
+    const scrollBtn = document.querySelector('.scroll-down-btn');
+    scrollBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.body.classList.remove('scroll-locked');
+        const studio = document.querySelector('#studio-intro');
+        window.scrollTo({ top: studio.offsetTop - 80, behavior: 'smooth' });
+        setTimeout(() => studio?.classList.add('visible'), 600);
+    });
+});
 
 // --- GESTIÓN DE ACORDEÓN Y PROYECTOS (Unificada) ---
 let currentIndex = 0;
