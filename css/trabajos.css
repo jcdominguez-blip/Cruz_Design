@@ -1,0 +1,136 @@
+/* --- TRABAJOS.CSS — CRUZ ESTUDIO ® --- */
+
+.archive-wrapper {
+    padding: 160px 45px 80px 45px;
+    background-color: #1D1E1C;
+}
+
+/* Header & Intro */
+.archive-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255, 253, 243, 0.1);
+}
+
+.all-projects-title {
+    font-family: 'cofo-sans-mono-variable', monospace;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    margin-bottom: 25px;
+    color: #FFFDF3;
+}
+
+/* SWITCH INTERACTIVO (CTA) */
+.view-switcher {
+    display: inline-flex;
+    background: rgba(255, 253, 243, 0.05);
+    padding: 4px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 253, 243, 0.1);
+}
+
+.view-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 253, 243, 0.4);
+    font-family: 'cofo-sans-mono-variable', monospace;
+    font-size: 10px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    border-radius: 2px;
+}
+
+.view-btn.active {
+    background: #FFFDF3;
+    color: #1D1E1C;
+}
+
+.view-btn:hover:not(.active) {
+    color: #FFFDF3;
+    background: rgba(255, 253, 243, 0.1);
+}
+
+.header-right { max-width: 450px; }
+.intro-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255, 253, 243, 0.6);
+    text-align: right;
+}
+
+/* GRILLA COMPACTA (Gap reducido) */
+.projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px; /* Separación mínima para estilo boutique */
+}
+
+/* Cards Horizontales */
+.project-card {
+    position: relative;
+    width: 100%;
+    margin-bottom: 0px; /* El gap de la grilla maneja el espacio */
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.img-container {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background-color: #111;
+    overflow: hidden;
+}
+
+.project-card.large .img-container {
+    aspect-ratio: 21 / 9;
+    margin-bottom: 15px; /* Espacio con la grilla de abajo */
+}
+
+.img-container img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(100%);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+}
+
+.project-card:hover img { filter: grayscale(0%); transform: scale(1.04); }
+
+/* TAGS: DELINEADO BLANCO DESIGN SYSTEM */
+.card-overlay {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%;
+    padding: 25px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+    z-index: 2;
+}
+
+.p-title-inside {
+    font-size: 22px; font-weight: 600; color: #FFFDF3; margin: 0;
+}
+
+.tag-outline {
+    font-family: 'cofo-sans-mono-variable', monospace;
+    font-size: 9px;
+    color: #FFFDF3;
+    border: 1px solid #FFFDF3; /* Delineado Blanco */
+    padding: 5px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* Vista Lista */
+.projects-grid.list-view { grid-template-columns: 1fr; }
+.projects-grid.list-view .img-container { aspect-ratio: 21 / 5; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .archive-header { flex-direction: column; align-items: flex-start; gap: 30px; }
+    .intro-text { text-align: left; }
+    .projects-grid { grid-template-columns: 1fr; gap: 10px; }
+    .archive-wrapper { padding: 120px 25px 40px 25px; }
+}
