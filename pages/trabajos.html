@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trabajos — Cruz Estudio®</title>
+    <title>Archivo — Cruz Estudio®</title>
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
     <link rel="stylesheet" href="../css/style.css"> 
     <link rel="stylesheet" href="../css/trabajos.css">
@@ -13,11 +13,11 @@
 
     <nav class="navbar-brand">
         <div class="containerNav">
-            <a href="../index.html" class="logo">Cruz Estudio<sup>®</sup></a>
+           <a href="../index.html" class="logo">
+                <img src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
+            </a>
             <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </div>
             <ul class="nav-links-brands" id="nav-links">
                 <li><a href="../index.html">INICIO</a></li>
@@ -32,87 +32,110 @@
         <header class="archive-header">
             <div class="header-left">
                 <h3 class="all-projects-title">ALL PROJECTS</h3>
-                <div class="view-switcher">
-                    <button class="view-btn active" data-view="grid">GRID</button>
-                    <button class="view-btn" data-view="list">LIST</button>
+                <div class="view-switcher-cta">
+                    <button class="view-btn active" data-view="grid">GRID VIEW</button>
+                    <button class="view-btn" data-view="list">LIST VIEW</button>
                 </div>
             </div>
             <div class="header-right">
                 <p class="intro-text">
-                    Sistematizamos la identidad visual mediante un enfoque estratégico y funcional. 
-                    Nuestra metodología transforma negocios en ecosistemas de marca globales 
-                    diseñados para perdurar y destacar.
+                    Sistematizamos identidades visuales mediante un enfoque estratégico. 
+                    Nuestro archivo refleja la evolución de ecosistemas de marca diseñados 
+                    para perdurar y destacar en mercados globales de alta complejidad.
                 </p>
             </div>
         </header>
 
         <section class="featured-project-full">
-            <article class="project-card horizontal large" onclick="location.href='./pages/trenescargas.html'">
-                <div class="img-container">
+            <article class="project-item horizontal large" onclick="location.href='./pages/trenescargas.html'">
+                <div class="visual-box">
                     <img src="https://i.ibb.co/dmkbM0K/tac.jpg" alt="TAC">
-                    <div class="card-overlay">
-                        <h2 class="p-title-inside">Trenes Argentinos Cargas</h2>
-                        <div class="p-tags-inside">
+                    <div class="inner-info">
+                        <h2 class="project-name">Trenes Argentinos Cargas</h2>
+                        <div class="tags-group">
                             <span class="tag-outline">BRANDING</span>
+                            <span class="tag-outline">WEB DESIGN</span>
                             <span class="tag-outline">2025</span>
                         </div>
                     </div>
                 </div>
+                <div class="list-info-row">
+                    <span class="l-name">Trenes Argentinos Cargas</span>
+                    <span class="l-cat">Branding / Web Design</span>
+                    <span class="l-year">2025</span>
+                    <span class="l-link">VIEW CASE ↗</span>
+                </div>
             </article>
         </section>
 
-        <section class="projects-grid" id="projects-container">
-            <article class="project-card horizontal">
-                <div class="img-container">
+        <section class="projects-container grid-mode" id="archive-grid">
+            
+            <article class="project-item horizontal" onclick="location.href='./pages/suuam.html'">
+                <div class="visual-box">
                     <img src="https://i.ibb.co/8BbCKvj/1.jpg" alt="SUUAM">
-                    <div class="card-overlay">
-                        <h4 class="p-title-inside">SUUAM® Super App</h4>
-                        <div class="p-tags-inside">
-                            <span class="tag-outline">UX/UI</span>
-                            <span class="tag-outline">2024</span>
-                        </div>
+                    <div class="inner-info">
+                        <h4 class="project-name">SUUAM® Super App</h4>
+                        <div class="tags-group"><span class="tag-outline">UX/UI</span><span class="tag-outline">2024</span></div>
                     </div>
                 </div>
+                <div class="list-info-row"><span class="l-name">SUUAM® Super App</span><span class="l-cat">UX/UI / Product</span><span class="l-year">2024</span><span class="l-link">VIEW CASE ↗</span></div>
             </article>
 
-            <article class="project-card horizontal">
-                <div class="img-container">
+            <article class="project-item horizontal" onclick="location.href='./pages/productdesign.html'">
+                <div class="visual-box">
                     <img src="https://i.ibb.co/svwVxV1L/pr13.jpg" alt="Prisma">
-                    <div class="card-overlay">
-                        <h4 class="p-title-inside">Prisma Dashboard</h4>
-                        <div class="p-tags-inside">
-                            <span class="tag-outline">PRODUCT DESIGN</span>
-                            <span class="tag-outline">2024</span>
-                        </div>
+                    <div class="inner-info">
+                        <h4 class="project-name">Prisma Dashboard</h4>
+                        <div class="tags-group"><span class="tag-outline">UX/UI</span><span class="tag-outline">2024</span></div>
                     </div>
                 </div>
+                <div class="list-info-row"><span class="l-name">Prisma Dashboard</span><span class="l-cat">Product Design</span><span class="l-year">2024</span><span class="l-link">VIEW CASE ↗</span></div>
             </article>
 
-            <article class="project-card horizontal">
-                <div class="img-container">
-                    <img src="https://i.ibb.co/TMXVptDr/AUR14.png" alt="Aurea">
-                    <div class="card-overlay">
-                        <h4 class="p-title-inside">AUREA Magazine</h4>
-                        <div class="p-tags-inside">
-                            <span class="tag-outline">FRONT END</span>
-                            <span class="tag-outline">2024</span>
-                        </div>
+            <article class="project-item horizontal">
+                <div class="visual-box">
+                    <img src="https://i.ibb.co/GfT5Pyk2/ejmUF.jpg" alt="Union Ferroviaria">
+                    <div class="inner-info">
+                        <h4 class="project-name">Unión Ferroviaria</h4>
+                        <div class="tags-group"><span class="tag-outline">BRANDING</span><span class="tag-outline">UX/UI</span><span class="tag-outline">2023</span></div>
                     </div>
                 </div>
+                <div class="list-info-row"><span class="l-name">Unión Ferroviaria</span><span class="l-cat">Branding / App</span><span class="l-year">2023</span><span class="l-link">VIEW CASE ↗</span></div>
             </article>
 
-            <article class="project-card horizontal">
-                <div class="img-container">
+            <article class="project-item horizontal">
+                <div class="visual-box">
+                    <img src="https://i.ibb.co/chdFd5Wc/eco1.jpg" alt="Ecostyle">
+                    <div class="inner-info">
+                        <h4 class="project-name">Ecostyle Circular</h4>
+                        <div class="tags-group"><span class="tag-outline">FRONT-END</span><span class="tag-outline">2023</span></div>
+                    </div>
+                </div>
+                <div class="list-info-row"><span class="l-name">Ecostyle Circular</span><span class="l-cat">Web / Branding</span><span class="l-year">2023</span><span class="l-link">VIEW CASE ↗</span></div>
+            </article>
+
+            <article class="project-item horizontal">
+                <div class="visual-box">
                     <img src="https://i.ibb.co/qMQcwjt/SC.jpg" alt="San Cristobal">
-                    <div class="card-overlay">
-                        <h4 class="p-title-inside">Municipio San Cristóbal</h4>
-                        <div class="p-tags-inside">
-                            <span class="tag-outline">BRAND IDENTITY</span>
-                            <span class="tag-outline">2023</span>
-                        </div>
+                    <div class="inner-info">
+                        <h4 class="project-name">Muni. San Cristóbal</h4>
+                        <div class="tags-group"><span class="tag-outline">BRAND IDENTITY</span><span class="tag-outline">2023</span></div>
                     </div>
                 </div>
+                <div class="list-info-row"><span class="l-name">Muni. San Cristóbal</span><span class="l-cat">Government Branding</span><span class="l-year">2023</span><span class="l-link">VIEW CASE ↗</span></div>
             </article>
+
+            <article class="project-item horizontal">
+                <div class="visual-box">
+                    <img src="https://i.ibb.co/tPZ8KBHk/VD15.jpg" alt="VDR">
+                    <div class="inner-info">
+                        <h4 class="project-name">Vientos de Ruta</h4>
+                        <div class="tags-group"><span class="tag-outline">FRONT-END</span><span class="tag-outline">2022</span></div>
+                    </div>
+                </div>
+                <div class="list-info-row"><span class="l-name">Vientos de Ruta (VDR)</span><span class="l-cat">Development / Brand</span><span class="l-year">2022</span><span class="l-link">VIEW CASE ↗</span></div>
+            </article>
+
         </section>
     </main>
 

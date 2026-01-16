@@ -1,22 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
     const viewBtns = document.querySelectorAll('.view-btn');
-    const container = document.getElementById('projects-container');
+    const container = document.getElementById('archive-grid');
 
     viewBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            // Actualizar UI del Switch
             viewBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
             const view = btn.getAttribute('data-view');
+            
             if (view === 'list') {
-                container.classList.add('list-view');
+                container.classList.remove('grid-mode');
+                container.classList.add('list-mode');
             } else {
-                container.classList.remove('list-view');
+                container.classList.remove('list-mode');
+                container.classList.add('grid-mode');
             }
         });
     });
 
-    // Menú Hamburguesa Mobile (Copia exacta del Index)
+    // Menú Hamburguesa Mobile (Copia exacta de Index para consistencia)
     const menuToggle = document.getElementById('mobile-menu');
     const navLinks = document.getElementById('nav-links');
 
