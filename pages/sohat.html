@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoHat — Cruz Estudio ®</title>
+    <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styleproyect.css">
+    <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png">
+</head>
+<body class="project-page">
+    <div class="page-transition"></div>
+
+    <nav class="navbar-brand">
+        <div class="containerNav">
+            <a href="../index.html" class="logo link-location">
+                <img src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
+            </a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+            <ul class="nav-links-brands" id="nav-links">
+                <li><a href="../index.html#work" class="link-location" data-en="/WORKS" data-es="/TRABAJOS">/TRABAJOS</a></li>
+                <li><a href="./about.html" class="link-location" data-en="/STUDIO" data-es="/ESTUDIO" >/ESTUDIO</a></li>               
+                <li><a href="../index.html#contact" class="link-location" data-en="/CONTACT" data-es="/CONTACTOS">/CONTACTOS</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="gretel-container">
+        <header class="gretel-hero">
+            <div class="hero-visual">
+                <img src="https://i.ibb.co/RYZ1CJ7/sh-1.jpg" alt="SoHat Cover" class="bg-video">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="display-title">So Hat<br>Accessories</h1>
+                <p class="hero-tagline">// ELEGANCIA INCLUSIVA Y DISEÑO CONTEMPORÁNEO</p>
+            </div>
+        </header>
+
+        <section class="gretel-brief-column">
+            <div class="brief-meta-list">
+                <div class="meta-item">
+                    <span class="mono-label">CLIENTE</span>
+                    <p>SO HAT / FASHION BRAND</p>
+                </div>
+                <div class="meta-item">
+                    <span class="mono-label">AÑO</span>
+                    <p>2024</p>
+                </div>
+                <div class="meta-item">
+                    <span class="mono-label">SERVICIOS</span>
+                    <p>BRANDING / ESTRATEGIA / DIRECCIÓN DE ARTE</p>
+                </div>
+            </div>
+
+            <div class="brief-description scroll-reveal">
+                <h2 class="mono-label">NUESTRO ENFOQUE</h2>
+                <p class="lectura-proyect">Desarrollamos una identidad visual y estratégica que posiciona a So Hat como un referente inclusivo en el mundo de los accesorios, priorizando una estética moderna que destaca la esencia estilizada de la marca.</p>
+            </div>
+        </section>
+
+        <section class="modular-grid-gallery">
+            <div class="gallery-row full">
+                <figure class="reveal-frame"><img src="https://i.ibb.co/c8NBv0J/SC.jpg" alt="SoHat 1"></figure>
+            </div>
+
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/dpDrQpN/3-SH.jpg" alt="SoHat 2"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/bRjM3N4/6-SH.jpg" alt="SoHat 3"></figure>
+            </div>
+            
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/vc7J7r1/2-SH.jpg" alt="SoHat 4"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/JttHBPM/7-SH.jpg" alt="SoHat 5"></figure>
+            </div>
+
+            <div class="gallery-row full">
+                <figure class="reveal-frame long-frame"><img src="https://i.ibb.co/kGFLK50/5-SCH.jpg" alt="SoHat Detail"></figure>
+            </div>
+
+            <div class="gallery-row full">
+                <figure class="reveal-frame long-frame"><img src="https://i.ibb.co/N95JnX7/4-SH.jpg" alt="SoHat Lookbook"></figure>
+            </div>
+        </section>
+
+        <section class="gretel-break">
+            <h3 class="break-text">"La moda es el lenguaje que traduce nuestra identidad al mundo."</h3>
+        </section>
+    </main>
+
+    <footer class="footer-project-nav">
+        <a href="./suuam.html" class="next-link">
+            <span class="mono-label-footer">SIGUIENTE PROYECTO</span>
+            <h2 class="next-title-display">SUUAM® →</h2>
+        </a>
+    </footer>
+
+    <script src="../java/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

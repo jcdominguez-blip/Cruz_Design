@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typefusion® — Cruz Estudio ®</title>
+    <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styleproyect.css">
+    <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png">
+</head>
+<body class="project-page site-wrapper">
+    <div class="page-transition"></div>
+
+    <nav class="navbar-brand">
+        <div class="containerNav">
+            <a href="../index.html" class="logo link-location">
+                <img src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
+            </a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+            <ul class="nav-links-brands" id="nav-links">
+                <li><a href="trabajos.html" class="link-location">/TRABAJOS</a></li>
+                <li><a href="#" class="link-location">/ESTUDIO</a></li>               
+                <li><a href="#" class="link-location">/CONTACTOS</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="archive-main-content gretel-container">
+        <header class="gretel-hero">
+            <div class="hero-visual">
+                <img src="https://i.ibb.co/1tBtbRyC/TF14.jpg" alt="Typefusion Cover" class="bg-video">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="display-title">Typefusion<sup>®</sup></h1>
+                <p class="hero-tagline">// OPTIMIZANDO EL WORKFLOW TIPOGRÁFICO</p>
+            </div>
+        </header>
+
+        <section class="gretel-brief-column">
+            <div class="brief-meta-list">
+                <div class="meta-item"><span class="mono-label">PROYECTO</span><p>TYPEFUSION® / LAB</p></div>
+                <div class="meta-item"><span class="mono-label">AÑO</span><p>2022</p></div>
+                <div class="meta-item"><span class="mono-label">SERVICIOS</span><p>UX/UI / PRODUCT DESIGN</p></div>
+            </div>
+            <div class="brief-description scroll-reveal">
+                <h2 class="mono-label">NUESTRO ENFOQUE</h2>
+                <p class="lectura-proyect">typefusion® simplifica la búsqueda y combinación de fuentes mediante una interfaz funcional que optimiza el flujo de trabajo creativo.</p>
+            </div>
+        </section>
+
+        <section class="modular-grid-gallery">
+            <div class="gallery-row full">
+                <figure class="reveal-frame"><img src="https://i.ibb.co/KjsBTZrH/TF1.jpg" alt="Typefusion UI"></figure>
+            </div>
+
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/yF5HwTHz/TF12.jpg" alt="TF 12"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/xqdhLVRY/TF13.jpg" alt="TF 13"></figure>
+            </div>
+
+            <div class="gallery-row full video-final-row">
+                <div class="scroll-reveal"> <div class="video-container-fix">
+                        <video autoplay muted loop playsinline preload="auto" class="video-native">
+                            <source src="../img/video-type.mp4" type="video/mp4">
+                            Tu navegador no admite video nativo.
+                        </video>
+                        <div class="video-click-blocker"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="gretel-break">
+            <h3 class="break-text">"La tipografía es el cimiento de la comunicación visual."</h3>
+        </section>
+    </main>
+
+    <footer class="footer-project-nav">
+        <a href="./ecostyle.html" class="next-link">
+            <span class="mono-label-footer">SIGUIENTE PROYECTO</span>
+            <h2 class="next-title-display">Ecostyle →</h2>
+        </a>
+    </footer>
+
+    <script src="../java/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Observer para animaciones
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.scroll-reveal, .reveal-frame').forEach((el) => observer.observe(el));
+
+            // Forzar reproducción del video nativo
+            const video = document.querySelector('.video-native');
+            if (video) {
+                video.play().catch(() => {
+                    console.log("El navegador requiere interacción para iniciar el video.");
+                });
+            }
+        });
+    </script>
+</body>
+</html>

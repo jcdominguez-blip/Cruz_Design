@@ -1,5 +1,5 @@
 /* ==========================================================================
-   MAESTRO CRUZ DISEÑO ® - VERSIÓN FINAL REPARADA
+   MAESTRO CRUZ DISEÑO ® - VERSIÓN FINAL AMPLIADA
    ========================================================================== */
 
 :root {
@@ -92,7 +92,6 @@ body {
     line-height: 0.9;
     letter-spacing: -0.04em;
     font-weight: 700;
-    
 }
 
 .hero-tagline {
@@ -125,6 +124,81 @@ body {
     display: flex; flex-direction: column; gap: 45px;
 }
 
+/* --- COMPONENTE DE VIDEO CENTRADO (MODIFICADO: MÁS GRANDE) --- */
+
+.video-final-row {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100%;
+    margin-top: 60px;
+    padding-bottom: 100px;
+}
+
+/* El contenedor de video local ahora es más ancho */
+.video-container-fix {
+    width: 100%;
+    max-width: 1400px; /* Incrementado de 1100px para mayor impacto */
+    aspect-ratio: 16 / 9;
+    background-color: #000;
+    overflow: hidden;
+    position: relative;
+    border-radius: 4px;
+    opacity: 1 !important;
+}
+
+.video-native {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+    display: block;
+}
+
+/* El contenedor de video YouTube ahora es más ancho */
+.video-mask {
+    position: relative;
+    width: 100%;
+    max-width: 1400px; /* Incrementado de 1100px para consistencia */
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #000;
+    border-radius: 4px;
+}
+
+.video-wrapper {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 115%; 
+    height: 115%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.video-wrapper iframe {
+    width: 100%; height: 100%;
+    object-fit: cover;
+}
+
+.video-click-blocker {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 10;
+}
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 1450px) {
+    .video-mask, .video-container-fix { 
+        max-width: 90vw; /* Ajuste dinámico para pantallas intermedias */
+    }
+}
+
+@media (max-width: 1024px) {
+    .video-mask, .video-container-fix { max-width: 100%; }
+    .gallery-row.split-equal { grid-template-columns: 1fr; gap: 20px; }
+    .video-final-row {
+        padding: 40px var(--grid-margin);
+    }
+}
+
 .reveal-frame { width: 100%; overflow: hidden; background-color: #151515; }
 .aspect-framed { aspect-ratio: 16 / 10; }
 .long-frame { aspect-ratio: auto; }
@@ -142,7 +216,12 @@ body {
 .next-title-display { font-size: clamp(2rem, 5vw, 4rem); line-height: 1; transition: transform 0.4s var(--reveal-curve); }
 .next-link:hover .next-title-display { transform: translateX(25px); }
 
-@media (max-width: 768px) {
-    .navbar-brand { padding: 20px !important; }
-    .gallery-row.split-equal { grid-template-columns: 1fr; gap: 20px; }
+/* --- FIX GLOBAL: FOOTER SIEMPRE AL FONDO --- */
+.site-wrapper { 
+    display: flex; 
+    flex-direction: column; 
+    min-height: 100vh; 
+}
+.archive-main-content { 
+    flex: 1; 
 }

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecostyle — Cruz Estudio ®</title>
+    <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styleproyect.css">
+    <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png">
+</head>
+<body class="project-page site-wrapper">
+    <div class="page-transition"></div>
+
+    <nav class="navbar-brand">
+        <div class="containerNav">
+            <a href="../index.html" class="logo link-location">
+                <img src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
+            </a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+            <ul class="nav-links-brands" id="nav-links">
+                <li><a href="../index.html#work" class="link-location" data-en="/WORKS" data-es="/TRABAJOS">/TRABAJOS</a></li>
+                <li><a href="./about.html" class="link-location" data-en="/STUDIO" data-es="/ESTUDIO" >/ESTUDIO</a></li>               
+                <li><a href="../index.html#contact" class="link-location" data-en="/CONTACT" data-es="/CONTACTOS">/CONTACTOS</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="archive-main-content gretel-container">
+        <header class="gretel-hero">
+            <div class="hero-visual">
+                <img src="https://i.ibb.co/chdFd5Wc/eco1.jpg" alt="Ecostyle Hero" class="bg-video" style="object-fit: cover; width: 100%; height: 100%;">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="display-title">Ecostyle<br>Circular</h1>
+                <p class="hero-tagline">// MODA SOSTENIBLE Y CONSCIENCIA AMBIENTAL</p>
+            </div>
+        </header>
+
+        <section class="gretel-brief-column">
+            <div class="brief-meta-list">
+                <div class="meta-item"><span class="mono-label">CLIENTE</span><p>ECOSTYLE</p></div>
+                <div class="meta-item"><span class="mono-label">AÑO</span><p>2023</p></div>
+                <div class="meta-item"><span class="mono-label">SERVICIOS</span><p>BRANDING / ESTRATEGIA / WEB</p></div>
+            </div>
+            <div class="brief-description scroll-reveal">
+                <h2 class="mono-label">NUESTRO ENFOQUE</h2>
+                <p class="lectura-proyect">En nosotros notamos que la sostenibilidad requiere una comunicación honesta y directa. Desarrollamos una identidad que equilibra la estética orgánica con la funcionalidad digital contemporánea, sistematizando el valor de la moda circular en cada punto de contacto.</p>
+            </div>
+        </section>
+
+        <section class="modular-grid-gallery">
+            <div class="gallery-row full">
+                <figure class="reveal-frame">
+                    <img src="https://i.ibb.co/cSkpSfRf/eco12.jpg" alt="Ecostyle Brand Landscape">
+                </figure>
+            </div>
+
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/TxcW0C3F/eco13.jpg" alt="Ecostyle Detail 1"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/wh3JGCww/eco14.jpg" alt="Ecostyle Detail 2"></figure>
+            </div>
+
+            <div class="gallery-row full video-final-row">
+                <div class="scroll-reveal">
+                    </div>
+            </div>
+        </section>
+
+        <section class="gretel-break">
+            <h3 class="break-text">"Rediseñando el futuro de la moda a través de la circularidad."</h3>
+        </section>
+    </main>
+
+    <footer class="footer-project-nav">
+        <a href="./sc.html" class="next-link">
+            <span class="mono-label-footer">SIGUIENTE PROYECTO</span>
+            <h2 class="next-title-display">San Cristóbal →</h2>
+        </a>
+    </footer>
+
+    <script src="../java/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.scroll-reveal, .reveal-frame').forEach((el) => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

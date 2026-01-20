@@ -1,15 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const viewBtns = document.querySelectorAll('.view-btn');
-    const container = document.getElementById('archive-grid');
+    const container = document.getElementById('archive-main');
 
     viewBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Actualizar UI del Switch
             viewBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
             const view = btn.getAttribute('data-view');
-            
             if (view === 'list') {
                 container.classList.remove('grid-mode');
                 container.classList.add('list-mode');
@@ -19,11 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
-    // Menú Hamburguesa Mobile (Copia exacta de Index para consistencia)
+    // Menú hamburguesa (Copia exacta de Index)
     const menuToggle = document.getElementById('mobile-menu');
     const navLinks = document.getElementById('nav-links');
-
     if(menuToggle) {
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');

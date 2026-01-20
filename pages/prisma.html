@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prisma — Cruz Estudio ®</title>
+    <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styleproyect.css">
+    <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png">
+</head>
+<body class="project-page">
+    <div class="page-transition"></div>
+
+    <nav class="navbar-brand">
+        <div class="containerNav">
+            <a href="../index.html" class="logo link-location">
+                <img src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
+            </a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+            <ul class="nav-links-brands" id="nav-links">
+                <li><a href="../index.html#work" class="link-location" data-en="/WORKS" data-es="/TRABAJOS">/TRABAJOS</a></li>
+                <li><a href="./about.html" class="link-location" data-en="/STUDIO" data-es="/ESTUDIO" >/ESTUDIO</a></li>               
+                <li><a href="../index.html#contact" class="link-location" data-en="/CONTACT" data-es="/CONTACTOS">/CONTACTOS</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="gretel-container">
+        <header class="gretel-hero">
+            <div class="hero-visual">
+                <img src="https://i.ibb.co/svwVxV1L/pr13.jpg" alt="Prisma Dashboard Hero" class="bg-video" style="object-fit: cover; width: 100%; height: 100%;">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="display-title">Prisma<br>Dashboard</h1>
+                <p class="hero-tagline">// VISUALIZACIÓN DE DATOS Y EFICIENCIA OPERATIVA</p>
+            </div>
+        </header>
+
+        <section class="gretel-brief-column">
+            <div class="brief-meta-list">
+                <div class="meta-item">
+                    <span class="mono-label">CLIENTE</span>
+                    <p>PRISMA SOLUTIONS</p>
+                </div>
+                <div class="meta-item">
+                    <span class="mono-label">AÑO</span>
+                    <p>2024</p>
+                </div>
+                <div class="meta-item">
+                    <span class="mono-label">SERVICIOS</span>
+                    <p>UX/UI / PRODUCT DESIGN</p>
+                </div>
+            </div>
+
+            <div class="brief-description scroll-reveal">
+                <h2 class="mono-label">NUESTRO ENFOQUE</h2>
+                <p class="lectura-proyect">Sistematizamos la visualización de datos complejos para transformarlos en una herramienta de toma de decisiones estratégica. En nosotros notamos que la claridad informativa es el eje central del ecosistema digital, por lo que diseñamos una interfaz que prioriza la legibilidad sin sacrificar la sofisticación técnica.</p>
+            </div>
+        </section>
+
+        <section class="modular-grid-gallery">
+            <div class="gallery-row full">
+                <figure class="reveal-frame">
+                    <img src="https://i.ibb.co/DD4psWX9/pr1.jpg" alt="Prisma System Overview">
+                </figure>
+            </div>
+
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/Vc8DfSxH/pr14.jpg" alt="Interface Module"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/DP6MRRMX/pr12.jpg" alt="Dashboard Detail"></figure>
+            </div>
+
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/8L1VtzNx/pr1VS.jpg" alt="Data Visualization 1"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/gMtn4YzJ/pr12vs.jpg" alt="Data Visualization 2"></figure>
+            </div>
+        </section>
+
+        <section class="gretel-break">
+            <h3 class="break-text">"Transformamos flujos de información en experiencias visuales de alto rendimiento."</h3>
+        </section>
+    </main>
+
+    <footer class="footer-project-nav">
+        <a href="./union-ferroviaria.html" class="next-link">
+            <span class="mono-label-footer">SIGUIENTE PROYECTO</span>
+            <h2 class="next-title-display">Unión Ferroviaria →</h2>
+        </a>
+    </footer>
+
+    <script src="../java/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animación de aparición (Scroll Reveal)
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.scroll-reveal, .reveal-frame').forEach((el) => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

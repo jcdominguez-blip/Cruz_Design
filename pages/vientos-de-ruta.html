@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vientos de Ruta — Cruz Estudio ®</title>
+    <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styleproyect.css">
+    <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png">
+</head>
+<body class="project-page site-wrapper">
+    <div class="page-transition"></div>
+
+    <nav class="navbar-brand">
+        <div class="containerNav">
+            <a href="../index.html" class="logo link-location">
+                <img src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
+            </a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+            <ul class="nav-links-brands" id="nav-links">
+                <li><a href="trabajos.html" class="link-location">/TRABAJOS</a></li>
+                <li><a href="#" class="link-location">/ESTUDIO</a></li>               
+                <li><a href="#" class="link-location">/CONTACTOS</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="archive-main-content gretel-container">
+        <header class="gretel-hero">
+            <div class="hero-visual">
+                <img src="../img/vdr-header.png" alt="VDR Header" class="bg-video">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="display-title">Vientos<br>de Ruta</h1>
+                <p class="hero-tagline">// EXPLORANDO LA IDENTIDAD FEDERAL</p>
+            </div>
+        </header>
+
+        <section class="gretel-brief-column">
+            <div class="brief-meta-list">
+                <div class="meta-item"><span class="mono-label">CLIENTE</span><p>VIENTOS DE RUTA (VDR)</p></div>
+                <div class="meta-item"><span class="mono-label">AÑO</span><p>2022</p></div>
+                <div class="meta-item"><span class="mono-label">SERVICIOS</span><p>BRANDING / WEB DEV</p></div>
+            </div>
+            <div class="brief-description scroll-reveal">
+                <h2 class="mono-label">NUESTRO ENFOQUE</h2>
+                <p class="lectura-proyect">Vientos de Ruta es una comunidad que busca compartir viajes y experiencias de cada rincón de Argentina. Diseñamos una marca que respira aventura y una plataforma web que sistematiza esta narrativa visual.</p>
+            </div>
+        </section>
+
+        <section class="modular-grid-gallery">
+            <div class="gallery-row full">
+                <figure class="reveal-frame"><img src="https://i.ibb.co/tPZ8KBHk/VD15.jpg" alt="VDR Branding"></figure>
+            </div>
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/0VCtmdzg/VD1.jpg" alt="VDR 1"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/nN3Zcmg2/VD12.jpg" alt="VDR 2"></figure>
+            </div>
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/wf8nVhT/VD13.jpg" alt="VDR 3"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/BVL3PNKZ/VD14.jpg" alt="VDR 4"></figure>
+            </div>
+        </section>
+
+        <section class="gretel-brief-column scroll-reveal" style="padding-top: 0; padding-bottom: 60px;">
+            <div class="brief-description">
+                <h2 class="mono-label">DESARROLLO DIGITAL</h2>
+                <p class="lectura-proyect">Creamos una experiencia web optimizada para la visualización de contenido fotográfico, permitiendo a la comunidad explorar destinos mediante una interfaz intuitiva y dinámica.</p>
+            </div>
+        </section>
+
+        <section class="modular-grid-gallery" style="padding-bottom: 100px;">
+            <div class="gallery-row split-equal">
+                <figure class="reveal-frame aspect-framed"><img src="../img/vdr-1.png" alt="VDR Web 1"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="../img/vdr-2.png" alt="VDR Web 2"></figure>
+            </div>
+            </section>
+
+        <section class="gretel-break">
+            <h3 class="break-text">"Viajar es capturar la esencia de lo que nos rodea."</h3>
+        </section>
+    </main>
+
+    <footer class="footer-project-nav">
+        <a href="./sohat.html" class="next-link">
+            <span class="mono-label-footer">SIGUIENTE PROYECTO</span>
+            <h2 class="next-title-display">SoHat →</h2>
+        </a>
+    </footer>
+
+    <script src="../java/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.scroll-reveal, .reveal-frame').forEach((el) => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
