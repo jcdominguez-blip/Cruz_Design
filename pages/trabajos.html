@@ -3,11 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archivo — Cruz Estudio®</title>
+    <title>Trabajos — Cruz Estudio®</title>
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
     <link rel="stylesheet" href="../css/style.css"> 
     <link rel="stylesheet" href="../css/trabajos.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script>
+    (function() {
+        if (sessionStorage.getItem('cruz-loader-visto')) {
+            // 1. Añadimos la clase para ocultar el loader
+            document.documentElement.classList.add('skip-loader');
+            // 2. Nos aseguramos de que el scroll esté habilitado
+            document.documentElement.style.overflowY = 'auto';
+        }
+    })();
+</script>
+
+<style>
+    /* Si ya se vio, el loader desaparece y el scroll se libera */
+    .skip-loader #loader, 
+    .skip-loader .loader { 
+        display: none !important; 
+        visibility: hidden !important; 
+    }
+    
+    .skip-loader body {
+        overflow-y: auto !important;
+        height: auto !important;
+    }
+</style>
+<link rel="icon"  sizes="32x32" href="./img/favicon-32x32.png">
 </head>
 <body class="bg-dark site-wrapper">
 
@@ -21,7 +46,7 @@
             </div>
             <ul class="nav-links-brands" id="nav-links">
                 <li><a href="../index.html">INICIO</a></li>
-                <li><a href="trabajos.html" class="active">/TRABAJOS</a></li>
+                
                 <li><a href="#">/ESTUDIO</a></li>
                 <li><a href="#">/CONTACTOS</a></li>
             </ul>

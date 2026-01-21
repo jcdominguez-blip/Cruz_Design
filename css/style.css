@@ -30,6 +30,26 @@ html {
     position: relative;
 }
 
+/* Activa el desplazamiento suave en toda la web */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Evita que el menú fijo tape el inicio de la sección */
+section[id] {
+    scroll-margin-top: 100px; /* Ajusta según la altura de tu navbar */
+}
+
+/* Opcional: Mejora la sensación de la animación al llegar */
+#featured-works, #contact {
+    transition: all 0.5s ease-in-out;
+}
+
+/* Modifica esto en tu style.css */
+body.scroll-locked {
+    overflow: hidden !important;
+    /* Elimina 'position: fixed' si ves que el scroll salta a lugares raros al hacer clic */
+}
 /* TRANSICION */
 
 
@@ -75,6 +95,18 @@ html {
     --loader-black: #1D1E1C;
     --loader-transition: cubic-bezier(0.77, 0, 0.175, 1);
     --loader-margin: 45px;
+}
+
+/* Estado del loader cuando termina la animación */
+#loader.loaded {
+    transform: translateY(-100%);
+    visibility: hidden;
+    transition: transform 1.1s cubic-bezier(0.77, 0, 0.175, 1), visibility 1.1s;
+}
+
+/* Forzamos que si se saltó el loader, el body sea visible de inmediato */
+.skip-loader body {
+    overflow-y: auto !important;
 }
 
 #loader {

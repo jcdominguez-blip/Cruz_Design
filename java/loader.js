@@ -1,35 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const percentage = document.getElementById("loader-percentage");
-    const loader = document.getElementById("loader");
-    const clockElement = document.getElementById("loader-clock");
-    let count = 0;
+    // Intentamos detectar el loader por ID o por Clase por seguridad
+    const loader = document.getElementById('loader') || document.querySelector('.loader');
+    const body = document.body;
 
-    // Reloj en vivo para la fisonomía técnica
-    function updateClock() {
-        const now = new Date();
-        clockElement.innerText = now.toTimeString().split(' ')[0];
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // Algoritmo de carga constante (1 en 1)
-    function startCounting() {
-        count++;
-        if (count > 100) count = 100;
-
-        // Formateo a dos dígitos (01, 02...)
-        percentage.innerText = count < 10 ? '0' + count : count;
-
-        if (count < 100) {
-            // Velocidad controlada para fluidez cinematográfica
-            let delay = count < 30 ? 30 : (count < 80 ? 50 : 20);
-            setTimeout(startCounting, delay);
-        } else {
+    if (sessionStorage.getItem('cruz-loader-visto')) {
+        console.log("Loader ya visto: Saltando...");
+        if (loader) loader.remove();
+        body.style.overflowY = 'auto'; // Forzamos scroll
+    } else {
+        console.log("Primera visita: Mostrando branding...");
+        
+        // Lógica para ocultar el loader tras la carga
+        window.addEventListener('load', () => {
             setTimeout(() => {
-                loader.classList.add("loaded");
-                document.body.classList.remove("scroll-locked");
-            }, 800);
-        }
+                if (loader) {
+                    loader.classList.add('loaded');
+                    sessionStorage.setItem('cruz-loader-visto', 'true');
+                    body.style.overflowY = 'auto'; // Liberamos scroll al terminar
+                }
+            }, 1200); // 1.2 segundos de impacto
+        });
+
+        // SAFETY: Si por alguna razón el loader falla, lo forzamos a ocultarse en 4s
+        setTimeout(() => {
+            if (loader && !loader.classList.contains('loaded')) {
+                loader.classList.add('loaded');
+                body.style.overflowY = 'auto';
+            }
+        }, 4000);
     }
-    startCounting();
 });

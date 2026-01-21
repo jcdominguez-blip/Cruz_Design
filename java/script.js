@@ -59,6 +59,66 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+/**
+ * SISTEMA DE NAVEGACIÓN CORREGIDO - CRUZ ESTUDIO
+ */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+
+        if (targetElement) {
+            e.preventDefault();
+
+            // 1. DESBLOQUEO CRUCIAL:
+            // Quitamos la clase que congela el scroll en el body
+            document.body.classList.remove('scroll-locked');
+            document.body.style.overflow = 'auto'; // Refuerzo manual
+            document.body.style.position = 'static'; // Evita que el fixed rompa el cálculo del offset
+
+            // 2. CÁLCULO DE POSICIÓN
+            const navHeight = document.querySelector('.navbar-brand').offsetHeight;
+            const targetPosition = targetElement.offsetTop - navHeight;
+
+            // 3. DESPLAZAMIENTO
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+
+            // 4. CIERRE DE MENÚ MÓVIL (Por si está abierto)
+            const navLinks = document.getElementById('nav-links');
+            const menuBtn = document.getElementById('mobile-menu');
+            if(navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                menuBtn.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            }
+        }
+    });
+});
+
+document.querySelectorAll('a[href^="index.html#"], a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        
+        // Si el enlace es un ancla en la misma página
+        if (href.includes('#')) {
+            const targetId = href.split('#')[1];
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement && window.location.pathname.includes('index.html') || window.location.pathname === '/') {
+                e.preventDefault();
+                
+                // Animación sutil de desplazamiento
+                window.scrollTo({
+                    top: targetElement.offsetTop - 90, // Altura de tu navbar
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+});
 
 // 1. Redirección con animación de cortina
 function redirectWithAnimation(element) {

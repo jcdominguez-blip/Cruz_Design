@@ -12,6 +12,30 @@
     <link rel="icon"  sizes="32x32" href="./img/favicon-32x32.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script>
+    (function() {
+        if (sessionStorage.getItem('cruz-loader-visto')) {
+            // 1. Añadimos la clase para ocultar el loader
+            document.documentElement.classList.add('skip-loader');
+            // 2. Nos aseguramos de que el scroll esté habilitado
+            document.documentElement.style.overflowY = 'auto';
+        }
+    })();
+</script>
+
+<style>
+    /* Si ya se vio, el loader desaparece y el scroll se libera */
+    .skip-loader #loader, 
+    .skip-loader .loader { 
+        display: none !important; 
+        visibility: hidden !important; 
+    }
+    
+    .skip-loader body {
+        overflow-y: auto !important;
+        height: auto !important;
+    }
+</style>
     <title>Cruz Diseño</title>
 </head>
 <body>
@@ -40,7 +64,7 @@
             </div>
             <div class="loader-col percentage-container">
                 <span class="loader-percentage" id="loader-percentage">00</span>
-                <span class="loader-symbol">%</span>
+                >
             </div>
         </div>
     </div>
@@ -57,11 +81,11 @@
             <span class="bar"></span>
             <span class="bar"></span>
         </div>
-        <ul class="nav-links-brands" id="nav-links">
-            <li><a href="#" class="link-location" data-en="/WORKS" data-es="/TRABAJOS">/TRABAJOS</a></li>
-            <li><a href="./pages/about.html" class="link-location" data-en="/STUDIO" data-es="/ESTUDIO">/ESTUDIO</a></li>               
-            <li><a href="#contact" class="link-location" data-en="/CONTACT" data-es="/CONTACTOS">/CONTACTOS</a></li>
-        </ul>
+      <ul class="nav-links-brands" id="nav-links">
+    <li><a href="#featured-works" class="link-location" data-en="/WORKS" data-es="/TRABAJOS">/TRABAJOS</a></li>
+    <li><a href="./pages/about.html" class="link-location" data-en="/STUDIO" data-es="/ESTUDIO">/ESTUDIO</a></li>               
+    <li><a href="#contact" class="link-location" data-en="/CONTACT" data-es="/CONTACTOS">/CONTACTOS</a></li>
+</ul>
     </div>
 </nav>
 
