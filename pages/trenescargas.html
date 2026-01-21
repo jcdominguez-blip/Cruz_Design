@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TAC — Cruz Diseño ®</title>
+    <title>TAC — Cruz Estudio ®</title>
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
     <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    
     <link rel="stylesheet" href="../css/styleproyect.css">
     <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png">
 </head>
-<body class="project-page">
+<body class="project-page site-wrapper">
     <div class="page-transition"></div>
 
     <nav class="navbar-brand">
@@ -21,14 +23,20 @@
                 <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </div>
             <ul class="nav-links-brands" id="nav-links">
-                <li><a href="../index.html#work" class="link-location" data-en="/WORKS" data-es="/TRABAJOS">/TRABAJOS</a></li>
-                <li><a href="./about.html" class="link-location" data-en="/STUDIO" data-es="/ESTUDIO" >/ESTUDIO</a></li>               
-                <li><a href="../index.html#contact" class="link-location" data-en="/CONTACT" data-es="/CONTACTOS">/CONTACTOS</a></li>
+                <li><a href="../index.html#work" class="link-location">/TRABAJOS</a></li>
+                <li><a href="./about.html" class="link-location">/ESTUDIO</a></li>               
+                <li><a href="../index.html#contact" class="link-location">/CONTACTOS</a></li>
             </ul>
         </div>
     </nav>
 
-    <main class="gretel-container">
+    <div class="back-nav-container">
+        <a href="trabajos.html" class="back-arrow-cta" aria-label="Volver a Trabajos">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </a>
+    </div>
+
+    <main class="archive-main-content gretel-container">
         <header class="gretel-hero">
             <div class="hero-visual">
                 <video autoplay muted loop playsinline class="bg-video">
@@ -44,29 +52,20 @@
 
         <section class="gretel-brief-column">
             <div class="brief-meta-list">
-                <div class="meta-item">
-                    <span class="mono-label">CLIENTE</span>
-                    <p>TAC / Mº TRANSPORTE</p>
-                </div>
-                <div class="meta-item">
-                    <span class="mono-label">AÑO</span>
-                    <p>2018 — 2025</p>
-                </div>
-                <div class="meta-item">
-                    <span class="mono-label">SERVICIOS</span>
-                    <p>BRANDING / ESTRATEGIA / UI</p>
-                </div>
+                <div class="meta-item"><span class="mono-label">CLIENTE</span><p>TAC / Mº TRANSPORTE</p></div>
+                <div class="meta-item"><span class="mono-label">AÑO</span><p>2018 — 2025</p></div>
+                <div class="meta-item"><span class="mono-label">SERVICIOS</span><p>BRANDING / ESTRATEGIA / UI</p></div>
             </div>
 
             <div class="brief-description scroll-reveal">
                 <h2 class="mono-label">NUESTRO ENFOQUE</h2>
-                <p class="lectura-proyect">Transformamos negocios diseñando ecosistemas de marca globales: desde la identidad hasta la estrategia que impulsa su rendimiento en el mercado.</p>
+                <p class="lectura-proyect">Transformamos negocios diseñando ecosistemas de marca globales. En nosotros notamos que la logística federal requiere un sistema visual que traduzca el rendimiento y la escala del mercado, desde la identidad hasta la estrategia digital.</p>
             </div>
         </section>
 
         <section class="modular-grid-gallery">
             <div class="gallery-row full">
-                <figure class="reveal-frame"><img src="https://i.ibb.co/qMGYg1Vs/TAC.jpg" alt="TAC Cover"></figure>
+                <figure class="reveal-frame long-frame"><img src="https://i.ibb.co/qMGYg1Vs/TAC.jpg" alt="TAC Cover"></figure>
             </div>
 
             <div class="gallery-row split-equal">
@@ -82,7 +81,7 @@
                 <figure class="reveal-frame long-frame"><img src="https://i.ibb.co/zHnDpqtv/locomotoras.png" alt="Locomotoras"></figure>
             </div>
 
-            <div class="gallery-row full">
+            <div class="gallery-row full" style="padding-bottom: 80px;">
                 <figure class="reveal-frame long-frame"><img src="https://i.ibb.co/7xMyV0wq/vagones1.png" alt="Vagones"></figure>
             </div>
         </section>
@@ -109,7 +108,8 @@
                     }
                 });
             }, { threshold: 0.1 });
-            document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
+            
+            document.querySelectorAll('.scroll-reveal, .reveal-frame').forEach((el) => observer.observe(el));
         });
     </script>
 </body>

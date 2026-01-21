@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
     <meta name="description" content="Soy diseñador gráfico especializado en identidades corporativas, con experiencia en proyectos destacados como la Municipalidad de San Cristóbal y sub-marcas de Unión Ferroviaria y Trenes Argentinos. Desde 2018, trabajo como freelance, integrando branding, comunicación y diseño de aplicaciones. Mi formación en la Universidad de Buenos Aires, combinada con habilidades en UX/UI y Desarrollo Front End, me permite ofrecer soluciones creativas y efectivas que destacan la esencia de cada marca." >
     <meta name="keywords" content="diseño, marcas, branding, diseño grafico, instagram, corporativo, empresas, brand design, diseño ux ui, diseño web">
-     
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=south_east" />
     <link rel="stylesheet" href="./css/style.css">
     <link rel="icon"  sizes="32x32" href="./img/favicon-32x32.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
@@ -18,13 +18,30 @@
 
 <div class="page-transition"></div>
 
-<div class="loader">
-    <div class="loader-content">
-        <div class="loader-percentage">1%</div>
-        <div class="loader-progress">
-            
-            <div class="progress-bar"></div>
-        </div>        
+<div class="loader" id="loader">
+    <div class="loader-grid">
+        <div class="loader-row top-bar">
+            <div class="loader-col">ESTUDIO CRUZ ® / LAB</div>
+            <div class="loader-col clock" id="loader-clock">00:00:00</div>
+            <div class="loader-col text-right">ISSUE 01 / 2026</div>
+        </div>
+
+        <div class="loader-row main-title-row">
+            <h1 class="loader-welcome">Bienvenido a<br>Estudio Cruz</h1>
+        </div>
+
+        <div class="loader-row footer-row">
+            <div class="loader-col bio-text">
+                <p class="mono-text">
+                    Somos socio estratégico de empresas, ayudamos a potenciar marcas mediante el diseño integral, 
+                    la arquitectura web y la comunicación digital. Sistematizamos identidades visuales 
+                    capaces de traccionar en mercados competitivos con un enfoque técnico y soberbio.
+                </p>
+            </div>
+            <div class="loader-col percentage-container">
+                <span class="loader-percentage" id="loader-percentage">00</span>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -58,18 +75,19 @@
                data-en="We transform businesses by designing global brand ecosystems: from identity to the strategy that drives their market performance.">
                Transformamos negocios diseñando ecosistemas de marca globales: desde la identidad hasta la estrategia que impulsa su rendimiento en el mercado.
             </p>
-            <div class="hero-arrow">
+
+        <div class="hero-arrow">
                 <img src="./img/south_east_300dp_E3E3E3_FILL0_wght200_GRAD0_opsz48.svg" alt="Arrow">
             </div>
         </div>
 
         <div class="hero-right">
             <nav class="hero-links">
-                <a href="./pages/brandworks.html" class="hero-link">[BRAND DESIGN]</a>
-                <a href="./pages/frontdesign.html" class="hero-link">[DISEÑO AUDIOVISUAL]</a>
-                <a href="./pages/productdesign.html" class="hero-link">[DISEÑO UX/UI]</a>
-                <a href="./pages/productdesign.html" class="hero-link">[MARKETING DIGITAL]</a>
-                <a href="./pages/frontdesign.html" class="hero-link">[FRONT END DESIGN]</a>
+                <a href="./pages/trabajos.html" class="hero-link">[BRAND DESIGN]</a>
+                <a href="./pages/trabajos.html" class="hero-link">[DISEÑO AUDIOVISUAL]</a>
+                <a href="./pages/trabajos.html" class="hero-link">[DISEÑO UX/UI]</a>
+                <a href="./pages/trabajos.html" class="hero-link">[MARKETING DIGITAL]</a>
+                <a href="./pages/trabajos.html" class="hero-link">[FRONT END DESIGN]</a>
             </nav>
         </div>
     </div>
@@ -85,9 +103,7 @@
     </div>
 </header>
 
-<div class="language-switch">
-        <button id="language-toggle" >Español</button>
-    </div>
+
 
 <section id="studio-intro" class="studio-section">
     <div class="studio-video-container">
@@ -275,29 +291,62 @@
     </div>
 </section>-->
 
-<section class="contact" id="contact">
-    <div class="container">
-        <h2 class="subtitulo-contacto" data-en="Contact" data-es="Contacto">Contacto</h2>
-        <p class="lectura-contacto" data-en="Would you like to get in touch with us?" data-es="¿Deseas ponerte en contacto con nosotros?">¿Deseas ponerte en contacto con nosotros?</p>
+<section class="contact-section" id="contact">
+    <div class="contact-wrapper">
+        <header class="contact-intro scroll-reveal">
+            <h2 class="contact-display">Hablemos de tu<br>próximo proyecto.</h2>
+            <p class="mono-label">// DISEÑO ESTRATÉGICO DESDE BUENOS AIRES</p>
+        </header>
        
-        <form action="https://formspree.io/f/xrbekqeb" method="POST" class="contact-form">
-            <div class="form-group">
-                <label for="nombre" data-en="Name" data-es="Nombre">Nombre</label>
-                <input  id="nombre" name="nombre" required>
+        <form action="https://formspree.io/f/xrbekqeb" method="POST" class="form-sistematizado">
+            
+            <div class="form-segment scroll-reveal">
+                <span class="mono-tag">¿EN QUÉ PODEMOS AYUDARTE?</span>
+                <div class="services-grid">
+                    <label class="service-chip">
+                        <input type="checkbox" name="Interés" value="Branding">
+                        <span class="chip-box">Branding</span>
+                    </label>
+                    <label class="service-chip">
+                        <input type="checkbox" name="Interés" value="Web Design">
+                        <span class="chip-box">Web Design</span>
+                    </label>
+                    <label class="service-chip">
+                        <input type="checkbox" name="Interés" value="UX/UI">
+                        <span class="chip-box">UX/UI</span>
+                    </label>
+                    <label class="service-chip">
+                        <input type="checkbox" name="Interés" value="Audiovisual">
+                        <span class="chip-box">Audiovisual</span>
+                    </label>
+                    <label class="service-chip">
+                        <input type="checkbox" name="Interés" value="Otros">
+                        <span class="chip-box">Otros</span>
+                    </label>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="email" data-en="Email" data-es="Correo electrónico">Correo electrónico</label>
-                <input  id="email" name="email" required>
+
+            <div class="fields-layout scroll-reveal">
+                <div class="input-container">
+                    <input type="text" name="name" id="userName" placeholder=" " required>
+                    <label for="userName">Tu nombre</label>
+                </div>
+                <div class="input-container">
+                    <input type="email" name="email" id="userEmail" placeholder=" " required>
+                    <label for="userEmail">Email profesional</label>
+                </div>
+                <div class="input-container full-col">
+                    <textarea name="message" id="userMsg" rows="1" placeholder=" " required></textarea>
+                    <label for="userMsg">Breve descripción del desafío...</label>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="telefono" data-en="Phone" data-es="Teléfono">Teléfono</label>
-                <input  id="telefono" name="telefono">
-            </div>
-            <div class="form-group">
-                <label for="mensaje" data-en="Message" data-es="Mensaje">Mensaje</label>
-                <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
-            </div>
-            <button  class="hero-button" class="link-location" data-en="Send Message" data-es="Enviar Mensaje">Enviar Mensaje</button>
+
+            <footer class="form-actions scroll-reveal">
+                <button type="submit" class="cta-submit">
+                    <span class="cta-text">ENVIAR PROPUESTA</span>
+                    <span class="material-symbols-outlined">north_east</span>
+                </button>
+            </footer>
         </form>
     </div>
 </section>

@@ -19,6 +19,54 @@ body {
     overflow-x: hidden;
 }
 
+/* ==========================================================================
+   COMPONENTE: BACK ARROW CTA (SISTEMATIZADO)
+   ========================================================================== */
+
+/* Contenedor que posiciona el botón debajo del Navbar */
+.back-nav-container {
+    position: fixed;
+    top: 85px; /* Altura calculada para quedar debajo del Navbar */
+    left: 0;
+    width: 100%;
+    padding: 0 var(--grid-margin);
+    z-index: 900; /* Debajo del Nav (1000), sobre el Hero */
+    pointer-events: none; /* Permite hacer clic "a través" del área vacía */
+}
+
+/* El botón circular minimalista */
+.back-arrow-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--crema);
+    background: rgba(29, 30, 28, 0.6); /* Fondo oscuro semitransparente */
+    border: 1px solid rgba(255, 253, 243, 0.15); /* Borde sutil */
+    border-radius: 50%; /* Circular */
+    width: 48px;
+    height: 48px;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: auto; /* Habilita el clic solo en el botón */
+    backdrop-filter: blur(8px); /* Efecto moderno de cristal */
+}
+
+/* Icono de la flecha */
+.back-arrow-cta .material-symbols-outlined {
+    font-size: 22px;
+    transition: transform 0.3s ease;
+}
+
+/* --- HOVER STATE (INTERACCIÓN CRUZ ESTUDIO) --- */
+.back-arrow-cta:hover {
+    border-color: var(--gold); /* Color de acento corporativo */
+    color: var(--gold);
+    transform: translateX(-4px); /* Sutil movimiento hacia atrás para indicar retorno */
+    background: rgba(29, 30, 28, 0.9);
+}
+
+
+
 /* --- EFECTO REVEAL SCROLL --- */
 .scroll-reveal {
     opacity: 0;
@@ -184,6 +232,21 @@ body {
     z-index: 10;
 }
 
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 1024px) {
+    .back-nav-container {
+        top: 75px; /* Ajuste fino para móviles */
+        padding: 0 20px;
+    }
+    .back-arrow-cta {
+        width: 40px; /* Un poco más pequeño en móvil */
+        height: 40px;
+    }
+    .back-arrow-cta .material-symbols-outlined {
+        font-size: 20px;
+    }
+}
 /* --- RESPONSIVE MOBILE --- */
 @media (max-width: 1450px) {
     .video-mask, .video-container-fix { 

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vientos de Ruta — Cruz Estudio ®</title>
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/styleproyect.css">
     <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png">
@@ -27,6 +28,12 @@
             </ul>
         </div>
     </nav>
+
+     <div class="back-nav-container">
+        <a href="trabajos.html" class="back-arrow-cta" aria-label="Volver a Trabajos">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </a>
+    </div>
 
     <main class="archive-main-content gretel-container">
         <header class="gretel-hero">
@@ -57,12 +64,12 @@
                 <figure class="reveal-frame"><img src="https://i.ibb.co/tPZ8KBHk/VD15.jpg" alt="VDR Branding"></figure>
             </div>
             <div class="gallery-row split-equal">
-                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/0VCtmdzg/VD1.jpg" alt="VDR 1"></figure>
-                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/nN3Zcmg2/VD12.jpg" alt="VDR 2"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/0VCtmdzg/VD1.jpg" alt="VDR Visual 1"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/nN3Zcmg2/VD12.jpg" alt="VDR Visual 2"></figure>
             </div>
             <div class="gallery-row split-equal">
-                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/wf8nVhT/VD13.jpg" alt="VDR 3"></figure>
-                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/BVL3PNKZ/VD14.jpg" alt="VDR 4"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/wf8nVhT/VD13.jpg" alt="VDR Visual 3"></figure>
+                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/BVL3PNKZ/VD14.jpg" alt="VDR Visual 4"></figure>
             </div>
         </section>
 
@@ -78,7 +85,19 @@
                 <figure class="reveal-frame aspect-framed"><img src="../img/vdr-1.png" alt="VDR Web 1"></figure>
                 <figure class="reveal-frame aspect-framed"><img src="../img/vdr-2.png" alt="VDR Web 2"></figure>
             </div>
-            </section>
+
+            <div class="gallery-row full video-final-row">
+                <div class="scroll-reveal"> 
+                    <div class="video-container-fix">
+                        <video autoplay muted loop playsinline preload="auto" class="video-native">
+                            <source src="../img/vientos-de-ruta.mp4" type="video/mp4">
+                            Tu navegador no admite video nativo.
+                        </video>
+                        <div class="video-click-blocker"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section class="gretel-break">
             <h3 class="break-text">"Viajar es capturar la esencia de lo que nos rodea."</h3>
@@ -95,6 +114,7 @@
     <script src="../java/script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Observer para animaciones (Scroll Reveal)
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -102,7 +122,16 @@
                     }
                 });
             }, { threshold: 0.1 });
+            
             document.querySelectorAll('.scroll-reveal, .reveal-frame').forEach((el) => observer.observe(el));
+
+            // Forzar reproducción del video nativo
+            const video = document.querySelector('.video-native');
+            if (video) {
+                video.play().catch(() => {
+                    console.log("El navegador requiere interacción para iniciar el video.");
+                });
+            }
         });
     </script>
 </body>
