@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const clockElement = document.getElementById("loader-clock");
     let count = 0;
 
-    // Reloj en vivo (como en la referencia)
+    // Reloj en vivo para la fisonomía técnica
     function updateClock() {
         const now = new Date();
         clockElement.innerText = now.toTimeString().split(' ')[0];
@@ -12,18 +12,24 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Contador de Carga
-    const loaderInterval = setInterval(() => {
+    // Algoritmo de carga constante (1 en 1)
+    function startCounting() {
         count++;
-        // Formatear a dos dígitos (01, 02...)
+        if (count > 100) count = 100;
+
+        // Formateo a dos dígitos (01, 02...)
         percentage.innerText = count < 10 ? '0' + count : count;
 
-        if (count === 100) {
-            clearInterval(loaderInterval);
+        if (count < 100) {
+            // Velocidad controlada para fluidez cinematográfica
+            let delay = count < 30 ? 30 : (count < 80 ? 50 : 20);
+            setTimeout(startCounting, delay);
+        } else {
             setTimeout(() => {
                 loader.classList.add("loaded");
                 document.body.classList.remove("scroll-locked");
-            }, 500);
+            }, 800);
         }
-    }, 30); // Velocidad de carga
+    }
+    startCounting();
 });

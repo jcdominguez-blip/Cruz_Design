@@ -59,6 +59,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+
+// 1. Redirección con animación de cortina
+function redirectWithAnimation(element) {
+    const url = element.getAttribute('data-url');
+    const transition = document.querySelector('.page-transition');
+
+    if (url) {
+        // Activamos la clase 'entering' definida en tu CSS
+        transition.style.transformOrigin = "left";
+        transition.classList.add('entering');
+        
+        // Esperamos 800ms (duración de la animación) antes de cambiar de página
+        setTimeout(() => {
+            window.location.href = url;
+        }, 800);
+    }
+}
+
+// 2. Cambio de imagen en el Preview (Hover)
+function changePreview(projectNum) {
+    // Quitamos la clase active de todas las imágenes de la preview
+    const allImages = document.querySelectorAll('.preview-inner img');
+    allImages.forEach(img => {
+        img.classList.remove('active');
+    });
+
+    // Activamos la imagen que coincide con el ID del proyecto
+    const targetImage = document.getElementById(`project-image-${projectNum}`);
+    if (targetImage) {
+        targetImage.classList.add('active');
+    }
+}
+
 // --- GESTIÓN DE ACORDEÓN Y PROYECTOS (Unificada) ---
 let currentIndex = 0;
 let projectImages = [];

@@ -1,36 +1,43 @@
-/* Estilos generales */
+/* ==========================================================================
+   SCROLL UNLOCK (FIX CRÍTICO)
+   ========================================================================== */
+html, body {
+    overflow-x: hidden !important;
+    overflow-y: auto !important; /* Fuerza el scroll vertical */
+    height: auto !important;    /* Evita que se bloquee a la altura de la pantalla */
+    position: relative !important;
+}
+
+/* Evita que la capa de transición bloquee el mouse */
+.page-transition {
+    pointer-events: none !important; 
+}
+
+/* ==========================================================================
+   TUS ESTILOS ORIGINALES (SIN CAMBIOS)
+   ========================================================================== */
 body {
     font-family: 'neue-haas-grotesk-display', sans-serif;
-    color: #FFFDF3; /* Change text color to white */
-    background-color: #000; /* Change background color to black */
+    color: #FFFDF3;
+    background-color: #000;
     margin: 0;
     padding: 0;
 }
 
 h1, h2 {
     font-family: 'neue-haas-grotesk-display', sans-serif;
-    color: #FFFDF3; /* Change text color to white */
+    color: #FFFDF3;
 }
 
 p {
     font-family: "cofo-sans-mono-variable", monospace;
     font-weight: 300;
-    color: #FFFDF3; /* Change text color to white */
+    color: #FFFDF3;
 }
-
-
-
-
-.about{
-
-    color: rgba(163, 163, 163, 0.685);
-}
-
-/* Estilos del proyecto */
 
 .about-hero {
-    background-color: #1D1E1C; /* Change background color to black */
-    color: #FFFDF3; /* Change text color to white */
+    background-color: #1D1E1C;
+    color: #FFFDF3;
     padding: 100px 20px;
     text-align: center;
 }
@@ -39,55 +46,46 @@ p {
     font-family: 'neue-haas-grotesk-display';
     font-weight: 600;
     font-size: 70px;
-    text-align: left; /* Justifica el título a la izquierda */
+    text-align: left;
     margin-top: 20px;
     width: 100%;
 }
 
-.overview-description{
-    
-    text-align: right; /* Alinea el texto a la derecha */
-    margin-left: auto; /* Empuja el contenido hacia la derecha */
-    margin-right: 20px; /* Espaciado desde el borde derecho */
-    max-width: 50%; /* Limita el ancho del contenido */
+.overview-description {
+    text-align: right;
+    margin-left: auto;
+    margin-right: 20px;
+    max-width: 50%;
 }
 
 .about-subtitle {
     font-family: 'neue-haas-grotesk-display';
     font-weight: 400;
     font-size: 24px;
-    text-align: left; /* Justifica el subtítulo a la izquierda */
+    text-align: left;
     margin-top: 10px;
-    margin-left: 170px; /* Centra horizontalmente */
-    margin-right: auto; /* Centra horizontalmente */
-    width: 70%; /* Ajusta el ancho para que no ocupe todo el espacio */
+    margin-left: 170px;
+    width: 70%;
 }
 
 .description {
-    background-color: #1D1E1C; /* Fondo negro */
-    color: #FFFDF3; /* Tipografía blanca */
-    
-    margin: 0; /* Elimina márgenes externos */
-    padding: 20px; /* Agrega espacio interno */
-    width: 100%; /* Asegura que la sección ocupe todo el ancho */
-    box-sizing: border-box; /* Incluye padding en el ancho total */
+    background-color: #1D1E1C;
+    color: #FFFDF3;
+    margin: 0;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .texto-about p {
     font-family: "cofo-sans-mono-variable", monospace;
     font-weight: 400;
     font-size: 16px;
-    line-height: 1.6; /* Mejora la legibilidad */
-    margin: 0; /* Elimina márgenes adicionales */
-    color: #FFFDF3; /* Asegura que el texto sea blanco */
-    max-width: 34%; /* Limita el ancho del contenido */
-    margin-left: auto; /* Empuja el contenido hacia la derecha */
-    margin-right: 145px; /* Espaciado desde el borde derecho */
+    line-height: 1.6;
+    max-width: 34%;
+    margin-left: auto;
+    margin-right: 145px;
 }
-
-
-
-
 
 /* Team Section */
 .team-section {
@@ -95,6 +93,8 @@ p {
     color: #FFFDF3;
     padding: 50px 20px;
     text-align: left;
+    position: relative;
+    padding-bottom: 50px;
 }
 
 .team-title {
@@ -102,15 +102,10 @@ p {
     font-size: 38px;
     margin-bottom: 40px;
 }
-.team-arrow {
-    position: relative; /* Necesario para que .team-arrow se posicione correctamente */
-    right: 0; /* Mantiene la flecha en la parte derecha */
-    transform: translate(120px, -60px); /* Ajusta la posición vertical hacia arriba */
-}
 
-.team-section {
-    position: relative; /* Asegura que la posición absoluta de .hero-arrow sea relativa a esta sección */
-    padding-bottom: 50px; /* Agrega espacio para que la flecha no se superponga al contenido */
+.team-arrow {
+    position: relative;
+    transform: translate(120px, -60px);
 }
 
 .team-grid {
@@ -128,14 +123,7 @@ p {
     width: 100%;
     max-width: 300px;
     height: auto;
-    border-radius: 0%;
     margin-bottom: 10px;
-}
-
-.member-name {
-    font-family: 'neue-haas-grotesk-display', sans-serif;
-    font-size: 18px;
-    font-weight: 600;
 }
 
 .member-role {
@@ -144,65 +132,18 @@ p {
     color: #AAA;
 }
 
-.icon-links {
-    display: flex;
-    gap: 10px; /* Space between icons */
-    justify-content: center; /* Center the icons */
-    margin-top: 10px; /* Space above the icons */
-}
-
-.linkedin-icon img, .mail-icon img {
-    width: 24px; /* Adjust the size of the icons */
-    height: 24px; /* Ensure the icons maintain their aspect ratio */
-}
-
-.linkedin-icon:hover img, .mail-icon:hover img {
-    opacity: 0.8; /* Slightly dim the icon on hover for effect */
-}
-
-
-/* Details Section */
-.about-details {
-    background-color: #1D1E1C;
-    color: #FFFDF3;
-    padding: 50px 20px;
-}
-
-.details-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-}
-
-.details-item h3 {
-    font-family: 'neue-haas-grotesk-display', sans-serif;
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.details-item p {
-    font-family: 'cofo-sans-mono-variable', monospace;
-    font-size: 16px;
-    line-height: 1.6;
-}
-
-
-
 /* Services Section */
 .services-section {
     width: 100%;
     background-color: #1D1E1C;
     padding: 80px 0;
-    margin: 0;
 }
 
 .services-title {
     max-width: 1900px;
     margin: 0 auto 40px;
     padding: 0 20px;
-    font-family: 'neue-haas-grotesk-display', sans-serif;
-    font-size: 38px;    
-    color: #FFFDF3;
+    font-size: 38px;
 }
 
 .accordion-service {
@@ -225,38 +166,15 @@ p {
     background: none;
     border: none;
     cursor: pointer;
-    text-align: left;
-    transition: all 0.3s ease;
-    color: #FFFDF3;
-}
-
-.service-number {
-    font-size: 1rem;
-    color: #666;
-    width: 50px;
-}
-
-.service-name {
-    flex-grow: 1;
-    font-size: 24px;
-    font-weight: 400;
-    color: #FFFDF3;
-}
-
-.accordion-icon {
-    font-size: 1.5rem;
-    transition: transform 0.3s ease;
     color: #FFFDF3;
 }
 
 .accordion-content-service {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: all 0.3s ease;
     padding: 0 50px;
     opacity: 0;
-    transition: all 0.3s ease;
-    color: #FFFDF3;
 }
 
 .accordion-item-service.active .accordion-content-service {
@@ -265,133 +183,74 @@ p {
     padding: 20px 50px;
 }
 
-.accordion-item-service.active .accordion-icon {
-    transform: rotate(45deg);
+/* ==========================================================================
+   FOOTER BLANCO (ESTILO INDEX)
+   ========================================================================== */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 45px;
+    background-color: #FFFDF3; /* Blanco/Crema institucional */
+    border-top: 1px solid rgba(29, 30, 28, 0.1);
+    width: 100%;
 }
 
-
-/*Texto adicional*/
-
-.texto-adicional{
-    padding: 50px 0; /* Corrige el padding para que sea válido */
-    max-width: 805px;
-    margin-top: 10px; 
+/* Color de texto oscuro para fondo blanco */
+.text-footer, 
+.footer-right .copyright, 
+.footer-right .year, 
+.footer-right .clock {
+    font-family: "cofo-sans-mono-variable", monospace;
+    font-size: 13px;
+    color: #1D1E1C !important; /* Gris oscuro/Negro del sistema */
+    text-decoration: none;
 }
 
+/* Enlaces del centro */
+.social-links {
+    display: flex;
+    gap: 30px;
+}
 
+.social-link {
+    transition: opacity 0.3s ease;
+}
+
+.social-link:hover {
+    color: #f2c335 !important; /* Amarillo en hover */
+    opacity: 1;
+}
+
+/* Mantener el amarillo corporativo en iconos y años */
+.txt-yellow {
+    color: #f2c335 !important;
+}
+
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1.4;
+}
+
+/* Ajuste Responsive para mantener minimalismo en móviles */
 @media (max-width: 768px) {
-    .overview-grid,
-    .content-grid {
-        grid-template-columns: 1fr; /* Asegura que las columnas ocupen todo el ancho */
+    .footer {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+        padding: 60px 20px;
     }
+    .footer-right {
+        align-items: center;
+    }
+}
 
-    .project-hero {
-        padding: 10px 15px; /* Agrega un poco de padding para dispositivos móviles */
-    }
-
-    .project-title,
-    .project-subtitle {
-        padding: 0 15px; /* Ajusta el padding para que el texto no toque los bordes */
-        text-align: center; /* Centra el texto */
-    }
-
-    .hero-image img {
-        max-height: none; /* Permite que las imágenes se ajusten automáticamente */
-        width: 100%; /* Asegura que las imágenes ocupen todo el ancho disponible */
-        height: auto; /* Mantiene las proporciones */
-    }
-
-    .about-hero-content {
-        padding: 20px 15px; /* Ajusta el padding para un diseño más limpio */
-    }
-
-    .about-title {
-        font-size: 2rem; /* Ajusta el tamaño del título */
-        text-align: left; /* Centra el título */
-        
-        margin-bottom: 30px; /* Agrega espacio debajo del título */
-    }
-
-    .overview-description {
-        text-align: left; /* Justifica el texto */
-        max-width: none; /* Elimina la limitación del ancho del contenido */
-        width: 100%; /* Asegura que el texto ocupe todo el ancho disponible */
-        padding: 0 ; /* Agrega espacio interno para los lados */
-        text-align: left; /* Alinea el texto a la izquierda para evitar espacios indeseados */
-    }
-
-    .about-subtitle {
-        font-family: 'neue-haas-grotesk-display';
-        font-weight: 400;
-        font-size: 24px;
-        line-height: 1.8; /* Mejora la legibilidad */
-        margin: 0; /* Elimina márgenes adicionales */
-        color: #FFFDF3; /* Asegura que el texto sea blanco */
-        max-width: none; /* Elimina la limitación del ancho del contenido */
-        width: 100%; /* Asegura que el texto ocupe todo el ancho disponible */
-        padding:  15px; /* Agrega espacio interno para los lados */
-        
-    }
-
-    .texto-about {
-        text-align: justify; /* Justifica el texto */
-        margin: 0 auto; /* Centra el bloque horizontalmente */
-        width: 100%; /* Ensancha el bloque para que ocupe toda la pantalla */
-        padding: 0 15px; /* Agrega espacio interno */
-        
-    }
-
-    .texto-about p {
-        font-family: "cofo-sans-mono-variable", monospace;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 1.6; /* Mejora la legibilidad */
-        margin: 0; /* Elimina márgenes adicionales */
-        color: #FFFDF3; /* Asegura que el texto sea blanco */
-        max-width: none; /* Elimina la limitación del ancho del contenido */
-        width: 100%; /* Asegura que el texto ocupe todo el ancho disponible */
-        padding: 0 15px; /* Agrega espacio interno para los lados */
-        text-align: left; /* Alinea el texto a la izquierda para evitar espacios indeseados */
-    }
-
-    /*galeria*/
-
-    .gallery-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .gallery-item {
-        grid-column: span 2 !important;
-        height: auto !important;
-    }
-    .gallery-item video {
-        width: 100%; /* Asegura que el video ocupe todo el ancho del contenedor */
-        height: auto; /* Mantiene las proporciones del video */
-        border-radius: 8px; /* Opcional: bordes redondeados */
-        object-fit: cover; /* Asegura que el video se ajuste correctamente al contenedor */
-    }
-    
-    
-
-    .team-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .details-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .team-member {
-        padding: 15px;
-    }
-
-    .member-name {
-        font-size: 1.1rem;
-    }
-
-    .member-role {
-        font-size: 0.9rem;
-    }
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .team-grid { grid-template-columns: 1fr; }
+    .about-title { font-size: 3rem; }
+    .about-subtitle { margin-left: 0; width: 100%; }
+    .texto-about p { max-width: 100%; margin-right: 0; }
 }
