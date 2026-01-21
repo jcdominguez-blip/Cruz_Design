@@ -1633,6 +1633,19 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     transform: translate(5px, -5px);
 }
 
+/* Ajuste Responsive para mantener minimalismo en móviles */
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+        padding: 60px 20px;
+    }
+    .footer-right {
+        align-items: center;
+    }
+}
+
 /* RESPONSIVE */
 @media (max-width: 1024px) {
     .fields-layout { grid-template-columns: 1fr; gap: 50px; }

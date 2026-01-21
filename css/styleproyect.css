@@ -232,6 +232,78 @@ body {
     z-index: 10;
 }
 
+/* ==========================================================================
+   SISTEMA DE NAVEGACIÓN RESPONSIVE (MATCH INDEX)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        padding: 20px 30px !important; /* Respiro lateral en móvil */
+        height: 80px;
+    }
+
+    /* Ocultar el menú original y convertirlo en Overlay */
+    .nav-links-brands {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100%;
+        background-color: var(--bg-dark);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3.5rem;
+        transform: translateY(-100%); /* Escondido arriba */
+        transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        z-index: 999;
+        margin: 0; padding: 0;
+    }
+
+    .nav-links-brands.active {
+        transform: translateY(0); /* Desliza hacia abajo */
+    }
+
+    .nav-links-brands li {
+        margin: 0; /* Reset de márgenes de desktop */
+    }
+
+    .nav-links-brands a {
+        font-size: 32px !important; /* Tipografía grande e impactante */
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    /* Hamburguesa */
+    .menu-toggle {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 20px;
+        cursor: pointer;
+        z-index: 1001; /* Siempre sobre el overlay */
+    }
+
+    .bar {
+        height: 2px;
+        width: 100%;
+        background-color: var(--crema);
+        transition: all 0.3s ease;
+    }
+
+    /* Animación a X */
+    .menu-toggle.open .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .menu-toggle.open .bar:nth-child(2) { opacity: 0; }
+    .menu-toggle.open .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+    /* Bloqueo de scroll cuando el menú está abierto */
+    body.menu-open {
+        overflow: hidden !important;
+    }
+}
+
 
 /* --- RESPONSIVE ADJUSTMENTS --- */
 @media (max-width: 1024px) {
