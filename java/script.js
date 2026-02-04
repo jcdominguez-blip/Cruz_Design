@@ -1,6 +1,7 @@
 /**
  * SISTEMA INTEGRAL CRUZ ESTUDIO ® 2026
- * Versión: Navegación Libre y Revelado por Scroll
+ * Dirección Creativa: Juan Cruz
+ * Versión: Navegación Sistematizada + Hero Kinético (NYT Style)
  */
 
 // 1. VARIABLES GLOBALES ÚNICAS
@@ -18,7 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuBtn = document.getElementById('mobile-menu');
     const navLinks = document.getElementById('nav-links');
 
-    // --- 2. GESTIÓN DE LOADER (SIN BLOQUEO DE PANTALLA) ---
+    // Detectamos si la URL tiene un ancla (#) para evitar bloqueos en navegación externa
+    const isExternalNav = window.location.hash !== "";
+
+    // --- 2. GESTIÓN DE LOADER (SISTEMATIZADO) ---
     let progress = 0;
     const loadInterval = setInterval(() => {
         progress += Math.floor(Math.random() * 10) + 1;
@@ -28,18 +32,72 @@ document.addEventListener('DOMContentLoaded', () => {
             
             setTimeout(() => {
                 loader?.classList.add('hidden');
-                // LIBERTAD TOTAL: Aseguramos que el scroll esté habilitado desde el inicio
-                body.style.overflow = 'auto';
-                body.style.height = 'auto';
-                body.style.position = 'static';
-                body.classList.remove('scroll-locked');
+                
+                if (isExternalNav) {
+                    // Si viene de otra página a una sección: Desbloqueo inmediato
+                    unlockBodyScroll();
+                    setTimeout(() => handleInitialHash(), 150);
+                } else {
+                    // Si entra al Home: Libertad de scroll pero con inicio controlado
+                    unlockBodyScroll();
+                }
             }, 500);
         }
         if (percentage) percentage.textContent = `${progress}%`;
         if (progressBar) progressBar.style.width = `${progress}%`;
     }, 40);
 
-    // --- 3. NAVEGACIÓN SUAVE (SMOOTH SCROLL) ---
+    function unlockBodyScroll() {
+        body.classList.remove('scroll-locked');
+        body.style.overflow = 'auto';
+        body.style.height = 'auto';
+        body.style.position = 'static';
+    }
+
+    function handleInitialHash() {
+        const hash = window.location.hash;
+        if (hash) {
+            const target = document.querySelector(hash);
+            if (target) {
+                const navHeight = navbar ? navbar.offsetHeight : 90;
+                window.scrollTo({
+                    top: target.offsetTop - navHeight,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    }
+
+    // --- 3. HERO KINÉTICO (REEMPLAZA TYPEWRITER) ---
+    // Efecto de rotación vertical: IDEAS, MARCAS, SISTEMAS, IDENTIDADES
+    const kineticTarget = document.getElementById("kinetic-word");
+    if (kineticTarget) {
+        const words = ["IDEAS", "MARCAS", "ESTRATEGIAS", "IDENTIDADES"];
+        let wordIdx = 0;
+
+        setInterval(() => {
+            // Fase 1: Salida (Dropdown/Persiana)
+            kineticTarget.style.transform = 'translateY(-20px)';
+            kineticTarget.style.opacity = '0';
+
+            setTimeout(() => {
+                // Fase 2: Cambio de palabra
+                wordIdx = (wordIdx + 1) % words.length;
+                kineticTarget.textContent = words[wordIdx];
+                
+                // Posicionamos abajo para la entrada
+                kineticTarget.style.transform = 'translateY(20px)';
+                
+                // Fase 3: Entrada
+                requestAnimationFrame(() => {
+                    kineticTarget.style.transform = 'translateY(0)';
+                    kineticTarget.style.opacity = '1';
+                });
+            }, 600); // Sincronizado con la transición CSS
+        }, 3000);
+    }
+
+    // --- 4. NAVEGACIÓN SUAVE (SMOOTH SCROLL) ---
     document.querySelectorAll('a[href^="#"], a[href^="index.html#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
@@ -48,13 +106,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (targetElement) {
                 e.preventDefault();
+                unlockBodyScroll();
                 const navHeight = navbar ? navbar.offsetHeight : 90;
                 window.scrollTo({
                     top: targetElement.offsetTop - navHeight,
                     behavior: 'smooth'
                 });
 
-                // Cerrar menú móvil si está abierto
+                // Cierre de menú móvil
                 if (navLinks?.classList.contains('active')) {
                     menuBtn?.classList.remove('open');
                     navLinks?.classList.remove('active');
@@ -64,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 4. MENÚ MÓVIL (TOGGLE) ---
+    // --- 5. MENÚ MÓVIL (TOGGLE) ---
     if (menuBtn && navLinks) {
         menuBtn.addEventListener('click', () => {
             menuBtn.classList.toggle('open');
@@ -73,25 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 5. TYPEWRITER EFFECT (HERO) ---
-    const typewriterTarget = document.getElementById("hero-title");
-    if (typewriterTarget) {
-        const texts = ["Sistematizamos marcas", "Diseñamos estrategias", "Creamos valor visual"];
-        let idx = 0, charIdx = 0, isDeleting = false;
-
-        function type() {
-            const fullText = texts[idx];
-            typewriterTarget.textContent = isDeleting ? fullText.substring(0, charIdx--) : fullText.substring(0, charIdx++);
-            let speed = isDeleting ? 50 : 100;
-
-            if (!isDeleting && charIdx > fullText.length) { isDeleting = true; speed = 1500; }
-            else if (isDeleting && charIdx < 0) { isDeleting = false; idx = (idx + 1) % texts.length; speed = 500; }
-            setTimeout(type, speed);
-        }
-        type();
-    }
-
-    // --- 6. RELOJ DEL FOOTER ---
+    // --- 6. RELOJ Y REVEALS ---
     function updateClock() {
         const clockElements = document.querySelectorAll('#clock, #loader-clock');
         const now = new Date();
@@ -101,8 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 1000);
     updateClock();
 
-    // --- 7. SISTEMA DE REVELADO AUTOMÁTICO (REVEAL ON SCROLL) ---
-    // Este observador activa tanto el manifiesto de Cruz Estudio como los demás elementos
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -110,14 +149,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, { 
-        threshold: 0.2, // Se activa cuando el 20% del elemento es visible
-        rootMargin: "0px 0px -50px 0px" // Dispara un poco antes de llegar
+        threshold: 0.15,
+        rootMargin: "0px 0px -50px 0px" 
     });
 
-    // Elementos a observar
-    document.querySelectorAll('.scroll-reveal, #studio-intro, .featured-work-item').forEach((el) => {
+    document.querySelectorAll('.scroll-reveal, #studio-intro, .featured-work-item, .service-row').forEach((el) => {
         revealObserver.observe(el);
     });
+
+    // --- 7. FORMULARIO ESTRATÉGICO ---
+    const textarea = document.getElementById('userMsg');
+    if (textarea) {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + "px";
+        });
+    }
+
+    const contactForm = document.querySelector('.form-sistematizado');
+    if (contactForm) {
+        contactForm.addEventListener('submit', () => {
+            const nombreInput = document.getElementById('userName');
+            if (nombreInput) {
+                localStorage.setItem('clienteNombre', nombreInput.value);
+            }
+        });
+    }
 });
 
 // --- 8. FUNCIONES GLOBALES (ACORDEÓN Y PREVIEWS) ---

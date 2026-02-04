@@ -1,33 +1,56 @@
+/**
+ * SISTEMA DE DISEÑO CRUZ ESTUDIO ® 2026
+ * Tipografías: Neue Haas Grotesk + IBM Plex Sans + Cofo Sans Mono
+ */
+
+/* --- 1. VARIABLES Y FUENTES SISTEMATIZADAS --- */
+:root {
+    --bg-dark: #1D1E1C;
+    --crema: #FFFDF3;
+    --amarillo-acento: #f2c335;
+    
+    /* Tipografías */
+    --font-header: 'neue-haas-grotesk-display', sans-serif;
+    --font-reading: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'cofo-sans-mono-variable', monospace;
+
+    /* Escala */
+  /* ESCALA DE IMPACTO SUIZO */
+    --h1-size: clamp(4.2rem, 10vw, 150px); /* Tamaño masivo según referencia */
+    --h1-leading: 0.90;                   /* Interlineado extremadamente cerrado */
+    --h1-spacing: -0.05rem;                /* Tensión en el kerning */
+    --body-size: 18px;
+    --detail-size: 14px;
+    
+    --loader-yellow: #f2c335;
+    --loader-black: #1D1E1C;
+    --loader-transition: cubic-bezier(0.77, 0, 0.175, 1);
+    --loader-margin: 45px;
+}
+
+/* --- 2. RESET & BASE --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'neue-haas-grotesk-display', 'cofo-sans-mono-variable', 'chivo',  sans-serif;
+    font-family: var(--font-header), var(--font-mono), sans-serif;
 }
-
 
 body {
-
-
-font-family: "neue-haas-grotesk-display", "cofo-sans-mono-variable", sans-serif;
-font-display: swap;
-font-synthesis: none; /* Evita que Chrome cambie las fuentes al traducir */
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
-background-color: #1D1E1C;
-color: #1D1E1C;
-cursor: crosshair; /*cursor + */
-overflow-x: hidden;
-width: 100%;
-position: relative;
-
-}
-
-
-html {
+    font-family: var(--font-reading), sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--crema);
+    cursor: crosshair;
     overflow-x: hidden;
     width: 100%;
-    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 /* Activa el desplazamiento suave en toda la web */
@@ -525,7 +548,7 @@ margin: 3px 0;
     font-size: 14px;
 }
 
-/* --- HERO BASE --- */
+/* --- SECCIÓN HERO (AJUSTE SISTEMATIZADO) --- */
 .hero {
     background-color: #1D1E1C;
     height: 100vh;
@@ -537,109 +560,115 @@ margin: 3px 0;
     z-index: 1;
 }
 
-/* --- MALLA 3D --- */
 #hero-3d-background {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     z-index: 0;
 }
-
-.hero-button {
-display: inline-block;
-padding: 10px 20px;
-font-size: 16px;
-color: #f4f4f4; /* Color del texto */
-background-color: #1D1E1C; /* Color de fondo */
-text-decoration: none;
-border-color: #f4f4f4;
-border-radius: 5px;
-font-family: "cofo-sans-mono-variable";
-transition: background-color 0.3s, color 0.3s; /* Añadido efecto de transición para el color del texto */
-}
-
-
-.hero-button:hover {
-background-color: #f4f4f4; /* Color de fondo al pasar el mouse */
-color: #1D1E1C; /* Cambia el color del texto al pasar el mouse */
-border-color: #f4f4f4;
-text-decoration: none;
-}
-/* --- CONTENEDOR HERO ALINEADO --- */
 
 .hero-main-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    
     width: 100% !important;
-    max-width: none !important;
-    margin: 0 !important;
-    padding-left: 40px !important;
-    padding-right: 40px !important;
-    padding-top: 10%;
-
-    /* --- AJUSTE DE POSICIÓN --- */
-    /* Cambiamos de -22vh a -12vh para bajarlo un poco */
-    /* Puedes probar con -10vh o -8vh si lo quieres aún más abajo */
-    transform: translateY(-12vh) !important; 
-
+    padding: 0 40px !important;
+    transform: translateY(-8vh) !important; /* Ajuste para respiro suizo */
     pointer-events: none;
     z-index: 2;
-    box-sizing: border-box;
     position: relative;
 }
 
-/* --- BLOQUE IZQUIERDO --- */
 .hero-left {
     pointer-events: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
+    width: 65%;
 }
 
 .hero-title {
-    font-family: 'neue-haas-grotesk-display', sans-serif;
-    font-size: clamp(3.5rem, 11vw, 130px);
+    font-family: var(--font-header);
+    font-size: var(--h1-size);
     font-weight: 700;
-    color: #FFFDF3;
-    line-height: 0.85;
-    margin-bottom: 2rem;
-    margin-left: -5px; 
-    min-height: 1.1em; 
-    display: flex;
-    align-items: baseline;
-    text-transform: none;
-    letter-spacing: -0.03em;
+    line-height: var(--h1-leading);
+    letter-spacing: var(--h1-spacing);
+    color: var(--crema);
+    
+    /* ALINEACIÓN SUIZA */
+    padding-top: 10%;
+    text-align: left; 
+    max-width: 90%;      /* Evita que el texto toque el borde derecho */
+    margin-bottom: 3rem;
+    display: block;
+}
+
+/* Palabra kinética: Usamos Cofo Mono para resaltar el sistema */
+.word-slider {
+    font-family: var(--font-mono);
+    color: var(--amarillo-acento);
+    display: inline-block;
+    transition: transform 0.6s var(--loader-transition), opacity 0.3s;
+    text-transform: uppercase;
 }
 
 .hero-subtitle {
-    font-family: 'cofo-sans-mono-variable', monospace;
-    font-size: 24px;
-    max-width: 900px;
-    color: rgba(255, 253, 243, 0.8);
-    line-height: 1.8;
-    text-align: left;
-    margin-left: 0 !important;
+    font-family: var(--font-reading);
+    font-size: 20px; /* Tamaño editorial reducido para notebooks */
+    font-weight: 300;
+    max-width: 600px;
+    color: rgba(255, 253, 243, 0.7);
+    line-height: 1.6;
+}
+
+.hero-right {
+    pointer-events: auto;
+    text-align: right;
+  
+    
+    
+}
+.hero-links{
+   font-size: 40%;
+}
+
+.hero-link {
+    
+    font-family: var(--font-mono);
+    
+    color: var(--crema) !important;
+    opacity: 0.4;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+.hero-link:hover { opacity: 1; color: var(--amarillo-acento) !important; transform: translateX(-5px); }
+
+.hero-arrow img {
+    width: 250px;
+    height: auto;
+    margin-top: 60px;
+    filter: brightness(0) saturate(100%) invert(82%) sepia(37%) saturate(1093%) hue-rotate(354deg) brightness(103%) contrast(93%);
+}
+
+.hero-fecha {
+    font-family: var(--font-mono);
+    color: var(--crema);
+    font-size: 18px;
+    font-weight: 700;
 }
 
 /* --- BLOQUE DERECHO --- */
 .hero-right {
     pointer-events: auto;
-
     text-align: right;
     /* Ajustamos el padding-top para que los links sigan nivelados con el H1 */
-    padding-top: 35px; 
+    padding-top: 8.5%; 
+    
 }
 
 .hero-link {
     color: #FFFDF3 !important; /* Limpieza de azul Bootstrap */
     text-decoration: none !important;
     font-family: 'cofo-sans-mono-variable', monospace;
-    font-size: 14px;
+    font-size: 8 rem;
     display: block;
     margin-bottom: 12px;
     transition: opacity 0.3s;
@@ -682,15 +711,9 @@ text-decoration: none;
 
 @media (max-width: 768px) {
     /* Eliminamos la flecha para limpiar el encuadre */
-    .hero-arrow {
-        display: none !important;
-    }
-
-    /* Opcional: Ajuste de respiro para el subtítulo 
-       al no tener el elemento visual debajo */
-    .hero-subtitle {
-        margin-bottom: 40px;
-    }
+  .hero-main-wrapper { flex-direction: column; padding-top: 180px !important; transform: none !important; }
+    .hero-title { font-size: 3.5rem; }
+    .hero-subtitle { font-size: 1.1rem; max-width: 100%; }
 }
 
 /*-----Animación*/
@@ -822,9 +845,9 @@ background-color: #444; /* Color al pasar el ratón */
         padding: 0 0px !important;
     }
 
-    .hero-title { font-size: 3.5rem; text-align: center; margin-left: 0; }
-    .hero-subtitle { text-align: center; margin: 0 auto; }
-    .hero-right { text-align: center; padding-top: 40px; width: 100%; }
+   
+    .hero-title { font-size: 3.5rem; }
+    .hero-subtitle { font-size: 1.1rem; max-width: 100%; }
     
     .nav-links-brands { display: none; } /* Ocultar para menú móvil */
     
@@ -1167,7 +1190,7 @@ body.scroll-locked {
 .featured-work-item:hover .work-category {
     color: #1D1E1C;
 }
-
+ 
 .decorative-line {
     border: none;
     height: 1px;
@@ -1345,7 +1368,7 @@ height: auto; /* Mantiene la proporción */
     color: #FFFDF3 !important; /* Crema base */
     text-decoration: none !important;
     font-family: 'cofo-sans-mono-variable', monospace;
-    font-size: 14px;
+    font-size: 18px;
     display: block;
     margin-bottom: 12px;
     transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
@@ -1760,40 +1783,47 @@ color: #838383;
 @media (min-width: 1024px) and (max-width: 1600px) {
 
     /* --- 1. RESPIRO SUPERIOR (AIRE CON EL NAVBAR) --- */
-    .hero-main-wrapper {
-        padding-top: 140px !important; /* Espacio de aire para que el H1 no ahogue al logo */
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        width: 100% !important;
-    }
+    
 
     /* --- 2. ESCALA REDUCIDA DE H1 Y H2 (SOPHISTICATED LOOK) --- */
+    .hero-main-wrapper {
+        padding: 0 var(--container-padding) !important;
+        /* Bajamos el bloque para que no compita con el Navbar en pantallas bajas */
+        transform: translateY(-5vh) !important; 
+    }
+
     .hero-left {
-        width: 60%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-         margin-bottom: -10rem;
+        width: 75%; /* Damos más aire a la derecha para que el texto "respire" */
     }
 
-    /* Título reducido para que no se corte en 13 pulgadas */
     .hero-title {
-        font-size: clamp(4rem, 7vw, 105px) !important; 
-        line-height: 0.85;
+         font-size: 7rem !important;
+        /* Ajuste fino de interlineado para evitar solapamiento de ascendentes */
+        line-height: 0.88;
+        letter-spacing: -0.05rem;
         margin-bottom: 2rem;
-        min-height: 1.1em; /* Reserva de espacio vertical para el typewriter */
-        letter-spacing: 0rem;
-        white-space: nowrap; /* Fuerza a que no se corte en dos palabras */
+        padding-left: 3%;
+    }
+    
+    .hero-link {
+    
+    
+    font-size: 14px;
+
+     }
+    .hero-subtitle {
+        /* IBM Plex Sans escalada para lectura cómoda en 13 pulgadas */
+        font-size: 18px !important;
+        max-width: 520px;
+        line-height: 1.5;
     }
 
-    /* BLOQUEO DE COLUMNA H2: Inamovible ante el efecto typewriter */
-    .hero-subtitle {
-        margin-bottom: -30%;
-        font-family: 'cofo-sans-mono-variable', monospace;
-        font-size: 22px !important; /* Escala reducida para notebook */
-        line-height: 1.8;
-        color: rgba(255, 253, 243, 0.7);
+    .word-slider {
+        /* En pantallas Retina, la mono regular puede verse muy delgada; 
+           un sutil ajuste de escala ayuda a equilibrar el peso visual */
+        transform: scale(1.02);
+        
+    }
         
         /* BLOQUEO RÍGIDO: 
         width: 480px !important; 
@@ -1811,6 +1841,13 @@ color: #838383;
         left: 45px;
         z-index: 2;
         text-align: left;
+    }
+
+    .hero-right {
+
+    
+        padding-right: 3%;
+
     }
 
 
@@ -1870,7 +1907,7 @@ color: #838383;
         padding: 6px 12px;
     }
 
-    }
+    
 
 /* ==========================================================================
    ADAPTACIÓN RESPONSIVE DEFINITIVA (CRUZ ESTUDIO ®)
