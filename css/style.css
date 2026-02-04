@@ -1817,28 +1817,80 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     }
 }
 
+/* --- AJUSTE PARA MÓVILES (768px) --- */
 @media (max-width: 768px) {
-    .footer {
+    .footer-global {
         grid-template-columns: 1fr;
         padding: 60px 35px;
-        gap: 40px;
-        align-items: flex-start;
+        gap: 50px;
     }
 
-    .footer-left, .footer-center, .footer-right {
-        align-items: flex-start; /* Evita que la info salga de encuadre */
-        text-align: left;
+    /* Reducción del logo para responsive */
+    .pluma-seal {
+        height: 30px; /* Tamaño reducido de 45px a 30px */
+        margin-bottom: 15px;
     }
 
-    .footer-right {
-        width: 100%;
-        border-top: 1px solid rgba(29, 30, 28, 0.1);
-        padding-top: 30px;
+    .footer-global .copyright-text {
+        font-size: 1.6rem; /* Ajuste proporcional del texto */
+        letter-spacing: -0.03em;
     }
 
-    .social-links {
-        flex-direction: column;
-        gap: 15px;
+    .footer-col, 
+    .footer-brand-end {
+        align-items: flex-start !important;
+        text-align: left !important;
+    }
+}
+
+/* --- BOTÓN WHATSAPP MONOCROMO --- */
+.whatsapp-fixed {
+    position: fixed;
+    bottom: 40px; /* Alineación suiza con el footer */
+    right: 45px;  /* Sigue tu grilla de 45px */
+    width: 60px;
+    height: 60px;
+    background-color: var(--bg-dark); /* Fondo oscuro por defecto */
+    border: 1px solid rgba(255, 253, 243, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.whatsapp-fixed svg {
+    width: 28px;
+    height: 28px;
+    fill: var(--crema); /* Icono crema sobre fondo oscuro */
+    transition: transform 0.4s ease, fill 0.4s ease;
+}
+
+/* Interacción: Aquí revelamos el Amarillo Acento */
+.whatsapp-fixed:hover {
+    background-color: var(--amarillo-acento);
+    transform: translateY(-5px) scale(1.05);
+    border-color: var(--amarillo-acento);
+}
+
+.whatsapp-fixed:hover svg {
+    fill: var(--bg-dark); /* El icono se vuelve oscuro en hover */
+    transform: rotate(10deg);
+}
+
+/* Ajuste Responsive */
+@media (max-width: 768px) {
+    .whatsapp-fixed {
+        bottom: 25px;
+        right: 25px;
+        width: 50px;
+        height: 50px;
+    }
+    .whatsapp-fixed svg {
+        width: 24px;
+        height: 24px;
     }
 }
 
@@ -2111,6 +2163,50 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
    ========================================================================== */
 
 @media (max-width: 768px) {
+
+    featured-works-container {
+        grid-template-columns: 1fr; /* Columna única */
+        gap: 40px;
+    }
+
+    /* Ocultamos la previsualización de imagen para priorizar la lista */
+    .works-preview .preview-inner {
+        display: none;
+    }
+
+    /* Posicionamos el botón al final de la sección */
+    .works-preview {
+        position: static;
+        order: 2; /* Baja después de la lista */
+        align-items: flex-start;
+        padding-top: 20px;
+    }
+
+    .works-list-wrapper {
+        order: 1;
+    }
+
+    .featured-work-item {
+        padding: 35px 0;
+    }
+
+    .work-title {
+        font-size: 1.6rem;
+    }
+
+    /* Forzamos visibilidad absoluta del botón en móvil */
+    .works-cta {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 100%;
+    }
+
+    .view-all-link {
+        font-size: 14px;
+        width: 100%;
+        justify-content: space-between;
+    }
 
     /* 1. Ocultamos el bloque de la imagen (lado izquierdo) */
     .works-preview {

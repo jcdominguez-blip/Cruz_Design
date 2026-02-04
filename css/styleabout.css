@@ -1,186 +1,285 @@
 /* ==========================================================================
-   SCROLL UNLOCK (FIX CRÍTICO)
+   SISTEMA DE DISEÑO CRUZ ESTUDIO ® — ABOUT PAGE
+   Inspiración: Mother Design / Studio Okay
    ========================================================================== */
+
+:root {
+    --bg-dark: #1D1E1C;
+    --crema: #FFFDF3;
+    --amarillo-acento: #f2c335;
+    
+    --font-header: 'neue-haas-grotesk-display', sans-serif;
+    --font-reading: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'cofo-sans-mono-variable', monospace;
+
+    --swiss-easing: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- 1. RESET & SCROLL (FIX) --- */
 html, body {
-    overflow-x: hidden !important;
-    overflow-y: auto !important; /* Fuerza el scroll vertical */
-    height: auto !important;    /* Evita que se bloquee a la altura de la pantalla */
-    position: relative !important;
+    background-color: var(--bg-dark);
+    color: var(--crema);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
-/* Evita que la capa de transición bloquee el mouse */
 .page-transition {
-    pointer-events: none !important; 
+    pointer-events: none;
 }
 
-/* ==========================================================================
-   TUS ESTILOS ORIGINALES (SIN CAMBIOS)
-   ========================================================================== */
-body {
-    font-family: 'neue-haas-grotesk-display', sans-serif;
-    color: #FFFDF3;
-    background-color: #000;
-    margin: 0;
-    padding: 0;
-}
-
-h1, h2 {
-    font-family: 'neue-haas-grotesk-display', sans-serif;
-    color: #FFFDF3;
-}
-
-p {
-    font-family: "cofo-sans-mono-variable", monospace;
-    font-weight: 300;
-    color: #FFFDF3;
-}
-
+/* --- 2. ABOUT HERO (JERARQUÍA MASIVA) --- */
 .about-hero {
-    background-color: #1D1E1C;
-    color: #FFFDF3;
-    padding: 100px 20px;
-    text-align: center;
+    padding: 180px 45px 100px 45px;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
 .about-title {
-    font-family: 'neue-haas-grotesk-display';
-    font-weight: 600;
-    font-size: 70px;
-    text-align: left;
-    margin-top: 20px;
-    width: 100%;
+    font-family: var(--font-header);
+    font-size: clamp(3rem, 5vw, 6.5rem);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    margin-bottom: 60px;
+}
+
+.about-title span.txt-yellow {
+    color: var(--amarillo-acento);
 }
 
 .overview-description {
-    text-align: right;
-    margin-left: auto;
-    margin-right: 20px;
-    max-width: 50%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    width: 100%;
 }
 
 .about-subtitle {
-    font-family: 'neue-haas-grotesk-display';
-    font-weight: 400;
-    font-size: 24px;
-    text-align: left;
-    margin-top: 10px;
-    margin-left: 170px;
-    width: 70%;
+    grid-column: 7 / 13; /* Desplazamiento asimétrico suizo */
+    font-family: var(--font-reading);
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    line-height: 1.4;
+    font-weight: 300;
+    color: rgba(255, 253, 243, 0.8);
 }
 
+/* --- 3. DESCRIPTION (TRANSICIÓN EDITORIAL) --- */
 .description {
-    background-color: #1D1E1C;
-    color: #FFFDF3;
-    margin: 0;
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
+    padding: 100px 45px;
+    border-top: 1px solid rgba(255, 253, 243, 0.1);
+}
+
+.texto-about {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
 }
 
 .texto-about p {
-    font-family: "cofo-sans-mono-variable", monospace;
-    font-weight: 400;
-    font-size: 16px;
+    grid-column: 1 / 8;
+    font-family: var(--font-reading);
+    font-size: clamp(1.1rem, 1.5vw, 1.4rem);
     line-height: 1.6;
-    max-width: 34%;
-    margin-left: auto;
-    margin-right: 145px;
+    color: var(--crema);
 }
 
-/* Team Section */
+/* --- 4. TEAM SECTION (GRID TÉCNICO) --- */
 .team-section {
-    background-color: #1D1E1C;
-    color: #FFFDF3;
-    padding: 50px 20px;
-    text-align: left;
-    position: relative;
-    padding-bottom: 50px;
+    padding: 140px 45px;
+    background-color: var(--bg-dark);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--amarillo-acento);
+    margin-bottom: 80px;
+    padding-bottom: 20px;
 }
 
 .team-title {
-    font-family: 'neue-haas-grotesk-display', sans-serif;
-    font-size: 38px;
-    margin-bottom: 40px;
-}
-
-.team-arrow {
-    position: relative;
-    transform: translate(120px, -60px);
+    font-family: var(--font-header);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
 }
 
 .team-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    justify-items: center;
+    gap: 30px;
 }
 
 .team-member {
-    text-align: center;
+    text-align: left;
+    transition: transform 0.4s var(--swiss-easing);
+}
+
+.team-member:hover {
+    transform: translateY(-10px);
 }
 
 .team-member img {
     width: 100%;
-    max-width: 300px;
-    height: auto;
-    margin-bottom: 10px;
+    filter: grayscale(1);
+    transition: filter 0.5s ease;
+    margin-bottom: 25px;
+}
+
+.team-member:hover img {
+    filter: grayscale(0);
+}
+
+.member-name {
+    font-family: var(--font-header);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 5px;
 }
 
 .member-role {
-    font-family: 'cofo-sans-mono-variable', monospace;    
-    font-size: 14px;
-    color: #AAA;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--amarillo-acento);
+    letter-spacing: 0.1em;
 }
 
-/* Services Section */
+.icon-links {
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+}
+
+.team-member:hover .icon-links {
+    opacity: 1;
+}
+
+/* --- 5. SERVICES ACCORDION (MINIMAL) --- */
 .services-section {
-    width: 100%;
-    background-color: #1D1E1C;
-    padding: 80px 0;
+    padding: 140px 45px;
+    border-top: 1px solid rgba(255, 253, 243, 0.1);
 }
 
 .services-title {
-    max-width: 1900px;
-    margin: 0 auto 40px;
-    padding: 0 20px;
-    font-size: 38px;
+    font-family: var(--font-header);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 700;
+    margin-bottom: 60px;
 }
 
 .accordion-service {
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 0 20px;
-    border-top: 1px solid #333;
+    border-top: 1px solid rgba(255, 253, 243, 0.1);
 }
 
 .accordion-item-service {
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid rgba(255, 253, 243, 0.1);
 }
 
 .accordion-button-service {
     width: 100%;
-    padding: 20px 0;
-    display: flex;
-    justify-content: space-between;
+    padding: 40px 0;
+    display: grid;
+    grid-template-columns: 80px 1fr 50px;
     align-items: center;
     background: none;
     border: none;
-    cursor: pointer;
-    color: #FFFDF3;
+    color: var(--crema);
+    text-align: left;
+    transition: color 0.3s ease;
 }
 
-.accordion-content-service {
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    padding: 0 50px;
-    opacity: 0;
+.service-number {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
 }
 
-.accordion-item-service.active .accordion-content-service {
-    max-height: 500px;
-    opacity: 1;
-    padding: 20px 50px;
+.service-name {
+    font-family: var(--font-header);
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.accordion-button-service:hover {
+    color: var(--amarillo-acento);
+}
+
+.accordion-content-service p {
+    font-family: var(--font-reading);
+    font-size: 1.1rem;
+    max-width: 800px;
+    padding-bottom: 40px;
+    line-height: 1.6;
+    color: rgba(255, 253, 243, 0.7);
+}
+
+/* --- 6. UTILITIES & RESPONSIVE --- */
+.txt-yellow { color: var(--amarillo-acento); }
+
+@media (max-width: 1024px) {
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .about-subtitle, .texto-about p { grid-column: 1 / 13; }
+}
+
+@media (max-width: 768px) {
+    .team-grid { grid-template-columns: 1fr; }
+    .about-hero { padding-top: 120px; }
+    .accordion-button-service { grid-template-columns: 40px 1fr 30px; }
+    .service-name { font-size: 1.5rem; }
+}
+
+/* --- BOTÓN WHATSAPP MONOCROMO --- */
+.whatsapp-fixed {
+    position: fixed;
+    bottom: 40px; /* Alineación suiza con el footer */
+    right: 45px;  /* Sigue tu grilla de 45px */
+    width: 60px;
+    height: 60px;
+    background-color: var(--bg-dark); /* Fondo oscuro por defecto */
+    border: 1px solid rgba(255, 253, 243, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.whatsapp-fixed svg {
+    width: 28px;
+    height: 28px;
+    fill: var(--crema); /* Icono crema sobre fondo oscuro */
+    transition: transform 0.4s ease, fill 0.4s ease;
+}
+
+/* Interacción: Aquí revelamos el Amarillo Acento */
+.whatsapp-fixed:hover {
+    background-color: var(--amarillo-acento);
+    transform: translateY(-5px) scale(1.05);
+    border-color: var(--amarillo-acento);
+}
+
+.whatsapp-fixed:hover svg {
+    fill: var(--bg-dark); /* El icono se vuelve oscuro en hover */
+    transform: rotate(10deg);
+}
+
+/* Ajuste Responsive */
+@media (max-width: 768px) {
+    .whatsapp-fixed {
+        bottom: 25px;
+        right: 25px;
+        width: 50px;
+        height: 50px;
+    }
+    .whatsapp-fixed svg {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 /*footer*/
@@ -237,27 +336,28 @@ p {
     }
 }
 
+/* --- AJUSTE PARA MÓVILES (768px) --- */
 @media (max-width: 768px) {
-    .footer {
+    .footer-global {
         grid-template-columns: 1fr;
         padding: 60px 35px;
-        gap: 40px;
-        align-items: flex-start;
+        gap: 50px;
     }
 
-    .footer-left, .footer-center, .footer-right {
-        align-items: flex-start; /* Evita que la info salga de encuadre */
-        text-align: left;
+    /* Reducción del logo para responsive */
+    .pluma-seal {
+        height: 30px; /* Tamaño reducido de 45px a 30px */
+        margin-bottom: 15px;
     }
 
-    .footer-right {
-        width: 100%;
-        border-top: 1px solid rgba(29, 30, 28, 0.1);
-        padding-top: 30px;
+    .footer-global .copyright-text {
+        font-size: 1.6rem; /* Ajuste proporcional del texto */
+        letter-spacing: -0.03em;
     }
 
-    .social-links {
-        flex-direction: column;
-        gap: 15px;
+    .footer-col, 
+    .footer-brand-end {
+        align-items: flex-start !important;
+        text-align: left !important;
     }
 }
