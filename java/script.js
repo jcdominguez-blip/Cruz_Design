@@ -131,7 +131,75 @@ document.addEventListener('DOMContentLoaded', () => {
             body.classList.toggle('menu-open');
         });
     }
+// Reloj del Footer
+function updateFooterClock() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('es-AR', { 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        hour12: false, 
+        timeZone: 'America/Argentina/Buenos_Aires' 
+    });
+    document.getElementById('footer-clock').textContent = timeString;
+}
+setInterval(updateFooterClock, 1000);
 
+// Cursor Estilo Flair Digital
+const cursor = document.querySelector('.custom-cursor');
+document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+});
+
+// Efecto de expansión al pasar por links
+const links = document.querySelectorAll('a, button');
+links.forEach(link => {
+    link.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'scale(4)';
+        cursor.style.opacity = '0.5';
+    });
+    link.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'scale(1)';
+        cursor.style.opacity = '1';
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Función del Reloj (Buenos Aires)
+    function updateFooterClock() {
+        const clockElement = document.getElementById('footer-clock');
+        if (clockElement) {
+            const now = new Date();
+            const options = { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                hour12: false, 
+                timeZone: 'America/Argentina/Buenos_Aires' 
+            };
+            clockElement.textContent = now.toLocaleTimeString('es-AR', options);
+        }
+    }
+
+    // Ejecución inmediata y actualización cada minuto
+    updateFooterClock();
+    setInterval(updateFooterClock, 60000);
+
+    // Lógica del Cursor Personalizado (Flair Digital)
+    const cursor = document.querySelector('.custom-cursor');
+    if (cursor) {
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Efecto hover en links
+        const links = document.querySelectorAll('a, button, .featured-work-item');
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => cursor.classList.add('cursor-expand'));
+            link.addEventListener('mouseleave', () => cursor.classList.remove('cursor-expand'));
+        });
+    }
+});
     // --- 6. RELOJ Y REVEALS ---
     function updateClock() {
         const clockElements = document.querySelectorAll('#clock, #loader-clock');

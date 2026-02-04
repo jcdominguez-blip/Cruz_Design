@@ -62,55 +62,69 @@
     <div class="contact-wrapper">
         <header class="contact-intro scroll-reveal">
             <h2 class="contact-display">Hablemos de tu<br>próximo proyecto.</h2>
-            <p class="mono-label">// DISEÑO ESTRATÉGICO DESDE BUENOS AIRES</p>
+            <p class="mono-label">// DISEÑO ESTRATÉGICO — BUENOS AIRES</p>
         </header>
        
         <form action="https://formspree.io/f/xrbekqeb" method="POST" class="form-sistematizado">
             
             <div class="form-segment scroll-reveal">
-                <span class="mono-tag">¿EN QUÉ PODEMOS AYUDARTE?</span>
+                <span class="mono-tag">[01] ÁREA DE INTERVENCIÓN</span>
                 <div class="services-grid">
-                    <label class="service-chip">
-                        <input type="checkbox" name="Interés" value="Branding">
-                        <span class="chip-box">Branding</span>
-                    </label>
-                    <label class="service-chip">
-                        <input type="checkbox" name="Interés" value="Web Design">
-                        <span class="chip-box">Web Design</span>
-                    </label>
-                    <label class="service-chip">
-                        <input type="checkbox" name="Interés" value="UX/UI">
-                        <span class="chip-box">UX/UI</span>
-                    </label>
-                    <label class="service-chip">
-                        <input type="checkbox" name="Interés" value="Audiovisual">
-                        <span class="chip-box">Audiovisual</span>
-                    </label>
-                    <label class="service-chip">
-                        <input type="checkbox" name="Interés" value="Otros">
-                        <span class="chip-box">Otros</span>
-                    </label>
+                    <label class="service-chip"><input type="checkbox" name="Interés" value="Branding"><span class="chip-box">BRANDING</span></label>
+                    <label class="service-chip"><input type="checkbox" name="Interés" value="Web"><span class="chip-box">DISEÑO WEB</span></label>
+                    <label class="service-chip"><input type="checkbox" name="Interés" value="UX/UI"><span class="chip-box">UX/UI</span></label>
+                    <label class="service-chip"><input type="checkbox" name="Interés" value="Audiovisual"><span class="chip-box">AUDIOVISUAL</span></label>
                 </div>
             </div>
 
-            <div class="fields-layout scroll-reveal">
-                <div class="input-container">
-                    <input type="text" name="name" id="userName" placeholder=" " required>
-                    <label for="userName">Tu nombre</label>
+            <div class="form-segment scroll-reveal">
+                <span class="mono-tag">[02] INFORMACIÓN DEL CONTACTO</span>
+                <div class="fields-layout">
+                    <div class="input-container">
+                        <input type="text" name="name" id="userName" placeholder=" " required>
+                        <label for="userName">Nombre (obligatorio)</label>
+                    </div>
+                    <div class="input-container">
+                        <input type="text" name="lastName" id="userLastName" placeholder=" " required>
+                        <label for="userLastName">Apellido (obligatorio)</label>
+                    </div>
+                    <div class="input-container">
+                        <input type="email" name="email" id="userEmail" placeholder=" " required>
+                        <label for="userEmail">Correo electrónico (obligatorio)</label>
+                    </div>
+                    <div class="input-container">
+                        <input type="tel" name="phone" id="userPhone" placeholder=" " required>
+                        <label for="userPhone">Teléfono (obligatorio)</label>
+                    </div>
+                    <div class="input-container full-col">
+                        <input type="text" name="country" id="userCountry" placeholder=" " required>
+                        <label for="userCountry">País de residencia (obligatorio)</label>
+                    </div>
                 </div>
-                <div class="input-container">
-                    <input type="email" name="email" id="userEmail" placeholder=" " required>
-                    <label for="userEmail">Email profesional</label>
-                </div>
+            </div>
+
+            <div class="form-segment scroll-reveal">
+                <span class="mono-tag">[03] DEFINICIÓN DE MARCA</span>
                 <div class="input-container full-col">
-                    <textarea name="message" id="userMsg" rows="1" placeholder=" " required></textarea>
-                    <label for="userMsg">Breve descripción del desafío...</label>
+                    <textarea name="brand_details" id="brandDetails" rows="1" placeholder=" " required></textarea>
+                    <label for="brandDetails">¿Cómo se llama tu marca? ¿De qué se trata? (obligatorio)</label>
+                </div>
+            </div>
+
+            <div class="form-segment scroll-reveal">
+                <span class="mono-tag">[04] CANAL DE ADQUISICIÓN</span>
+                <p class="reading-small">¿A través de qué medio llegaste a Cruz Estudio? (obligatorio)</p>
+                <div class="services-grid">
+                    <label class="service-chip"><input type="radio" name="Origin" value="Recommendation" required><span class="chip-box">RECOMENDACIÓN</span></label>
+                    <label class="service-chip"><input type="radio" name="Origin" value="Instagram" required><span class="chip-box">INSTAGRAM</span></label>
+                    <label class="service-chip"><input type="radio" name="Origin" value="Google" required><span class="chip-box">BÚSQUEDA (GOOGLE)</span></label>
+                    <label class="service-chip"><input type="radio" name="Origin" value="Ads" required><span class="chip-box">ANUNCIOS</span></label>
                 </div>
             </div>
 
             <footer class="form-actions scroll-reveal">
                 <button type="submit" class="cta-submit">
-                    <span class="cta-text">ENVIAR PROPUESTA</span>
+                    <span class="cta-text">ENVIAR REQUERIMIENTO</span>
                     <span class="material-symbols-outlined">north_east</span>
                 </button>
             </footer>
@@ -118,23 +132,42 @@
     </div>
 </section>
    
-<footer class="footer">
-    <div class="footer-left">
-        <span class="material-symbols-outlined">pin_drop</span>
-        <span class="text-footer" data-en="Headquarters in Buenos Aires, Argentina" data-es="Sede en Buenos Aires, Argentina">Sede en Buenos Aires, Argentina</span>
-    </div>
-    <div class="footer-center">
-        <div class="social-links">
-            <a href="https://www.instagram.com/cruzestudio_/" target="_blank" rel="noopener noreferrer" class="social-link text-footer link-location">Instagram</a>
-            <a href="https://www.linkedin.com/company/cruzdesign/?viewAsMember=true" target="_blank" rel="noopener noreferrer" class="social-link text-footer link-location">LinkedIn</a>
-            <a href="mailto:jcdominguezbarco@gmail.com" class="social-link text-footer link-location">Email</a>
+<footer class="footer-global">
+    <div class="footer-line"></div>
+    <div class="footer-grid">
+        <div class="footer-col">
+            <span class="mono-label">UBICACIÓN</span>
+            <div class="col-content">
+                <p class="reading-small">Buenos Aires, ARG <br> (GMT-3) <span id="footer-clock">00:00</span></p>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <span class="mono-label">SAY HELLO</span>
+            <div class="col-content">
+                <a href="mailto:estudiocruzdesign@gmail.com" class="footer-link">estudiocruzdesign@gmail.com </a>
+                <p class="reading-small">Branding & Estrategia de marca</p>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <span class="mono-label">STALK ME</span>
+            <div class="col-content">
+                <a href="https://www.instagram.com/cruzestudio_/" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram</a>
+                <a href="https://www.linkedin.com/company/cruzdesign" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+            </div>
+        </div>
+
+        <div class="footer-col footer-brand-end">
+            <span class="mono-label">©2018—2026</span>
+            <div class="col-content">
+                <img src="../img/positivo-pluma.svg" alt="Sello Cruz Estudio" class="pluma-seal">
+                
+            </div>
         </div>
     </div>
-    <div class="footer-right">
-        <span class="copyright">Cruz Estudio<sup>®</sup></span>
-        <span class="year">2018-2026</span>
-        <span id="clock" class="clock"></span>
-    </div>
+    
+    <div class="custom-cursor"></div>
 </footer>
 
 

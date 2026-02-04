@@ -183,74 +183,81 @@ p {
     padding: 20px 50px;
 }
 
+/*footer*/
+
 /* ==========================================================================
-   FOOTER BLANCO (ESTILO INDEX)
+   FOOTER SISTEMATIZADO - LIGHT CONTRAST
+   Fondo: Crema | Texto: Dark | Estilo: Swiss Editorial
    ========================================================================== */
-.footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 60px 45px;
-    background-color: #FFFDF3; /* Blanco/Crema institucional */
-    border-top: 1px solid rgba(29, 30, 28, 0.1);
+/* --- FOOTER GLOBAL --- */
+.footer-global {
+    background-color: var(--crema);
+    color: var(--bg-dark);
+    padding: 100px 45px 60px 45px;
     width: 100%;
+    position: relative;
+    cursor: none; /* Rigor Flair Digital: el cursor amarillo manda */
 }
 
-/* Color de texto oscuro para fondo blanco */
-.text-footer, 
-.footer-right .copyright, 
-.footer-right .year, 
-.footer-right .clock {
-    font-family: "cofo-sans-mono-variable", monospace;
-    font-size: 13px;
-    color: #1D1E1C !important; /* Gris oscuro/Negro del sistema */
+.footer-global .footer-link, 
+.footer-global .copyright-text, 
+.footer-global .reading-small {
+    color: #1D1E1C !important;
     text-decoration: none;
 }
 
-/* Enlaces del centro */
-.social-links {
-    display: flex;
-    gap: 30px;
+.footer-global .footer-link:hover {
+    color: #f2c335 !important; /* Amarillo acento */
 }
 
-.social-link {
-    transition: opacity 0.3s ease;
+.pluma-seal {
+    height: 45px;
+    width: auto;
+    filter: brightness(0); /* Asegura que el logo sea negro sobre crema */
 }
 
-.social-link:hover {
-    color: #f2c335 !important; /* Amarillo en hover */
-    opacity: 1;
+@media (max-width: 768px) {
+    .footer-global {
+        grid-template-columns: 1fr;
+        padding: 60px 25px;
+    }
+}
+/* ==========================================================================
+   RESPONSIVE: FIX ENCUADRE
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+    .footer {
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+    }
+    .footer-center {
+        grid-column: 1 / -1;
+        order: 3;
+    }
 }
 
-/* Mantener el amarillo corporativo en iconos y años */
-.txt-yellow {
-    color: #f2c335 !important;
-}
-
-.footer-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    line-height: 1.4;
-}
-
-/* Ajuste Responsive para mantener minimalismo en móviles */
 @media (max-width: 768px) {
     .footer {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+        padding: 60px 35px;
         gap: 40px;
-        text-align: center;
-        padding: 60px 20px;
+        align-items: flex-start;
     }
-    .footer-right {
-        align-items: center;
-    }
-}
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .team-grid { grid-template-columns: 1fr; }
-    .about-title { font-size: 3rem; }
-    .about-subtitle { margin-left: 0; width: 100%; }
-    .texto-about p { max-width: 100%; margin-right: 0; }
+    .footer-left, .footer-center, .footer-right {
+        align-items: flex-start; /* Evita que la info salga de encuadre */
+        text-align: left;
+    }
+
+    .footer-right {
+        width: 100%;
+        border-top: 1px solid rgba(29, 30, 28, 0.1);
+        padding-top: 30px;
+    }
+
+    .social-links {
+        flex-direction: column;
+        gap: 15px;
+    }
 }

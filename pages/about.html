@@ -113,7 +113,7 @@
         </div>
     </section>
 
-    <section class="services-section">
+    <!--<section class="services-section">
         <h2 class="services-title">Nuestros servicios</h2>    
         <div class="accordion-service">
             <div class="accordion-item-service">
@@ -159,7 +159,7 @@
         </div>
     </section>
 
-    <!--<section class="about-details">
+    <section class="about-details">
         <div class="details-grid">
             <div class="details-item">
                 <h3 class="h2-semibold">No creemos en soluciones genéricas</h3>
@@ -173,46 +173,49 @@
     </section>-->
 </main>
 
-<footer class="footer">
-    <div class="footer-left">
-        <span class="material-symbols-outlined">pin_drop</span>
-        <span class="text-footer" data-en="Headquarters in Buenos Aires, Argentina" data-es="Sede en Buenos Aires, Argentina">Sede en Buenos Aires, Argentina</span>
-    </div>
-    <div class="footer-center">
-        <div class="social-links">
-            <a href="https://www.instagram.com/cruzestudio_/" target="_blank" rel="noopener noreferrer" class="social-link text-footer link-location">Instagram</a>
-            <a href="https://www.linkedin.com/company/cruzdesign/?viewAsMember=true" target="_blank" rel="noopener noreferrer" class="social-link text-footer link-location">LinkedIn</a>
-            <a href="mailto:jcdominguezbarco@gmail.com" class="social-link text-footer link-location">Email</a>
+<footer class="footer-global">
+    <div class="footer-line"></div>
+    <div class="footer-grid">
+        <div class="footer-col">
+            <span class="mono-label">UBICACIÓN</span>
+            <div class="col-content">
+                <p class="reading-small">Buenos Aires, ARG <br> (GMT-3) <span id="footer-clock">00:00</span></p>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <span class="mono-label">SAY HELLO</span>
+            <div class="col-content">
+                <a href="mailto:estudiocruzdesign@gmail.com" class="footer-link">estudiocruzdesign@gmail.com </a>
+                <p class="reading-small">Branding & Estrategia de marca</p>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <span class="mono-label">STALK ME</span>
+            <div class="col-content">
+                <a href="https://www.instagram.com/cruzestudio_/" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram</a>
+                <a href="https://www.linkedin.com/company/cruzdesign" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+            </div>
+        </div>
+
+        <div class="footer-col footer-brand-end">
+            <span class="mono-label">©2018—2026</span>
+            <div class="col-content">
+                <img src="../img/positivo-pluma.svg" alt="Sello Cruz Estudio" class="pluma-seal">
+                
+            </div>
         </div>
     </div>
-    <div class="footer-right">
-        <span class="copyright">Cruz Estudio<sup>®</sup></span>
-        <span class="year">2018-2026</span>
-        <span id="clock" class="clock"></span>
-    </div>
+    
+    <div class="custom-cursor"></div>
 </footer>
 
-<script>
-    // Script de Acordeón
-    document.querySelectorAll('.accordion-button-service').forEach(button => {
-        button.addEventListener('click', () => {
-            const accordionItem = button.parentElement;
-            accordionItem.classList.toggle('active');
-            const icon = button.querySelector('.accordion-icon');
-            icon.textContent = accordionItem.classList.contains('active') ? '−' : '+';
-        });
-    });
 
-    // Reloj Footer
-    function updateClock() {
-        const now = new Date();
-        const timeString = now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        document.getElementById('clock').textContent = timeString;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-</script>
 
 <script src="../java/script.js"></script>
+<script>
+    document.getElementById('footer-clock').textContent = new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false });
+</script>
 </body>
 </html>
