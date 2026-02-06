@@ -1507,16 +1507,29 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
 }
 
 
+
+
 /* ==========================================================================
-   CONTACT COMPONENT - SISTEMA CRUZ ESTUDIO ®
+   SISTEMA DE DISEÑO CRUZ ESTUDIO ® 2026
    Arquitectura: Neue Haas (H) + IBM Plex (B) + Cofo Mono (D)
    ========================================================================== */
 
+:root {
+    --bg-dark: #1D1E1C;
+    --crema: #FFFDF3;
+    --amarillo-acento: #f2c335;
+    --font-header: 'neue-haas-grotesk-display', sans-serif;
+    --font-reading: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'cofo-sans-mono-variable', monospace;
+    --swiss-easing: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- 1. CONTACT COMPONENT --- */
 .contact-section {
     background-color: var(--bg-dark) !important;
     padding: 160px 45px;
     width: 100%;
-    border-top: 1px solid rgba(255, 253, 243, 0.05); /* Tensión visual sutil */
+    border-top: 1px solid rgba(255, 253, 243, 0.05);
 }
 
 .contact-wrapper {
@@ -1524,30 +1537,40 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     margin: 0 auto;
 }
 
-/* --- CABECERA DE SECCIÓN --- */
 .contact-display {
     font-family: var(--font-header);
-    /* Escala fluida optimizada para Laptops/MacBooks */
     font-size: clamp(3.5rem, 8vw, 110px); 
     font-weight: 700;
-    line-height: 0.85; /* Interlineado suizo cerrado */
+    line-height: 0.85;
     letter-spacing: -0.04em;
     color: var(--crema) !important;
     margin-bottom: 25px;
     text-align: left;
 }
 
-.mono-label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: rgba(255, 253, 243, 0.4);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+/* --- 2. SEGMENTACIÓN Y CONTRASTE (FIXED) --- */
+.form-segment { 
+    margin-top: 100px; /* Espaciado generoso entre bloques */
 }
 
-/* --- SEGMENTACIÓN TÉCNICA (SERVICIOS) --- */
-.form-segment { 
-    margin-top: 100px; 
+.form-segment .reading-small {
+    font-family: var(--font-reading);
+    font-size: 1.1rem;
+    color: var(--crema) !important; /* Contraste absoluto */
+    line-height: 1.5;
+    margin-bottom: 45px; /* Evita el amontonamiento con los inputs */
+    display: block;
+    letter-spacing: 0.01em;
+}
+
+.required-notice {
+    font-family: var(--font-mono);
+    color: var(--amarillo-acento);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-left: 10px;
+    vertical-align: middle;
 }
 
 .mono-tag {
@@ -1555,34 +1578,37 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     font-family: var(--font-mono);
     font-size: 10px;
     color: var(--amarillo-acento); 
-    margin-bottom: 30px;
+    margin-bottom: 35px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
 }
 
+/* --- 3. SELECCIÓN TÉCNICA (PILLS) --- */
 .services-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px; /* Gap reducido para mayor cohesión visual */
+    gap: 15px;
+    margin-top: 20px;
 }
 
 .service-chip input { display: none; }
 
 .chip-box {
     display: inline-block;
-    padding: 14px 28px;
+    padding: 16px 32px;
     border: 1px solid rgba(255, 253, 243, 0.15);
-    border-radius: 2px; /* Ángulos rectos para el look industrial/suizo */
+    border-radius: 50px; /* Redondeado suave sistematizado */
     color: var(--crema) !important;
     font-family: var(--font-mono);
     font-size: 11px;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    transition: all 0.4s var(--swiss-easing);
 }
 
 .service-chip:hover .chip-box { 
     border-color: var(--crema); 
+    background-color: rgba(255, 253, 243, 0.05);
 }
 
 .service-chip input:checked + .chip-box {
@@ -1591,12 +1617,12 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     border-color: var(--crema);
 }
 
-/* --- INPUTS FLOTANTES (IBM PLEX SANS) --- */
+/* --- 4. INPUTS FLOTANTES --- */
 .fields-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 70px 45px;
-    margin-top: 100px;
+    gap: 85px 45px; /* Tensión visual entre filas */
+    margin-top: 80px;
 }
 
 .full-col { grid-column: 1 / -1; }
@@ -1604,6 +1630,7 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
 .input-container {
     position: relative;
     border-bottom: 1px solid rgba(255, 253, 243, 0.15);
+    padding-bottom: 10px;
 }
 
 .input-container input, 
@@ -1613,7 +1640,7 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     border: none;
     padding: 15px 0;
     color: var(--crema) !important;
-    font-size: 22px; /* Tamaño Neue Haas */
+    font-size: 22px;
     outline: none;
     font-family: var(--font-header);
 }
@@ -1623,14 +1650,13 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     top: 15px;
     left: 0;
     color: rgba(255, 253, 243, 0.3);
-    font-family: var(--font-reading); /* IBM Plex Sans para el label pasivo */
+    font-family: var(--font-reading);
     font-size: 18px;
     font-weight: 300;
     pointer-events: none;
-    transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    transition: all 0.4s var(--swiss-easing);
 }
 
-/* Lógica de Flotación (Sistematizada) */
 .input-container input:focus + label,
 .input-container input:not(:placeholder-shown) + label,
 .input-container textarea:focus + label,
@@ -1638,13 +1664,13 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     top: -25px;
     font-size: 10px;
     color: var(--amarillo-acento);
-    font-family: var(--font-mono); /* Cambio a Cofo Mono en estado activo */
+    font-family: var(--font-mono);
     text-transform: uppercase;
 }
 
-/* --- BOTÓN DE ACCIÓN (CTA) --- */
+/* --- 5. ACCIÓN FINAL (CTA) --- */
 .cta-submit {
-    margin-top: 80px;
+    margin-top: 100px;
     background: none;
     border: none;
     display: flex;
@@ -1659,63 +1685,70 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     font-size: 13px;
     font-weight: 700;
     font-family: var(--font-mono);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
 }
 
-.cta-submit:hover { 
-    color: var(--amarillo-acento) !important; 
-}
-
-.cta-submit .material-symbols-outlined {
-    font-size: 24px;
-    transition: transform 0.4s ease;
-}
+.cta-submit:hover { color: var(--amarillo-acento) !important; }
 
 .cta-submit:hover .material-symbols-outlined {
-    transform: translate(5px, -5px); /* Movimiento diagonal técnico */
+    transform: translate(5px, -5px);
 }
 
-/* --- AJUSTES DE ADAPTACIÓN (RESPONSIVE) --- */
-
-/* Laptops y MacBooks */
-@media (max-width: 1536px) {
-    .contact-display { font-size: 5.5rem; }
-    .fields-layout { gap: 50px 35px; }
+/* --- 6. WHATSAPP FIXED (5491161105751) --- */
+.whatsapp-fixed {
+    position: fixed;
+    bottom: 40px;
+    right: 45px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--bg-dark);
+    border: 1px solid rgba(255, 253, 243, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    transition: all 0.4s var(--swiss-easing);
 }
 
-/* Tablets */
-@media (max-width: 1024px) {
-    .fields-layout { grid-template-columns: 1fr; gap: 50px; }
-    .contact-section { padding: 100px 30px; }
+.whatsapp-fixed svg { width: 26px; height: 26px; fill: var(--crema); z-index: 2; }
+
+.wa-tooltip {
+    position: absolute;
+    right: 75px;
+    background-color: var(--amarillo-acento);
+    color: var(--bg-dark);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 18px;
+    white-space: nowrap;
+    border-radius: 2px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(10px);
+    transition: all 0.4s var(--swiss-easing);
 }
 
-/* Móviles */
-@media (max-width: 768px) {
-    .contact-display { font-size: 3.2rem; }
-    .chip-box { padding: 12px 20px; width: 100%; text-align: center; }
-    .form-segment { margin-top: 60px; }
-}
-
-
-
-
-
-
-
-/*footer*/
-
+.whatsapp-fixed:hover { background-color: var(--amarillo-acento); transform: scale(1.05); }
+.whatsapp-fixed:hover .wa-tooltip { opacity: 1; visibility: visible; transform: translateX(0); }
+.whatsapp-fixed:hover svg { fill: var(--bg-dark); }
 /* ==========================================================================
-   FOOTER SISTEMATIZADO - LIGHT CONTRAST
+   FOOTER GLOBAL - SISTEMA CRUZ ESTUDIO ®
+   Inspiración: Mother Design / Studio Okay
    Fondo: Crema | Texto: Dark | Estilo: Swiss Editorial
    ========================================================================== */
-/* --- FOOTER GLOBAL --- */
+
 .footer-global {
     background-color: var(--crema);
     color: var(--bg-dark);
     padding: 100px 45px 60px 45px;
     width: 100%;
     position: relative;
-    cursor: none; /* Rigor Flair Digital: el cursor amarillo manda */
+    border-top: 1px solid rgba(29, 30, 28, 0.1);
+    /* Rigor Flair Digital: el cursor personalizado toma el control */
+    cursor: none; 
 }
 
 .footer-line {
@@ -1726,6 +1759,7 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     opacity: 0.1;
 }
 
+/* Grilla Técnica Asimétrica */
 .footer-grid {
     display: grid;
     grid-template-columns: 1.2fr 1.5fr 1fr 1.5fr;
@@ -1733,14 +1767,7 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     align-items: flex-start;
 }
 
-/* --- ELEMENTOS DE MARCA --- */
-.pluma-seal {
-    height: 40px; /* Tamaño sutil pero presente */
-    width: auto;
-    margin-bottom: 20px;
-    display: block;
-}
-
+/* --- ELEMENTOS DE TEXTO Y MARCA --- */
 .copyright-text {
     font-family: var(--font-header);
     font-size: 2.2rem;
@@ -1748,9 +1775,9 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     line-height: 0.85;
     letter-spacing: -0.04em;
     color: var(--bg-dark);
+    margin: 0;
 }
 
-/* --- INTERACCIÓN --- */
 .footer-link {
     font-family: var(--font-header);
     font-size: 1.1rem;
@@ -1759,30 +1786,43 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     text-decoration: none;
     display: block;
     margin-bottom: 8px;
-    transition: color 0.3s ease;
+    transition: color 0.3s var(--swiss-easing);
 }
 
 .footer-link:hover {
     color: var(--amarillo-acento);
 }
 
-/* --- CORRECCIÓN DE VISIBILIDAD MONO-LABEL --- */
+/* Visibilidad técnica de etiquetas */
 .mono-label {
     font-family: var(--font-mono);
     font-size: 10px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    
-    /* CAMBIO CLAVE: Usamos el color oscuro con opacidad para que no desaparezca */
-    color: var(--bg-dark) !important; 
-    opacity: 0.5; /* Da ese look técnico/sutil sin ser invisible */
-    
+    color: #1D1E1C !important; /* Forzamos contraste sobre crema */
+    opacity: 0.5;
     display: block;
     margin-bottom: 30px;
     visibility: visible !important;
 }
 
-/* --- CURSOR CUSTOM --- */
+.reading-small {
+    font-family: var(--font-reading);
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(29, 30, 28, 0.7);
+}
+
+/* Sello Pluma */
+.pluma-seal {
+    height: 45px;
+    width: auto;
+    filter: brightness(0); /* Negro puro sobre fondo claro */
+    margin-bottom: 20px;
+    display: block;
+}
+
+/* --- CURSOR PERSONALIZADO --- */
 .custom-cursor {
     width: 18px;
     height: 18px;
@@ -1791,51 +1831,50 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     position: fixed;
     pointer-events: none;
     z-index: 9999;
-    /* Efecto multiply para que el amarillo interactúe con el crema */
     mix-blend-mode: multiply; 
     transition: transform 0.15s ease-out;
 }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
-    .footer-grid { grid-template-columns: 1fr; gap: 60px; }
-    .footer-global { cursor: auto; }
-    .custom-cursor { display: none; }
-}
 /* ==========================================================================
-   RESPONSIVE: FIX ENCUADRE
+   RESPONSIVE: FIX DE ENCUADRE Y GRIDS
    ========================================================================== */
 
+/* Ajuste para Tablets y Laptops pequeñas (1024px) */
 @media (max-width: 1024px) {
-    .footer {
-        grid-template-columns: 1fr 1fr;
-        gap: 50px;
-    }
-    .footer-center {
-        grid-column: 1 / -1;
-        order: 3;
+    .footer-grid {
+        grid-template-columns: 1fr 1fr; /* Colapsamos a 2 columnas */
+        gap: 60px 40px;
     }
 }
 
-/* --- AJUSTE PARA MÓVILES (768px) --- */
+/* Ajuste Crítico para Móviles (768px) */
 @media (max-width: 768px) {
     .footer-global {
-        grid-template-columns: 1fr;
         padding: 60px 35px;
+        cursor: auto; /* Devolvemos el cursor estándar en táctil */
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr; /* Una sola columna vertical */
         gap: 50px;
     }
 
-    /* Reducción del logo para responsive */
+    .custom-cursor {
+        display: none; /* Innecesario en mobile */
+    }
+
+    /* Reducción del sello para no saturar el encuadre */
     .pluma-seal {
-        height: 30px; /* Tamaño reducido de 45px a 30px */
+        height: 30px; 
         margin-bottom: 15px;
     }
 
-    .footer-global .copyright-text {
-        font-size: 1.6rem; /* Ajuste proporcional del texto */
+    .copyright-text {
+        font-size: 1.6rem; 
         letter-spacing: -0.03em;
     }
 
+    /* Forzamos alineación segura a la izquierda */
     .footer-col, 
     .footer-brand-end {
         align-items: flex-start !important;

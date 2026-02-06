@@ -52,3 +52,151 @@
     .list-row { grid-template-columns: 1.5fr 1fr; }
     .l-cat, .l-year { display: none; }
 }
+
+/* ==========================================================================
+   FOOTER GLOBAL - SISTEMA CRUZ ESTUDIO ®
+   Inspiración: Mother Design / Studio Okay
+   Fondo: Crema | Texto: Dark | Estilo: Swiss Editorial
+   ========================================================================== */
+
+.footer-global {
+    background-color: var(--crema);
+    color: var(--bg-dark);
+    padding: 100px 45px 60px 45px;
+    width: 100%;
+    position: relative;
+    border-top: 1px solid rgba(29, 30, 28, 0.1);
+    /* Rigor Flair Digital: el cursor personalizado toma el control */
+    cursor: none; 
+}
+
+.footer-line {
+    width: 100%;
+    height: 1px;
+    background-color: var(--bg-dark);
+    margin-bottom: 60px;
+    opacity: 0.1;
+}
+
+/* Grilla Técnica Asimétrica */
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1.5fr 1fr 1.5fr;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* --- ELEMENTOS DE TEXTO Y MARCA --- */
+.copyright-text {
+    font-family: var(--font-header);
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: var(--bg-dark);
+    margin: 0;
+}
+
+.footer-link {
+    font-family: var(--font-header);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bg-dark);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    transition: color 0.3s var(--swiss-easing);
+}
+
+.footer-link:hover {
+    color: var(--amarillo-acento);
+}
+
+/* Visibilidad técnica de etiquetas */
+.mono-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #1D1E1C !important; /* Forzamos contraste sobre crema */
+    opacity: 0.5;
+    display: block;
+    margin-bottom: 30px;
+    visibility: visible !important;
+}
+
+.reading-small {
+    font-family: var(--font-reading);
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(29, 30, 28, 0.7);
+}
+
+/* Sello Pluma */
+.pluma-seal {
+    height: 45px;
+    width: auto;
+    filter: brightness(0); /* Negro puro sobre fondo claro */
+    margin-bottom: 20px;
+    display: block;
+}
+
+/* --- CURSOR PERSONALIZADO --- */
+.custom-cursor {
+    width: 18px;
+    height: 18px;
+    background-color: var(--amarillo-acento);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: multiply; 
+    transition: transform 0.15s ease-out;
+}
+
+/* ==========================================================================
+   RESPONSIVE: FIX DE ENCUADRE Y GRIDS
+   ========================================================================== */
+
+/* Ajuste para Tablets y Laptops pequeñas (1024px) */
+@media (max-width: 1024px) {
+    .footer-grid {
+        grid-template-columns: 1fr 1fr; /* Colapsamos a 2 columnas */
+        gap: 60px 40px;
+    }
+}
+
+/* Ajuste Crítico para Móviles (768px) */
+@media (max-width: 768px) {
+    .footer-global {
+        padding: 60px 35px;
+        cursor: auto; /* Devolvemos el cursor estándar en táctil */
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr; /* Una sola columna vertical */
+        gap: 50px;
+    }
+
+    .custom-cursor {
+        display: none; /* Innecesario en mobile */
+    }
+
+    /* Reducción del sello para no saturar el encuadre */
+    .pluma-seal {
+        height: 30px; 
+        margin-bottom: 15px;
+    }
+
+    .copyright-text {
+        font-size: 1.6rem; 
+        letter-spacing: -0.03em;
+    }
+
+    /* Forzamos alineación segura a la izquierda */
+    .footer-col, 
+    .footer-brand-end {
+        align-items: flex-start !important;
+        text-align: left !important;
+    }
+}
