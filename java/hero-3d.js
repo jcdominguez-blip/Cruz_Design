@@ -31,7 +31,7 @@ if (container) {
     const config = {
         lineColor: "rgba(255, 253, 243, 0.15)", 
         backgroundColor: "#1D1E1C",
-        waveSpeed: 0.0003, // VELOCIDAD REDUCIDA (Casi imperceptible pero constante)
+        waveSpeed: 0.00015, // VELOCIDAD REDUCIDA (Casi imperceptible pero constante)
         waveAmp: 48,
         xGap: 18, 
         yGap: 18,
