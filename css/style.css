@@ -1633,7 +1633,8 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     position: absolute;
     top: 15px;
     left: 0;
-    color: rgba(255, 253, 243, 0.3);
+    /* ESTA ES LA LÍNEA QUE DEBÉS MODIFICAR */
+    color: rgba(255, 253, 243, 0.863); 
     font-family: var(--font-reading);
     font-size: 18px;
     font-weight: 300;
@@ -1652,31 +1653,52 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     text-transform: uppercase;
 }
 
-/* --- 5. ACCIÓN FINAL (CTA) --- */
-.cta-submit {
-    margin-top: 100px;
-    background: none;
-    border: none;
+/* --- 5. ACCIÓN FINAL (CTA) - TAMAÑO MEDIUM (AJUSTADO) --- */
+.ux-submit-btn {
+    margin-top: 40px !important;
+    padding: 16px 32px !important; /* Ajuste sutil para que la píldora respire bien */
+    background-color: var(--crema) !important; 
+    color: var(--bg-dark) !important; 
+    border: none !important;
+    border-radius: 50px !important; 
+    
+    /* CAMBIOS CLAVE PARA EL ANCHO: */
+    width: fit-content !important; /* Se ajusta exactamente al tamaño del texto + ícono */
     display: flex;
+    justify-content: center; 
+    gap: 20px; /* Separación fija y controlada entre texto y flecha */
     align-items: center;
-    gap: 20px;
-    color: var(--crema) !important;
+    
     cursor: pointer;
-    transition: color 0.3s ease;
+    transition: all 0.4s var(--swiss-easing, cubic-bezier(0.77, 0, 0.175, 1));
 }
 
-.cta-text {
-    font-size: 13px;
-    font-weight: 700;
+.ux-submit-btn .cta-text {
     font-family: var(--font-mono);
+    font-size: 13px; 
+    font-weight: 700;
     letter-spacing: 0.12em;
+    color: var(--bg-dark) !important; 
 }
 
-.cta-submit:hover { color: var(--amarillo-acento) !important; }
-
-.cta-submit:hover .material-symbols-outlined {
-    transform: translate(5px, -5px);
+.ux-submit-btn .material-symbols-outlined {
+    font-size: 22px; 
+    color: var(--bg-dark) !important;
+    transition: transform 0.4s ease;
 }
+
+/* --- ESTADO HOVER (Feedback Interactivo) --- */
+.ux-submit-btn:hover {
+    background-color: var(--amarillo-acento) !important; 
+    transform: translateY(-4px); 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
+}
+
+.ux-submit-btn:hover .material-symbols-outlined {
+    transform: translate(5px, -5px); 
+}
+
+
 
 /* --- 6. WHATSAPP FIXED (5491161105751) --- */
 .whatsapp-fixed {
@@ -1817,6 +1839,49 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     z-index: 9999;
     mix-blend-mode: multiply; 
     transition: transform 0.15s ease-out;
+}
+
+/* ==========================================================================
+   UX UPGRADE: CONTACT FORM GRID (NO INVASIVO)
+   ========================================================================== */
+
+/* Grilla asimétrica para escritorio */
+.ux-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr; /* Da un poco más de aire a la derecha para escribir */
+    gap: 80px;
+    margin-top: 80px;
+    align-items: flex-start;
+}
+
+.form-intent, .form-data {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Reducimos el margen inferior exagerado de tus inputs anteriores 
+   solo para esta columna, para que no quede tan largo */
+.form-data .input-container {
+    margin-bottom: 35px;
+    padding-bottom: 5px;
+}
+
+/* Modificación específica para el botón dentro de la nueva grilla */
+.ux-submit-btn {
+    margin-top: 40px !important;
+    padding-top: 30px !important;
+    border-top: 1px solid rgba(255, 253, 243, 0.1) !important;
+    width: 100%; 
+    justify-content: space-between;
+}
+
+/* --- ADAPTACIÓN MÓVIL (Vuelve a 1 columna en celulares) --- */
+@media (max-width: 1024px) {
+    .ux-form-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+        margin-top: 60px;
+    }
 }
 
 /* ==========================================================================
