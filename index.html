@@ -1,42 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
+    <title>Cruz Estudio</title>
     <meta name="description" content="Somos un estudio especializado en identidades corporativas, con experiencia en proyectos destacados como Trenes Argentinos Cargas, la Municipalidad de San Cristóbal Y Unión Ferroviaria entre otras empresas y organizacines." >
     <meta name="keywords" content="diseño, marcas, branding, diseño grafico, instagram, corporativo, empresas, brand design, diseño ux ui, diseño web">
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=south_east" />
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="icon"  sizes="32x32" href="./img/favicon-32x32.png">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script>
-    (function() {
-        if (sessionStorage.getItem('cruz-loader-visto')) {
-            // 1. Añadimos la clase para ocultar el loader
-            document.documentElement.classList.add('skip-loader');
-            // 2. Nos aseguramos de que el scroll esté habilitado
-            document.documentElement.style.overflowY = 'auto';
-        }
-    })();
-</script>
-
-<style>
-    /* Si ya se vio, el loader desaparece y el scroll se libera */
-    .skip-loader #loader, 
-    .skip-loader .loader { 
-        display: none !important; 
-        visibility: hidden !important; 
-    }
     
-    .skip-loader body {
-        overflow-y: auto !important;
-        height: auto !important;
-    }
-</style>
-    <title>Cruz Estudio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=south_east" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" sizes="32x32" href="./img/favicon-32x32.png">
+    
+    <script>
+        (function() {
+            if (sessionStorage.getItem('cruz-loader-visto')) {
+                document.documentElement.classList.add('skip-loader');
+                document.documentElement.style.overflowY = 'auto';
+            }
+        })();
+    </script>
+    <style>
+        .skip-loader #loader, .skip-loader .loader { display: none !important; visibility: hidden !important; }
+        .skip-loader body { overflow-y: auto !important; height: auto !important; }
+    </style>
 </head>
 <body>
 
@@ -49,457 +41,347 @@
             <div class="loader-col clock" id="loader-clock">00:00:00</div>
             <div class="loader-col text-right">ISSUE 01 / 2026</div>
         </div>
-
         <div class="loader-row main-title-row">
             <h1 class="loader-welcome">Bienvenido a<br>Cruz Estudio</h1>
         </div>
-
         <div class="loader-row footer-row">
             <div class="loader-col bio-text">
                 <p class="mono-text">
-                    Somos socio estratégico de empresas, ayudamos a potenciar marcas mediante el diseño integral, 
-                    arquitectura web y comunicación digital. Sistematizamos identidades visuales 
-                    capaces de traccionar en mercados competitivos con un enfoque técnico y soberbio.
+                    Somos socio estratégico de empresas, ayudamos a potenciar marcas mediante el diseño integral, arquitectura web y comunicación digital. Sistematizamos identidades visuales capaces de traccionar en mercados competitivos con un enfoque técnico y soberbio.
                 </p>
             </div>
             <div class="loader-col percentage-container">
                 <span class="loader-percentage" id="loader-percentage">00</span>
-                
             </div>
         </div>
     </div>
 </div>
 
-
-<nav class="navbar-brand">
+<nav class="navbar-brand" style="z-index: 100;">
     <div class="containerNav">
         <a href="index.html" class="logo link-location">
             <img src="./img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
         </a>
+        
         <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
         </div>
-      <ul class="nav-links-brands" id="nav-links">
-    <li><a href="./pages/trabajos.html" class="link-location" data-en="/WORKS" data-es="/TRABAJOS">/TRABAJOS</a></li>
-    <li><a href="./pages/about.html" class="link-location" data-en="/STUDIO" data-es="/ESTUDIO">/ESTUDIO</a></li>               
-    <li><a href="./pages/contacto.html" class="link-location" data-en="/CONTACT" data-es="/CONTACTOS">/CONTACTOS</a></li>
-</ul>
+
+        <ul class="nav-links-brands" id="nav-links">
+            <li><a href="./pages/trabajos.html" class="link-location">[PROYECTOS]</a></li>
+            <li><a href="#" class="link-location">[METODOLOGÍA]</a></li>
+            <li><a href="./pages/about.html" class="link-location">[ESTUDIO]</a></li>
+            <li class="mobile-contact-item"><a href="./pages/contacto.html" class="link-location">CONTACTO</a></li>
+        </ul>
+
+       <div class="nav-right-cta">
+            <a href="./pages/contacto.html" class="nav-cta-btn">CONTACTO</a>
+        </div>
     </div>
 </nav>
 
-<header class="hero">
-    <div id="hero-3d-background"></div>
+<div class="grid-bg"></div>
+<div id="canvas-wrap"></div>
 
-    <div class="hero-main-wrapper">
-        <div class="hero-left">
-            <h1 class="hero-title">
-                Sistematizamos<br>
-                <span class="word-slider" id="kinetic-word">IDEAS</span><br>
-                para traccionar proyectos.
-            </h1>
-            
-              <!-- <p class="hero-subtitle" 
-               data-es="Transformamos negocios diseñando ecosistemas de marca globales: desde la identidad hasta la estrategia que impulsa su rendimiento en el mercado." 
-               data-en="We transform businesses by designing global brand ecosystems: from identity to the strategy that drives their market performance.">
-               Transformamos negocios diseñando ecosistemas de marca globales: desde la identidad hasta la estrategia que impulsa su rendimiento en el mercado.
-            </p>  -->
-        </div>
-
-       <div class="hero-right">
-            <nav class="hero-links">
-                <a href="./pages/trabajos.html" class="hero-link">[BRAND DESIGN]</a>
-                <a href="./pages/trabajos.html" class="hero-link">[DISEÑO AUDIOVISUAL]</a>
-                <a href="./pages/trabajos.html" class="hero-link">[DISEÑO UX/UI]</a>
-                <a href="./pages/trabajos.html" class="hero-link">[MARKETING DIGITAL]</a>
-                <a href="./pages/trabajos.html" class="hero-link">[FRONT END DESIGN]</a>
-            </nav>
-        </div>
-    </div>
-
-    <a href="#studio-intro" class="scroll-down-btn" aria-label="Scroll down">
-        <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40">
-            <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/>
-        </svg>
-    </a>
-</header>
-
-
-
-<section id="studio-intro" class="studio-section">
-    <div class="studio-video-container">
-        <video autoplay muted loop playsinline class="studio-video">
-            <source src="./video/videoStudio.mp4" type="video/mp4">
-            Tu navegador no soporta video HTML5.
-        </video>
-        <div class="video-overlay"></div>
-    </div>
-   <div class="studio-text-container">
-    <h2 class="studio-statement">
-        <span class="reveal-text">
-        En Cruz Estudio estamos para ayudarte. Somos un estudio de diseño gráfico y comunicación visual centrado en la estrategia, especializado en transformar y acompañar a las marcas en su camino para mejorar la comunicación con su público.
-        </span>
-    </h2>
-</div>
-</section>
-
-
-<div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="1800" data-wrap="true">
-    <ol class="carousel-indicators">
-        <li data-target="#carouselExample" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExample" data-slide-to="1"></li>
-        <li data-target="#carouselExample" data-slide-to="2"></li>
-        <li data-target="#carouselExample" data-slide-to="3"></li>
-        <li data-target="#carouselExample" data-slide-to="4"></li>
-        <li data-target="#carouselExample" data-slide-to="5"></li>
-        <li data-target="#carouselExample" data-slide-to="6"></li>
-        <li data-target="#carouselExample" data-slide-to="7"></li>
-    </ol>
-
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img class="d-block w-100" src="https://i.ibb.co/357FqBCw/tp1.jpg" alt="Primera imagen">
-        </div>
-        <div class="carousel-item">
-            <img class="d-block w-100" src="https://i.ibb.co/FbqNNq7T/img3.jpg" alt="Segunda imagen">
-        </div>
-        <div class="carousel-item">
-            <img class="d-block w-100" src="https://i.ibb.co/d02tVYsp/img2.jpg" alt="Tercera imagen">
-        </div>
-        <div class="carousel-item">
-            <img class="d-block w-100" src="https://i.ibb.co/b5hK8Mrd/runakay.jpg" alt="Cuarta imagen">
-        </div>
-        <div class="carousel-item">
-            <img class="d-block w-100" src="https://i.ibb.co/YF2vhdQx/8M.jpg" alt="Quinta imagen">
-        </div>
-        <div class="carousel-item">
-            <img class="d-block w-100" src="https://i.ibb.co/0R1HxFm5/uf1.jpg" alt="Sexta imagen">
-        </div>
-        <div class="carousel-item">
-            <img class="d-block w-100" src="https://i.ibb.co/fzM14ZKD/sc-01.jpg" alt="Séptima imagen">
-        </div>
-        <div class="carousel-item">
-            <img class="d-block w-100" src="https://i.ibb.co/qMGYg1Vs/TAC.jpg" alt="Octava imagen">
-        </div>
-    </div>
-    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Anterior</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Siguiente</span>
-    </a>
+<div id="hero-text">
+  <div class="label-tag">CREACIÓN DE MARCAS // BRANDING // ESTRATEGIA // DISEÑO</div>
+  
+  <h1>Diseño y<br>estrategia visual<br>para <span class="hl">marcas</span>.</h1>
+  
+  <p class="body-copy">
+    Somos un estudio de diseño que traduce la estrategia de tu empresa en identidades sólidas. Creamos sistemas visuales pensados para conectar con tu público de manera efectiva.
+  </p>
 </div>
 
-<section class="featured-works" id="featured-works">
-    <div class="works-header">
-        <h2 class="display-title">Trabajos destacados</h2>
-        <hr class="decorative-line">
-    </div>
+<div id="stat-strip">
+  <div><div class="stat-num">+<b>40</b></div><div class="stat-lbl">MARCAS</div></div>
+  <div><div class="stat-num"><b>8</b></div><div class="stat-lbl">AÑOS</div></div>
+  <div><div class="stat-num">AR<b>·</b>LA</div><div class="stat-lbl">ALCANCE</div></div>
+</div>
 
-    <div class="featured-works-container">
-        <div class="works-preview">
-            <div class="preview-inner">
-                
-                <img id="project-image-1" src="https://i.ibb.co/dmkbM0K/tac.jpg" class="active" alt="Trenes Argentinos">
-                <img id="project-image-2" src="https://i.ibb.co/gb4PTXst/img4.jpg" alt="San Cristobal">
-                <img id="project-image-3" src="https://i.ibb.co/357FqBCw/tp1.jpg" alt="SUUAM">
-                <img id="project-image-4" src="./img/ROVEX-PREVIEW.png" alt="ROVEX">
-            </div>
+<div id="proj-card">
+  <button class="pc-close" id="card-close">✕</button>
+  
+  <div class="pc-image-container">
+      <img id="pc-img" src="" alt="Vista previa del proyecto">
+  </div>
+  
+  <div class="pc-label" id="pc-lbl">BRANDING · IDENTIDAD</div>
+  <div class="pc-title" id="pc-title">Proyecto</div>
+  <div class="pc-desc"  id="pc-desc">Descripción.</div>
+  <a href="./pages/trabajos.html" class="pc-link">VER CASO COMPLETO</a>
+</div>
 
-            <div class="works-cta">
-                <a href="./pages/trabajos.html" class="view-all-link">
-                    <span class="btn-text">//Ver todos los trabajos</span>
-                    <span class="btn-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="#1D1E1C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                </a>
-            </div>
+<div id="click-hint">
+  <div class="hint-line"></div>
+  <span>[CLICk EN LA ESFERA]</span>
+</div>
+
+<div id="ticker">
+  <div class="tick-inner">
+    <span class="tick-item">//BRANDING & ESTRATEGIA DE MARCA<span class="tick-dot"></span></span>
+    <span class="tick-item">//DISEÑO UX · UI · FRONT DESIGN<span class="tick-dot"></span></span>
+    <span class="tick-item">//ESTRATEGIA & CONTENIDO DE REDES<span class="tick-dot"></span></span>
+    <span class="tick-item">//SISTEMAS VISUALES<span class="tick-dot"></span></span>
+    <span class="tick-item">//IDENTIDAD CORPORATIVA<span class="tick-dot"></span></span>
+    <span class="tick-item">//BRANDING & ESTRATEGIA DE MARCA<span class="tick-dot"></span></span>
+    <span class="tick-item">//DISEÑO UX · UI · FRONT DESIGN<span class="tick-dot"></span></span>
+    <span class="tick-item">//ESTRATEGIA & CONTENIDO DE REDES<span class="tick-dot"></span></span>
+    <span class="tick-item">//SISTEMAS VISUALES<span class="tick-dot"></span></span>
+    <span class="tick-item">//IDENTIDAD CORPORATIVA<span class="tick-dot"></span></span>
+  </div>
+</div>
+
+<div id="spacer"></div>
+<div class="site-content-wrapper">
+    <section id="studio-intro" class="studio-section">
+        <div class="studio-video-container">
+            <video autoplay muted loop playsinline class="studio-video">
+                <source src="./video/videoStudio.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
         </div>
+       <div class="studio-text-container">
+        <h2 class="studio-statement">
+            <span class="reveal-text">
+            En Cruz Estudio estamos para ayudarte. Somos un estudio de diseño gráfico y comunicación visual centrado en la estrategia, especializado en transformar y acompañar a las marcas en su camino para mejorar la comunicación con su público.
+            </span>
+        </h2>
+       </div>
+    </section>
 
-        <div class="works-list-wrapper">
-            <ul class="featured-works-list">
-                <li class="featured-work-item" data-project="1" data-url="./pages/trenescargas.html" onmouseover="changePreview(1)" onclick="redirectWithAnimation(this)">
-                    <div class="work-item-content">
-                        <span class="work-category">//Branding</span>
-                        <h3 class="work-title">Trenes Argentinos Cargas</h3>
-                        <span class="work-year">[2025]</span>
-                    </div>
-                    <hr class="decorative-line">
-                </li>
-
-                <li class="featured-work-item" data-project="2" data-url="./pages/sc.html" onmouseover="changePreview(2)" onclick="redirectWithAnimation(this)">
-                    <div class="work-item-content">
-                        <span class="work-category">//Brand Identity</span>
-                        <h3 class="work-title">Municipalidad de San Cristobal</h3>
-                        <span class="work-year">[2023]</span>
-                    </div>
-                    <hr class="decorative-line">
-                </li>
-
-                <li class="featured-work-item" data-project="3" data-url="./pages/suuam.html" onmouseover="changePreview(3)" onclick="redirectWithAnimation(this)">
-                    <div class="work-item-content">
-                        <span class="work-category">//Brand Identity</span>
-                        <h3 class="work-title">SUUAM</h3>
-                        <span class="work-year">[2024]</span>
-                    </div>
-                    <hr class="decorative-line">
-                </li>
-
-                <li class="featured-work-item" data-project="4" data-url="./pages/rovex.html" onmouseover="changePreview(4)" onclick="redirectWithAnimation(this)">
-                    <div class="work-item-content">
-                        <span class="work-category">//Brand Identity</span>
-                        <h3 class="work-title">Rovex</h3>
-                        <span class="work-year">[2025]</span>
-                    </div>
-                    <hr class="decorative-line">
-                </li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-
-
-<section class="services-v2">
-    <div class="obys-container">
-        <header class="services-hero">
-            <div class="hero-text-wrapper">
-                <span class="mono-tag" data-aos="fade-up">//PROGRAMA DE SERVICIOS</span>
-                <h2 class="display-title" data-aos="fade-up">
-                    Diseño estratégico con <br>
-                    <span class="bold-highlight">precisión técnica.</span>
-                </h2>
-            </div>
-            
-            <div class="circular-text-box">
-                <svg viewBox="0 0 100 100" class="rotating-svg">
-                    <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="transparent" />
-                    <text>
-                        <textPath xlink:href="#circlePath" class="mono-label">
-                            • ESTRATEGIA • DISEÑO • INNOVACIÓN • CRUZ ESTUDIO •
-                        </textPath>
-                    </text>
-                </svg>
-            </div>
-        </header>
-        
-
-        <div class="services-list-v2">
-            <article class="service-block">
-                <div class="block-number">[01]</div>
-                <div class="block-main">
-                    <h3>Branding & Estrategia</h3>
-                    <p>Definimos los atributos que debe expresar la marca antes de diseñarla para asegurar su máximo rendimiento.</p>
-                    <div class="method-pills">
-                        <div class="pill"><span>//DIAGNÓSTICO</span>Evaluación del capital simbólico acumulado.</div>
-                        <div class="pill"><span>//ESTRATEGIA</span>Trazamos el mapa funcional de la marca.</div>
-                        <div class="pill"><span>//DISEÑO</span>Sistemas visuales eficaces y pertinentes.</div>
-                    </div>
-                </div>
-            </article>
-
-            <article class="service-block">
-                <div class="block-number">[02]</div>
-                <div class="block-main">
-                    <h3>Estrategia & Contenido</h3>
-                    <p>Planes integrales de comunicación medibles y ajustables para conectar con audiencias específicas.</p>
-                </div>
-            </article>
-
-            <article class="service-block">
-                <div class="block-number">[03]</div>
-                <div class="block-main">
-                    <h3>Producción Audiovisual</h3>
-                    <p>Cobertura institucional y spots que combinan ritmo narrativo, estética y funcionalidad.</p>
-                </div>
-            </article>
+    <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="1800" data-wrap="true">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExample" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExample" data-slide-to="1"></li>
+            <li data-target="#carouselExample" data-slide-to="2"></li>
+            <li data-target="#carouselExample" data-slide-to="3"></li>
+            <li data-target="#carouselExample" data-slide-to="4"></li>
+            <li data-target="#carouselExample" data-slide-to="5"></li>
+            <li data-target="#carouselExample" data-slide-to="6"></li>
+            <li data-target="#carouselExample" data-slide-to="7"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active"><img class="d-block w-100" src="https://i.ibb.co/357FqBCw/tp1.jpg" alt="1"></div>
+            <div class="carousel-item"><img class="d-block w-100" src="https://i.ibb.co/FbqNNq7T/img3.jpg" alt="2"></div>
+            <div class="carousel-item"><img class="d-block w-100" src="https://i.ibb.co/d02tVYsp/img2.jpg" alt="3"></div>
+            <div class="carousel-item"><img class="d-block w-100" src="https://i.ibb.co/b5hK8Mrd/runakay.jpg" alt="4"></div>
+            <div class="carousel-item"><img class="d-block w-100" src="https://i.ibb.co/YF2vhdQx/8M.jpg" alt="5"></div>
+            <div class="carousel-item"><img class="d-block w-100" src="https://i.ibb.co/0R1HxFm5/uf1.jpg" alt="6"></div>
+            <div class="carousel-item"><img class="d-block w-100" src="https://i.ibb.co/fzM14ZKD/sc-01.jpg" alt="7"></div>
+            <div class="carousel-item"><img class="d-block w-100" src="https://i.ibb.co/qMGYg1Vs/TAC.jpg" alt="8"></div>
         </div>
     </div>
-</section>
 
-
-   <!--<section class="work" id="work">
-    <h2 class="subtitulo" data-en="Works" data-es="Trabajos">Trabajos</h2>
-    <div class="works-section">
-        <div class="works-image">
-            <img id="project-image" src="https://i.ibb.co/1YWL3MTz/example1.jpg" alt="Proyecto 1" />  
+    <section class="featured-works" id="featured-works">
+        <div class="works-header">
+            <h2 class="display-title">Trabajos destacados</h2>
+            <hr class="decorative-line">
         </div>
-        <div class="works-list">
-            <ul>
-                <li>
-                    <div class="accordion  " onclick="toggleAccordion(this)">
-                        <span data-title="Título del Proyecto 1" data-description="Descripción del Proyecto 1" data-images='["https://i.ibb.co/8BbCKvj/1.jpg", "https://i.ibb.co/qMQcwjt/SC.jpg", "https://i.ibb.co/rw5zDHP/1-tac.jpg"]'>
-                            [01] <span data-en="Brand design" data-es="Diseño de marca">Diseño de marca</span>                                                          
+        <div class="featured-works-container">
+            <div class="works-preview">
+                <div class="preview-inner">
+                    <img id="project-image-1" src="https://i.ibb.co/dmkbM0K/tac.jpg" class="active" alt="Trenes Argentinos">
+                    <img id="project-image-2" src="https://i.ibb.co/gb4PTXst/img4.jpg" alt="San Cristobal">
+                    <img id="project-image-3" src="https://i.ibb.co/357FqBCw/tp1.jpg" alt="SUUAM">
+                    <img id="project-image-4" src="./img/ROVEX-PREVIEW.png" alt="ROVEX">
+                </div>
+                <div class="works-cta">
+                    <a href="./pages/trabajos.html" class="view-all-link">
+                        <span class="btn-text">//Ver todos los trabajos</span>
+                        <span class="btn-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="#1D1E1C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
                         </span>
-                        
-                    </div>
-                    <div class="accordion-content">
-                        <p class="lectura" data-en="High-performance brand identity projects with graphic quality. Through a strategic and creative approach, we develop visual identities that stand out in the market and effectively communicate your values ​​and mission. From graphic brand creation to redesigns, we guarantee comprehensive solutions that boost brand recognition and repositioning." data-es="Proyectos de identidad de marca con alto rendimiento y calidad gráfica. A través de un enfoque estratégico y creativo, desarrollamos identidades visuales que destacan en el mercado y comunican eficazmente sus valores y misión. Desde creación de marcas gráficas, hasta rediseños, garantizamos soluciones integrales que impulsan el reconocimiento y el reposicionamiento de la marca.">Proyectos de identidad de marca con alto rendimiento y calidad gráfica. A través de un enfoque estratégico y creativo, desarrollamos identidades visuales que destacan en el mercado y comunican eficazmente sus valores y misión. Desde creación de marcas gráficas, hasta rediseños, garantizamos soluciones integrales que impulsan el reconocimiento y el reposicionamiento de la marca.</p>
-                        <button  id="project-button"  onclick="location.href='./pages/brandworks.html'" data-en="View More" data-es="Ver Más">Ver más</button>
-                    </div>
-                    <hr class="decorative-line">
-                </li>
-                <li>
-                    <div class="accordion" onclick="toggleAccordion(this)">
-                        <span data-title="Título del Proyecto 2" data-description="Descripción del Proyecto 2" data-images='["https://i.ibb.co/wrZZPSjZ/example-PD1.jpg", "https://i.ibb.co/ZRSpRPhM/example-PD2.jpg", "https://i.ibb.co/QvNLdDsK/example-ux.jpg"]'>
-                            [02] <span data-en="UX/UI Design" data-es="Diseño UX/UI">Diseño UX/UI</span>                                
-                        </span>
-                    </div>
-                    <div class="accordion-content">
-                        <p class="lectura" data-en="In UX/UI design, I focus on creating intuitive and engaging experiences for users. Every project starts with in-depth user research to understand their needs and behaviors. From there, I develop wireframes and prototypes that facilitate interaction and improve usability." data-es="En el diseño UX/UI , me enfoco en crear experiencias intuitivas y atractivas para los usuarios. Cada proyecto comienza con una profunda investigación del usuario para entender sus necesidades y comportamientos. A partir de ahí, desarrollo wireframes y prototipos que facilitan la interacción y mejoran la usabilidad.">En el diseño UX/UI, me enfoco en crear experiencias intuitivas y atractivas para los usuarios. Cada proyecto comienza con una profunda investigación del usuario para entender sus necesidades y comportamientos. A partir de ahí, desarrollo wireframes y prototipos que facilitan la interacción y mejoran la usabilidad.</p>
-                        <button id="project-button" class="link-location" onclick="location.href='./pages/productdesign.html'" data-en="View More" data-es="Ver Más">Ver más</button>
-                    </div>
-                    <hr class="decorative-line">
-                </li>
-                <li>
-                    <div class="accordion" onclick="toggleAccordion(this)">
-                        <span data-title="Título del Proyecto 3" data-description="Descripción del Proyecto 3" data-images='["https://i.ibb.co/zTsYQtDr/FE3.jpg", "https://i.ibb.co/3Y5thW3K/FE1.jpg", "https://i.ibb.co/YFFWSmgg/FE2.jpg"]'>
-                            [03] <span data-en="Front end Developer" data-es="Desarrollador Front End">Desarrollador Front End</span>
-                        </span>
-                    </div>
-                    <div class="accordion-content">
-                        <p class="lectura" data-en="Engaging and functional web interfaces that deliver an exceptional user experience. My approach begins with a deep understanding of design and usability, collaborating closely with UX/UI designers to transform prototypes into interactive products. I use technologies such as HTML, CSS, and JavaScript to develop efficient and responsive solutions, ensuring that each website not only looks good, but also performs optimally across different devices and browsers." data-es="interfaces web atractivas y funcionales que brindan una experiencia de usuario excepcional. Mi enfoque comienza con una comprensión profunda del diseño y la usabilidad, colaborando estrechamente con diseñadores UX/UI para transformar prototipos en productos interactivos. Utilizo tecnologías como HTML, CSS y JavaScript para desarrollar soluciones eficientes y responsivas, asegurando que cada sitio web no solo se vea bien, sino que también funcione de manera óptima en diferentes dispositivos y navegadores.">interfaces web atractivas y funcionales que brindan una experiencia de usuario excepcional. Mi enfoque comienza con una comprensión profunda del diseño y la usabilidad, colaborando estrechamente con diseñadores UX/UI para transformar prototipos en productos interactivos. Utilizo tecnologías como HTML, CSS y JavaScript para desarrollar soluciones eficientes y responsivas, asegurando que cada sitio web no solo se vea bien, sino que también funcione de manera óptima en diferentes dispositivos y navegadores.</p>
-                        <button id="project-button" class="link-location" onclick="location.href='./pages/frontdesign.html'" data-en="View More" data-es="Ver Más">Ver más</button>
-                    </div>
-                    <hr class="decorative-line">
-                </li>
-            </ul>
-        </div>
-    </div>
-</section>-->
-
-<section class="contact-section" id="contact">
-    <div class="contact-wrapper">
-        <header class="contact-intro scroll-reveal">
-            <h2 class="contact-display">Hablemos de tu<br>próximo proyecto.</h2>
-            <p class="mono-label">// DISEÑO ESTRATÉGICO — BUENOS AIRES</p>
-        </header>
-       
-        <form action="https://formspree.io/f/xrbekqeb" method="POST" class="form-sistematizado ux-form-grid">
-            
-            <div class="form-intent scroll-reveal">
-                <span class="mono-tag">[01] — ¿EN QUÉ PODEMOS AYUDARTE?</span>
-                <div class="services-grid">
-                    <label class="service-chip"><input type="checkbox" name="Servicio" value="Branding"><span class="chip-box">BRANDING</span></label>
-                    <label class="service-chip"><input type="checkbox" name="Servicio" value="Estrategia"><span class="chip-box">ESTRATEGIA DIGITAL</span></label>
-                    <label class="service-chip"><input type="checkbox" name="Servicio" value="Web_UX"><span class="chip-box">DISEÑO WEB / UX</span></label>
-                    <label class="service-chip"><input type="checkbox" name="Servicio" value="Audiovisual"><span class="chip-box">AUDIOVISUAL</span></label>
+                    </a>
                 </div>
             </div>
+            <div class="works-list-wrapper">
+                <ul class="featured-works-list">
+                    <li class="featured-work-item" data-project="1" data-url="./pages/trenescargas.html" onmouseover="changePreview(1)" onclick="redirectWithAnimation(this)">
+                        <div class="work-item-content">
+                            <span class="work-category">//Branding</span>
+                            <h3 class="work-title">Trenes Argentinos Cargas</h3>
+                            <span class="work-year">[2025]</span>
+                        </div>
+                        <hr class="decorative-line">
+                    </li>
+                    <li class="featured-work-item" data-project="2" data-url="./pages/sc.html" onmouseover="changePreview(2)" onclick="redirectWithAnimation(this)">
+                        <div class="work-item-content">
+                            <span class="work-category">//Brand Identity</span>
+                            <h3 class="work-title">Municipalidad de San Cristobal</h3>
+                            <span class="work-year">[2023]</span>
+                        </div>
+                        <hr class="decorative-line">
+                    </li>
+                    <li class="featured-work-item" data-project="3" data-url="./pages/suuam.html" onmouseover="changePreview(3)" onclick="redirectWithAnimation(this)">
+                        <div class="work-item-content">
+                            <span class="work-category">//Brand Identity</span>
+                            <h3 class="work-title">SUUAM</h3>
+                            <span class="work-year">[2024]</span>
+                        </div>
+                        <hr class="decorative-line">
+                    </li>
+                    <li class="featured-work-item" data-project="4" data-url="./pages/rovex.html" onmouseover="changePreview(4)" onclick="redirectWithAnimation(this)">
+                        <div class="work-item-content">
+                            <span class="work-category">//Brand Identity</span>
+                            <h3 class="work-title">Rovex</h3>
+                            <span class="work-year">[2025]</span>
+                        </div>
+                        <hr class="decorative-line">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-            <div class="form-data scroll-reveal">
-                <span class="mono-tag">[02] — TUS DATOS</span>
-                
-                <div class="input-container full-col">
-                    <input type="text" name="name" id="userName" placeholder=" " required>
-                    <label for="userName">Tu nombre o empresa (obligatorio)</label>
+    <section class="services-v2">
+        <div class="obys-container">
+            <header class="services-hero">
+                <div class="hero-text-wrapper">
+                    <span class="mono-tag" data-aos="fade-up">//PROGRAMA DE SERVICIOS</span>
+                    <h2 class="display-title" data-aos="fade-up">
+                        Diseño estratégico con <br>
+                        <span class="bold-highlight">precisión técnica.</span>
+                    </h2>
                 </div>
-
-                <div class="input-container full-col">
-                    <input type="email" name="email" id="userEmail" placeholder=" " required>
-                    <label for="userEmail">Correo electrónico (obligatorio)</label>
+                <div class="circular-text-box">
+                    <svg viewBox="0 0 100 100" class="rotating-svg">
+                        <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="transparent" />
+                        <text>
+                            <textPath xlink:href="#circlePath" class="mono-label">
+                                • ESTRATEGIA • DISEÑO • INNOVACIÓN • CRUZ ESTUDIO •
+                            </textPath>
+                        </text>
+                    </svg>
                 </div>
+            </header>
+            <div class="services-list-v2">
+                <article class="service-block">
+                    <div class="block-number">[01]</div>
+                    <div class="block-main">
+                        <h3>Branding & Estrategia</h3>
+                        <p>Definimos los atributos que debe expresar la marca antes de diseñarla para asegurar su máximo rendimiento.</p>
+                        <div class="method-pills">
+                            <div class="pill"><span>//DIAGNÓSTICO</span>Evaluación del capital simbólico acumulado.</div>
+                            <div class="pill"><span>//ESTRATEGIA</span>Trazamos el mapa funcional de la marca.</div>
+                            <div class="pill"><span>//DISEÑO</span>Sistemas visuales eficaces y pertinentes.</div>
+                        </div>
+                    </div>
+                </article>
+                <article class="service-block">
+                    <div class="block-number">[02]</div>
+                    <div class="block-main">
+                        <h3>Estrategia & Contenido</h3>
+                        <p>Planes integrales de comunicación medibles y ajustables para conectar con audiencias específicas.</p>
+                    </div>
+                </article>
+                <article class="service-block">
+                    <div class="block-number">[03]</div>
+                    <div class="block-main">
+                        <h3>Producción Audiovisual</h3>
+                        <p>Cobertura institucional y spots que combinan ritmo narrativo, estética y funcionalidad.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
 
-                <div class="input-container full-col">
-                    <textarea name="message" id="userMsg" placeholder=" " rows="1" required></textarea>
-                    <label for="userMsg">Contanos un poco más sobre tu proyecto</label>
-                </div>
-
-                <div class="reference-block" style="margin-top: 20px; margin-bottom: 20px;">
-                    <span class="mono-tag">[03] — REFERENCIA</span>
-                    <p style="color: rgba(255, 253, 243, 0.7); font-family: var(--font-reading); font-size: 16px; margin-bottom: 20px; font-weight: 300;">
-                        ¿A través de qué medio llegaste a Cruz Estudio?
-                    </p>
-                    
+    <section class="contact-section" id="contact">
+        <div class="contact-wrapper">
+            <header class="contact-intro scroll-reveal">
+                <h2 class="contact-display">Hablemos de tu<br>próximo proyecto.</h2>
+                <p class="mono-label">// DISEÑO ESTRATÉGICO — BUENOS AIRES</p>
+            </header>
+            <form action="https://formspree.io/f/xrbekqeb" method="POST" class="form-sistematizado ux-form-grid">
+                <div class="form-intent scroll-reveal">
+                    <span class="mono-tag">[01] — ¿EN QUÉ PODEMOS AYUDARTE?</span>
                     <div class="services-grid">
-                        <label class="service-chip">
-                            <input type="radio" name="Origin" value="Recomendacion" required>
-                            <span class="chip-box">RECOMENDACIÓN</span>
-                        </label>
-                        <label class="service-chip">
-                            <input type="radio" name="Origin" value="Instagram" required>
-                            <span class="chip-box">INSTAGRAM</span>
-                        </label>
-                        <label class="service-chip">
-                            <input type="radio" name="Origin" value="Google" required>
-                            <span class="chip-box">BÚSQUEDA (GOOGLE)</span>
-                        </label>
-                        <label class="service-chip">
-                            <input type="radio" name="Origin" value="Anuncios" required>
-                            <span class="chip-box">ANUNCIOS</span>
-                        </label>
+                        <label class="service-chip"><input type="checkbox" name="Servicio" value="Branding"><span class="chip-box">BRANDING</span></label>
+                        <label class="service-chip"><input type="checkbox" name="Servicio" value="Estrategia"><span class="chip-box">ESTRATEGIA DIGITAL</span></label>
+                        <label class="service-chip"><input type="checkbox" name="Servicio" value="Web_UX"><span class="chip-box">DISEÑO WEB / UX</span></label>
+                        <label class="service-chip"><input type="checkbox" name="Servicio" value="Audiovisual"><span class="chip-box">AUDIOVISUAL</span></label>
                     </div>
                 </div>
-
-                <button type="submit" class="cta-submit ux-submit-btn">
-                    <span class="cta-text">SOLICITAR REUNIÓN INFORMATIVA</span>
-                    <span class="material-symbols-outlined">north_east</span>
-                </button>
+                <div class="form-data scroll-reveal">
+                    <span class="mono-tag">[02] — TUS DATOS</span>
+                    <div class="input-container full-col">
+                        <input type="text" name="name" id="userName" placeholder=" " required>
+                        <label for="userName">Tu nombre o empresa (obligatorio)</label>
+                    </div>
+                    <div class="input-container full-col">
+                        <input type="email" name="email" id="userEmail" placeholder=" " required>
+                        <label for="userEmail">Correo electrónico (obligatorio)</label>
+                    </div>
+                    <div class="input-container full-col">
+                        <textarea name="message" id="userMsg" placeholder=" " rows="1" required></textarea>
+                        <label for="userMsg">Contanos un poco más sobre tu proyecto</label>
+                    </div>
+                    <div class="reference-block" style="margin-top: 20px; margin-bottom: 20px;">
+                        <span class="mono-tag">[03] — REFERENCIA</span>
+                        <p style="color: rgba(255, 253, 243, 0.7); font-family: var(--font-reading); font-size: 16px; margin-bottom: 20px; font-weight: 300;">
+                            ¿A través de qué medio llegaste a Cruz Estudio?
+                        </p>
+                        <div class="services-grid">
+                            <label class="service-chip"><input type="radio" name="Origin" value="Recomendacion" required><span class="chip-box">RECOMENDACIÓN</span></label>
+                            <label class="service-chip"><input type="radio" name="Origin" value="Instagram" required><span class="chip-box">INSTAGRAM</span></label>
+                            <label class="service-chip"><input type="radio" name="Origin" value="Google" required><span class="chip-box">BÚSQUEDA (GOOGLE)</span></label>
+                            <label class="service-chip"><input type="radio" name="Origin" value="Anuncios" required><span class="chip-box">ANUNCIOS</span></label>
+                        </div>
+                    </div>
+                    <button type="submit" class="cta-submit ux-submit-btn">
+                        <span class="cta-text">SOLICITAR REUNIÓN INFORMATIVA</span>
+                        <span class="material-symbols-outlined">north_east</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+       
+    <footer class="footer-global">
+        <div class="footer-line"></div>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <span class="mono-label">UBICACIÓN</span>
+                <div class="col-content">
+                    <p class="reading-small">Buenos Aires, ARG <br> (GMT-3) <span id="footer-clock">00:00</span></p>
+                </div>
             </div>
-
-        </form>
-
-    </div>
-</section>
-   
-<footer class="footer-global">
-    <div class="footer-line"></div>
-    <div class="footer-grid">
-        <div class="footer-col">
-            <span class="mono-label">UBICACIÓN</span>
-            <div class="col-content">
-                <p class="reading-small">Buenos Aires, ARG <br> (GMT-3) <span id="footer-clock">00:00</span></p>
+            <div class="footer-col">
+                <span class="mono-label">SAY HELLO</span>
+                <div class="col-content">
+                    <a href="mailto:estudiocruzdesign@gmail.com" class="footer-link">estudiocruzdesign@gmail.com </a>
+                    <p class="reading-small">Branding & Estrategia de marca</p>
+                </div>
+            </div>
+            <div class="footer-col">
+                <span class="mono-label">STALK ME</span>
+                <div class="col-content">
+                    <a href="https://www.instagram.com/cruzestudio_/" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram</a>
+                    <a href="https://www.linkedin.com/company/cruzdesign" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+            <div class="footer-col footer-brand-end">
+                <span class="mono-label">©2018—2026</span>
+                <div class="col-content">
+                    <img src="./img/positivo-pluma.svg" alt="Sello Cruz Estudio" class="pluma-seal">
+                </div>
             </div>
         </div>
-
-        <div class="footer-col">
-            <span class="mono-label">SAY HELLO</span>
-            <div class="col-content">
-                <a href="mailto:estudiocruzdesign@gmail.com" class="footer-link">estudiocruzdesign@gmail.com </a>
-                <p class="reading-small">Branding & Estrategia de marca</p>
-            </div>
-        </div>
-
-        <div class="footer-col">
-            <span class="mono-label">STALK ME</span>
-            <div class="col-content">
-                <a href="https://www.instagram.com/cruzestudio_/" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram</a>
-                <a href="https://www.linkedin.com/company/cruzdesign" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
-            </div>
-        </div>
-
-        <div class="footer-col footer-brand-end">
-            <span class="mono-label">©2018—2026</span>
-            <div class="col-content">
-                <img src="./img/positivo-pluma.svg" alt="Sello Cruz Estudio" class="pluma-seal">
-                
-            </div>
-        </div>
-    </div>
-    
-    <div class="custom-cursor"></div>
-</footer>
-
-
-  <script type="importmap">
-    {
-        "imports": {
-            "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
-        }
-    }
-</script>
-
-<script src="./java/loader.js"></script> 
-<script src="./java/script.js" defer></script>
-<script type="module" src="./java/hero-3d.js"></script>
+        <div class="custom-cursor"></div>
+    </footer>
+</div> <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script src="./java/loader.js"></script> 
+<script src="./java/hero-3d.js"></script>
+<script src="./java/script.js" defer></script>
+
 <a href="https://wa.me/5491161105751?text=Hola%20Cruz%20Estudio,%20me%20gustaría%20consultar%20por%20un%20proyecto." class="whatsapp-fixed" target="_blank" rel="noopener noreferrer" aria-label="Contacto por WhatsApp">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.63 1.43h.004c6.557 0 11.892-5.335 11.895-11.893a11.821 11.821 0 00-3.48-8.413Z"/>

@@ -369,19 +369,23 @@ cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" wid
 
 .logo-vectorial {
     /* Si no defines altura, el SVG no se visualiza */
-    height: 20px; 
+    height: 15px; 
     width: auto;
     display: block;
     /* Mantenemos la pureza del color crema de Cruz Diseño */
     filter: brightness(1.1); 
 }
 
+
 /* --- NAVBAR BRAND (ESPACIADO) --- */
+
 .navbar-brand {
-    /* Cambiamos 0px por 30px arriba/abajo para que respire */
-    padding: 0px 45px !important; 
-    border-bottom: 1px solid rgba(255, 255, 243, 0.1);
-    background-color: #1D1E1C;
+    padding: 10px 65px !important; 
+    border-bottom: 1px solid rgba(255, 253, 243, 0.1);
+    /* EFECTO GLASS */
+    background-color: rgba(29, 30, 28, 0.70);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -396,6 +400,7 @@ cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" wid
     align-items: center;
     width: 100%;
     justify-content: space-between;
+    position: relative; /* ¡CRÍTICO para el centrado perfecto! */
 }
 
 
@@ -469,247 +474,279 @@ margin: 3px 0;
 }
 
 
-/* --- EL MENÚ DERECHO (HOVER ACTUALIZADO) --- */
+
+
+/* --- EL MENÚ CENTRADO --- */
+
+.nav-links-brands {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* Centrado matemático perfecto (inmune a los costados) */
+    gap: 70px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links-brands li { margin: 0; }
 
 .nav-links-brands a {
     font-family: "cofo-sans-mono-variable", monospace;
-    font-size: 14px;
-    color: #FFFDF3; /* Color Crema base */
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: rgba(255, 253, 243, 0.5); /* Gris tenue por defecto */
     text-decoration: none !important;
-    padding: 30px 0; 
+    padding: 18px 0; 
     display: inline-block;
     line-height: 1;
-    transition: color 0.3s ease, opacity 0.3s ease;
-    position: relative; /* Necesario para posicionar los corchetes */
+    transition: color 0.3s ease;
 }
 
-/* --- ESTADO HOVER: COLOR AMARILLO #f2c335 --- */
 .nav-links-brands a:hover {
-    color: #f2c335 !important;
-    opacity: 1;
+    color: #FFFDF3 !important; 
 }
 
-/* --- EFECTO DE CORCHETES EN AMARILLO --- */
-.nav-links-brands a::before,
-.nav-links-brands a::after {
-    content: '';
-    position: absolute;
-    opacity: 0;
-    color: #f2c335; /* Color corporativo para los corchetes */
-    transition: all 0.3s cubic-bezier(0.77, 0, 0.175, 1);
+/* Ocultar en escritorio el item de contacto de la lista central */
+.mobile-contact-item {
+    display: none !important;
 }
 
-.nav-links-brands a:hover::before {
-    content: '[';
-    left: -18px; /* Ajuste de aire para que no toque la letra */
-    opacity: 1;
-}
-
-.nav-links-brands a:hover::after {
-    content: ']';
-    right: -18px; /* Ajuste de aire */
-    opacity: 1;
-}
-
-/* Ajuste para el estado activo (página actual) */
-.nav-links-brands .active {
-    color: #f2c335;
-    font-weight: bold;
-    opacity: 0.8;
-}
-
-
-/* Estilos para la animación de la cruz */
-.menu-toggle.open .bar:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-}
-
-.menu-toggle.open .bar:nth-child(2) {
-    opacity: 0;
-}
-
-.menu-toggle.open .bar:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
-}
-
-/* Estilos para el menú desplegable */
-.nav-links-brands {
+/* --- LINK DERECHO (CONTACTO) - TEXTO MINIMALISTA --- */
+.nav-right-text {
     display: flex;
-    list-style: none;
+    align-items: center;
+    z-index: 10;
 }
 
-.nav-links-brands li {
-    margin-left: 20px;
-}
-
-.nav-links-brands a {
-    color: #FFFDF3;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-/* --- SECCIÓN HERO (AJUSTE SISTEMATIZADO) --- */
-.hero {
-    background-color: #1D1E1C;
-    height: 100vh;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center; 
-    z-index: 1;
-}
-
-#hero-3d-background {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none; /* Permite que el mouse "atraviese" el contenedor */
-}
-
-#hero-3d-background canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-
-
-.hero-main-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100% !important;
-    padding: 0 40px !important;
-    transform: translateY(-8vh) !important; /* Ajuste para respiro suizo */
-    pointer-events: none;
-    z-index: 2;
-    position: relative;
-}
-
-.hero-left {
-    pointer-events: auto;
-    width: 65%;
-}
-
-.hero-title {
-    font-family: var(--font-header);
-    font-size: var(--h1-size);
-    font-weight: 700;
-    line-height: var(--h1-leading);
-    letter-spacing: var(--h1-spacing);
-    color: var(--crema);
-    
-    /* ALINEACIÓN SUIZA */
-    padding-top: 10%;
-    text-align: left; 
-    max-width: 90%;      /* Evita que el texto toque el borde derecho */
-    margin-bottom: 3rem;
-    display: block;
-}
-
-/* Palabra kinética: Usamos Cofo Mono para resaltar el sistema */
-.word-slider {
-    font-family: var(--font-mono);
-    color: var(--amarillo-acento);
-    display: inline-block;
-    transition: transform 0.6s var(--loader-transition), opacity 0.3s;
+.nav-contact-link {
+    font-family: "cofo-sans-mono-variable", monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: rgba(255, 253, 243, 0.5); /* Mismo gris tenue que los demás */
     text-transform: uppercase;
-}
-
-.hero-subtitle {
-    font-family: var(--font-reading);
-    font-size: 20px; /* Tamaño editorial reducido para notebooks */
-    font-weight: 300;
-    max-width: 600px;
-    color: rgba(255, 253, 243, 0.7);
-    line-height: 1.6;
-}
-
-.hero-right {
-    pointer-events: auto;
-    text-align: right;
-  
-    
-    
-}
-.hero-links{
-   font-size: 40%;
-}
-
-.hero-link {
-    
-    font-family: var(--font-mono);
-    
-    color: var(--crema) !important;
-    opacity: 0.4;
-    margin-bottom: 12px;
-    transition: all 0.3s ease;
-}
-
-.hero-link:hover { opacity: 1; color: var(--amarillo-acento) !important; transform: translateX(-5px); }
-
-.hero-arrow img {
-    width: 250px;
-    height: auto;
-    margin-top: 60px;
-    filter: brightness(0) saturate(100%) invert(82%) sepia(37%) saturate(1093%) hue-rotate(354deg) brightness(103%) contrast(93%);
-}
-
-.hero-fecha {
-    font-family: var(--font-mono);
-    color: var(--crema);
-    font-size: 18px;
-    font-weight: 700;
-}
-
-/* --- BLOQUE DERECHO --- */
-.hero-right {
-    pointer-events: auto;
-    text-align: right;
-    /* Ajustamos el padding-top para que los links sigan nivelados con el H1 */
-    padding-top: 8.5%; 
-    
-}
-
-.hero-link {
-    color: #FFFDF3 !important; /* Limpieza de azul Bootstrap */
     text-decoration: none !important;
-    font-family: 'cofo-sans-mono-variable', monospace;
-    font-size: 8 rem;
-    display: block;
-    margin-bottom: 12px;
-    transition: opacity 0.3s;
+    transition: color 0.3s ease;
 }
 
-.hero-link:hover {
-    opacity: 0.5;
+.nav-contact-link:hover {
     color: #FFFDF3 !important;
 }
 
-/* --- FLECHA --- */
-.hero-arrow img {
-    width: 250px; /* Tamaño según referencia visual */
-    height: auto;
-    margin-top: 40px;
+/* --- BOTÓN DERECHO (CONTACTO AMARILLO) --- */
+.nav-right-cta {
+    display: flex;
+    align-items: center;
+    z-index: 10;
 }
 
-
-
-/* --- FOOTER (Copyright y Año) --- */
-.hero-footer {
-    position: absolute;
-    bottom: 140px;
-    right: 30px;
-    z-index: 2;
-    text-align: right;
-}
-
-.hero-fecha {
-    color: #FFFDF3;
-    font-family: 'cofo-sans-mono-variable', monospace;
-    font-size: 20px;
+.nav-cta-btn {
+    background-color: var(--amarillo-acento); 
+    color: var(--bg-dark) !important;
+    font-family: "cofo-sans-mono-variable", monospace;
+    font-size: 10px;
     font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 12px 30px; 
+    text-decoration: none !important;
+    border-radius: 50px; /* Efecto píldora */
+    transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.nav-cta-btn:hover {
+    background-color: var(--crema); 
+    color: var(--bg-dark) !important;
+    transform: translateY(-3px); 
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); 
+}
+
+
+/* ==========================================================================
+   NUEVO SISTEMA HERO ESFERA 3D CRUZ ESTUDIO
+   ========================================================================== */
+   /* Grid de fondo y Canvas fijo */
+.grid-bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+#canvas-wrap { position: fixed; inset: 0; z-index: 2; }
+#canvas-wrap canvas { display: block; }
+
+/* Textos Editoriales (Fijos, revelados por scroll) */
+#hero-text {
+  position: fixed; 
+  top: 50%; 
+  left: 48px; 
+  transform: translateY(-50%);
+  z-index: 20; 
+  /* AMPLIAMOS LA CAJA PARA QUE ENTRE LA FRASE EN 110px */
+  max-width: 800px; 
+  opacity: 0; 
+  pointer-events: none; 
+  will-change: opacity;
+}
+.label-tag {
+  font-family: 'cofo-sans-mono-variable', monospace; font-size: 9px; color: var(--muted);
+  letter-spacing: 0.18em; text-transform: uppercase; display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
+}
+.label-tag::before { content: ''; display: block; width: 20px; height: 1px; background: var(--yellow); flex-shrink: 0; }
+
+#hero-text h1 {
+  /* 1. Tipografía oficial del sistema para titulares */
+  font-family: var(--font-header); 
+  
+  /* 2. Peso tipográfico (700 suele rendir más elegante que 900 en minúsculas) */
+  font-weight: 700; 
+  
+  /* 3. Nuevo tamaño: Sube hasta 110px en pantallas grandes, pero baja a 60px en móviles */
+  font-size: clamp(60px, 7vw, 110px); 
+  
+  /* 4. Interlineado y Kerning ajustados para minúsculas */
+  line-height: 1.05; 
+  letter-spacing: -0.04em; 
+  
+  /* 5. Color crema oficial del sistema */
+  color: var(--crema); 
+  
+  margin-bottom: 28px;
+}
+
+#hero-text h1 .hl { 
+  color: var(--amarillo-acento); 
+  font-style: none; 
+}
+
+#hero-text h1 .out { 
+  -webkit-text-stroke: 1.5px rgba(255, 253, 243, 0.38); /* Trazo color crema transparente */
+  color: none; 
+}
+
+.body-copy {
+  font-family: var(--font-reading); /* IBM Plex Sans */
+  font-size: 16px; /* Agrandamos la tipografía para lectura cómoda */
+  font-weight: 300;
+  
+  /* MEJORA DE CONTRASTE: Subimos la opacidad del crema al 85% */
+  color: rgba(255, 253, 243, 0.85); 
+  
+  line-height: 1.6; /* Interlineado suizo, ajustado al nuevo tamaño */
+  
+  /* Hacemos la línea divisoria izquierda sutilmente más visible */
+  border-left: 1px solid rgba(255, 253, 243, 0.25); 
+  padding-left: 20px; /* Damos un poco más de aire respecto a la línea */
+  
+  /* ENSANCHAMOS LA CAJA (pasamos de 300px a 520px) */
+  max-width: 520px; 
+}
+
+/* Stats y Hints */
+#stat-strip {
+  position: fixed; bottom: 52px; left: 48px; z-index: 20; display: flex; gap: 36px;
+  opacity: 0; pointer-events: none; will-change: opacity;
+}
+.stat-num { font-family: var(--f-display); font-weight: 900; font-size: 26px; color: var(--white); letter-spacing: -0.04em; line-height: 1; }
+.stat-num b { color: var(--yellow); }
+.stat-lbl { font-family: var(--f-mono); font-size: 8px; color: rgba(255,255,255,0.28); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 4px; }
+
+/* Indicador de Clic (Hint) - Centrado bajo la Esfera */
+
+#click-hint {
+  /* Posicionamiento centrado absoluto */
+  position: absolute; 
+  bottom: 4vh; /* Distancia desde abajo, ajustable según preferencia */
+  left: 50%;
+  transform: translateX(-50%); /* El truco matemático para centrar perfectamente */
+  
+  z-index: 20; 
+  font-family: 'cofo-sans-mono-variable', monospace; 
+  font-size: 9px;
+  color: var(--amarillo-acento); /* Texto en color amarillo institucional */
+  letter-spacing: 0.12em; 
+  text-transform: uppercase; 
+  
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 8px; 
+  transition: opacity 0.5s;
+}
+
+#click-hint.hide { 
+  opacity: 0; 
+  pointer-events: none; /* Asegura que no estorbe si está oculto */
+}
+
+/* La línea animada ahora es amarilla */
+.hint-line { 
+  width: 1px; 
+  height: 36px; 
+  background: linear-gradient(to bottom, var(--amarillo-acento), transparent); /* Gradiente amarillo */
+  animation: pulse 2.2s ease-in-out infinite; 
+}
+
+/* Ajuste de la animación para mantener el color */
+@keyframes pulse { 
+  0%, 100% { opacity: 0.28; } 
+  50% { opacity: 0.9; } 
+}
+
+/* Ticker Footer Hero */
+#ticker {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: var(--yellow); overflow: hidden; padding: 8px 0;
+}
+.tick-inner { display: flex; white-space: nowrap; animation: tick 22s linear infinite; }
+.tick-item { font-family: 'cofo-sans-mono-variable', monospace; font-size: 8px; font-weight: 700; color: var(--dark); letter-spacing: 0.14em; text-transform: uppercase; padding: 0 36px; }
+.tick-dot { display: inline-block; width: 3px; height: 3px; background: rgba(17,17,16,0.32); border-radius: 50%; vertical-align: middle; margin: 0 14px; }
+@keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* Card Interactiva */
+#proj-card {
+  position: fixed; z-index: 60; background: rgba(13,13,12,0.97); border: 0.5px solid rgba(240,192,64,0.5);
+  padding: 20px 22px 18px; min-width: 230px; max-width: 280px;
+  opacity: 0; transform: translateY(10px) scale(0.97); pointer-events: none; transition: opacity 0.22s ease, transform 0.22s ease;
+}
+#proj-card.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+.pc-label { font-family: var(--f-mono); font-size: 8px; color: var(--yellow); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 8px; }
+.pc-title { font-family: var(--f-display); font-weight: 700; font-size: 17px; color: var(--white); letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 8px; }
+.pc-desc { font-family: var(--f-body); font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 14px; }
+.pc-link { font-family: var(--f-mono); font-size: 8px; color: var(--yellow); text-decoration: none; letter-spacing: 0.12em; text-transform: uppercase; }
+.pc-close { position: absolute; top: 10px; right: 14px; font-family: var(--f-mono); font-size: 10px; color: rgba(255,255,255,0.25); background: none; border: none; cursor: pointer; transition: color 0.15s; }
+.pc-close:hover { color: var(--yellow); }
+
+/* ESPACIADOR Y CUBIERTA DEL SITIO (CRÍTICO PARA EL SCROLL) */
+#spacer { height: 350vh; } 
+.site-content-wrapper {
+  position: relative;
+  z-index: 100; /* Se desliza por encima de la esfera fija */
+  background-color: var(--dark); /* Oculta lo que queda atrás */
+}
+
+/* Estilos para la imagen dentro de la Card */
+.pc-image-container {
+  width: 100%;
+  height: 130px; /* Altura controlada para no tapar el texto */
+  margin-bottom: 16px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(242, 195, 53, 0.3); /* Línea amarilla sutil */
+  background-color: #111110;
+}
+
+.pc-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que la imagen llene el espacio sin deformarse */
+  opacity: 0.85;
+  transition: opacity 0.3s ease, transform 0.5s ease;
+}
+
+/* Micro-interacción: leve zoom al pasar el mouse por la card */
+#proj-card:hover .pc-image-container img {
+  opacity: 1;
+  transform: scale(1.05);
 }
 
 
@@ -725,6 +762,7 @@ margin: 3px 0;
 }
 
 /*-----Animación*/
+
 
 
 .nav-links li::after {
@@ -944,6 +982,10 @@ body.scroll-locked {
         line-height: 1.2;
     }
 }
+
+
+/* Ocultamos el botón amarillo solo en celulares */
+  
 
 
 /*----- Carrusell -----*/
@@ -1258,6 +1300,8 @@ body.scroll-locked {
         margin-top: 15px;
     }
 }
+
+
 /*----- Sección About Me -----*/
 
 
@@ -2349,11 +2393,17 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
         width: 100%;
     }
 
+
     /* --- 2. NAVBAR & HAMBURGER (CON RESPIRO LATERAL) --- */
+
     .navbar-brand {
-        padding: 20px 35px !important; 
-        height: 80px;
-        background-color: #1D1E1C;
+        /* Redujimos el padding vertical y la altura general */
+        padding: 10px 35px !important; 
+        height: 60px;
+        /* EFECTO GLASS MÓVIL */
+        background-color: rgba(29, 30, 28, 0.70);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(5px);
         border-bottom: none;
         display: flex;
         justify-content: space-between;
@@ -2492,6 +2542,23 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     .language-switch { bottom: 20px; right: 35px; }
 }
 
+@media (max-width: 768px) {
+    /* 1. ESTO DESAPARECE EL BOTÓN AMARILLO DEL NAVBAR EN CELULARES */
+    .nav-right-cta {
+        display: none !important; 
+    }
+    
+    /* 2. ESTO LO HACE APARECER DENTRO DEL MENÚ HAMBURGUESA */
+    .mobile-contact-item {
+        display: block !important; 
+        margin-top: 20px;
+    }
+    
+    /* 3. LO PONEMOS EN AMARILLO INSTITUCIONAL DENTRO DEL MENÚ */
+    .mobile-contact-item a {
+        color: #f2c335 !important; 
+    }
+}
 
 
 /* Animación de rebote */

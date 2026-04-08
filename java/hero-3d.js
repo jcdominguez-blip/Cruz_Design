@@ -1,123 +1,265 @@
 /**
- * SISTEMA CRUZ ESTUDIO ® - Waves Engine High-Fidelity
- * Movimiento: Natural, Ultra-Lento y Multidireccional
+ * SISTEMA CRUZ ESTUDIO ® - 3D Sphere Interactive Engine
+ * REEMPLAZAR TODO EL CONTENIDO DE hero-3d.js POR ESTE CÓDIGO
+ * Actualización: Sistema Toggle (Clic abre, 2do Clic cierra) + Secuencia de proyectos.
  */
 
-class Grad { constructor(x, y, z) { this.x = x; this.y = y; this.z = z; } dot2(x, y) { return this.x * x + this.y * y; } }
-class Noise {
-    constructor(seed = Math.random()) {
-        this.p = [151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168,68,175,74,165,71,134,139,48,27,166,77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,102,143,54,65,25,63,161,1,216,80,73,209,76,132,187,208,89,18,169,200,196,135,130,116,188,159,86,164,100,109,198,173,186,3,64,52,217,226,250,124,123,5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,223,183,170,213,119,248,152,2,44,154,163,70,221,153,101,155,167,43,172,9,129,22,39,253,19,98,108,110,79,113,224,232,178,185,112,104,218,246,97,228,251,34,242,193,238,210,144,12,191,179,162,241,81,51,145,235,249,14,239,107,49,192,214,31,181,199,106,157,184,84,204,176,115,121,50,45,127,4,150,254,138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180];
-        this.perm = new Array(512); this.gradP = new Array(512);
-        this.grad3 = [new Grad(1,1,0),new Grad(-1,1,0),new Grad(1,-1,0),new Grad(-1,-1,0),new Grad(1,0,1),new Grad(-1,0,1),new Grad(1,0,-1),new Grad(-1,0,-1),new Grad(0,1,1),new Grad(0,-1,1),new Grad(0,1,-1),new Grad(0,-1,-1)];
-        if (seed > 0 && seed < 1) seed *= 65536; seed = Math.floor(seed);
-        for (let i = 0; i < 256; i++) { let v = this.p[i] ^ (seed & 255); this.perm[i] = this.perm[i + 256] = v; this.gradP[i] = this.gradP[i + 256] = this.grad3[v % 12]; }
+document.addEventListener("DOMContentLoaded", () => {
+    if (!document.getElementById('canvas-wrap')) return;
+    
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // ── DATA PROYECTOS (IMÁGENES REALES) ──────────────────────────────────
+    const PROJECTS = [
+      {
+        label: 'BRANDING · IDENTIDAD',
+        title: 'Trenes Argentinos Cargas',
+        desc: 'Rediseño del sistema visual de la principal operadora ferroviaria de Argentina. Alineación estratégica con el Estado.',
+        img: 'https://i.ibb.co/dmkbM0K/tac.jpg' 
+      },
+      {
+        label: 'BRANDING · IDENTIDAD',
+        title: 'SUUAM',
+        desc: 'Proyecto de identidad de marca con alto rendimiento y calidad gráfica. Desarrollo estratégico integral.',
+        img: 'https://i.ibb.co/357FqBCw/tp1.jpg' 
+      },
+      {
+        label: 'BRANDING · IDENTIDAD',
+        title: 'Rovex',
+        desc: 'Identidad sólida, robusta y atemporal para repuestos de maquinaria vial y agropecuaria. Confianza y tecnología.',
+        img: './img/ROVEX-PREVIEW.png' 
+      },
+      {
+        label: 'MARCA GESTIÓN',
+        title: 'Municipalidad de San Cristobal',
+        desc: 'Revitalización del escudo heráldico y marca gestión. Historia y modernidad integradas.',
+        img: 'https://i.ibb.co/gb4PTXst/img4.jpg' 
+      }
+    ];
+    
+    // ── PERLIN NOISE ──────────────────────────────────────────
+    const _p = Array.from({length:256},(_,i)=>i).sort(()=>Math.random()-.5);
+    const PP = [..._p,..._p];
+    const fd = t=>t*t*t*(t*(t*6-15)+10);
+    const lp = (t,a,b)=>a+t*(b-a);
+    function gr(h,x,y,z){h&=15;const u=h<8?x:y,v=h<4?y:(h===12||h===14?x:z);return((h&1)?-u:u)+((h&2)?-v:v);}
+    function noise(x,y,z){
+      const X=Math.floor(x)&255,Y=Math.floor(y)&255,Z=Math.floor(z)&255;
+      x-=Math.floor(x);y-=Math.floor(y);z-=Math.floor(z);
+      const u=fd(x),v=fd(y),w=fd(z);
+      const A=PP[X]+Y,AA=PP[A]+Z,AB=PP[A+1]+Z,B=PP[X+1]+Y,BA=PP[B]+Z,BB=PP[B+1]+Z;
+      return lp(w,lp(v,lp(u,gr(PP[AA],x,y,z),gr(PP[BA],x-1,y,z)),lp(u,gr(PP[AB],x,y-1,z),gr(PP[BB],x-1,y-1,z))),lp(v,lp(u,gr(PP[AA+1],x,y,z-1),gr(PP[BA+1],x-1,y,z-1)),lp(u,gr(PP[AB+1],x,y-1,z-1),gr(PP[BB+1],x-1,y-1,z-1))));
     }
-    perlin2(x, y) {
-        let X = Math.floor(x), Y = Math.floor(y); x -= X; y -= Y; X &= 255; Y &= 255;
-        const n00 = this.gradP[X + this.perm[Y]].dot2(x, y), n01 = this.gradP[X + this.perm[Y+1]].dot2(x, y-1);
-        const n10 = this.gradP[X+1 + this.perm[Y]].dot2(x-1, y), n11 = this.gradP[X+1 + this.perm[Y+1]].dot2(x-1, y-1);
-        const fade = (t) => t * t * t * (t * (t * 6 - 15) + 10), lerp = (a, b, t) => (1 - t) * a + t * b;
-        return lerp(lerp(n00, n10, fade(x)), lerp(n01, n11, fade(x)), fade(y));
+    
+    // ── THREE.JS SETUP ──────────────────────────────────────────────
+    let W = window.innerWidth, H = window.innerHeight;
+    const scene    = new THREE.Scene();
+    const camera   = new THREE.PerspectiveCamera(52, W/H, 0.1, 100);
+    camera.position.z = 5.5;
+    
+    const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+    renderer.setSize(W, H);
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setClearColor(0x000000, 0);
+    document.getElementById('canvas-wrap').appendChild(renderer.domElement);
+    
+    // ── GENERATE SPHERE ────────────────────────────────────────────────
+    const SEG = 76;
+    const geo  = new THREE.SphereGeometry(2, SEG, SEG);
+    const pos  = geo.attributes.position;
+    const N    = pos.count;
+    const base = new Float32Array(N * 3);
+    
+    for (let i = 0; i < N; i++) {
+      const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+      const len = Math.sqrt(x*x + y*y + z*z);
+      const nx = x/len, ny = y/len, nz = z/len;
+      const n = noise(nx*2.4, ny*2.4, nz*2.4)*0.32 + noise(nx*5.2, ny*5.2, nz*5.2)*0.10;
+      const r = 2 + n;
+      base[i*3]=nx*r; base[i*3+1]=ny*r; base[i*3+2]=nz*r;
+      pos.setXYZ(i, nx*r, ny*r, nz*r);
     }
-}
-
-const container = document.getElementById('hero-3d-background');
-if (container) {
-    const canvas = document.createElement('canvas');
-    container.appendChild(canvas);
-    const ctx = canvas.getContext('2d');
-    const noise = new Noise();
-
-    const config = {
-        lineColor: "rgba(255, 253, 243, 0.15)", 
-        backgroundColor: "#1D1E1C",
-        waveSpeed: 0.00015, // VELOCIDAD REDUCIDA (Casi imperceptible pero constante)
-        waveAmp: 48,
-        xGap: 18, 
-        yGap: 18,
-        friction: 0.88,    
-        tension: 0.006,    // Tensión baja para naturalidad orgánica
-        ovalFactor: 3.5,   // Punta ovalada pronunciada
-    };
-
-    let width, height, grid = [], columns, rows;
-    let mouse = { x: -2000, y: -2000, sx: 0, sy: 0 };
-
-    function init() {
-        width = canvas.width = container.offsetWidth;
-        height = canvas.height = container.offsetHeight;
-        columns = Math.ceil(width / config.xGap) + 1;
-        rows = Math.ceil(height / config.yGap) + 1;
-        grid = [];
-        for (let i = 0; i < columns; i++) {
-            grid[i] = [];
-            for (let j = 0; j < rows; j++) {
-                grid[i][j] = { x: i * config.xGap, y: j * config.yGap, vx: 0, vy: 0, curX: 0, curY: 0 };
-            }
+    pos.needsUpdate = true;
+    geo.computeVertexNormals();
+    
+    const mat = new THREE.MeshBasicMaterial({ color:0xffffff, wireframe:true, transparent:true, opacity:0.48 });
+    const sphere = new THREE.Mesh(geo, mat);
+    scene.add(sphere);
+    
+    // ── RAYCASTER & INTERACTION ─────────────────────────────────────────────
+    const ray   = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    
+    // ── SCROLL STATE (GSAP) ──────────────────────────────────────────
+    let targetX=0, targetScale=1, curX=0, curScale=1;
+    const heroText  = document.getElementById('hero-text');
+    const statStrip = document.getElementById('stat-strip');
+    
+    ScrollTrigger.create({
+      trigger:'#spacer', start:'top top', end:'bottom bottom', scrub:1.2,
+      onUpdate(self){
+        const p = self.progress;
+        if(p < 0.35){
+          const t = p/0.35;
+          targetScale = 1 + t*0.42;
+          targetX = 0;
+          gsap.set(heroText,  {opacity:0});
+          gsap.set(statStrip, {opacity:0});
+        } else {
+          const t = (p-0.35)/0.65;
+          targetScale = 1.42;
+          targetX = t * 2.5;
+          const alpha = Math.min(t*1.5, 1);
+          gsap.set(heroText,  {opacity:alpha});
+          gsap.set(statStrip, {opacity:alpha});
+          if(alpha>0.3){ heroText.style.pointerEvents='all'; }
         }
-    }
-
-    function animate(time) {
-        ctx.fillStyle = config.backgroundColor;
-        ctx.fillRect(0, 0, width, height);
-        ctx.strokeStyle = config.lineColor;
-        ctx.lineWidth = 0.6;
-
-        mouse.sx += (mouse.x - mouse.sx) * 0.06;
-        mouse.sy += (mouse.y - mouse.sy) * 0.06;
-
-        for (let i = 0; i < columns; i++) {
-            for (let j = 0; j < rows; j++) {
-                const p = grid[i][j];
-                // FRECUENCIA DE RUIDO MUY BAJA (Frecuencia 0.035) para naturalidad suprema
-                const noiseVal = noise.perlin2(i * 0.035, j * 0.035 + time * config.waveSpeed) * 12;
-                
-                const targetX = p.x + Math.cos(noiseVal) * config.waveAmp;
-                const targetY = p.y + Math.sin(noiseVal) * config.waveAmp;
-
-                const dx = p.x - mouse.sx, dy = p.y - mouse.sy;
-                const dist = Math.hypot(dx / config.ovalFactor, dy); // Interacción Ovalada
-                if (dist < 300) {
-                    const f = (1 - dist / 300) * 0.45;
-                    p.vx += dx * f * 0.02; p.vy += dy * f * 0.02;
-                }
-
-                p.vx += (targetX - p.curX) * config.tension;
-                p.vy += (targetY - p.curY) * config.tension;
-                p.vx *= config.friction; p.vy *= config.friction;
-                
-                p.curX = (p.curX || targetX) + p.vx;
-                p.curY = (p.curY || targetY) + p.vy;
-            }
-        }
-
-        // Dibujo de la Rejilla Técnica (Grid Dual)
-        for (let i = 0; i < columns; i++) {
-            ctx.beginPath();
-            for (let j = 0; j < rows; j++) {
-                const p = grid[i][j];
-                if (j === 0) ctx.moveTo(p.curX, p.curY);
-                else ctx.lineTo(p.curX, p.curY);
-            }
-            ctx.stroke();
-        }
-        for (let j = 0; j < rows; j++) {
-            ctx.beginPath();
-            for (let i = 0; i < columns; i++) {
-                const p = grid[i][j];
-                if (i === 0) ctx.moveTo(p.curX, p.curY);
-                else ctx.lineTo(p.curX, p.curY);
-            }
-            ctx.stroke();
-        }
-        requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('mousemove', e => {
-        const r = canvas.getBoundingClientRect();
-        mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+      }
     });
+    
+    // ── EXTRUSION LOGIC ─────────────────────────────────────────────
+    let extVerts=[], extTween=null, isExtruded=false;
+    
+    function findVerts(lp, radius){
+      const out=[];
+      for(let i=0;i<N;i++){
+        const vx=base[i*3],vy=base[i*3+1],vz=base[i*3+2];
+        const d=Math.sqrt((vx-lp.x)**2+(vy-lp.y)**2+(vz-lp.z)**2);
+        if(d<radius) out.push({idx:i, f:1-d/radius});
+      }
+      return out;
+    }
+    
+    function applyExt(verts, t, amt){
+      for(const v of verts){
+        const vx=base[v.idx*3],vy=base[v.idx*3+1],vz=base[v.idx*3+2];
+        const l=Math.sqrt(vx*vx+vy*vy+vz*vz)||1;
+        const d=t*amt*v.f;
+        pos.setXYZ(v.idx, vx+vx/l*d, vy+vy/l*d, vz+vz/l*d);
+      }
+      pos.needsUpdate=true;
+    }
+    
+    function retract(){
+      if(!isExtruded||!extVerts.length) return;
+      if(extTween) extTween.kill();
+      const o={t:1};
+      extTween=gsap.to(o,{t:0,duration:.5,ease:'power2.inOut',
+        onUpdate(){ applyExt(extVerts,o.t,0.72); },
+        onComplete(){ isExtruded=false; extVerts=[]; gsap.to(mat.color,{r:1,g:1,b:1,duration:.5}); }
+      });
+    }
+    
+    function extrude(verts){
+      extVerts=verts; isExtruded=true;
+      if(extTween) extTween.kill();
+      const o={t:0};
+      extTween=gsap.to(o,{t:1,duration:.65,ease:'power3.out',
+        onUpdate(){ applyExt(verts,o.t,0.72); }
+      });
+      gsap.to(mat.color,{r:242/255,g:195/255,b:53/255,duration:.25,
+        onComplete:()=>gsap.to(mat.color,{r:1,g:1,b:1,duration:1.2,delay:.5})
+      });
+    }
+    
+    // ── CARD LOGIC (CON IMÁGENES) ──────────────────────────────────────────────────
+    const card  = document.getElementById('proj-card');
+    const pcLbl = document.getElementById('pc-lbl');
+    const pcTtl = document.getElementById('pc-title');
+    const pcDsc = document.getElementById('pc-desc');
+    const pcImg = document.getElementById('pc-img'); 
+    
+    function showCard(proj, ex, ey){
+      pcLbl.textContent = proj.label;
+      pcTtl.textContent = proj.title;
+      pcDsc.textContent = proj.desc;
+      
+      if(pcImg && proj.img) {
+          pcImg.src = proj.img;
+      }
+      
+      const cx = Math.max(20, Math.min(ex+24, W-300));
+      const cy = Math.max(70, Math.min(ey-60, H-200));
+      card.style.left=cx+'px'; card.style.top=cy+'px';
+      card.classList.add('show');
+    }
+    
+    function hideCard(){ card.classList.remove('show'); }
+    
+    // Botón de cerrar de la card
+    document.getElementById('card-close').addEventListener('click',e=>{
+      e.stopPropagation(); hideCard(); retract(); 
+    });
+    
+    // ── ESTADO CÍCLICO DE PROYECTOS ───────────────────────────────────────────
+    let currentProjectIndex = 0; 
 
-    window.addEventListener('resize', init);
-    init(); requestAnimationFrame(animate);
-}
+    // ── CLICK EVENT (SISTEMA DE TOGGLE Y SECUENCIA) ───────────────────────────
+    renderer.domElement.addEventListener('click', e=>{
+      
+      // REGLA 1: Si la esfera ya está extruida (hay una tarjeta visible), 
+      // CUALQUIER clic cerrará la tarjeta y retraerá la esfera. No hacemos nada más.
+      if(isExtruded){ 
+          retract(); 
+          hideCard(); 
+          return; 
+      }
+      
+      // REGLA 2: Si llegamos aquí, no hay tarjeta visible. Comprobamos si el clic dio en la esfera.
+      const rect=renderer.domElement.getBoundingClientRect();
+      mouse.x = ((e.clientX-rect.left)/rect.width)*2-1;
+      mouse.y = -((e.clientY-rect.top)/rect.height)*2+1;
+      ray.setFromCamera(mouse,camera);
+      const hits=ray.intersectObject(sphere);
+    
+      if(hits.length){
+        // Acertamos a la esfera
+        document.getElementById('click-hint').classList.add('hide');
+        const local=sphere.worldToLocal(hits[0].point.clone());
+        
+        // Obtenemos el proyecto actual y preparamos el siguiente para el próximo clic
+        let pi = currentProjectIndex;
+        currentProjectIndex = (currentProjectIndex + 1) % PROJECTS.length;
+    
+        // Extruimos en el punto del clic
+        const verts=findVerts(local, 0.88);
+        if(verts.length) extrude(verts);
+        
+        // Mostramos la Card
+        showCard(PROJECTS[pi], e.clientX, e.clientY);
+      }
+    });
+    
+    renderer.domElement.addEventListener('mousemove', e=>{
+      const rect=renderer.domElement.getBoundingClientRect();
+      mouse.x = ((e.clientX-rect.left)/rect.width)*2-1;
+      mouse.y = -((e.clientY-rect.top)/rect.height)*2+1;
+      ray.setFromCamera(mouse,camera);
+      
+      // Cambiar a cursor tipo pointer solo si el mouse está sobre la esfera Y no está extruida
+      const isHoveringSphere = ray.intersectObject(sphere).length > 0;
+      renderer.domElement.style.cursor = (isHoveringSphere && !isExtruded) ? 'crosshair' : 'default';
+    });
+    
+    // ── RENDER LOOP ───────────────────────────────────────────
+    let time=0;
+    (function animate(){
+      requestAnimationFrame(animate);
+      time+=0.003;
+      sphere.rotation.y+=0.0013;
+      sphere.rotation.x=Math.sin(time*.28)*.04;
+      curX     +=(targetX    -curX)    *.055;
+      curScale +=(targetScale-curScale)*.055;
+      sphere.position.x=curX;
+      sphere.scale.setScalar(curScale);
+      mat.opacity=0.42+Math.sin(time*.7)*.06;
+      renderer.render(scene,camera);
+    })();
+    
+    // ── RESIZE ────────────────────────────────────────────────
+    window.addEventListener('resize',()=>{
+      W=window.innerWidth; H=window.innerHeight;
+      camera.aspect=W/H; camera.updateProjectionMatrix();
+      renderer.setSize(W,H);
+    });
+});
