@@ -9,31 +9,31 @@ document.addEventListener("DOMContentLoaded", () => {
     
     gsap.registerPlugin(ScrollTrigger);
     
-    // ── DATA PROYECTOS (IMÁGENES REALES) ──────────────────────────────────
+   // ── DATA PROYECTOS (ORDEN SINCRONIZADO CON LA LISTA) ──
     const PROJECTS = [
       {
         label: 'BRANDING · IDENTIDAD',
         title: 'Trenes Argentinos Cargas',
-        desc: 'Rediseño del sistema visual de la principal operadora ferroviaria de Argentina. Alineación estratégica con el Estado.',
+        desc: 'Rediseño del sistema visual ferroviario.',
         img: 'https://i.ibb.co/dmkbM0K/tac.jpg' 
+      },
+      {
+        label: 'MARCA GESTIÓN',
+        title: 'Municipalidad de San Cristobal',
+        desc: 'Revitalización del escudo y marca gestión.',
+        img: 'https://i.ibb.co/gb4PTXst/img4.jpg' 
       },
       {
         label: 'BRANDING · IDENTIDAD',
         title: 'SUUAM',
-        desc: 'Proyecto de identidad de marca con alto rendimiento y calidad gráfica. Desarrollo estratégico integral.',
+        desc: 'Identidad de alto rendimiento gráfico.',
         img: 'https://i.ibb.co/357FqBCw/tp1.jpg' 
       },
       {
         label: 'BRANDING · IDENTIDAD',
         title: 'Rovex',
-        desc: 'Identidad sólida, robusta y atemporal para repuestos de maquinaria vial y agropecuaria. Confianza y tecnología.',
+        desc: 'Identidad sólida para maquinaria vial.',
         img: './img/ROVEX-PREVIEW.png' 
-      },
-      {
-        label: 'MARCA GESTIÓN',
-        title: 'Municipalidad de San Cristobal',
-        desc: 'Revitalización del escudo heráldico y marca gestión. Historia y modernidad integradas.',
-        img: 'https://i.ibb.co/gb4PTXst/img4.jpg' 
       }
     ];
     
@@ -113,13 +113,12 @@ document.addEventListener("DOMContentLoaded", () => {
           currentTextAlpha = Math.min(entranceT * entranceT, 1); 
         }
 
-        // --- 2. FIX DEFINITIVO MOBILE: Contraste Sincronizado ---
-        // Si estamos en responsive (<=768px), la opacidad de la esfera
-        // copia exactamente la opacidad del texto para garantizar lectura instantánea.
+       // --- 2. NUEVO FIX CONTRASTE MOBILE (SUBTILE DIM) ---
         if (window.innerWidth <= 768) {
-            // Cuando el texto es visible (currentTextAlpha = 1), sumamos +0.55 a la base (0.42)
-            // logrando una opacidad casi total de 0.97 para la esfera.
-            mobileOpacityBoost = currentTextAlpha * 0.55; 
+            // En móvil, cuando el texto aparece (currentTextAlpha sube), 
+            // RESTAMOS opacidad a la esfera para que no compita.
+            // Pasa de 0.42 a ~0.10 cuando el texto está al 100%.
+            mobileOpacityBoost = -(currentTextAlpha * 0.32); 
         } else {
             mobileOpacityBoost = 0;
         }

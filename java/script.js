@@ -1,10 +1,10 @@
 /**
  * SISTEMA INTEGRAL CRUZ ESTUDIO ® 2026
  * Dirección Creativa: Juan Cruz
- * Versión: Consolidada (UI + Live Data + Smooth Logic)
+ * Versión: Consolidada + Fix Reveal + Dynamic Preview
  */
 
-// 1. VARIABLES GLOBALES (Ubicadas fuera para ser accesibles)
+// 1. VARIABLES GLOBALES
 let intervalId = null; 
 let currentIndex = 0;
 let projectImages = [];
@@ -12,12 +12,13 @@ let projectImages = [];
 document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
     const navbar = document.querySelector('.navbar-brand');
-    const loader = document.querySelector('.loader');
-    const percentage = document.querySelector('.loader-percentage');
+    const loader = document.getElementById('loader') || document.querySelector('.loader');
+    const percentage = document.getElementById('loader-percentage'); 
+    const loaderBar = document.getElementById('loader-bar');          
     const menuBtn = document.getElementById('mobile-menu');
     const navLinks = document.getElementById('nav-links');
 
-    // --- 2. LOADER SISTEMATIZADO ---
+    // --- 2. LOADER SISTEMATIZADO (V2) ---
     let progress = 0;
     const loadInterval = setInterval(() => {
         progress += Math.floor(Math.random() * 10) + 1;
@@ -25,15 +26,17 @@ document.addEventListener('DOMContentLoaded', () => {
             progress = 100;
             clearInterval(loadInterval);
             setTimeout(() => {
-                loader?.classList.add('hidden');
+                if (loader) loader.classList.add('hidden');
                 body.classList.remove('scroll-locked');
                 body.style.overflow = 'auto';
             }, 500);
         }
-        if (percentage) percentage.textContent = `${progress}%`;
+        // Formato '00' para estética técnica suiza
+        if (percentage) percentage.textContent = String(progress).padStart(2, '0');
+        if (loaderBar) loaderBar.style.width = `${progress}%`;
     }, 40);
 
-    // --- 3. HERO KINÉTICO (ROTACIÓN DE CONCEPTOS) ---
+    // --- 3. HERO KINÉTICO (GSAP) ---
     const kineticTarget = document.getElementById("kinetic-word");
     if (kineticTarget) {
         const words = ["IDEAS", "MARCAS", "ESTRATEGIAS", "IDENTIDADES"];
@@ -62,85 +65,77 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 const navHeight = navbar ? navbar.offsetHeight : 90;
                 window.scrollTo({ top: target.offsetTop - navHeight, behavior: 'smooth' });
-                // Cierre de menú si está abierto
                 menuBtn?.classList.remove('open');
                 navLinks?.classList.remove('active');
-                body.classList.remove('menu-open');
             }
         });
     });
 
-    if (menuBtn && navLinks) {
+    if (menuBtn) {
         menuBtn.addEventListener('click', () => {
             menuBtn.classList.toggle('open');
-            navLinks.classList.toggle('active');
-            body.classList.toggle('menu-open');
+            navLinks?.classList.toggle('active');
         });
     }
 
-    // --- 5. CURSOR PERSONALIZADO (FLAIR DIGITAL) ---
+    // --- 5. CURSOR PERSONALIZADO ---
     const cursor = document.querySelector('.custom-cursor');
     if (cursor) {
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
-        document.querySelectorAll('a, button, .featured-work-item').forEach(link => {
+        // Expansión en elementos interactivos
+        document.querySelectorAll('a, button, .featured-work-item, .fwv2-item').forEach(link => {
             link.addEventListener('mouseenter', () => cursor.classList.add('cursor-expand'));
             link.addEventListener('mouseleave', () => cursor.classList.remove('cursor-expand'));
         });
     }
 
-    // --- 6. LIVE DATA (RELOJES Y CLIMA REAL) ---
+    // --- 6. LIVE DATA (TIEMPO REAL) ---
     function updateLiveClocks() {
         const clockEls = document.querySelectorAll('#hero-clock, #footer-clock, #loader-clock');
         const now = new Date();
-        const timeStr = now.toLocaleTimeString('es-AR', { 
-            hour: '2-digit', minute: '2-digit', hour12: false, 
-            timeZone: 'America/Argentina/Buenos_Aires' 
-        });
+        const timeStr = now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false });
         clockEls.forEach(el => { if(el) el.textContent = timeStr; });
     }
-
-    async function updateWeather() {
-        const tempEl = document.getElementById('hero-temp');
-        const iconEl = document.getElementById('hero-weather-icon');
-        try {
-            // API Real para Buenos Aires (Sin necesidad de Key)
-            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-34.60&longitude=-58.38&current_weather=true');
-            const data = await res.json();
-            if (data && data.current_weather) {
-                const temp = Math.round(data.current_weather.temperature);
-                const code = data.current_weather.weathercode;
-                let icon = 'cloud';
-                if (code === 0) icon = 'wb_sunny';
-                if (code >= 1 && code <= 3) icon = 'partly_cloudy_day';
-                if (code >= 51) icon = 'rainy';
-                
-                if(tempEl) tempEl.textContent = `${temp}°C`;
-                if(iconEl) iconEl.textContent = icon;
-            }
-        } catch (e) { console.warn("Clima no disponible temporalmente"); }
-    }
-
     setInterval(updateLiveClocks, 1000);
     updateLiveClocks();
-    updateWeather();
 
-    // --- 7. REVEALS AL SCROLLEAR ---
+    // --- 7. REVEALS AL SCROLLEAR (FIX PARA TRABAJOS DESTACADOS) ---
     const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        entries.forEach(entry => { 
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
+            }
+        });
     }, { threshold: 0.15 });
 
-    document.querySelectorAll('.scroll-reveal, .featured-work-item, .service-block').forEach((el) => {
+    // Observamos los elementos de la sección de trabajos y el intro del estudio
+    document.querySelectorAll('.works-header, .works-preview, .featured-work-item, #studio-intro, .scroll-reveal').forEach((el) => {
         revealObserver.observe(el);
     });
 });
 
 // --- 8. FUNCIONES DE TRABAJOS Y ACORDEÓN (GLOBALES) ---
 window.changePreview = function(projectNum) {
-    document.querySelectorAll('.preview-inner img').forEach(img => img.classList.remove('active'));
-    document.getElementById(`project-image-${projectNum}`)?.classList.add('active');
+    // Apuntamos al contenedor de la nueva versión V2
+    const container = document.querySelector('.preview-inner-v2');
+    if (!container) return;
+    
+    const allImages = container.querySelectorAll('img');
+    
+    // 1. Limpieza técnica: quitamos la clase activa de todas
+    allImages.forEach(img => {
+        img.classList.remove('active');
+    });
+    
+    // 2. Activamos la imagen solicitada (la opacidad la gestiona el CSS)
+    const target = document.getElementById(`project-image-${projectNum}`);
+    if (target) {
+        target.classList.add('active');
+    }
 };
 
 window.redirectWithAnimation = function(element) {

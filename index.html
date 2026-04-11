@@ -35,26 +35,35 @@
 <div class="page-transition"></div>
 
 <div class="loader" id="loader">
-    <div class="loader-grid">
-        <div class="loader-row top-bar">
-            <div class="loader-col">ESTUDIO CRUZ ® / LAB</div>
-            <div class="loader-col clock" id="loader-clock">00:00:00</div>
-            <div class="loader-col text-right">ISSUE 01 / 2026</div>
+    <div class="loader" id="loader">
+    <div class="loader-vline" style="left: 33.33%;"></div>
+    <div class="loader-vline" style="left: 66.66%;"></div>
+
+    <div class="loader-topbar">
+        <div class="loader-meta-text">ESTUDIO CRUZ ® / LAB</div>
+        <div class="loader-meta-text" id="loader-clock">00:00</div>
+        <div class="loader-meta-text">ISSUE 01 / 2026</div>
+    </div>
+
+    <div class="loader-center">
+        <div class="loader-logo-wrap">
+            <img src="./img/nuevo-logo-cre.svg" alt="Cruz Estudio" class="loader-logotype-svg">
         </div>
-        <div class="loader-row main-title-row">
-            <h1 class="loader-welcome">Bienvenido a<br>Cruz Estudio</h1>
-        </div>
-        <div class="loader-row footer-row">
-            <div class="loader-col bio-text">
-                <p class="mono-text">
-                    Somos socio estratégico de empresas, ayudamos a potenciar marcas mediante el diseño integral, arquitectura web y comunicación digital. Sistematizamos identidades visuales capaces de traccionar en mercados competitivos con un enfoque técnico y soberbio.
-                </p>
-            </div>
-            <div class="loader-col percentage-container">
-                <span class="loader-percentage" id="loader-percentage">00</span>
-            </div>
+        <div class="loader-tagline">BRANDING · ESTRATEGIA · SISTEMAS VISUALES</div>
+        
+        <div class="loader-progress-wrap">
+            <div class="loader-progress-track"></div>
+            <div class="loader-progress-fill" id="loader-bar"></div>
+            <div class="loader-pct-ghost" id="loader-percentage">00</div>
         </div>
     </div>
+
+    <div class="loader-bottombar">
+        <div class="loader-meta-text">Socio estratégico de marcas</div>
+        <div class="loader-meta-text">Buenos Aires, ARG · (GMT-3)</div>
+        <div class="loader-meta-text">©2018—2026</div>
+    </div>
+</div>
 </div>
 
 <nav class="navbar-brand" style="z-index: 100;">
@@ -190,65 +199,53 @@
         </div>
     </div>
 
-    <section class="featured-works" id="featured-works">
-        <div class="works-header">
-            <h2 class="display-title">Trabajos destacados</h2>
-            <hr class="decorative-line">
-        </div>
-        <div class="featured-works-container">
-            <div class="works-preview">
-                <div class="preview-inner">
-                    <img id="project-image-1" src="https://i.ibb.co/dmkbM0K/tac.jpg" class="active" alt="Trenes Argentinos">
-                    <img id="project-image-2" src="https://i.ibb.co/gb4PTXst/img4.jpg" alt="San Cristobal">
-                    <img id="project-image-3" src="https://i.ibb.co/357FqBCw/tp1.jpg" alt="SUUAM">
-                    <img id="project-image-4" src="./img/ROVEX-PREVIEW.png" alt="ROVEX">
-                </div>
-                <div class="works-cta">
-                    <a href="./pages/trabajos.html" class="view-all-link">
-                        <span class="btn-text">//Ver todos los trabajos</span>
-                        <span class="btn-icon">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="#1D1E1C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </span>
-                    </a>
-                </div>
+    <section class="featured-works-v2 light-version" id="featured-works">
+        <div class="featured-works-inner">
+            <div class="works-header-v2 scroll-reveal">
+                <span class="mono-tag">// PROYECTOS SELECCIONADOS</span>
+                <h2 class="display-title" style="color: #1D1E1C !important;">Proyectos<br>destacados.</h2>
             </div>
-            <div class="works-list-wrapper">
-                <ul class="featured-works-list">
-                    <li class="featured-work-item" data-project="1" data-url="./pages/trenescargas.html" onmouseover="changePreview(1)" onclick="redirectWithAnimation(this)">
-                        <div class="work-item-content">
-                            <span class="work-category">//Branding</span>
-                            <h3 class="work-title">Trenes Argentinos Cargas</h3>
-                            <span class="work-year">[2025]</span>
-                        </div>
-                        <hr class="decorative-line">
-                    </li>
-                    <li class="featured-work-item" data-project="2" data-url="./pages/sc.html" onmouseover="changePreview(2)" onclick="redirectWithAnimation(this)">
-                        <div class="work-item-content">
-                            <span class="work-category">//Brand Identity</span>
-                            <h3 class="work-title">Municipalidad de San Cristobal</h3>
-                            <span class="work-year">[2023]</span>
-                        </div>
-                        <hr class="decorative-line">
-                    </li>
-                    <li class="featured-work-item" data-project="3" data-url="./pages/suuam.html" onmouseover="changePreview(3)" onclick="redirectWithAnimation(this)">
-                        <div class="work-item-content">
-                            <span class="work-category">//Brand Identity</span>
-                            <h3 class="work-title">SUUAM</h3>
-                            <span class="work-year">[2024]</span>
-                        </div>
-                        <hr class="decorative-line">
-                    </li>
-                    <li class="featured-work-item" data-project="4" data-url="./pages/rovex.html" onmouseover="changePreview(4)" onclick="redirectWithAnimation(this)">
-                        <div class="work-item-content">
-                            <span class="work-category">//Brand Identity</span>
-                            <h3 class="work-title">Rovex</h3>
-                            <span class="work-year">[2025]</span>
-                        </div>
-                        <hr class="decorative-line">
-                    </li>
-                </ul>
+
+            <div class="featured-container-v2">
+                <div class="works-preview-v2">
+                    <div class="preview-inner-v2">
+                        <img id="project-image-1" src="https://i.ibb.co/dmkbM0K/tac.jpg" class="active" alt="Trenes Argentinos">
+                        <img id="project-image-2" src="https://i.ibb.co/gb4PTXst/img4.jpg" alt="San Cristóbal">
+                        <img id="project-image-3" src="https://i.ibb.co/357FqBCw/tp1.jpg" alt="SUUAM">
+                        <img id="project-image-4" src="./img/ROVEX-PREVIEW.png" alt="Rovex">
+                    </div>
+                    <div class="works-footer-v2">
+                        <a href="./pages/trabajos.html" class="view-all-v2 link-location">
+                            <span class="btn-text">VER TODOS LOS PROYECTOS</span>
+                            <span class="material-symbols-outlined">north_east</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="works-list-v2">
+                    <ul class="featured-list-v2">
+                        <li class="fwv2-item" onmouseover="changePreview(1)" onclick="redirectWithAnimation(this)" data-url="./pages/trenescargas.html">
+                            <span class="fwv2-category">// BRANDING</span>
+                            <h3 class="fwv2-title">Trenes Argentinos Cargas</h3>
+                            <span class="fwv2-year">[2025]</span>
+                        </li>
+                        <li class="fwv2-item" onmouseover="changePreview(2)" onclick="redirectWithAnimation(this)" data-url="./pages/sc.html">
+                            <span class="fwv2-category">// BRAND IDENTITY</span>
+                            <h3 class="fwv2-title">Municipalidad de San Cristóbal</h3>
+                            <span class="fwv2-year">[2023]</span>
+                        </li>
+                        <li class="fwv2-item" onmouseover="changePreview(3)" onclick="redirectWithAnimation(this)" data-url="./pages/suuam.html">
+                            <span class="fwv2-category">// BRAND IDENTITY</span>
+                            <h3 class="fwv2-title">SUUAM</h3>
+                            <span class="fwv2-year">[2024]</span>
+                        </li>
+                        <li class="fwv2-item" onmouseover="changePreview(4)" onclick="redirectWithAnimation(this)" data-url="./pages/rovex.html">
+                            <span class="fwv2-category">// BRAND IDENTITY</span>
+                            <h3 class="fwv2-title">Rovex</h3>
+                            <span class="fwv2-year">[2025]</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
