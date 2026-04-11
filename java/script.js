@@ -183,3 +183,106 @@ function updateProjectImage() {
         }, 300);
     }
 }
+
+// ==========================================================================
+// SECCIÓN 9: SISTEMA DE SONIDO INTEGRAL (CRUZ ESTUDIO ®)
+// Control de Pista de Fondo + Efecto Dropdown
+// ==========================================================================
+
+const bgMusic = document.getElementById('bg-music-continuum');
+const sfxZoom = document.getElementById('sfx-zoom');
+const soundToggle = document.getElementById('global-sound-toggle');
+let isGlobalSoundEnabled = false; // El sonido empieza desactivado por defecto (Mejor UX)
+
+// --- A. GESTIÓN AUTOPLAY (Browser Workaround) ---
+// La mayoría de navegadores bloquean el sonido hasta que el usuario interactúa.
+// Intentamos reproducir cuando termina el loader, si el navegador lo permite.
+window.addEventListener('load', () => {
+    // Escuchamos el final del loader que ya tenías en la Sección 2
+    const loaderCheck = setInterval(() => {
+        const loader = document.getElementById('loader');
+        if (loader && loader.classList.contains('hidden')) {
+            clearInterval(loaderCheck);
+            
+            // Intentamos reproducir la pista de fondo
+            bgMusic.play().then(() => {
+                // Autoplay exitoso: Actualizamos el botón a ON
+                isGlobalSoundEnabled = true;
+                soundToggle.classList.remove('muted');
+                soundToggle.classList.add('active');
+            }).catch(error => {
+                // Autoplay bloqueado (User must click): Botón queda en OFF
+                console.log("Autoplay de audio bloqueado por el navegador. El usuario debe activarlo.");
+                soundToggle.classList.remove('active');
+                soundToggle.classList.add('muted');
+            });
+        }
+    }, 100);
+});
+
+// --- B. LÓGICA DEL BOTÓN SWITCH GLOBAL ---
+soundToggle.addEventListener('click', () => {
+    isGlobalSoundEnabled = !isGlobalSoundEnabled;
+
+    if (isGlobalSoundEnabled) {
+        // ACTIVAR SONIDO GLOBAL
+        bgMusic.play();
+        bgMusic.muted = false; // Aseguramos que no esté muted
+        soundToggle.classList.remove('muted');
+        soundToggle.classList.add('active');
+    } else {
+        // DESACTIVAR SONIDO GLOBAL
+        bgMusic.pause();
+        bgMusic.muted = true; // Muteamos la pista de fondo
+        soundToggle.classList.remove('active');
+        soundToggle.classList.add('muted');
+    }
+});
+
+// ==========================================================================
+// REEMPLAZO SECCIÓN 8: FUNCIONES DE TRABAJOS Y ACORDEÓN (MODIFICADA CON SONIDO)
+// ==========================================================================
+window.toggleAccordion = function(element) {
+    const allAccordions = document.querySelectorAll('.accordion');
+    const content = element.nextElementSibling;
+    const isNowActive = element.classList.contains('active');
+
+    // --- REPRODUCCIÓN EFECTO ZOOM ---
+    // Solo si el sonido global está activo y estamos ABRIENDO un acordeón
+    if (isGlobalSoundEnabled && sfxZoom && !isNowActive) {
+        // Reiniciamos la pista por si se toca rápido
+        sfxZoom.currentTime = 0; 
+        sfxZoom.play();
+    }
+
+    allAccordions.forEach(acc => {
+        acc.classList.remove('active');
+        if (acc.nextElementSibling) acc.nextElementSibling.style.display = "none";
+    });
+
+    if (intervalId) clearInterval(intervalId);
+
+    if (!isNowActive) {
+        element.classList.add('active');
+        content.style.display = "block";
+        const span = element.querySelector('span');
+        projectImages = JSON.parse(span?.getAttribute('data-images') || "[]");
+        currentIndex = 0;
+        if (projectImages.length > 0) {
+            updateProjectImage();
+            intervalId = setInterval(updateProjectImage, 2500);
+        }
+    }
+};
+
+// --- IMPORTANTE: También añadimos el efecto SFX al hover de los proyectos V2 ---
+// Para una experiencia más Flair Digital en la lista que venimos trabajando.
+document.querySelectorAll('.fwv2-item').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+        if (isGlobalSoundEnabled && sfxZoom) {
+            // Un toque de zoom SFX al posar el cursor
+            sfxZoom.currentTime = 0; 
+            sfxZoom.play();
+        }
+    });
+});

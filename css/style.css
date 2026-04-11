@@ -1355,23 +1355,40 @@ body.scroll-locked {
     color: #1D1E1C;
 }
 
-/* Adaptación Mobile */
+/* --- Adaptación Mobile: Reordenamiento UX --- */
 @media (max-width: 1024px) {
     .featured-container-v2 {
-        grid-template-columns: 1fr;
-        gap: 60px;
+        display: flex;
+        flex-direction: column;
+        gap: 0; 
     }
     
+    /* El truco suizo: "disolvemos" la caja contenedora para liberar sus elementos internos */
     .works-preview-v2 {
-        position: relative;
-        top: 0;
-        order: 1;
+        display: contents;
     }
     
+    /* 1. La imagen queda arriba */
+    .preview-inner-v2 {
+        order: 1;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    /* 2. La lista de proyectos pasa al medio */
     .works-list-v2 {
         order: 2;
+        width: 100%;
     }
     
+    /* 3. El botón se empuja al final de la sección */
+    .works-footer-v2 {
+        order: 3;
+        width: 100%;
+        margin-top: 50px; /* Respiro visual antes del botón */
+    }
+    
+    /* Ajustes internos de los items en mobile */
     .fwv2-item {
         grid-template-columns: 1fr auto;
         padding: 35px 0;
@@ -2659,3 +2676,5 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     40% { transform: translateX(-50%) translateY(10px); }
     60% { transform: translateX(-50%) translateY(5px); }
 }
+
+
