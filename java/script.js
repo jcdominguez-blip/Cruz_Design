@@ -1,11 +1,10 @@
 /**
  * SISTEMA INTEGRAL CRUZ ESTUDIO ® 2026
  * Dirección Creativa: Juan Cruz
- * Versión: Navegación Sistematizada + Hero Kinético (NYT Style)
+ * Versión: Consolidada (UI + Live Data + Smooth Logic)
  */
 
-// 1. VARIABLES GLOBALES ÚNICAS
-let projectInterval = null;
+// 1. VARIABLES GLOBALES (Ubicadas fuera para ser accesibles)
 let intervalId = null; 
 let currentIndex = 0;
 let projectImages = [];
@@ -15,115 +14,62 @@ document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.querySelector('.navbar-brand');
     const loader = document.querySelector('.loader');
     const percentage = document.querySelector('.loader-percentage');
-    const progressBar = document.querySelector('.progress-bar');
     const menuBtn = document.getElementById('mobile-menu');
     const navLinks = document.getElementById('nav-links');
 
-    // Detectamos si la URL tiene un ancla (#) para evitar bloqueos en navegación externa
-    const isExternalNav = window.location.hash !== "";
-
-    // --- 2. GESTIÓN DE LOADER (SISTEMATIZADO) ---
+    // --- 2. LOADER SISTEMATIZADO ---
     let progress = 0;
     const loadInterval = setInterval(() => {
         progress += Math.floor(Math.random() * 10) + 1;
         if (progress >= 100) {
             progress = 100;
             clearInterval(loadInterval);
-            
             setTimeout(() => {
                 loader?.classList.add('hidden');
-                
-                if (isExternalNav) {
-                    // Si viene de otra página a una sección: Desbloqueo inmediato
-                    unlockBodyScroll();
-                    setTimeout(() => handleInitialHash(), 150);
-                } else {
-                    // Si entra al Home: Libertad de scroll pero con inicio controlado
-                    unlockBodyScroll();
-                }
+                body.classList.remove('scroll-locked');
+                body.style.overflow = 'auto';
             }, 500);
         }
         if (percentage) percentage.textContent = `${progress}%`;
-        if (progressBar) progressBar.style.width = `${progress}%`;
     }, 40);
 
-    function unlockBodyScroll() {
-        body.classList.remove('scroll-locked');
-        body.style.overflow = 'auto';
-        body.style.height = 'auto';
-        body.style.position = 'static';
-    }
-
-    function handleInitialHash() {
-        const hash = window.location.hash;
-        if (hash) {
-            const target = document.querySelector(hash);
-            if (target) {
-                const navHeight = navbar ? navbar.offsetHeight : 90;
-                window.scrollTo({
-                    top: target.offsetTop - navHeight,
-                    behavior: 'smooth'
-                });
-            }
-        }
-    }
-
-    // --- 3. HERO KINÉTICO (REEMPLAZA TYPEWRITER) ---
-    // Efecto de rotación vertical: IDEAS, MARCAS, SISTEMAS, IDENTIDADES
+    // --- 3. HERO KINÉTICO (ROTACIÓN DE CONCEPTOS) ---
     const kineticTarget = document.getElementById("kinetic-word");
     if (kineticTarget) {
         const words = ["IDEAS", "MARCAS", "ESTRATEGIAS", "IDENTIDADES"];
         let wordIdx = 0;
-
         setInterval(() => {
-            // Fase 1: Salida (Dropdown/Persiana)
             kineticTarget.style.transform = 'translateY(-20px)';
             kineticTarget.style.opacity = '0';
-
             setTimeout(() => {
-                // Fase 2: Cambio de palabra
                 wordIdx = (wordIdx + 1) % words.length;
                 kineticTarget.textContent = words[wordIdx];
-                
-                // Posicionamos abajo para la entrada
                 kineticTarget.style.transform = 'translateY(20px)';
-                
-                // Fase 3: Entrada
                 requestAnimationFrame(() => {
                     kineticTarget.style.transform = 'translateY(0)';
                     kineticTarget.style.opacity = '1';
                 });
-            }, 600); // Sincronizado con la transición CSS
+            }, 600);
         }, 3000);
     }
 
-    // --- 4. NAVEGACIÓN SUAVE (SMOOTH SCROLL) ---
-    document.querySelectorAll('a[href^="#"], a[href^="index.html#"]').forEach(anchor => {
+    // --- 4. NAVEGACIÓN Y MENÚ MÓVIL ---
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
-            const targetId = href.includes('#') ? '#' + href.split('#')[1] : href;
-            const targetElement = document.querySelector(targetId);
-
-            if (targetElement) {
+            const target = document.querySelector(href);
+            if (target) {
                 e.preventDefault();
-                unlockBodyScroll();
                 const navHeight = navbar ? navbar.offsetHeight : 90;
-                window.scrollTo({
-                    top: targetElement.offsetTop - navHeight,
-                    behavior: 'smooth'
-                });
-
-                // Cierre de menú móvil
-                if (navLinks?.classList.contains('active')) {
-                    menuBtn?.classList.remove('open');
-                    navLinks?.classList.remove('active');
-                    body.classList.remove('menu-open');
-                }
+                window.scrollTo({ top: target.offsetTop - navHeight, behavior: 'smooth' });
+                // Cierre de menú si está abierto
+                menuBtn?.classList.remove('open');
+                navLinks?.classList.remove('active');
+                body.classList.remove('menu-open');
             }
         });
     });
 
-    // --- 5. MENÚ MÓVIL (TOGGLE) ---
     if (menuBtn && navLinks) {
         menuBtn.addEventListener('click', () => {
             menuBtn.classList.toggle('open');
@@ -131,121 +77,81 @@ document.addEventListener('DOMContentLoaded', () => {
             body.classList.toggle('menu-open');
         });
     }
-// Reloj del Footer
-function updateFooterClock() {
-    const now = new Date();
-    const timeString = now.toLocaleTimeString('es-AR', { 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        hour12: false, 
-        timeZone: 'America/Argentina/Buenos_Aires' 
-    });
-    document.getElementById('footer-clock').textContent = timeString;
-}
-setInterval(updateFooterClock, 1000);
 
-// Cursor Estilo Flair Digital
-const cursor = document.querySelector('.custom-cursor');
-document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-});
-
-// Efecto de expansión al pasar por links
-const links = document.querySelectorAll('a, button');
-links.forEach(link => {
-    link.addEventListener('mouseenter', () => {
-        cursor.style.transform = 'scale(4)';
-        cursor.style.opacity = '0.5';
-    });
-    link.addEventListener('mouseleave', () => {
-        cursor.style.transform = 'scale(1)';
-        cursor.style.opacity = '1';
-    });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Función del Reloj (Buenos Aires)
-    function updateFooterClock() {
-        const clockElement = document.getElementById('footer-clock');
-        if (clockElement) {
-            const now = new Date();
-            const options = { 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                hour12: false, 
-                timeZone: 'America/Argentina/Buenos_Aires' 
-            };
-            clockElement.textContent = now.toLocaleTimeString('es-AR', options);
-        }
-    }
-
-    // Ejecución inmediata y actualización cada minuto
-    updateFooterClock();
-    setInterval(updateFooterClock, 60000);
-
-    // Lógica del Cursor Personalizado (Flair Digital)
+    // --- 5. CURSOR PERSONALIZADO (FLAIR DIGITAL) ---
     const cursor = document.querySelector('.custom-cursor');
     if (cursor) {
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
-
-        // Efecto hover en links
-        const links = document.querySelectorAll('a, button, .featured-work-item');
-        links.forEach(link => {
+        document.querySelectorAll('a, button, .featured-work-item').forEach(link => {
             link.addEventListener('mouseenter', () => cursor.classList.add('cursor-expand'));
             link.addEventListener('mouseleave', () => cursor.classList.remove('cursor-expand'));
         });
     }
-});
-    // --- 6. RELOJ Y REVEALS ---
-    function updateClock() {
-        const clockElements = document.querySelectorAll('#clock, #loader-clock');
+
+    // --- 6. LIVE DATA (RELOJES Y CLIMA REAL) ---
+    function updateLiveClocks() {
+        const clockEls = document.querySelectorAll('#hero-clock, #footer-clock, #loader-clock');
         const now = new Date();
-        const timeStr = now.toLocaleTimeString('es-AR', { hour12: false });
-        clockElements.forEach(el => el.textContent = timeStr);
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
+        const timeStr = now.toLocaleTimeString('es-AR', { 
+            hour: '2-digit', minute: '2-digit', hour12: false, 
+            timeZone: 'America/Argentina/Buenos_Aires' 
         });
-    }, { 
-        threshold: 0.15,
-        rootMargin: "0px 0px -50px 0px" 
-    });
+        clockEls.forEach(el => { if(el) el.textContent = timeStr; });
+    }
 
-    document.querySelectorAll('.scroll-reveal, #studio-intro, .featured-work-item, .service-row').forEach((el) => {
+    async function updateWeather() {
+        const tempEl = document.getElementById('hero-temp');
+        const iconEl = document.getElementById('hero-weather-icon');
+        try {
+            // API Real para Buenos Aires (Sin necesidad de Key)
+            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-34.60&longitude=-58.38&current_weather=true');
+            const data = await res.json();
+            if (data && data.current_weather) {
+                const temp = Math.round(data.current_weather.temperature);
+                const code = data.current_weather.weathercode;
+                let icon = 'cloud';
+                if (code === 0) icon = 'wb_sunny';
+                if (code >= 1 && code <= 3) icon = 'partly_cloudy_day';
+                if (code >= 51) icon = 'rainy';
+                
+                if(tempEl) tempEl.textContent = `${temp}°C`;
+                if(iconEl) iconEl.textContent = icon;
+            }
+        } catch (e) { console.warn("Clima no disponible temporalmente"); }
+    }
+
+    setInterval(updateLiveClocks, 1000);
+    updateLiveClocks();
+    updateWeather();
+
+    // --- 7. REVEALS AL SCROLLEAR ---
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.scroll-reveal, .featured-work-item, .service-block').forEach((el) => {
         revealObserver.observe(el);
     });
-
-    // --- 7. FORMULARIO ESTRATÉGICO ---
-    const textarea = document.getElementById('userMsg');
-    if (textarea) {
-        textarea.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + "px";
-        });
-    }
-
-    const contactForm = document.querySelector('.form-sistematizado');
-    if (contactForm) {
-        contactForm.addEventListener('submit', () => {
-            const nombreInput = document.getElementById('userName');
-            if (nombreInput) {
-                localStorage.setItem('clienteNombre', nombreInput.value);
-            }
-        });
-    }
 });
 
-// --- 8. FUNCIONES GLOBALES (ACORDEÓN Y PREVIEWS) ---
+// --- 8. FUNCIONES DE TRABAJOS Y ACORDEÓN (GLOBALES) ---
+window.changePreview = function(projectNum) {
+    document.querySelectorAll('.preview-inner img').forEach(img => img.classList.remove('active'));
+    document.getElementById(`project-image-${projectNum}`)?.classList.add('active');
+};
+
+window.redirectWithAnimation = function(element) {
+    const url = element.getAttribute('data-url');
+    const transition = document.querySelector('.page-transition');
+    if (url && transition) {
+        transition.classList.add('entering');
+        setTimeout(() => { window.location.href = url; }, 800);
+    }
+};
+
 window.toggleAccordion = function(element) {
     const allAccordions = document.querySelectorAll('.accordion');
     const content = element.nextElementSibling;
@@ -262,9 +168,8 @@ window.toggleAccordion = function(element) {
         element.classList.add('active');
         content.style.display = "block";
         const span = element.querySelector('span');
-        projectImages = JSON.parse(span.getAttribute('data-images') || "[]");
+        projectImages = JSON.parse(span?.getAttribute('data-images') || "[]");
         currentIndex = 0;
-        
         if (projectImages.length > 0) {
             updateProjectImage();
             intervalId = setInterval(updateProjectImage, 2500);
@@ -281,22 +186,5 @@ function updateProjectImage() {
             imgElement.style.opacity = 1;
             currentIndex = (currentIndex + 1) % projectImages.length;
         }, 300);
-    }
-}
-
-function changePreview(projectNum) {
-    const allImages = document.querySelectorAll('.preview-inner img');
-    allImages.forEach(img => img.classList.remove('active'));
-    const targetImage = document.getElementById(`project-image-${projectNum}`);
-    if (targetImage) targetImage.classList.add('active');
-}
-
-function redirectWithAnimation(element) {
-    const url = element.getAttribute('data-url');
-    const transition = document.querySelector('.page-transition');
-    if (url && transition) {
-        transition.style.transformOrigin = "left";
-        transition.classList.add('entering');
-        setTimeout(() => { window.location.href = url; }, 800);
     }
 }

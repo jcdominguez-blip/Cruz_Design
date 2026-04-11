@@ -1,0 +1,147 @@
+/* --- METODOLOGÍA: IMPACTO Y SISTEMA --- */
+
+.metodo-hero {
+    padding: 120px 45px 80px;
+    position: relative;
+    overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.content-limit { max-width: 1200px; width: 100%; }
+
+.hero-bg-num {
+    position: absolute;
+    right: -5%;
+    top: 5%;
+    font-family: var(--font-header);
+    font-size: clamp(300px, 40vw, 550px);
+    font-weight: 700;
+    color: rgba(255, 253, 243, 0.03); /* Sutil presencia parallax */
+    line-height: 1;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.metodo-h1 {
+    font-family: var(--font-header);
+    font-size: clamp(3.5rem, 8vw, 110px);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-transform: none; /* Caja baja suiza */
+    color: var(--crema);
+    z-index: 1;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.hero-desc {
+    font-family: var(--font-reading);
+    font-size: 20px;
+    line-height: 1.6;
+    color: rgba(255, 253, 243, 0.6);
+    max-width: 650px;
+}
+
+/* --- CLASES DE UTILIDAD (TEXTOS) --- */
+.txt-yellow {
+    color: var(--amarillo-acento) !important;
+}
+
+.txt-crema {
+    color: var(--crema) !important;
+}
+
+.txt-italic {
+    font-style: none;
+}
+
+/* --- LISTA DE FASES TÉCNICAS --- */
+.fases-container {
+    padding: 0 45px 100px;
+}
+
+.fase-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 80px 0;
+    border-top: 1px solid rgba(255, 253, 243, 0.1);
+    transition: background 0.4s ease;
+}
+
+.fase-row:hover { background: rgba(242, 195, 53, 0.02); }
+
+.fase-header { display: flex; flex-direction: column; gap: 15px; }
+
+.fase-index {
+    font-family: var(--font-mono);
+    color: var(--amarillo-acento);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+}
+
+.fase-title {
+    font-family: var(--font-header);
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--crema);
+    text-transform: none;
+}
+
+.fase-body p {
+    font-family: var(--font-reading);
+    font-size: 18px;
+    line-height: 1.7;
+    color: rgba(255, 253, 243, 0.7);
+    max-width: 500px;
+    margin-bottom: 30px;
+}
+
+.fase-tags { display: flex; gap: 10px; }
+.fase-tags span {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    padding: 6px 14px;
+    border: 1px solid rgba(255, 253, 243, 0.2);
+    border-radius: 50px;
+    color: var(--amarillo-acento);
+}
+
+/* --- AJUSTE DE INPUTS (SISTEMA) --- */
+.input-container input {
+    font-size: 24px !important; /* Reforzamos el tamaño del sistema */
+    font-weight: 400;
+    color: var(--crema) !important;
+}
+
+.input-container label {
+    font-size: 16px;
+    color: rgba(255, 253, 243, 0.5) !important;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .fase-row { grid-template-columns: 1fr; gap: 30px; padding: 60px 0; }
+    .hero-bg-num { font-size: 180px; top: 15%; }
+}
+/* --- CONFIGURACIÓN DE ESFERA BACKGROUND 3D --- */
+#canvas-metodo-wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none; /* Crucial para no interferir con clicks/scroll */
+}
+
+/* Elevamos el z-index del texto para asegurar lectura sobre el canvas */
+.content-limit { 
+    max-width: 1200px; 
+    width: 100%; 
+    z-index: 2; 
+    position: relative;
+}
+
+/* (Opcional) Borra del CSS las reglas de .hero-bg-num ya que eliminamos el "04" */

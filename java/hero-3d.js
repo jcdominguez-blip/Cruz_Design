@@ -1,7 +1,7 @@
 /**
  * SISTEMA CRUZ ESTUDIO ® - 3D Sphere Interactive Engine
  * REEMPLAZAR TODO EL CONTENIDO DE hero-3d.js POR ESTE CÓDIGO
- * Actualización: Sistema Toggle (Clic abre, 2do Clic cierra) + Secuencia de proyectos.
+ * FIX DEFINITIVO: Contraste Mobile Sincronizado con Texto + Sistema Integral
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -60,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
     renderer.setSize(W, H);
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-    renderer.setClearColor(0x000000, 0);
     document.getElementById('canvas-wrap').appendChild(renderer.domElement);
     
     // ── GENERATE SPHERE ────────────────────────────────────────────────
@@ -82,37 +81,70 @@ document.addEventListener("DOMContentLoaded", () => {
     pos.needsUpdate = true;
     geo.computeVertexNormals();
     
-    const mat = new THREE.MeshBasicMaterial({ color:0xffffff, wireframe:true, transparent:true, opacity:0.48 });
+    const mat = new THREE.MeshBasicMaterial({ color:0xffffff, wireframe:true, transparent:true, opacity:0.42 });
     const sphere = new THREE.Mesh(geo, mat);
     scene.add(sphere);
     
-    // ── RAYCASTER & INTERACTION ─────────────────────────────────────────────
     const ray   = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     
-    // ── SCROLL STATE (GSAP) ──────────────────────────────────────────
+    // ── SCROLL STATE & BOOSTER GLOBAL ──
     let targetX=0, targetScale=1, curX=0, curScale=1;
+    let mobileOpacityBoost = 0; // Accesible en ScrollTrigger y Render Loop
+    
     const heroText  = document.getElementById('hero-text');
     const statStrip = document.getElementById('stat-strip');
     
     ScrollTrigger.create({
-      trigger:'#spacer', start:'top top', end:'bottom bottom', scrub:1.2,
-      onUpdate(self){
+      trigger: '#spacer', 
+      start: 'top top', 
+      end: 'bottom bottom', 
+      scrub: 1.2,
+      onUpdate(self) {
         const p = self.progress;
-        if(p < 0.35){
-          const t = p/0.35;
-          targetScale = 1 + t*0.42;
-          targetX = 0;
-          gsap.set(heroText,  {opacity:0});
-          gsap.set(statStrip, {opacity:0});
+        
+        // 1. Calculamos primero la visibilidad del texto (Shared Scope)
+        let currentTextAlpha = 0;
+        if(p < 0.22) {
+          currentTextAlpha = 0;
         } else {
-          const t = (p-0.35)/0.65;
-          targetScale = 1.42;
-          targetX = t * 2.5;
-          const alpha = Math.min(t*1.5, 1);
-          gsap.set(heroText,  {opacity:alpha});
-          gsap.set(statStrip, {opacity:alpha});
-          if(alpha>0.3){ heroText.style.pointerEvents='all'; }
+          // Curva de entrada acelerada
+          const entranceT = (p - 0.22) / 0.12; 
+          currentTextAlpha = Math.min(entranceT * entranceT, 1); 
+        }
+
+        // --- 2. FIX DEFINITIVO MOBILE: Contraste Sincronizado ---
+        // Si estamos en responsive (<=768px), la opacidad de la esfera
+        // copia exactamente la opacidad del texto para garantizar lectura instantánea.
+        if (window.innerWidth <= 768) {
+            // Cuando el texto es visible (currentTextAlpha = 1), sumamos +0.55 a la base (0.42)
+            // logrando una opacidad casi total de 0.97 para la esfera.
+            mobileOpacityBoost = currentTextAlpha * 0.55; 
+        } else {
+            mobileOpacityBoost = 0;
+        }
+
+        // Lógica de visibilidad del Hint
+        const clickHint = document.getElementById('click-hint');
+        if(p > 0.01) clickHint?.classList.add('hide');
+        else clickHint?.classList.remove('hide');
+
+        // Lógica de posición y opacidad del Hero Text (GSAP)
+        if(p < 0.22) {
+          targetScale = 1; targetX = 0;
+          gsap.set(heroText, { opacity: 0, y: 15, pointerEvents: 'none' });
+          gsap.set(statStrip, { opacity: 0 });
+        } 
+        else {
+          targetScale = 1 + (p * 0.45); 
+          targetX = (p - 0.22) * 2.8;   
+          
+          gsap.set(heroText, {
+            opacity: currentTextAlpha, // Usamos la variable compartida
+            y: 10 * (1 - currentTextAlpha),
+            pointerEvents: currentTextAlpha > 0.8 ? 'all' : 'none' 
+          });
+          gsap.set(statStrip, { opacity: currentTextAlpha });
         }
       }
     });
@@ -162,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
     
-    // ── CARD LOGIC (CON IMÁGENES) ──────────────────────────────────────────────────
+    // ── CARD LOGIC ────────────────────────────────────────────────────────
     const card  = document.getElementById('proj-card');
     const pcLbl = document.getElementById('pc-lbl');
     const pcTtl = document.getElementById('pc-title');
@@ -173,10 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
       pcLbl.textContent = proj.label;
       pcTtl.textContent = proj.title;
       pcDsc.textContent = proj.desc;
-      
-      if(pcImg && proj.img) {
-          pcImg.src = proj.img;
-      }
+      if(pcImg && proj.img) pcImg.src = proj.img;
       
       const cx = Math.max(20, Math.min(ex+24, W-300));
       const cy = Math.max(70, Math.min(ey-60, H-200));
@@ -186,62 +215,58 @@ document.addEventListener("DOMContentLoaded", () => {
     
     function hideCard(){ card.classList.remove('show'); }
     
-    // Botón de cerrar de la card
     document.getElementById('card-close').addEventListener('click',e=>{
-      e.stopPropagation(); hideCard(); retract(); 
+      e.stopPropagation(); hideCard(); retract(); animateHintText('[CLICK EN LA ESFERA]');
     });
     
-    // ── ESTADO CÍCLICO DE PROYECTOS ───────────────────────────────────────────
     let currentProjectIndex = 0; 
 
-    // ── CLICK EVENT (SISTEMA DE TOGGLE Y SECUENCIA) ───────────────────────────
-    renderer.domElement.addEventListener('click', e=>{
-      
-      // REGLA 1: Si la esfera ya está extruida (hay una tarjeta visible), 
-      // CUALQUIER clic cerrará la tarjeta y retraerá la esfera. No hacemos nada más.
-      if(isExtruded){ 
-          retract(); 
-          hideCard(); 
-          return; 
-      }
-      
-      // REGLA 2: Si llegamos aquí, no hay tarjeta visible. Comprobamos si el clic dio en la esfera.
-      const rect=renderer.domElement.getBoundingClientRect();
-      mouse.x = ((e.clientX-rect.left)/rect.width)*2-1;
-      mouse.y = -((e.clientY-rect.top)/rect.height)*2+1;
-      ray.setFromCamera(mouse,camera);
-      const hits=ray.intersectObject(sphere);
-    
-      if(hits.length){
-        // Acertamos a la esfera
-        document.getElementById('click-hint').classList.add('hide');
-        const local=sphere.worldToLocal(hits[0].point.clone());
+    const animateHintText = (newText) => {
+        const hintSpan = document.querySelector('#click-hint span');
+        if (!hintSpan) return;
+        gsap.to(hintSpan, {
+            opacity: 0,
+            duration: 0.3,
+            onComplete: () => {
+                hintSpan.textContent = newText;
+                gsap.to(hintSpan, { opacity: 1, duration: 0.3 });
+            }
+        });
+    };
+
+    renderer.domElement.addEventListener('click', e => {
+        if (isExtruded) { 
+            retract(); hideCard(); animateHintText('[CLICK EN LA ESFERA]');
+            return; 
+        }
         
-        // Obtenemos el proyecto actual y preparamos el siguiente para el próximo clic
-        let pi = currentProjectIndex;
-        currentProjectIndex = (currentProjectIndex + 1) % PROJECTS.length;
+        const rect = renderer.domElement.getBoundingClientRect();
+        mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+        ray.setFromCamera(mouse, camera);
+        const hits = ray.intersectObject(sphere);
     
-        // Extruimos en el punto del clic
-        const verts=findVerts(local, 0.88);
-        if(verts.length) extrude(verts);
-        
-        // Mostramos la Card
-        showCard(PROJECTS[pi], e.clientX, e.clientY);
-      }
+        if (hits.length) {
+            animateHintText('[SCROLL PARA DESCUBRIR CRUZ ESTUDIO®]');
+            const local = sphere.worldToLocal(hits[0].point.clone());
+            let pi = currentProjectIndex;
+            currentProjectIndex = (currentProjectIndex + 1) % PROJECTS.length;
+            const verts = findVerts(local, 0.88);
+            if (verts.length) extrude(verts);
+            showCard(PROJECTS[pi], e.clientX, e.clientY);
+        }
     });
     
-    renderer.domElement.addEventListener('mousemove', e=>{
-      const rect=renderer.domElement.getBoundingClientRect();
-      mouse.x = ((e.clientX-rect.left)/rect.width)*2-1;
-      mouse.y = -((e.clientY-rect.top)/rect.height)*2+1;
-      ray.setFromCamera(mouse,camera);
-      
-      // Cambiar a cursor tipo pointer solo si el mouse está sobre la esfera Y no está extruida
-      const isHoveringSphere = ray.intersectObject(sphere).length > 0;
-      renderer.domElement.style.cursor = (isHoveringSphere && !isExtruded) ? 'crosshair' : 'default';
+    renderer.domElement.addEventListener('mousemove', e => {
+        const rect = renderer.domElement.getBoundingClientRect();
+        mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+        ray.setFromCamera(mouse, camera);
+        const isHoveringSphere = ray.intersectObject(sphere).length > 0;
+        renderer.domElement.style.cursor = (isHoveringSphere && !isExtruded) ? 'crosshair' : 'default';
     });
-    
-    // ── RENDER LOOP ───────────────────────────────────────────
+
+    // ── RENDER LOOP (CON OPACIDAD DINÁMICA ACTUALIZADA) ────────────
     let time=0;
     (function animate(){
       requestAnimationFrame(animate);
@@ -252,11 +277,16 @@ document.addEventListener("DOMContentLoaded", () => {
       curScale +=(targetScale-curScale)*.055;
       sphere.position.x=curX;
       sphere.scale.setScalar(curScale);
-      mat.opacity=0.42+Math.sin(time*.7)*.06;
+      
+      // APLICACIÓN TÉCNICA DEL FIX:
+      // mat.opacity base es 0.42. 
+      // En móvil sumamos 'mobileOpacityBoost' (que sube al ritmo del texto).
+      // Math.sin mantiene el latido sutil.
+      mat.opacity = (0.42 + mobileOpacityBoost) + Math.sin(time * 0.7) * 0.06;
+      
       renderer.render(scene,camera);
     })();
     
-    // ── RESIZE ────────────────────────────────────────────────
     window.addEventListener('resize',()=>{
       W=window.innerWidth; H=window.innerHeight;
       camera.aspect=W/H; camera.updateProjectionMatrix();

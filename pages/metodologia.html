@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metodología — Cruz Estudio®</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/metodologia.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+</head>
+<body class="bg-dark">
+
+<nav class="navbar-brand">
+    <div class="containerNav">
+        <a href="../index.html" class="logo">
+            <img src="../img/nuevo-logo-cre.svg" alt="Cruz Estudio Logo" class="logo-vectorial">
+        </a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
+        <ul class="nav-links-brands" id="nav-links">
+            <li><a href="trabajos.html">[PROYECTOS]</a></li>
+            <li><a href="metodologia.html" class="nav-active">[METODOLOGÍA]</a></li>
+            <li><a href="about.html">[ESTUDIO]</a></li>
+            <li class="mobile-contact-item"><a href="contacto.html">CONTACTO</a></li>
+        </ul>
+        <div class="nav-right-cta">
+            <a href="contacto.html" class="nav-cta-btn">CONTACTO</a>
+        </div>
+    </div>
+</nav>
+
+<div class="site-content-wrapper" style="padding-top: 100px;">
+    
+    <section class="metodo-hero">
+        <div id="canvas-metodo-wrap"></div>
+        
+        <div class="content-limit">
+            <div class="mono-label reveal-item">// SISTEMA OPERATIVO DE DISEÑO</div>
+            <h1 class="metodo-h1 reveal-item">
+    Nuestro proceso<br>
+    estratégico para<br>
+    <span class="txt-yellow txt-italic">activar marcas.</span>
+</h1>
+            
+            <div class="hero-split reveal-item">
+                <p class="hero-desc">
+                    No diseñamos signos aislados; sistematizamos identidades que capitalizan el valor de tu empresa. Nuestro método asegura que cada decisión visual sea la consecuencia lógica de la estrategia, logrando que la marca <span class="txt-crema">evoca</span> los atributos correctos en cada punto de contacto.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="fases-container">
+        
+        <div class="fase-row reveal-fase" data-fase="01">
+            <div class="fase-header">
+                <span class="fase-index">[01]</span>
+                <h2 class="fase-title">Inmersión y diagnóstico</h2>
+            </div>
+            <div class="fase-body">
+                <p>Investigamos el capital simbólico acumulado y el entorno competitivo. Definimos qué debe decir la marca antes de decidir cómo debe verse.</p>
+                <div class="fase-tags"><span>AUDITORÍA</span><span>MERCADO</span><span>ATRIBUTOS</span></div>
+            </div>
+        </div>
+
+        <div class="fase-row reveal-fase" data-fase="02">
+            <div class="fase-header">
+                <span class="fase-index">[02]</span>
+                <h2 class="fase-title">Estrategia de marca</h2>
+            </div>
+            <div class="fase-body">
+                <p>Construimos la plataforma conceptual. Tono de voz, personalidad y posicionamiento estratégico para traccionar en mercados complejos.</p>
+                <div class="fase-tags"><span>PROPUESTA DE VALOR</span><span>TONALIDAD</span></div>
+            </div>
+        </div>
+
+        <div class="fase-row reveal-fase" data-fase="03">
+            <div class="fase-header">
+                <span class="fase-index">[03]</span>
+                <h2 class="fase-title">Sistema de identidad</h2>
+            </div>
+            <div class="fase-body">
+                <p>Desarrollo del <span class="txt-yellow">logotipo con símbolo</span> y el lenguaje visual completo. Traducimos conceptos técnicos en una estética diferencial y soberbia.</p>
+                <div class="fase-tags"><span>LOGOTIPO</span><span>TIPOGRAFÍA</span><span>CROMATISMO</span></div>
+            </div>
+        </div>
+
+        <div class="fase-row reveal-fase" data-fase="04">
+            <div class="fase-header">
+                <span class="fase-index">[04]</span>
+                <h2 class="fase-title">Implementación normativa</h2>
+            </div>
+            <div class="fase-body">
+                <p>Sistematizamos la marca en un brandbook técnico. Aseguramos la coherencia y el crecimiento del activo visual a largo plazo.</p>
+                <div class="fase-tags"><span>MANUAL DE MARCA</span><span>ACTIVOS DIGITALES</span></div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="contact-section">
+        <div class="contact-wrapper">
+            <h2 class="contact-display reveal-item">Hablemos de tu<br>próximo activo.</h2>
+            
+            <form action="#" class="ux-form-grid reveal-item">
+                <div class="form-intent">
+                    <span class="mono-tag">// SELECCIÓN DE SERVICIO</span>
+                    <div class="services-grid">
+                        <label class="service-chip"><input type="checkbox"><span class="chip-box">BRANDING</span></label>
+                        <label class="service-chip"><input type="checkbox"><span class="chip-box">WEB / UX</span></label>
+                        <label class="service-chip"><input type="checkbox"><span class="chip-box">ESTRATEGIA</span></label>
+                    </div>
+                </div>
+                
+                <div class="form-data">
+                    <div class="input-container">
+                        <input type="text" id="name" placeholder=" " required>
+                        <label for="name">Nombre o Empresa</label>
+                    </div>
+                    <div class="input-container">
+                        <input type="email" id="email" placeholder=" " required>
+                        <label for="email">Email de contacto</label>
+                    </div>
+                    <button type="submit" class="ux-submit-btn">
+                        <span class="cta-text">INICIAR CONSULTA</span>
+                        <span class="material-symbols-outlined">north_east</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+<script src="../java/script.js" defer></script>
+<script src="../java/metodologia.js" defer></script>
+</body>
+</html>

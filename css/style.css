@@ -576,81 +576,148 @@ margin: 3px 0;
 #canvas-wrap { position: fixed; inset: 0; z-index: 2; }
 #canvas-wrap canvas { display: block; }
 
-/* Textos Editoriales (Fijos, revelados por scroll) */
+/* --- TEXTOS DEL HERO (FIX FINAL SIN ERRORES) --- */
 #hero-text {
   position: fixed; 
   top: 50%; 
   left: 48px; 
   transform: translateY(-50%);
   z-index: 20; 
-  /* AMPLIAMOS LA CAJA PARA QUE ENTRE LA FRASE EN 110px */
-  max-width: 800px; 
+  /* 1. AMPLIAMOS LA CAJA: Ahora tiene espacio para la tipografía masiva */
+  width: calc(100% - 100px);
+  max-width: 1100px; 
   opacity: 0; 
   pointer-events: none; 
   will-change: opacity;
 }
+
 .label-tag {
-  font-family: 'cofo-sans-mono-variable', monospace; font-size: 9px; color: var(--muted);
-  letter-spacing: 0.18em; text-transform: uppercase; display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
+  font-family: var(--font-mono); 
+  font-size: 9px; 
+  color: rgba(255, 253, 243, 0.4);
+  letter-spacing: 0.18em; 
+  text-transform: uppercase; 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  margin-bottom: 28px;
 }
-.label-tag::before { content: ''; display: block; width: 20px; height: 1px; background: var(--yellow); flex-shrink: 0; }
+.label-tag::before { content: ''; display: block; width: 20px; height: 1px; background: var(--amarillo-acento); flex-shrink: 0; }
 
 #hero-text h1 {
-  /* 1. Tipografía oficial del sistema para titulares */
   font-family: var(--font-header); 
-  
-  /* 2. Peso tipográfico (700 suele rendir más elegante que 900 en minúsculas) */
   font-weight: 700; 
-  
-  /* 3. Nuevo tamaño: Sube hasta 110px en pantallas grandes, pero baja a 60px en móviles */
-  font-size: clamp(60px, 7vw, 110px); 
-  
-  /* 4. Interlineado y Kerning ajustados para minúsculas */
-  line-height: 1.05; 
-  letter-spacing: -0.04em; 
-  
-  /* 5. Color crema oficial del sistema */
+  /* 2. ESCALA SUIZA: Clamp ajustado para que nunca desborde */
+  font-size: clamp(45px, 8vw, 110px); 
+  line-height: 0.95; /* Interlineado cerrado para mayor impacto visual */
+  letter-spacing: -0.05em; 
   color: var(--crema); 
-  
   margin-bottom: 28px;
 }
 
 #hero-text h1 .hl { 
   color: var(--amarillo-acento); 
-  font-style: none; 
+  font-style: normal; /* CORRECCIÓN: 'none' era el error */
 }
 
 #hero-text h1 .out { 
-  -webkit-text-stroke: 1.5px rgba(255, 253, 243, 0.38); /* Trazo color crema transparente */
-  color: none; 
+  -webkit-text-stroke: 1.5px rgba(255, 253, 243, 0.38); 
+  color: transparent; /* CORRECCIÓN: 'none' era el error */
 }
 
 .body-copy {
-  font-family: var(--font-reading); /* IBM Plex Sans */
-  font-size: 16px; /* Agrandamos la tipografía para lectura cómoda */
+  font-family: var(--font-reading);
+  font-size: 16px;
   font-weight: 300;
-  
-  /* MEJORA DE CONTRASTE: Subimos la opacidad del crema al 85% */
   color: rgba(255, 253, 243, 0.85); 
-  
-  line-height: 1.6; /* Interlineado suizo, ajustado al nuevo tamaño */
-  
-  /* Hacemos la línea divisoria izquierda sutilmente más visible */
+  line-height: 1.6;
   border-left: 1px solid rgba(255, 253, 243, 0.25); 
-  padding-left: 20px; /* Damos un poco más de aire respecto a la línea */
-  
-  /* ENSANCHAMOS LA CAJA (pasamos de 300px a 520px) */
-  max-width: 520px; 
+  padding-left: 20px;
+  max-width: 520px;
 }
 
-/* Stats y Hints */
-#stat-strip {
-  position: fixed; bottom: 52px; left: 48px; z-index: 20; display: flex; gap: 36px;
-  opacity: 0; pointer-events: none; will-change: opacity;
+/* --- 3. RESPONSIVE MÓVIL (Garantiza que no se rompa en el celular) --- */
+@media (max-width: 768px) {
+    #hero-text {
+        left: 25px;
+        max-width: calc(100% - 50px);
+    }
+    #hero-text h1 {
+        font-size: clamp(38px, 10vw, 60px);
+        line-height: 1.0;
+    }
 }
-.stat-num { font-family: var(--f-display); font-weight: 900; font-size: 26px; color: var(--white); letter-spacing: -0.04em; line-height: 1; }
-.stat-num b { color: var(--yellow); }
-.stat-lbl { font-family: var(--f-mono); font-size: 8px; color: rgba(255,255,255,0.28); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 4px; }
+
+/* --- CONTEXT BAR (LEVEL: DETAIL / SWISS EDITORIAL) --- */
+#stat-strip {
+  position: fixed; 
+  bottom: 40px; /* Lo bajamos un poco más para que sea un pie de página real */
+  left: 48px; 
+  right: 48px;
+  z-index: 20; 
+  display: flex; 
+  justify-content: flex-start;
+  gap: 60px; /* Reducimos el gap para que el bloque se vea más compacto */
+  opacity: 0; 
+  pointer-events: none; 
+  transition: opacity 0.8s ease;
+}
+
+.context-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px; /* Tensión visual: etiquetas pegadas al dato */
+}
+
+/* Etiqueta superior (Mini Mono) */
+.context-item .mono-tag {
+    font-family: var(--font-mono);
+    font-size: 8px; /* Micro-escala */
+    color: rgba(255, 253, 243, 0.3); /* Muy sutil */
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+/* Dato principal (Detail Reading) */
+.context-data {
+    font-family: var(--font-header); 
+    font-size: 11px; /* TAMAÑO DE DETALLE */
+    font-weight: 500;
+    color: rgba(255, 253, 243, 0.7); /* Menos contraste para no competir con el H1 */
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+}
+
+.context-link {
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 253, 243, 0.15); /* Línea de detalle */
+    padding-bottom: 2px;
+    transition: all 0.3s ease;
+}
+
+.context-link:hover {
+    color: var(--amarillo-acento);
+    border-bottom-color: var(--amarillo-acento);
+}
+
+#hero-weather-icon {
+    font-size: 14px; /* Icono pequeño acorde al texto */
+    color: var(--amarillo-acento);
+    margin-top: -1px;
+}
+
+/* Responsivo: En móvil lo mantenemos limpio */
+@media (max-width: 768px) {
+    #stat-strip {
+        bottom: 25px;
+        left: 25px;
+        gap: 20px;
+    }
+}
 
 /* Indicador de Clic (Hint) - Centrado bajo la Esfera */
 
