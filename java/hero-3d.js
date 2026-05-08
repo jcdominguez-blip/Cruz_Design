@@ -128,6 +128,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if(p > 0.01) clickHint?.classList.add('hide');
         else clickHint?.classList.remove('hide');
 
+        // Lógica de visibilidad del badge WE.directory:
+        // se oculta justo cuando el hero text empieza a aparecer (p >= 0.22)
+        const weBadge = document.getElementById('hero-we-badge');
+        if(p >= 0.22) weBadge?.classList.add('hide');
+        else weBadge?.classList.remove('hide');
+
         // Lógica de posición y opacidad del Hero Text (GSAP)
         if(p < 0.22) {
           targetScale = 1; targetX = 0;

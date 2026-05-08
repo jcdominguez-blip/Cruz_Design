@@ -697,6 +697,122 @@ margin: 3px 0;
     }
 }
 
+/* --- HERO WE.DIRECTORY BADGE (Featured on WeDirectory) ---
+   Pieza editorial pequeña, anclada bottom-left del hero.
+   Se oculta al hacer scroll-down (clase .hide vía JS). */
+.hero-we-badge {
+    position: fixed;
+    bottom: 110px;
+    left: 48px;
+    z-index: 20;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+        opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.hero-we-badge-logo {
+    height: 16px;
+    width: auto;
+    flex-shrink: 0;
+    opacity: 0.55;
+    transition: opacity 0.4s ease;
+}
+
+.hero-we-badge:hover .hero-we-badge-logo {
+    opacity: 1;
+}
+
+/* Wrapper de los dos textos: usamos grid para que ambos
+   ocupen la misma celda y hagan crossfade limpio en hover. */
+.hero-we-badge-text {
+    position: relative;
+    display: inline-grid;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.we-text-default,
+.we-text-hover {
+    grid-column: 1;
+    grid-row: 1;
+    transition:
+        opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        color 0.4s ease;
+}
+
+.we-text-default {
+    color: rgba(255, 253, 243, 0.5);
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.we-text-hover {
+    color: var(--amarillo-acento);
+    opacity: 0;
+    transform: translateY(4px);
+}
+
+.hero-we-badge:hover .we-text-default {
+    opacity: 0;
+    transform: translateY(-4px);
+}
+
+.hero-we-badge:hover .we-text-hover {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Subrayado amarillo corporativo dibujándose de izq. a der. */
+.hero-we-badge-text::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 1px;
+    width: 100%;
+    background: var(--amarillo-acento);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.55s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.hero-we-badge:hover .hero-we-badge-text::after {
+    transform: scaleX(1);
+}
+
+/* Estado oculto al scrollear (toggle vía JS) */
+.hero-we-badge.hide {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
+/* Outline amarillo en focus en lugar del azul del navegador */
+.hero-we-badge:focus,
+.hero-we-badge:focus-visible {
+    outline: 1px solid var(--amarillo-acento);
+    outline-offset: 6px;
+}
+
+@media (max-width: 768px) {
+    .hero-we-badge {
+        display: none; /* En móvil priorizamos espacio para el stat-strip */
+    }
+}
+
 /* --- CONTEXT BAR (LEVEL: DETAIL / SWISS EDITORIAL) --- */
 #stat-strip {
   position: fixed; 
@@ -1411,6 +1527,454 @@ body.scroll-locked {
 }
 
 
+/* ===================================================
+   SCROLL REVEAL SYSTEM — Cruz Estudio ®
+   Animaciones suaves al entrar al viewport.
+   Respeta el design system: easing y timing consistentes.
+   =================================================== */
+
+/* Easing común para toda la sistematización editorial */
+:root {
+    --reveal-easing: cubic-bezier(0.25, 1, 0.5, 1);
+    --reveal-duration: 1.4s;
+}
+
+/* Reveal básico: SOLO se oculta si <html> tiene .js-ready (inline en <head>).
+   Si el inline script falla o JS está deshabilitado, el contenido se ve siempre. */
+.js-ready .scroll-reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition:
+        opacity var(--reveal-duration) var(--reveal-easing),
+        transform var(--reveal-duration) var(--reveal-easing);
+    will-change: opacity, transform;
+}
+
+.js-ready .scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger: hijos directos revelan en cascada cuando el padre entra al viewport */
+.js-ready .scroll-reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(32px);
+    transition:
+        opacity 1.3s var(--reveal-easing),
+        transform 1.3s var(--reveal-easing);
+    will-change: opacity, transform;
+}
+
+.js-ready .scroll-reveal-stagger.visible > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Failsafe duro: a los 5s, todo lo que aún no se haya revelado se vuelve visible.
+   La clase .reveal-fallback la añade un setTimeout en el inline script del <head>. */
+html.reveal-fallback .scroll-reveal,
+html.reveal-fallback .scroll-reveal-stagger > *,
+html.reveal-fallback .text-reveal > span {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+.scroll-reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; }
+.scroll-reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.15s; }
+.scroll-reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.30s; }
+.scroll-reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.45s; }
+.scroll-reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.60s; }
+.scroll-reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.75s; }
+.scroll-reveal-stagger.visible > *:nth-child(7) { transition-delay: 0.90s; }
+.scroll-reveal-stagger.visible > *:nth-child(8) { transition-delay: 1.05s; }
+
+/* Text reveal mask: tipografías grandes "emergen" por debajo (solo con .js-ready) */
+.text-reveal {
+    display: block;
+    overflow: hidden;
+    line-height: inherit;
+}
+
+.js-ready .text-reveal > span {
+    display: inline-block;
+    transform: translateY(105%);
+    transition: transform 1.5s var(--reveal-easing);
+    will-change: transform;
+}
+
+.js-ready .text-reveal.visible > span,
+.js-ready .scroll-reveal.visible .text-reveal > span,
+.js-ready .visible > .text-reveal > span {
+    transform: translateY(0);
+}
+
+/* Línea editorial que se dibuja de izquierda a derecha al revelar */
+.line-reveal {
+    position: relative;
+}
+
+.line-reveal::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 1.6s var(--reveal-easing);
+}
+
+.line-reveal.visible::after {
+    transform: scaleX(1);
+}
+
+/* Respeta usuarios que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+    .scroll-reveal,
+    .scroll-reveal-stagger > *,
+    .text-reveal > span {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
+/* ===================================================
+   SCROLL PROGRESS BAR — finita, color amarillo acento
+   =================================================== */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--amarillo-acento);
+    z-index: 99998;
+    pointer-events: none;
+    transition: width 0.08s linear;
+    will-change: width;
+}
+
+/* ===================================================
+   CURSOR MAGNÉTICO — atrae elementos clave
+   =================================================== */
+[data-magnetic],
+.view-all-v2,
+.cta-submit {
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+                background-color 0.4s cubic-bezier(0.77, 0, 0.175, 1),
+                border-color 0.4s cubic-bezier(0.77, 0, 0.175, 1),
+                color 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    will-change: transform;
+}
+
+/* ===================================================
+   SELECTED WORK — Lista numerada + cursor morph card
+   =================================================== */
+
+.selected-work.light-version {
+    background-color: #FFFFFF;
+    padding: 100px 0 90px;
+    border-top: 1px solid rgba(29, 30, 28, 0.1);
+}
+
+.sw-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+.sw-header {
+    margin-bottom: 64px;
+}
+
+/* H2 — Título de sección "Proyectos destacados" */
+.sw-title {
+    font-family: var(--font-header);
+    font-size: clamp(3.5rem, 6.5vw, 6.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    font-weight: 700;
+    color: #1D1E1C;
+    margin-top: 12px;
+}
+
+.sw-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+/* Línea editorial superior animada (line-reveal) */
+.sw-list::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(29, 30, 28, 0.15);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 1.6s var(--reveal-easing);
+}
+
+.sw-list.visible::before {
+    transform: scaleX(1);
+}
+
+.sw-item {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(29, 30, 28, 0.15);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sw-number {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(29, 30, 28, 0.35);
+    letter-spacing: 0.08em;
+    width: 56px;
+    flex-shrink: 0;
+    transition: color 0.3s ease;
+}
+
+/* H3 — Título de cada proyecto: claramente menor que el H2 */
+.sw-project-title {
+    flex: 1;
+    font-family: var(--font-header);
+    font-size: clamp(1.4rem, 2.1vw, 2rem);
+    font-weight: 500;
+    color: #1D1E1C;
+    margin: 0;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    transition: color 0.4s ease, transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.sw-meta {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 18px;
+    flex-shrink: 0;
+    margin-left: 32px;
+    margin-right: 20px;
+}
+
+.sw-category,
+.sw-year {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(29, 30, 28, 0.4);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.sw-arrow {
+    font-size: 18px;
+    color: rgba(29, 30, 28, 0.25);
+    flex-shrink: 0;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease;
+}
+
+/* Hover */
+.sw-item:hover .sw-project-title {
+    color: #1D1E1C;
+    transform: translateX(12px);
+}
+
+.sw-item:hover .sw-number {
+    color: var(--amarillo-acento);
+}
+
+.sw-item:hover .sw-category,
+.sw-item:hover .sw-year {
+    color: rgba(29, 30, 28, 0.7);
+}
+
+.sw-item:hover .sw-arrow {
+    transform: translate(5px, -5px);
+    color: #1D1E1C;
+}
+
+/* Footer del bloque */
+.sw-footer {
+    margin-top: 60px;
+}
+
+/* ============================================
+   CURSOR CARD — preview siguiendo al cursor (estilo Studio Namma)
+   ============================================ */
+
+/* Registramos --sw-scale como propiedad animable para que solo el "scale up"
+   transicione, mientras --sw-x / --sw-y se actualizan vía rAF + Lerp desde JS
+   sin transición (movimiento controlado por interpolación, no por CSS). */
+@property --sw-scale {
+    syntax: '<number>';
+    initial-value: 0.85;
+    inherits: false;
+}
+
+.sw-cursor-card {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 360px;
+    pointer-events: none;
+    z-index: 99999;
+    background: var(--bg-dark);
+    overflow: hidden;
+    border-radius: 6px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    will-change: transform, opacity;
+    visibility: hidden;
+
+    /* CSS vars escritas desde JS cada frame (translate3d acelerado por GPU) */
+    --sw-x: 0px;
+    --sw-y: 0px;
+    --sw-scale: 0.85;
+
+    opacity: 0;
+    /* translate3d primero (posicionamiento), luego centrado al cursor (-50%, -50%),
+       luego scale (transición animada vía @property --sw-scale). */
+    transform:
+        translate3d(var(--sw-x), var(--sw-y), 0)
+        translate(-50%, -50%)
+        scale(var(--sw-scale));
+    transition:
+        opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+        --sw-scale 0.55s cubic-bezier(0.34, 1.4, 0.64, 1),
+        visibility 0s linear 0.35s;
+}
+
+.sw-cursor-card.visible {
+    opacity: 1;
+    visibility: visible;
+    --sw-scale: 1;
+    transition:
+        opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+        --sw-scale 0.55s cubic-bezier(0.34, 1.4, 0.64, 1),
+        visibility 0s linear 0s;
+}
+
+.sw-card-image {
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+    position: relative;
+    background: #2a2b29;
+}
+
+.sw-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.35s ease;
+}
+
+.sw-card-image img.sw-fade {
+    opacity: 0;
+}
+
+.sw-card-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 16px;
+    background: var(--bg-dark);
+    border-top: 1px solid rgba(255, 253, 243, 0.08);
+}
+
+.sw-card-label span {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+#sw-card-category {
+    color: var(--amarillo-acento);
+}
+
+#sw-card-title {
+    color: rgba(255, 253, 243, 0.9);
+    text-align: right;
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Tablet / pantallas medianas */
+@media (max-width: 1024px) {
+    .sw-inner {
+        padding: 0 40px;
+    }
+
+    .sw-item {
+        padding: 24px 0;
+        gap: 0;
+    }
+
+    .sw-number {
+        width: 44px;
+        font-size: 10px;
+    }
+
+    .sw-project-title {
+        font-size: clamp(1.2rem, 3.2vw, 1.6rem);
+    }
+
+    .sw-meta {
+        display: none;
+    }
+
+    .sw-item:hover .sw-project-title {
+        transform: none;
+    }
+}
+
+/* La card sólo se desactiva en pantallas táctiles / muy chicas */
+@media (max-width: 768px), (hover: none) {
+    .sw-cursor-card {
+        display: none !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .sw-inner {
+        padding: 0 24px;
+    }
+
+    .selected-work.light-version {
+        padding: 80px 0 70px;
+    }
+
+    .sw-header {
+        margin-bottom: 50px;
+    }
+
+    .sw-footer {
+        margin-top: 40px;
+    }
+
+    .sw-item {
+        padding: 28px 0;
+    }
+}
+
 /*----- Sección About Me -----*/
 
 
@@ -1899,6 +2463,169 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
    Fondo: Crema | Texto: Dark | Estilo: Swiss Editorial
    ========================================================================== */
 
+/* --- Badge WE.directory: Website of the day --- */
+.we-directory-badge {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 28px 36px;
+    margin: 0 0 60px 0;
+    border: 1px solid rgba(29, 30, 28, 0.15);
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--bg-dark);
+    background: transparent;
+    transition: background 0.5s var(--reveal-easing), border-color 0.5s var(--reveal-easing), transform 0.6s var(--reveal-easing);
+    position: relative;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Reemplaza el outline azul del navegador por el amarillo corporativo */
+.we-directory-badge:focus,
+.we-directory-badge:focus-visible {
+    outline: 2px solid var(--amarillo-acento);
+    outline-offset: 4px;
+}
+
+.we-directory-badge,
+.we-directory-badge * {
+    text-decoration: none !important;
+}
+
+.we-directory-badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--bg-dark);
+    transform: translateY(101%);
+    transition: transform 0.6s var(--reveal-easing);
+    z-index: 0;
+}
+
+.we-directory-badge > * {
+    position: relative;
+    z-index: 1;
+    transition: color 0.5s var(--reveal-easing);
+}
+
+.we-directory-badge:hover {
+    border-color: var(--bg-dark);
+}
+
+.we-directory-badge:hover::before {
+    transform: translateY(0);
+}
+
+.we-directory-badge:hover .we-badge-label,
+.we-directory-badge:hover .we-badge-title,
+.we-directory-badge:hover .we-badge-link {
+    color: var(--crema);
+}
+
+.we-directory-badge:hover .we-badge-logo {
+    filter: invert(1);
+}
+
+.we-badge-left {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    min-width: 0;
+}
+
+.we-badge-logo {
+    height: 36px;
+    width: auto;
+    display: block;
+    flex-shrink: 0;
+    transition: filter 0.5s var(--reveal-easing);
+}
+
+.we-badge-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.we-badge-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(29, 30, 28, 0.5);
+    line-height: 1;
+}
+
+.we-badge-title {
+    font-family: var(--font-header);
+    font-size: clamp(1rem, 1.4vw, 1.25rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: var(--bg-dark);
+    position: relative;
+    display: inline-block;
+    width: fit-content;
+}
+
+/* Línea amarilla corporativa que se dibuja de izquierda a derecha en hover */
+.we-badge-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 2px;
+    width: 100%;
+    background: var(--amarillo-acento);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.55s var(--reveal-easing);
+}
+
+.we-directory-badge:hover .we-badge-title::after,
+.we-directory-badge:focus-visible .we-badge-title::after {
+    transform: scaleX(1);
+}
+
+.we-badge-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bg-dark);
+    flex-shrink: 0;
+}
+
+.we-badge-link .material-symbols-outlined {
+    font-size: 16px;
+    transition: transform 0.4s var(--reveal-easing);
+}
+
+.we-directory-badge:hover .we-badge-link .material-symbols-outlined {
+    transform: translate(3px, -3px);
+}
+
+@media (max-width: 768px) {
+    .we-directory-badge {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+        padding: 22px 24px;
+    }
+    .we-badge-left {
+        gap: 18px;
+    }
+    .we-badge-logo {
+        height: 28px;
+    }
+}
+
 .footer-global {
     background-color: var(--crema);
     color: var(--bg-dark);
@@ -2152,13 +2879,14 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
 .services-v2 {
     background-color: var(--bg-dark);
     color: var(--crema);
-    padding: 180px 5%;
+    padding: 100px 0 90px;
     overflow: hidden; /* Evita que el sello rompa el layout */
 }
 
 .obys-container {
-    max-width: 1400px;
+    max-width: 1440px;
     margin: 0 auto;
+    padding: 0 60px;
 }
 
 /* --- HEADER STYLE --- */
@@ -2166,26 +2894,35 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 120px;
+    margin-bottom: 64px;
+    gap: 40px;
 }
 
+.hero-text-wrapper {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+/* H2 — Mismo sistema que .sw-title de Proyectos destacados */
 .display-title {
     font-family: var(--font-header);
-    font-size: clamp(3rem, 5vw, 6.5rem);
-    line-height: 0.9;
-    letter-spacing: -0.04em;
-    font-weight: 600;
+    font-size: clamp(3.5rem, 6.5vw, 6.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    font-weight: 700;
+    color: var(--crema);
+    margin-top: 12px;
 }
 
 .bold-highlight {
-    font-weight: 700; /* El bold que pediste */
+    font-weight: 700;
     color: var(--amarillo-acento);
 }
 
-/* --- SELLO CIRCULAR (FIX) --- */
+/* --- SELLO CIRCULAR --- */
 .circular-text-box {
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
     position: relative;
     flex-shrink: 0;
 }
@@ -2208,62 +2945,155 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     to { transform: rotate(360deg); }
 }
 
-/* --- SERVICES LIST (OBYS STYLE) --- */
+/* --- SERVICES LIST --- */
+.services-list-v2 {
+    position: relative;
+    border-bottom: 1px solid rgba(255, 253, 243, 0.1);
+}
+
+/* Línea editorial superior animada (line-reveal) */
+.services-list-v2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255, 253, 243, 0.1);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 1.6s var(--reveal-easing);
+}
+
+.services-list-v2.visible::before {
+    transform: scaleX(1);
+}
+
 .service-block {
     display: grid;
-    grid-template-columns: 0.5fr 2fr;
-    border-top: 1px solid rgba(255, 253, 243, 0.1);
-    padding: 80px 0;
+    grid-template-columns: 56px 1fr;
+    gap: 0;
+    padding: 36px 0;
     transition: background 0.4s ease;
+    align-items: start;
+}
+
+.service-block + .service-block {
+    border-top: 1px solid rgba(255, 253, 243, 0.1);
 }
 
 .service-block:hover {
     background-color: rgba(242, 195, 53, 0.03);
 }
 
-.block-number {
-    font-family: var(--font-mono);
-    color: var(--amarillo-acento);
-    font-size: 1.2rem;
+/* La regla del stagger (0,2,0) sobreescribe el transition de .service-block.
+   Este override (0,3,0) lo restaura e incluye background-color para que el hover anime. */
+.js-ready .scroll-reveal-stagger > .service-block {
+    transition:
+        opacity 0.85s var(--reveal-easing),
+        transform 0.85s var(--reveal-easing),
+        background-color 0.4s ease;
 }
 
+.block-number {
+    font-family: var(--font-mono);
+    color: rgba(255, 253, 243, 0.4);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+}
+
+.service-block:hover .block-number {
+    color: var(--amarillo-acento);
+}
+
+/* H3 — Mismo sistema que .sw-project-title */
 .block-main h3 {
     font-family: var(--font-header);
-    font-size: clamp(2.5rem, 4vw, 4rem);
-    margin-bottom: 30px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-size: clamp(1.4rem, 2.1vw, 2rem);
+    margin: 0 0 14px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    color: var(--crema);
 }
 
 .block-main p {
     font-family: var(--font-reading);
-    font-size: 1.25rem;
-    max-width: 700px;
-    line-height: 1.5;
-    opacity: 0.8;
+    font-size: 16px;
+    max-width: 640px;
+    line-height: 1.55;
+    color: rgba(255, 253, 243, 0.7);
+    font-weight: 400;
 }
 
 /* Pills de Metodología */
 .method-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 40px;
+    gap: 14px;
+    margin-top: 28px;
 }
 
 .pill {
-    border: 1px solid rgba(255, 253, 243, 0.2);
-    padding: 20px;
+    font-family: var(--font-reading);
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255, 253, 243, 0.75);
+    border: 1px solid rgba(255, 253, 243, 0.18);
+    padding: 16px 18px;
     flex: 1;
-    min-width: 250px;
+    min-width: 220px;
+    border-radius: 2px;
 }
 
 .pill span {
     display: block;
     font-family: var(--font-mono);
     color: var(--amarillo-acento);
-    font-size: 0.7rem;
-    margin-bottom: 10px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+/* Responsive — mismo enfoque que Proyectos destacados */
+@media (max-width: 1024px) {
+    .services-v2 {
+        padding: 80px 0 70px;
+    }
+    .obys-container {
+        padding: 0 40px;
+    }
+    .services-hero {
+        margin-bottom: 48px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .service-block {
+        grid-template-columns: 44px 1fr;
+        padding: 28px 0;
+    }
+    .block-main h3 {
+        font-size: clamp(1.2rem, 3.2vw, 1.6rem);
+    }
+    .block-main p {
+        font-size: 15px;
+    }
+    .pill {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .obys-container {
+        padding: 0 24px;
+    }
+    .circular-text-box {
+        width: 110px;
+        height: 110px;
+    }
 }
 
 /* ==========================================================================

@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cursor.style.top = e.clientY + 'px';
         });
         // Expansión en elementos interactivos
-        document.querySelectorAll('a, button, .featured-work-item, .fwv2-item').forEach(link => {
+        document.querySelectorAll('a, button, .featured-work-item, .fwv2-item, .sw-item').forEach(link => {
             link.addEventListener('mouseenter', () => cursor.classList.add('cursor-expand'));
             link.addEventListener('mouseleave', () => cursor.classList.remove('cursor-expand'));
         });
@@ -102,20 +102,44 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateLiveClocks, 1000);
     updateLiveClocks();
 
-    // --- 7. REVEALS AL SCROLLEAR (FIX PARA TRABAJOS DESTACADOS) ---
+    // --- 7. REVEALS AL SCROLLEAR ---
+    // Threshold 0 + rootMargin negativo: dispara apenas el elemento entra al viewport.
+    // Más confiable para listas altas (servicios con pills) que con 0.15.
     const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { 
+        entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
                 revealObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.15 });
+    }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
 
-    // Observamos los elementos de la sección de trabajos y el intro del estudio
-    document.querySelectorAll('.works-header, .works-preview, .featured-work-item, #studio-intro, .scroll-reveal').forEach((el) => {
+    const revealSelector = '.works-header, .works-preview, .featured-work-item, #studio-intro, .scroll-reveal, .scroll-reveal-stagger';
+    document.querySelectorAll(revealSelector).forEach((el) => {
         revealObserver.observe(el);
     });
+
+    // Failsafe: si por algún motivo el observer no dispara (loader, transforms, etc.),
+    // forzamos visible a cualquier elemento que ya esté dentro del viewport pasados 1.5s.
+    setTimeout(() => {
+        const vh = window.innerHeight;
+        document.querySelectorAll(revealSelector).forEach((el) => {
+            if (el.classList.contains('visible')) return;
+            const rect = el.getBoundingClientRect();
+            if (rect.top < vh && rect.bottom > 0) {
+                el.classList.add('visible');
+                revealObserver.unobserve(el);
+            }
+        });
+    }, 1500);
+
+    // Escape hatch absoluto: a los 4s, todo lo que aún no se reveló se vuelve visible.
+    // Garantiza que el contenido NUNCA quede oculto si algo falla.
+    setTimeout(() => {
+        document.querySelectorAll(revealSelector).forEach((el) => {
+            if (!el.classList.contains('visible')) el.classList.add('visible');
+        });
+    }, 4000);
 });
 
 // --- 8. FUNCIONES DE TRABAJOS Y ACORDEÓN (GLOBALES) ---
@@ -198,19 +222,22 @@ let isGlobalSoundEnabled = false; // El sonido empieza desactivado por defecto (
 // La mayoría de navegadores bloquean el sonido hasta que el usuario interactúa.
 // Intentamos reproducir cuando termina el loader, si el navegador lo permite.
 window.addEventListener('load', () => {
+    // Si no existen los elementos de sonido en esta página, no hacemos nada.
+    if (!bgMusic || !soundToggle) return;
+
     // Escuchamos el final del loader que ya tenías en la Sección 2
     const loaderCheck = setInterval(() => {
         const loader = document.getElementById('loader');
         if (loader && loader.classList.contains('hidden')) {
             clearInterval(loaderCheck);
-            
+
             // Intentamos reproducir la pista de fondo
             bgMusic.play().then(() => {
                 // Autoplay exitoso: Actualizamos el botón a ON
                 isGlobalSoundEnabled = true;
                 soundToggle.classList.remove('muted');
                 soundToggle.classList.add('active');
-            }).catch(error => {
+            }).catch(() => {
                 // Autoplay bloqueado (User must click): Botón queda en OFF
                 console.log("Autoplay de audio bloqueado por el navegador. El usuario debe activarlo.");
                 soundToggle.classList.remove('active');
@@ -221,23 +248,29 @@ window.addEventListener('load', () => {
 });
 
 // --- B. LÓGICA DEL BOTÓN SWITCH GLOBAL ---
-soundToggle.addEventListener('click', () => {
-    isGlobalSoundEnabled = !isGlobalSoundEnabled;
+if (soundToggle) {
+    soundToggle.addEventListener('click', () => {
+        isGlobalSoundEnabled = !isGlobalSoundEnabled;
 
-    if (isGlobalSoundEnabled) {
-        // ACTIVAR SONIDO GLOBAL
-        bgMusic.play();
-        bgMusic.muted = false; // Aseguramos que no esté muted
-        soundToggle.classList.remove('muted');
-        soundToggle.classList.add('active');
-    } else {
-        // DESACTIVAR SONIDO GLOBAL
-        bgMusic.pause();
-        bgMusic.muted = true; // Muteamos la pista de fondo
-        soundToggle.classList.remove('active');
-        soundToggle.classList.add('muted');
-    }
-});
+        if (isGlobalSoundEnabled) {
+            // ACTIVAR SONIDO GLOBAL
+            if (bgMusic) {
+                bgMusic.play();
+                bgMusic.muted = false; // Aseguramos que no esté muted
+            }
+            soundToggle.classList.remove('muted');
+            soundToggle.classList.add('active');
+        } else {
+            // DESACTIVAR SONIDO GLOBAL
+            if (bgMusic) {
+                bgMusic.pause();
+                bgMusic.muted = true; // Muteamos la pista de fondo
+            }
+            soundToggle.classList.remove('active');
+            soundToggle.classList.add('muted');
+        }
+    });
+}
 
 // ==========================================================================
 // REEMPLAZO SECCIÓN 8: FUNCIONES DE TRABAJOS Y ACORDEÓN (MODIFICADA CON SONIDO)
@@ -275,14 +308,218 @@ window.toggleAccordion = function(element) {
     }
 };
 
-// --- IMPORTANTE: También añadimos el efecto SFX al hover de los proyectos V2 ---
-// Para una experiencia más Flair Digital en la lista que venimos trabajando.
-document.querySelectorAll('.fwv2-item').forEach(item => {
-    item.addEventListener('mouseenter', () => {
-        if (isGlobalSoundEnabled && sfxZoom) {
-            // Un toque de zoom SFX al posar el cursor
-            sfxZoom.currentTime = 0; 
-            sfxZoom.play();
-        }
+/* ============================================================
+   SELECTED WORK — Floating Cursor Preview Card
+   ============================================================
+   - Posiciona la card siguiendo al cursor con Lerp (interpolación lineal)
+     y rAF, escribiendo solo CSS vars (--sw-x, --sw-y) que el CSS
+     consume dentro de translate3d() para acelerar por GPU.
+   - mouseenter en cada .sw-item: carga la PRIMERA imagen del data-images
+     y los textos (categoría + título).
+   - mouseleave en el <ul.sw-list> (no por item): fade out suave.
+   - El fade in / scale up corre 100% por CSS (transition).
+============================================================ */
+function initSelectedWorkCursor() {
+    const card        = document.getElementById('sw-cursor-card');
+    const cardImg     = document.getElementById('sw-card-img');
+    const cardCategory= document.getElementById('sw-card-category');
+    const cardTitle   = document.getElementById('sw-card-title');
+    const list        = document.querySelector('.sw-list');
+    const items       = list ? list.querySelectorAll('.sw-item') : [];
+
+    if (!card || !cardImg || !list || !items.length) return;
+
+    // ── 1. Sacamos la card del flujo de la <section> (que puede tener transforms
+    //       en ancestros vía animaciones de reveal) y la anclamos al <body> para
+    //       que position:fixed funcione siempre respecto al viewport.
+    if (card.parentElement !== document.body) {
+        document.body.appendChild(card);
+    }
+
+    // ── 2. Preload de la primera imagen de cada proyecto (las únicas que se usan).
+    items.forEach((item) => {
+        try {
+            const arr = JSON.parse(item.getAttribute('data-images') || '[]');
+            if (arr[0]) { const pre = new Image(); pre.src = arr[0]; }
+        } catch (_) {}
     });
-});
+
+    // ── 3. Estado de seguimiento (Lerp).
+    let mouseX  = window.innerWidth  / 2;
+    let mouseY  = window.innerHeight / 2;
+    let cardX   = mouseX;
+    let cardY   = mouseY;
+    let rafId   = null;
+    let active  = false;
+    const EASE  = 0.16; // factor de Lerp — más bajo = más arrastre / inercia
+
+    // Helper: escribe las CSS vars que el transform consume.
+    const writeTransform = (x, y) => {
+        card.style.setProperty('--sw-x', x + 'px');
+        card.style.setProperty('--sw-y', y + 'px');
+    };
+
+    // ── 4. Loop de animación con Lerp + rAF.
+    function tick() {
+        cardX += (mouseX - cardX) * EASE;
+        cardY += (mouseY - cardY) * EASE;
+        writeTransform(cardX, cardY);
+
+        // Si la card sigue activa, o aún no alcanzó al cursor, seguimos animando.
+        const dx = mouseX - cardX;
+        const dy = mouseY - cardY;
+        if (active || (dx * dx + dy * dy) > 0.25) {
+            rafId = requestAnimationFrame(tick);
+        } else {
+            rafId = null;
+        }
+    }
+
+    function startTick() {
+        if (rafId === null) rafId = requestAnimationFrame(tick);
+    }
+
+    // ── 5. Captura del mouse global (para que la card pueda "alcanzar" al cursor
+    //       incluso si entra por arriba de un item exacto).
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        // Si la card no está activa, snapeamos sin lerp para que el primer
+        // mouseenter ya la haga aparecer en el lugar correcto.
+        if (!active) {
+            cardX = mouseX;
+            cardY = mouseY;
+            writeTransform(cardX, cardY);
+        } else {
+            startTick();
+        }
+    }, { passive: true });
+
+    // ── 6. mouseenter por item: cargamos data y mostramos.
+    items.forEach((item) => {
+        item.addEventListener('mouseenter', () => {
+            // Parse del JSON; tomamos SOLO la primera URL.
+            let firstImage = '';
+            try {
+                const arr = JSON.parse(item.getAttribute('data-images') || '[]');
+                firstImage = arr[0] || '';
+            } catch (_) {}
+
+            if (!firstImage) return;
+
+            // Solo actualizamos el src si cambió, para evitar flicker entre items.
+            if (cardImg.getAttribute('src') !== firstImage) {
+                cardImg.src = firstImage;
+            }
+
+            const catEl   = item.querySelector('.sw-category');
+            const titleEl = item.querySelector('.sw-project-title');
+            if (cardCategory) cardCategory.textContent = catEl   ? catEl.textContent.trim()   : '';
+            if (cardTitle)    cardTitle.textContent    = titleEl ? titleEl.textContent.trim() : '';
+
+            active = true;
+            card.classList.add('visible');
+            startTick();
+        });
+    });
+
+    // ── 7. mouseleave en el <ul> entero: fade out (CSS hace la transición).
+    list.addEventListener('mouseleave', () => {
+        active = false;
+        card.classList.remove('visible');
+        // El loop sigue un frame más por inercia y se autodetiene cuando
+        // la distancia al cursor es despreciable (ver tick()).
+    });
+}
+
+// --- Scroll Progress Bar ---
+function initScrollProgress() {
+    const bar = document.getElementById('scroll-progress');
+    if (!bar) return;
+
+    let rafId = null;
+    function update() {
+        const h = document.documentElement;
+        const scrollTop = h.scrollTop || document.body.scrollTop;
+        const max = h.scrollHeight - h.clientHeight;
+        const progress = max > 0 ? (scrollTop / max) * 100 : 0;
+        bar.style.width = progress + '%';
+        rafId = null;
+    }
+
+    function onScroll() {
+        if (rafId) return;
+        rafId = requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+}
+
+// --- Cursor Magnético en CTAs ---
+function initMagneticCursor() {
+    const targets = document.querySelectorAll('[data-magnetic]');
+    if (!targets.length) return;
+
+    targets.forEach(function(el) {
+        const strength = parseFloat(el.dataset.magneticStrength || '0.3');
+        let rafId = null;
+
+        el.addEventListener('mousemove', function(e) {
+            const rect = el.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dx = (e.clientX - cx) * strength;
+            const dy = (e.clientY - cy) * strength;
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(function() {
+                el.style.transform = 'translate(' + dx + 'px, ' + dy + 'px)';
+            });
+        });
+
+        el.addEventListener('mouseleave', function() {
+            if (rafId) cancelAnimationFrame(rafId);
+            el.style.transform = '';
+        });
+    });
+}
+
+// Ejecutar cuando el DOM esté listo (script tiene defer, así que ya debería estarlo)
+// --- Hero WE.directory badge: fallback de ocultamiento ---
+// La lógica principal vive en hero-3d.js (sincronizada con la aparición del hero text
+// vía ScrollTrigger del #spacer). Este listener solo actúa como red de seguridad
+// por si GSAP/ScrollTrigger no carga: oculta el badge a partir de un scroll alto.
+function initHeroWeBadge() {
+    const badge = document.getElementById('hero-we-badge');
+    if (!badge) return;
+
+    const FALLBACK_THRESHOLD = 600; // alto: solo entra si ScrollTrigger no actuó
+    let ticking = false;
+
+    function update() {
+        if (window.scrollY > FALLBACK_THRESHOLD) badge.classList.add('hide');
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+        }
+    }, { passive: true });
+}
+
+function bootCruzInteractions() {
+    initSelectedWorkCursor();
+    initScrollProgress();
+    initMagneticCursor();
+    initHeroWeBadge();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootCruzInteractions);
+} else {
+    bootCruzInteractions();
+}

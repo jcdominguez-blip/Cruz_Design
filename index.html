@@ -19,6 +19,15 @@
     
     <script>
         (function() {
+            // Activa el sistema de reveals (oculta inicial). Si este script no corre,
+            // el contenido queda visible por defecto — failsafe natural.
+            document.documentElement.classList.add('js-ready');
+
+            // Hard failsafe: a los 5s desactiva cualquier reveal que aún esté oculto.
+            setTimeout(function() {
+                document.documentElement.classList.add('reveal-fallback');
+            }, 5000);
+
             if (sessionStorage.getItem('cruz-loader-visto')) {
                 document.documentElement.classList.add('skip-loader');
                 document.documentElement.style.overflowY = 'auto';
@@ -31,6 +40,8 @@
     </style>
 </head>
 <body>
+
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
 <div class="page-transition"></div>
 
@@ -101,6 +112,14 @@
     Somos un estudio de diseño que traduce la estrategia de tu empresa en identidades sólidas. Creamos sistemas visuales pensados para conectar con tu público de manera efectiva.
   </p>
 </div>
+
+<a href="https://we.directory/collection" target="_blank" rel="noopener noreferrer" class="hero-we-badge" id="hero-we-badge" aria-label="Featured on WE.directory — Website of the day">
+  <img src="./img/we_logo3_white.svg" alt="" class="hero-we-badge-logo" aria-hidden="true">
+  <span class="hero-we-badge-text">
+    <span class="we-text-default">Featured on WeDirectory — best talents and brands</span>
+    <span class="we-text-hover">Reconocimiento · Website of the day</span>
+  </span>
+</a>
 
 <div id="stat-strip">
   <div class="context-item">
@@ -199,65 +218,86 @@
         </div>
     </div>
 
-    <section class="featured-works-v2 light-version" id="featured-works">
-        <div class="featured-works-inner">
-            <div class="works-header-v2 scroll-reveal">
+    <section class="selected-work light-version" id="featured-works">
+        <div class="sw-inner">
+            <div class="sw-header scroll-reveal">
                 <span class="mono-tag">// PROYECTOS SELECCIONADOS</span>
-                <h2 class="display-title" style="color: #1D1E1C !important;">Proyectos<br>destacados.</h2>
+                <h2 class="sw-title">
+                    <span class="text-reveal"><span>Proyectos</span></span>
+                    <span class="text-reveal"><span>destacados.</span></span>
+                </h2>
             </div>
 
-            <div class="featured-container-v2">
-                <div class="works-preview-v2">
-                    <div class="preview-inner-v2">
-                        <img id="project-image-1" src="https://i.ibb.co/dmkbM0K/tac.jpg" class="active" alt="Trenes Argentinos">
-                        <img id="project-image-2" src="https://i.ibb.co/gb4PTXst/img4.jpg" alt="San Cristóbal">
-                        <img id="project-image-3" src="https://i.ibb.co/357FqBCw/tp1.jpg" alt="SUUAM">
-                        <img id="project-image-4" src="./img/ROVEX-PREVIEW.png" alt="Rovex">
+            <ul class="sw-list scroll-reveal-stagger">
+                <li class="sw-item" onclick="redirectWithAnimation(this)" data-url="./pages/trenescargas.html"
+                    data-images='["./img/tac-1.jpg","./img/tac-2.png","./img/tac-3.png","./img/tac-4.jpg"]'>
+                    <span class="sw-number">01</span>
+                    <h3 class="sw-project-title">Trenes Argentinos Cargas</h3>
+                    <div class="sw-meta">
+                        <span class="sw-category">// BRANDING</span>
+                        <span class="sw-year">[2025]</span>
                     </div>
-                    <div class="works-footer-v2">
-                        <a href="./pages/trabajos.html" class="view-all-v2 link-location">
-                            <span class="btn-text">VER TODOS LOS PROYECTOS</span>
-                            <span class="material-symbols-outlined">north_east</span>
-                        </a>
+                    <span class="sw-arrow material-symbols-outlined">north_east</span>
+                </li>
+                <li class="sw-item" onclick="redirectWithAnimation(this)" data-url="./pages/sc.html"
+                    data-images='["./img/1-SC.jpg","./img/3-SC.jpg","./img/sc-12.jpeg","./img/sc-11.jpeg","./img/sc-13.jpeg"]'>
+                    <span class="sw-number">02</span>
+                    <h3 class="sw-project-title">Municipalidad de San Cristóbal</h3>
+                    <div class="sw-meta">
+                        <span class="sw-category">// BRAND IDENTITY</span>
+                        <span class="sw-year">[2023]</span>
                     </div>
-                </div>
+                    <span class="sw-arrow material-symbols-outlined">north_east</span>
+                </li>
+                <li class="sw-item" onclick="redirectWithAnimation(this)" data-url="./pages/suuam.html"
+                    data-images='["https://i.ibb.co/357FqBCw/tp1.jpg","https://i.ibb.co/8BbCKvj/1.jpg","https://i.ibb.co/k2V6qRc/simbolo.jpg","https://i.ibb.co/MDn31W8/6.jpg"]'>
+                    <span class="sw-number">03</span>
+                    <h3 class="sw-project-title">SUUAM</h3>
+                    <div class="sw-meta">
+                        <span class="sw-category">// BRAND IDENTITY</span>
+                        <span class="sw-year">[2024]</span>
+                    </div>
+                    <span class="sw-arrow material-symbols-outlined">north_east</span>
+                </li>
+                <li class="sw-item" onclick="redirectWithAnimation(this)" data-url="./pages/rovex.html"
+                    data-images='["./img/header-rovex.png","./img/rovex-1.jpeg","./img/rovex-3.jpg","./img/rovex-4.jpg"]'>
+                    <span class="sw-number">04</span>
+                    <h3 class="sw-project-title">Rovex</h3>
+                    <div class="sw-meta">
+                        <span class="sw-category">// BRAND IDENTITY</span>
+                        <span class="sw-year">[2025]</span>
+                    </div>
+                    <span class="sw-arrow material-symbols-outlined">north_east</span>
+                </li>
+            </ul>
 
-                <div class="works-list-v2">
-                    <ul class="featured-list-v2">
-                        <li class="fwv2-item" onmouseover="changePreview(1)" onclick="redirectWithAnimation(this)" data-url="./pages/trenescargas.html">
-                            <span class="fwv2-category">// BRANDING</span>
-                            <h3 class="fwv2-title">Trenes Argentinos Cargas</h3>
-                            <span class="fwv2-year">[2025]</span>
-                        </li>
-                        <li class="fwv2-item" onmouseover="changePreview(2)" onclick="redirectWithAnimation(this)" data-url="./pages/sc.html">
-                            <span class="fwv2-category">// BRAND IDENTITY</span>
-                            <h3 class="fwv2-title">Municipalidad de San Cristóbal</h3>
-                            <span class="fwv2-year">[2023]</span>
-                        </li>
-                        <li class="fwv2-item" onmouseover="changePreview(3)" onclick="redirectWithAnimation(this)" data-url="./pages/suuam.html">
-                            <span class="fwv2-category">// BRAND IDENTITY</span>
-                            <h3 class="fwv2-title">SUUAM</h3>
-                            <span class="fwv2-year">[2024]</span>
-                        </li>
-                        <li class="fwv2-item" onmouseover="changePreview(4)" onclick="redirectWithAnimation(this)" data-url="./pages/rovex.html">
-                            <span class="fwv2-category">// BRAND IDENTITY</span>
-                            <h3 class="fwv2-title">Rovex</h3>
-                            <span class="fwv2-year">[2025]</span>
-                        </li>
-                    </ul>
-                </div>
+            <div class="sw-footer scroll-reveal">
+                <a href="./pages/trabajos.html" class="view-all-v2 link-location" data-magnetic data-magnetic-strength="0.25">
+                    <span class="btn-text">VER TODOS LOS PROYECTOS</span>
+                    <span class="material-symbols-outlined">north_east</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="sw-cursor-card" id="sw-cursor-card">
+            <div class="sw-card-image">
+                <img id="sw-card-img" src="" alt="">
+            </div>
+            <div class="sw-card-label">
+                <span id="sw-card-category"></span>
+                <span id="sw-card-title"></span>
             </div>
         </div>
     </section>
 
     <section class="services-v2">
         <div class="obys-container">
-            <header class="services-hero">
+            <header class="services-hero scroll-reveal">
                 <div class="hero-text-wrapper">
-                    <span class="mono-tag" data-aos="fade-up">//PROGRAMA DE SERVICIOS</span>
-                    <h2 class="display-title" data-aos="fade-up">
-                        Diseño estratégico con <br>
-                        <span class="bold-highlight">precisión técnica.</span>
+                    <span class="mono-tag">//PROGRAMA DE SERVICIOS</span>
+                    <h2 class="display-title">
+                        <span class="text-reveal"><span>Diseño estratégico con</span></span>
+                        <span class="text-reveal"><span class="bold-highlight">precisión técnica.</span></span>
                     </h2>
                 </div>
                 <div class="circular-text-box">
@@ -271,7 +311,7 @@
                     </svg>
                 </div>
             </header>
-            <div class="services-list-v2">
+            <div class="services-list-v2 scroll-reveal-stagger">
                 <article class="service-block">
                     <div class="block-number">[01]</div>
                     <div class="block-main">
@@ -301,6 +341,7 @@
             </div>
         </div>
     </section>
+    
 
     <section class="contact-section" id="contact">
         <div class="contact-wrapper">
@@ -344,7 +385,7 @@
                             <label class="service-chip"><input type="radio" name="Origin" value="Anuncios" required><span class="chip-box">ANUNCIOS</span></label>
                         </div>
                     </div>
-                    <button type="submit" class="cta-submit ux-submit-btn">
+                    <button type="submit" class="cta-submit ux-submit-btn" data-magnetic data-magnetic-strength="0.2">
                         <span class="cta-text">SOLICITAR REUNIÓN INFORMATIVA</span>
                         <span class="material-symbols-outlined">north_east</span>
                     </button>
@@ -355,7 +396,22 @@
        
     <footer class="footer-global">
         <div class="footer-line"></div>
-        <div class="footer-grid">
+
+        <a href="https://we.directory/collection" target="_blank" rel="noopener noreferrer" class="we-directory-badge scroll-reveal" aria-label="WE.directory — Website of the day">
+            <div class="we-badge-left">
+                <img src="./img/we_logo1_black.svg" alt="WE.directory" class="we-badge-logo">
+                <div class="we-badge-text">
+                    <span class="we-badge-label">RECONOCIMIENTO</span>
+                    <span class="we-badge-title">Website of the day · WE.directory</span>
+                </div>
+            </div>
+            <span class="we-badge-link">
+                <span>VER COLECCIÓN</span>
+                <span class="material-symbols-outlined">arrow_outward</span>
+            </span>
+        </a>
+
+        <div class="footer-grid scroll-reveal-stagger">
             <div class="footer-col">
                 <span class="mono-label">UBICACIÓN</span>
                 <div class="col-content">
@@ -385,11 +441,7 @@
         </div>
         <div class="custom-cursor"></div>
     </footer>
-<button id="global-sound-toggle" class="sound-toggle-btn active" title="Activar/Desactivar Sonido">
-    <span class="material-symbols-outlined volume-icon active">volume_up</span>
-    <span class="material-symbols-outlined volume-icon muted">volume_off</span>
-    <span class="mono-label">[ SOUND ]</span>
-</button>
+
 
 
 </div> <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

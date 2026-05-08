@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
  
     // --- 7. REVEALS AL SCROLLEAR ---
     const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { 
+        entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
                 // Stagger para hijos directos en la misma sección
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
- 
+
     document.querySelectorAll(
         '#studio-intro, .scroll-reveal, .featured-work-item, .service-block, .fwv2-card'
     ).forEach(el => revealObserver.observe(el));
