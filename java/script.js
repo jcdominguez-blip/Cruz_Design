@@ -511,11 +511,160 @@ function initHeroWeBadge() {
     }, { passive: true });
 }
 
+/* ============================================================
+   STUDIO INTRO — Malla 3D animada con waves interactivas
+   Adaptado del demo classic de https://threejs.org (geometry-plane
+   con displacement por suma de senos + mouse).
+
+   Diferencias con el original:
+   - Usa el THREE global (r128 ya cargado en index.html), no ES module.
+   - Sizing al contenedor (.studio-text-container, 40% del section),
+     no al window.
+   - Mouse coords relativas al section, no a la ventana.
+   - Pausa con IntersectionObserver cuando la sección sale de viewport.
+============================================================ */
+function initStudioWaves() {
+    const canvas  = document.getElementById('studio-mesh-bg');
+    const section = document.getElementById('studio-intro');
+    if (!canvas || !section || typeof THREE === 'undefined') return;
+
+    const container = canvas.parentElement; // .studio-text-container
+
+    // ── Renderer ────────────────────────────────────────
+    const renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: 'high-performance'
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+
+    // ── Escena + cámara (parámetros estilo threejs.org) ─
+    const scene  = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+    camera.position.set(0, 15, 45);
+
+    // ── Plano wireframe con fuerte inclinación hacia cámara
+    const geometry = new THREE.PlaneGeometry(150, 80, 50, 30);
+    const material = new THREE.MeshBasicMaterial({
+        color: 0xfffdf3,        // crema corporativo
+        wireframe: true,
+        transparent: true,
+        opacity: 0.32
+    });
+    const plane = new THREE.Mesh(geometry, material);
+    plane.rotation.x = -Math.PI / 2.2; // ≈ -81.8°, vertical inclinado
+    scene.add(plane);
+
+    // Guardamos las Z originales para no acumular el desplazamiento
+    const positions = plane.geometry.attributes.position;
+    const initialZ = new Float32Array(positions.count);
+    for (let i = 0; i < positions.count; i++) initialZ[i] = positions.getZ(i);
+
+    // ── Mouse (coords relativas al section) ─────────────
+    let mouseX = 0, mouseY = 0;
+    let targetX = 0, targetY = 0;
+
+    section.addEventListener('mousemove', (e) => {
+        const rect = section.getBoundingClientRect();
+        // Mismo factor 0.1 que tu código original
+        mouseX = ((e.clientX - rect.left) - rect.width  / 2) * 0.1;
+        mouseY = ((e.clientY - rect.top)  - rect.height / 2) * 0.1;
+    }, { passive: true });
+
+    section.addEventListener('touchmove', (e) => {
+        const t = e.touches[0];
+        if (!t) return;
+        const rect = section.getBoundingClientRect();
+        mouseX = ((t.clientX - rect.left) - rect.width  / 2) * 0.1;
+        mouseY = ((t.clientY - rect.top)  - rect.height / 2) * 0.1;
+    }, { passive: true });
+
+    // ── Resize sincronizado al contenedor ───────────────
+    function resize() {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        if (w === 0 || h === 0) return;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+    }
+    resize();
+
+    // ── Loop ────────────────────────────────────────────
+    const clock = new THREE.Clock();
+    let rafId = null;
+    let running = false;
+    const baseCamY = 15;
+
+    function tick() {
+        const time = clock.getElapsedTime();
+
+        // Suavizado del mouse (Lerp)
+        targetX += (mouseX - targetX) * 0.05;
+        targetY += (mouseY - targetY) * 0.05;
+
+        // Displacement por vértice: ola base + efecto del mouse
+        for (let i = 0; i < positions.count; i++) {
+            const x = positions.getX(i);
+            const y = positions.getY(i);
+
+            const wave1 = Math.sin(x * 0.1 + time) * 2;
+            const wave2 = Math.cos(y * 0.1 + time) * 2;
+
+            // Distorsión por proximidad al cursor, modulada por sin(t·3)
+            const distX = Math.abs(x - targetX);
+            const distY = Math.abs(y + targetY);
+            const mouseEffect = Math.max(0, 10 - (distX + distY) * 0.2) * Math.sin(time * 3);
+
+            positions.setZ(i, initialZ[i] + wave1 + wave2 + mouseEffect);
+        }
+        positions.needsUpdate = true;
+
+        // Leve rotación panorámica del plano
+        plane.rotation.z = time * 0.05;
+
+        // Parallax sutil de cámara
+        camera.position.x += (mouseX * 0.1 - camera.position.x) * 0.05;
+        camera.position.y += ((-mouseY * 0.1 + baseCamY) - camera.position.y) * 0.05;
+        camera.lookAt(scene.position);
+
+        renderer.render(scene, camera);
+        rafId = requestAnimationFrame(tick);
+    }
+
+    function start() {
+        if (running) return;
+        running = true;
+        clock.start(); // reinicia el reloj al volver a viewport
+        rafId = requestAnimationFrame(tick);
+    }
+    function stop() {
+        running = false;
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    }
+
+    // Solo animar cuando la sección está en viewport
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => entry.isIntersecting ? start() : stop());
+    }, { threshold: 0 });
+    io.observe(section);
+
+    // Resize debounced
+    let resizeRaf = null;
+    window.addEventListener('resize', () => {
+        if (resizeRaf) cancelAnimationFrame(resizeRaf);
+        resizeRaf = requestAnimationFrame(resize);
+    }, { passive: true });
+}
+
 function bootCruzInteractions() {
     initSelectedWorkCursor();
     initScrollProgress();
     initMagneticCursor();
     initHeroWeBadge();
+    initStudioWaves();       // no-op si no hay canvas
+    // initServicesLayers() ahora vive en java/capas.js como módulo aislado.
 }
 
 if (document.readyState === 'loading') {

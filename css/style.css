@@ -1159,21 +1159,24 @@ body.scroll-locked {
    SECCIÓN STUDIO INTRO (VIDEO + REVEAL)
    ========================================================================== */
 
-/* Contenedor Maestro: Ocupa el 100% de la pantalla sin scroll interno */
+/* ==========================================================================
+   STUDIO INTRO — Layout original con video + bloque inferior editorial
+   ========================================================================== */
+
 .studio-section {
+    position: relative;
     width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #1D1E1C; /* Fondo negro puro según referencia visual */
+    background-color: var(--bg-dark); /* #1D1E1C corporativo */
     overflow: hidden;
-    position: relative;
     z-index: 10;
 }
 
 /* --- BLOQUE DE VIDEO (60% de la altura) --- */
 .studio-video-container {
-    flex: 6; /* Proporción ajustada para dar más aire al texto inferior */
+    flex: 6;
     width: 100%;
     position: relative;
     overflow: hidden;
@@ -1182,78 +1185,356 @@ body.scroll-locked {
 .studio-video {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Asegura que el video llene el área cinematográficamente */
+    object-fit: cover;
     display: block;
 }
 
 /* --- BLOQUE DE TEXTO (40% de la altura) --- */
+/* Fondo: background-section.svg como detalle (opacidad baja) sobre negro corporativo */
 .studio-text-container {
-    flex: 4; /* Espacio ampliado para evitar desbordes de texto */
-    background-color: #1D1E1C;
+    flex: 4;
+    position: relative;
+    background-color: var(--bg-dark);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px 45px; /* Alineación milimétrica con el logo de 45px */
-    text-align: center;
+    padding: 40px 45px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Pseudo con la imagen de fondo a baja opacidad → queda como textura sutil */
+.studio-text-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('../img/background-section.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 0.18; /* Detalle, no protagonista */
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Wrapper que centra el frame */
+.studio-frame-wrap {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1080px;
     box-sizing: border-box;
 }
 
-/* --- TIPOGRAFÍA CON EFECTO REVEAL (Dots and Lines Style) --- */
-.studio-statement {
-    overflow: hidden; /* Actúa como máscara para el efecto de emergencia */
-    display: block;
-    width: 100%;
-    max-width: 1200px; /* Limita el ancho de línea para mejorar la legibilidad */
-}
+/* Frame translúcido con marcadores en las esquinas */
+.studio-frame {
+    position: relative;
+    padding: 44px 64px;
+    background: rgba(20, 21, 19, 0.55);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 253, 243, 0.05);
+    border-radius: 2px;
+    text-align: center;
 
-.reveal-text {
-    display: inline-block;
-    /* DINÁMICA DE ENCUADRE: El uso de 'vh' asegura que la letra se 
-       ajuste a la altura de la pantalla, evitando que se corte abajo */
-    font-size: clamp(1.9rem, 5.0vh, 3.8rem); 
-    font-family: 'neue-haas-grotesk-display', sans-serif;
-    font-weight: 700;
-    color: #FFFDF3; /* Color crema institucional */
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    
-    /* Estado Inicial: Oculto bajo la máscara */
-    transform: translateY(110%); 
+    /* Animación de entrada: clip-path abriendo desde el centro
+       + leve scale + fade. Se dispara con .studio-section.visible. */
     opacity: 0;
-    
-    /* Curva de transición profesional (Cubic Bezier) */
-    transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), 
-                opacity 1s ease;
+    transform: scale(0.97);
+    clip-path: inset(48% 8% 48% 8%);
+    will-change: clip-path, transform, opacity;
+    transition:
+        opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1) 0.05s,
+        transform 1.05s cubic-bezier(0.25, 1, 0.5, 1) 0.05s,
+        clip-path 1.15s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-/* --- ESTADO ACTIVO: Gatillado por el botón Drop --- */
-.studio-section.visible .reveal-text {
+.studio-section.visible .studio-frame {
+    opacity: 1;
+    transform: scale(1);
+    clip-path: inset(0 0 0 0);
+}
+
+/* Marcadores + en las esquinas (estilo blueprint editorial) */
+.studio-corner {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    line-height: 1;
+    color: var(--amarillo-acento);
+    opacity: 0.85;
+    user-select: none;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+}
+.studio-corner--tl { top: 0;   left: 0;   }
+.studio-corner--tr { top: 0;   left: 100%; }
+.studio-corner--bl { top: 100%; left: 0;   }
+.studio-corner--br { top: 100%; left: 100%; }
+
+/* Eyebrow opcional */
+.studio-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 253, 243, 0.4);
+    margin-bottom: 28px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+        opacity 0.8s ease,
+        transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.studio-section.visible .studio-eyebrow {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.55s;
+}
+
+/* Statement: 3 líneas con máscara individual */
+.studio-statement-v2 {
+    margin: 0;
+    font-family: 'neue-haas-grotesk-display', var(--font-header), sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.05rem, 1.6vw, 1.5rem);
+    line-height: 1.45;
+    letter-spacing: -0.005em;
+    color: var(--crema);
+}
+
+.studio-reveal-line {
+    display: block;
+    overflow: hidden;
+    line-height: 1.45;
+}
+
+.studio-reveal-line > span {
+    display: inline-block;
+    transform: translateY(110%);
+    opacity: 0;
+    will-change: transform, opacity;
+    transition:
+        transform 1.15s cubic-bezier(0.77, 0, 0.175, 1),
+        opacity 0.9s ease;
+}
+
+.studio-section.visible .studio-reveal-line > span {
     transform: translateY(0);
     opacity: 1;
 }
 
+/* Stagger editorial entre líneas */
+.studio-section.visible .studio-reveal-line:nth-child(1) > span { transition-delay: 0.70s; }
+.studio-section.visible .studio-reveal-line:nth-child(2) > span { transition-delay: 0.85s; }
+.studio-section.visible .studio-reveal-line:nth-child(3) > span { transition-delay: 1.00s; }
+
 /* ==========================================================================
-   ADAPTACIÓN PARA DISPOSITIVOS MÓVILES
+   STUDIO INTRO — RESPONSIVE
    ========================================================================== */
-@media (max-width: 768px) {
-    .studio-video-container {
-        flex: 4; /* En móvil priorizamos el espacio para el texto */
+@media (max-width: 900px) {
+    .studio-frame {
+        padding: 48px 36px;
     }
-    .studio-text-container {
-        flex: 6;
-        padding: 20px 30px;
+    .studio-frame-wrap {
+        padding: 0 28px;
     }
-    .reveal-text {
-        /* Ajuste de tamaño para lectura vertical cómoda */
-        font-size: clamp(1.2rem, 3.8vh, 1.8rem);
-        line-height: 1.2;
+    .studio-statement-v2 {
+        font-size: clamp(0.95rem, 3.2vw, 1.15rem);
+        line-height: 1.5;
+    }
+    .studio-corner {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 560px) {
+    .studio-frame {
+        padding: 38px 22px;
+    }
+    .studio-eyebrow {
+        font-size: 9px;
+        margin-bottom: 20px;
     }
 }
 
 
 /* Ocultamos el botón amarillo solo en celulares */
-  
 
+
+/* ==========================================================================
+   TRUSTED BY — Marquee infinito de logos de clientes
+   Inspiración: https://wearemotto.com/  (sección "Trusted By")
+   ========================================================================== */
+
+/* Sección INVERTIDA: fondo crema corporativo, contenidos en black corporativo */
+.trusted-by {
+    position: relative;
+    padding: 110px 0 100px;
+    background: var(--crema);           /* #FFFDF3 */
+    color: var(--bg-dark);              /* #1D1E1C */
+    overflow: hidden;
+    z-index: 5;
+}
+
+.trusted-header {
+    max-width: 1400px;
+    margin: 0 auto 70px;
+    padding: 0 48px;
+    text-align: center;
+}
+
+.trusted-header .mono-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(29, 30, 28, 0.55);      /* black con opacidad — secundario */
+    margin-bottom: 16px;
+}
+
+/* H3 — Mismo sistema tipográfico que .sw-project-title y .block-main h3 */
+.trusted-title {
+    margin: 0;
+    font-family: var(--font-header);
+    font-size: clamp(1.4rem, 2.1vw, 2rem);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--bg-dark);              /* #1D1E1C — protagonista */
+}
+
+/* Contenedor del marquee con máscara lateral para fade-in/out */
+.trusted-marquee {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent 0%,
+        #000 8%,
+        #000 92%,
+        transparent 100%
+    );
+            mask-image: linear-gradient(
+        90deg,
+        transparent 0%,
+        #000 8%,
+        #000 92%,
+        transparent 100%
+    );
+}
+
+/* Track con los logos duplicados (loop seamless) */
+.trusted-track {
+    display: flex;
+    align-items: center;
+    gap: 90px;
+    width: max-content;
+    animation: trustedScroll 55s linear infinite;
+    will-change: transform;
+}
+
+/* Al hover sobre el marquee, pausamos el scroll */
+.trusted-marquee:hover .trusted-track {
+    animation-play-state: paused;
+}
+
+/* Cada logo se renderiza dentro de un slot de tamaño fijo
+   (mismo width + height para TODOS los logos) y se ajusta por dentro
+   con object-fit: contain → uniformidad visual estilo motto.com. */
+.trusted-logo {
+    flex-shrink: 0;
+    display: block;
+    width: 150px;
+    height: 38px;
+    object-fit: contain;
+    object-position: center center;
+    /* INVERTIDO: forzamos a monocromo black sobre el fondo crema */
+    filter: brightness(0);
+    opacity: 0.55;
+    transition:
+        opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        filter   0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.trusted-logo:hover {
+    opacity: 1;
+}
+
+/* Variante para logos que visualmente quedan chicos en el slot estándar
+   (mucho whitespace interno, trazo fino, etc.). Slot más grande. */
+.trusted-logo--lg {
+    width: 200px;
+    height: 52px;
+}
+
+/* Animación: trasladamos -50% (porque el track contiene la lista 2 veces).
+   Al llegar a -50% el frame es idéntico al inicio → loop sin saltos. */
+@keyframes trustedScroll {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (max-width: 900px) {
+    .trusted-by {
+        padding: 80px 0 70px;
+    }
+    .trusted-header {
+        margin-bottom: 50px;
+        padding: 0 28px;
+    }
+    .trusted-track {
+        gap: 60px;
+        animation-duration: 42s;
+    }
+    .trusted-logo {
+        width: 120px;
+        height: 32px;
+    }
+    .trusted-logo--lg {
+        width: 165px;
+        height: 44px;
+    }
+}
+
+@media (max-width: 560px) {
+    .trusted-track {
+        gap: 44px;
+        animation-duration: 36s;
+    }
+    .trusted-logo {
+        width: 100px;
+        height: 28px;
+        opacity: 0.6;
+    }
+    .trusted-logo--lg {
+        width: 138px;
+        height: 38px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .trusted-track {
+        animation: none;
+    }
+}
+
+/* Override del .scroll-reveal global para esta sección:
+   solo queremos fade de opacidad (sin translateY) como pidió el usuario. */
+.js-ready .trusted-by.scroll-reveal,
+.js-ready .trusted-by.scroll-reveal.visible {
+    transform: none;
+}
+.js-ready .trusted-by.scroll-reveal {
+    transition: opacity 1.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
 
 /*----- Carrusell -----*/
 
@@ -1676,7 +1957,7 @@ html.reveal-fallback .text-reveal > span {
    =================================================== */
 
 .selected-work.light-version {
-    background-color: #FFFFFF;
+    background-color: var(--crema); /* #FFFDF3 — design system */
     padding: 100px 0 90px;
     border-top: 1px solid rgba(29, 30, 28, 0.1);
 }
@@ -3097,6 +3378,726 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
 }
 
 /* ==========================================================================
+   SERVICES V3 — 2-col: acordeón ↔ Three.js layered wireframe
+   ========================================================================== */
+
+.services-v3 .svc-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+.services-v3 .svc-header {
+    margin-bottom: 64px;
+    max-width: 1100px;
+}
+
+.services-v3 .svc-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--amarillo-acento); /* eyebrow en amarillo per spec */
+    margin-bottom: 18px;
+}
+
+/* Título (mismo sistema H2 que .display-title, ajustado para 2 cols) */
+.services-v3 .svc-title {
+    margin: 0;
+    font-family: var(--font-header);
+    font-size: clamp(2.6rem, 5vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    color: var(--crema);
+}
+
+/* Layout 2 columnas — accordion | canvas */
+.services-v3 .svc-grid {
+    display: grid;
+    grid-template-columns: 1fr 0.85fr;
+    gap: 80px;
+    align-items: start;
+}
+
+/* ── Canvas Three.js (columna derecha) ──
+   SIN contenedor visible: el canvas vive flotando directamente sobre
+   el fondo de la sección — sin fondo, sin borde, sin radius.
+   Altura ampliada (680px) para dar espacio vertical a los picos de las
+   olas cuando la capa activa entra en estado de amplitud máxima. */
+.services-v3 .svc-canvas-wrap {
+    position: sticky;
+    top: 150px;
+    width: 100%;
+    height: 120vh;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+}
+
+.services-v3 .svc-3d-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* ── Acordeón (columna izquierda) ── */
+.services-v3 .svc-accordion {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgba(255, 253, 243, 0.12);
+}
+
+.svc-item {
+    border-bottom: 1px solid rgba(255, 253, 243, 0.12);
+    padding: 26px 0;
+    cursor: pointer;
+    transition: padding 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.svc-item:hover {
+    padding: 32px 0;
+}
+
+.svc-head {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.svc-num {
+    font-family: var(--font-mono);
+    color: rgba(255, 253, 243, 0.4);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+    transition: color 0.4s ease;
+}
+
+.svc-item:hover .svc-num {
+    color: var(--amarillo-acento);
+}
+
+/* H3 — mismo sistema que .sw-project-title */
+.svc-h3 {
+    margin: 0;
+    font-family: var(--font-header);
+    font-size: clamp(1.4rem, 2.1vw, 2rem);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--crema);
+    transition: color 0.4s ease;
+}
+
+.svc-item:hover .svc-h3 {
+    color: var(--amarillo-acento);
+}
+
+/* Acordeón body: grid 0fr → 1fr (auto-height animable, sin JS) */
+.svc-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.svc-body-inner {
+    overflow: hidden;
+    min-height: 0;
+    padding-left: 76px; /* 64px col + 12px gap del .svc-head */
+}
+
+.svc-body-inner > * {
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+        opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.svc-item:hover .svc-body {
+    grid-template-rows: 1fr;
+}
+
+.svc-item:hover .svc-body-inner > * {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.18s;
+}
+
+.svc-body p {
+    margin: 18px 0 0;
+    font-family: var(--font-reading);
+    font-size: 16px;
+    line-height: 1.55;
+    color: rgba(255, 253, 243, 0.7);
+    max-width: 540px;
+}
+
+.svc-body .method-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.svc-body .pill {
+    font-family: var(--font-reading);
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255, 253, 243, 0.75);
+    border: 1px solid rgba(255, 253, 243, 0.18);
+    padding: 14px 16px;
+    flex: 1;
+    min-width: 200px;
+    border-radius: 2px;
+}
+
+.svc-body .pill span {
+    display: block;
+    font-family: var(--font-mono);
+    color: var(--amarillo-acento);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .services-v3 .svc-container {
+        padding: 0 40px;
+    }
+    .services-v3 .svc-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+    .services-v3 .svc-canvas-wrap {
+        position: relative;
+        top: auto;
+        height: 460px;
+        order: -1;
+    }
+    .svc-head {
+        grid-template-columns: 52px 1fr;
+    }
+    .svc-body-inner {
+        padding-left: 64px;
+    }
+}
+
+@media (max-width: 640px) {
+    .services-v3 .svc-container {
+        padding: 0 24px;
+    }
+    .services-v3 .svc-canvas-wrap {
+        height: 360px;
+    }
+    .svc-body-inner {
+        padding-left: 0;
+    }
+    .svc-body .pill {
+        min-width: 100%;
+    }
+}
+
+/* ==========================================================================
+   WHY US — Single column, centered, scroll-to-type cinematográfico
+   Inspirado en https://codepen.io/jh3y/pen/ZYzKyXx
+   ========================================================================== */
+
+.why-us {
+    position: relative;
+    background: var(--bg-dark);
+    color: var(--crema);
+    padding: 0;                       /* el espaciado lo da .why-us-container con flex centrado */
+    overflow: hidden;
+    font-style: normal;
+    z-index: 4;
+    min-height: 100vh;               /* asegura que ocupe 1 viewport completo cuando se pinea */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.why-us-container {
+    /* Container más ancho para que el H2 respire en el centro de la pantalla */
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 32px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Mantiene todo centrado */
+    gap: 2.5rem; /* Este es el "aire". Se aplicará de forma pareja entre cada elemento */
+}
+
+.why-us-eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amarillo-acento);
+    margin-bottom: 8px;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.why-us-title {
+    /* H2 a todo el ancho del container (1180px max).
+       Espaciado generoso al body abajo (140px). */
+    margin-top: 0;
+    margin: 0 auto 140px;
+    margin-bottom: 3rem;
+    max-width: 1100px;
+    text-align: center;
+    font-size: clamp(1.8rem, 3.2vw, 2.9rem);
+    line-height: 1.18;
+    letter-spacing: -0.022em;
+    color: var(--crema);
+    font-style: normal;
+}
+
+.why-us-body {
+    /* Body más angosto para mantener legibilidad clásica */
+    margin: 0 auto;
+    max-width: 720px;
+    text-align: center;
+    font-family: var(--font-reading);
+    font-size: clamp(1rem, 1.25vw, 1.2rem);
+    line-height: 1.7;
+    color: var(--crema);
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* ── Estado inicial de los CARACTERES (invisibles) ──
+   Arrancan en opacity 0 — el texto NO se ve.
+   GSAP scrubea opacidad → 1 ligada directamente al scroll wheel,
+   revelando cada char a medida que el usuario scrollea.
+   Soporta tanto .tp-char (módulo type.js) como .stw-char (text-reveal.js). */
+.why-us-title .tp-char,
+.why-us-body  .tp-char,
+.why-us-title .stw-char,
+.why-us-body  .stw-char {
+    color: var(--crema);
+    opacity: 0;
+    will-change: opacity;
+    font-style: normal;
+}
+
+/* Word wrapper: mantiene la integridad de cada palabra (no se parte mid-word) */
+.why-us-title .tp-word,
+.why-us-body  .tp-word,
+.why-us-title .stw-word,
+.why-us-body  .stw-word {
+    display: inline-block;
+    white-space: nowrap;
+    font-style: normal;
+}
+
+/* Fallback sin JS: si el splitter no envolvió, el texto queda legible */
+.why-us-title:not(:has(.tp-char)):not(:has(.stw-char)),
+.why-us-body:not(:has(.tp-char)):not(:has(.stw-char)) {
+    color: rgba(255, 253, 243, 0.9);
+}
+
+/* Respeta reduced-motion: muestra texto en estado final sin scrub */
+@media (prefers-reduced-motion: reduce) {
+    .why-us-title .tp-char,
+    .why-us-body  .tp-char,
+    .why-us-title .stw-char,
+    .why-us-body  .stw-char {
+        opacity: 1 !important;
+    }
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+    .why-us {
+        padding: 110px 0 100px;
+    }
+    .why-us-container {
+        padding: 0 24px;
+    }
+    .why-us-eyebrow {
+        margin-bottom: 40px;
+    }
+    .why-us-title {
+        margin-bottom: 44px;
+    }
+}
+
+/* ==========================================================================
+   SECTION DISPLAY TITLE — sistema H2 unificado
+   Aplicado a "Proyectos destacados", "Capas donde operamos",
+   "Hablemos de tu próximo proyecto" para garantizar la misma
+   tipografía display en toda la web. El color lo hereda cada sección.
+   Selector h2.section-display-title para ganar especificidad sobre
+   las clases legacy (.sw-title, .sv4-title, .contact-display).
+   ========================================================================== */
+h2.section-display-title,
+h2.section-display-title * {
+    font-style: normal;
+}
+
+h2.section-display-title {
+    font-family: var(--font-header);
+    font-size: clamp(2.8rem, 5.8vw, 6rem);
+    line-height: 0.93;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* ==========================================================================
+   SERVICES V4 — Grid 3 columnas (Swiss / Technical Minimalism)
+   - Dark bg corporativo, crema en texto, amarillo solo en hover.
+   - Sin "cajas": columnas separadas por líneas 1px sutiles.
+   - Sin itálicas en ningún lado.
+   - 3 canvas Three.js independientes (geometrías distintas).
+   ========================================================================== */
+
+.services-grid-v4 {
+    background: var(--bg-dark);
+    color: var(--crema);
+    padding: 120px 0 110px;
+    position: relative;
+    overflow: hidden;
+    font-style: normal;
+}
+
+.sv4-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+.sv4-header {
+    margin-bottom: 84px;
+    max-width: 1100px;
+}
+
+.sv4-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--amarillo-acento);
+    margin-bottom: 18px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.sv4-title {
+    margin: 0;
+    font-family: var(--font-header);
+    font-size: clamp(2.6rem, 5vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    color: var(--crema);
+    font-style: normal;
+}
+
+.sv4-title .bold-highlight {
+    color: var(--amarillo-acento);
+    font-style: normal;
+}
+
+/* Grid 3 columnas separadas por líneas verticales 1px (no cajas) */
+.sv4-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(255, 253, 243, 0.10);
+}
+
+.sv4-col {
+    padding: 68px 44px 60px; /* +16px top para dejar lugar al [0X] */
+    position: relative;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    transition: background 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    font-style: normal;
+}
+
+/* Separadores verticales entre columnas (1px, sutiles) */
+.sv4-col + .sv4-col {
+    border-left: 1px solid rgba(255, 253, 243, 0.10);
+}
+
+/* Sutil tinte amarillo al hover en la columna (sin caja, solo wash) */
+.sv4-col:hover {
+    background: rgba(242, 195, 53, 0.025);
+}
+
+/* ── Canvas wrapper ── */
+.sv4-canvas-wrap {
+    width: 100%;
+    height: 280px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: visible;
+}
+
+.sv4-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* ── Contenido textual (debajo del canvas) ── */
+.sv4-content {
+    position: relative;
+    font-style: normal;
+}
+
+/* Número anclado en la esquina superior izquierda de la card.
+   Sale del flow normal y se posiciona absolute respecto a .sv4-col. */
+.sv4-num {
+    position: absolute;
+    top: 28px;
+    left: 44px;
+    z-index: 3;
+    font-family: var(--font-mono);
+    color: rgba(255, 253, 243, 0.55);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    font-style: normal;
+    font-weight: 400;
+    pointer-events: none;
+    transition: color 0.4s ease, transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* H3 — sistema editorial corporativo (no itálicas, weight 500) */
+.sv4-h3 {
+    margin: 0;
+    font-family: var(--font-header);
+    font-size: clamp(1.3rem, 1.75vw, 1.75rem);
+    font-weight: 500;
+    line-height: 1.18;
+    letter-spacing: -0.015em;
+    color: var(--crema);
+    font-style: normal;
+    position: relative;
+    display: inline-block;
+    transition: color 0.4s ease, transform 0.55s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Línea amarilla corporativa que se dibuja izq→der al hover */
+.sv4-h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -8px;
+    height: 1px;
+    background: var(--amarillo-acento);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.sv4-desc {
+    margin: 24px 0 0;
+    font-family: var(--font-reading);
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 253, 243, 0.65);
+    max-width: 380px;
+    font-style: normal;
+    font-weight: 400;
+    transition: color 0.4s ease;
+}
+
+/* ── Hover sobre la columna entera ── */
+.sv4-col:hover .sv4-num {
+    color: var(--amarillo-acento);
+    transform: translateY(-2px);
+}
+
+.sv4-col:hover .sv4-h3 {
+    color: var(--amarillo-acento);
+    transform: translateY(-4px);
+}
+
+.sv4-col:hover .sv4-h3::after {
+    transform: scaleX(1);
+}
+
+.sv4-col:hover .sv4-desc {
+    color: rgba(255, 253, 243, 0.85);
+}
+
+/* ── CTA "NUESTRO PROCESO" (variante dark del .view-all-v2) ──
+   Misma morfología pill que el botón principal de la web, pero invertida
+   para vivir sobre el fondo dark de esta sección. */
+.sv4-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 28px;
+    margin-top: 32px;
+    border: 1px solid rgba(255, 253, 243, 0.7);
+    border-radius: 50px;
+    background-color: transparent;
+    text-decoration: none !important;
+    cursor: pointer;
+    transition: background 0.45s cubic-bezier(0.77, 0, 0.175, 1),
+                border-color 0.45s cubic-bezier(0.77, 0, 0.175, 1),
+                transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.sv4-cta .btn-text {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--crema);
+    font-style: normal;
+    transition: color 0.4s ease;
+}
+
+.sv4-cta .material-symbols-outlined {
+    font-size: 18px;
+    color: var(--crema);
+    transition: transform 0.4s ease, color 0.4s ease;
+}
+
+.sv4-cta:hover {
+    background-color: var(--amarillo-acento);
+    border-color: var(--amarillo-acento);
+}
+
+.sv4-cta:hover .btn-text,
+.sv4-cta:hover .material-symbols-outlined {
+    color: var(--bg-dark);
+}
+
+.sv4-cta:hover .material-symbols-outlined {
+    transform: translate(3px, -3px);
+}
+
+.sv4-cta:focus-visible {
+    outline: 1px solid var(--amarillo-acento);
+    outline-offset: 4px;
+}
+
+/* ── Scroll reveal cinematográfico de las cards ──
+   Estado inicial oculto (solo con .js-ready, failsafe natural si JS no carga).
+   La animación de entrada la maneja GSAP desde capas.js, NO el sistema global
+   de scroll-reveal — así evitamos el bug donde .reveal-fallback dejaba
+   propiedades como `filter` colgadas.
+   Las cards ganan la clase .is-revealed cuando entran al viewport. */
+.js-ready .sv4-grid[data-sv4-grid] > .sv4-col {
+    opacity: 0;
+    transform: translate3d(0, 60px, 0) scale(0.96);
+    will-change: opacity, transform;
+}
+
+/* Cuando JS marca la card como revelada → estado final (GSAP la anima) */
+.js-ready .sv4-grid[data-sv4-grid] > .sv4-col.is-revealed {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js-ready .sv4-grid[data-sv4-grid] > .sv4-col {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .sv4-container {
+        padding: 0 40px;
+    }
+    .sv4-header {
+        margin-bottom: 60px;
+    }
+    .sv4-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    /* En 2 columnas, la tercera ocupa el ancho completo abajo */
+    .sv4-col:nth-child(3) {
+        grid-column: 1 / -1;
+        border-left: none;
+        border-top: 1px solid rgba(255, 253, 243, 0.10);
+    }
+    .sv4-col {
+        padding: 60px 32px 52px;
+    }
+    .sv4-num {
+        top: 22px;
+        left: 32px;
+    }
+    .sv4-canvas-wrap {
+        height: 240px;
+        margin-bottom: 32px;
+    }
+    .sv4-cta {
+        padding: 12px 24px;
+        margin-top: 28px;
+    }
+}
+
+@media (max-width: 720px) {
+    .sv4-container {
+        padding: 0 24px;
+    }
+    .sv4-grid {
+        grid-template-columns: 1fr;
+    }
+    .sv4-col + .sv4-col {
+        border-left: none;
+        border-top: 1px solid rgba(255, 253, 243, 0.10);
+    }
+    .sv4-col:nth-child(3) {
+        grid-column: auto;
+        border-top: 1px solid rgba(255, 253, 243, 0.10);
+        border-left: none;
+    }
+    .sv4-col {
+        padding: 50px 0 44px;
+    }
+    .sv4-num {
+        top: 14px;
+        left: 0;
+    }
+    .sv4-canvas-wrap {
+        height: 220px;
+        margin-bottom: 24px;
+    }
+    .sv4-desc {
+        max-width: 100%;
+    }
+    .sv4-cta {
+        padding: 12px 22px;
+        margin-top: 24px;
+    }
+}
+
+/* Respeta usuarios con reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    .sv4-col,
+    .sv4-num,
+    .sv4-h3,
+    .sv4-h3::after,
+    .sv4-desc {
+        transition: none !important;
+    }
+}
+
+/* ==========================================================================
    ADAPTACIÓN RESPONSIVE DEFINITIVA (CRUZ ESTUDIO ®)
    ========================================================================== */
 @media (min-width: 1024px) and (max-width: 1600px) {
@@ -3340,7 +4341,7 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
         padding: 10px 35px !important; 
         height: 60px;
         /* EFECTO GLASS MÓVIL */
-        background-color: rgba(29, 30, 28, 0.70);
+        background-color: rgba(131, 243, 19, 0.7);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(5px);
         border-bottom: none;

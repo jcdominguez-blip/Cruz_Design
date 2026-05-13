@@ -184,45 +184,79 @@
             <video autoplay muted loop playsinline class="studio-video">
                 <source src="./video/videoStudio.mp4" type="video/mp4">
             </video>
+            
             <div class="video-overlay"></div>
         </div>
        <div class="studio-text-container">
-        <h2 class="studio-statement">
-            <span class="reveal-text">
-            En Cruz Estudio estamos para ayudarte. Somos un estudio de diseño gráfico y comunicación visual centrado en la estrategia, especializado en transformar y acompañar a las marcas en su camino para mejorar la comunicación con su público.
-            </span>
-        </h2>
+            <div class="studio-frame-wrap">
+                <div class="studio-frame">
+                    <span class="studio-corner studio-corner--tl" aria-hidden="true">+</span>
+                    <span class="studio-corner studio-corner--tr" aria-hidden="true">+</span>
+                    <span class="studio-corner studio-corner--bl" aria-hidden="true">+</span>
+                    <span class="studio-corner studio-corner--br" aria-hidden="true">+</span>
+
+                    <span class="studio-eyebrow">// QUIÉNES SOMOS</span>
+
+                    <p class="studio-statement-v2">
+                        <span class="studio-reveal-line"><span>En Cruz Estudio estamos para ayudarte. Somos un estudio de diseño gráfico y</span></span>
+                        <span class="studio-reveal-line"><span>comunicación visual centrado en la estrategia, especializado en transformar y</span></span>
+                        <span class="studio-reveal-line"><span>acompañar a las marcas en su camino para mejorar la comunicación con su público.</span></span>
+                    </p>
+                </div>
+            </div>
        </div>
     </section>
 
-    <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="1800" data-wrap="true">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExample" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExample" data-slide-to="1"></li>
-            <li data-target="#carouselExample" data-slide-to="2"></li>
-            <li data-target="#carouselExample" data-slide-to="3"></li>
-            <li data-target="#carouselExample" data-slide-to="4"></li>
-            <li data-target="#carouselExample" data-slide-to="5"></li>
-            <li data-target="#carouselExample" data-slide-to="6"></li>
-            <li data-target="#carouselExample" data-slide-to="7"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active"><img class="d-block w-100" src="https://i.ibb.co/357FqBCw/tp1.jpg" alt="1"></div>
-            <div class="carousel-item"><img class="d-block w-100" src="https://i.ibb.co/FbqNNq7T/img3.jpg" alt="2"></div>
-            <div class="carousel-item"><img class="d-block w-100" src="https://i.ibb.co/d02tVYsp/img2.jpg" alt="3"></div>
-            <div class="carousel-item"><img class="d-block w-100" src="https://i.ibb.co/b5hK8Mrd/runakay.jpg" alt="4"></div>
-            <div class="carousel-item"><img class="d-block w-100" src="https://i.ibb.co/YF2vhdQx/8M.jpg" alt="5"></div>
-            <div class="carousel-item"><img class="d-block w-100" src="https://i.ibb.co/0R1HxFm5/uf1.jpg" alt="6"></div>
-            <div class="carousel-item"><img class="d-block w-100" src="https://i.ibb.co/fzM14ZKD/sc-01.jpg" alt="7"></div>
-            <div class="carousel-item"><img class="d-block w-100" src="https://i.ibb.co/qMGYg1Vs/TAC.jpg" alt="8"></div>
+    <!-- ==========================================================
+         TRUSTED BY — Marquee infinito de logos de clientes
+         Modelo: https://wearemotto.com/ sección "Trusted By"
+         ========================================================== -->
+    <section class="trusted-by scroll-reveal" aria-label="Clientes que confían en Cruz Estudio">
+        <div class="trusted-header">
+            <span class="mono-tag">// TRUSTED BY</span>
+            <h3 class="trusted-title">Marcas que nos eligieron.</h3>
         </div>
-    </div>
+
+        <div class="trusted-marquee">
+            <div class="trusted-track">
+                <!-- Pasada 1 -->
+                <img src="./img/cliente-trenes-argentinos.svg" alt="Trenes Argentinos Cargas" class="trusted-logo">
+                <img src="./img/cliente-union-ferroviaria.svg" alt="Unión Ferroviaria" class="trusted-logo trusted-logo--lg">
+                <img src="./img/cielnte-municupio-sc.svg" alt="Municipalidad de San Cristóbal" class="trusted-logo trusted-logo--lg">
+                <img src="./img/cliente-suuam.svg" alt="SUUAM" class="trusted-logo">
+                <img src="./img/cliente-rovex.svg" alt="Rovex" class="trusted-logo">
+                <img src="./img/cliente-rafa-id.svg" alt="Rafa ID" class="trusted-logo">
+                <img src="./img/cliente-sohat.svg" alt="Sohat" class="trusted-logo">
+                <img src="./img/cliente-estacion-sur.svg" alt="Estación Sur" class="trusted-logo">
+                <img src="./img/cliente-pinta-gaucha.svg" alt="Pinta Gaucha" class="trusted-logo trusted-logo--lg">
+                <img src="./img/cliente-espacio_maisha.svg" alt="Espacio Maisha" class="trusted-logo trusted-logo--lg">
+                <img src="./img/clientes-runakay.svg" alt="Runakay" class="trusted-logo">
+                <img src="./img/clientes-bears.svg" alt="Bears" class="trusted-logo">
+                <img src="./img/clientes-vdr.svg" alt="VDR" class="trusted-logo">
+
+                <!-- Pasada 2 (clonada para loop sin costuras) -->
+                <img src="./img/cliente-trenes-argentinos.svg" alt="" aria-hidden="true" class="trusted-logo">
+                <img src="./img/cliente-union-ferroviaria.svg" alt="" aria-hidden="true" class="trusted-logo trusted-logo--lg">
+                <img src="./img/cielnte-municupio-sc.svg" alt="" aria-hidden="true" class="trusted-logo trusted-logo--lg">
+                <img src="./img/cliente-suuam.svg" alt="" aria-hidden="true" class="trusted-logo">
+                <img src="./img/cliente-rovex.svg" alt="" aria-hidden="true" class="trusted-logo">
+                <img src="./img/cliente-rafa-id.svg" alt="" aria-hidden="true" class="trusted-logo">
+                <img src="./img/cliente-sohat.svg" alt="" aria-hidden="true" class="trusted-logo">
+                <img src="./img/cliente-estacion-sur.svg" alt="" aria-hidden="true" class="trusted-logo">
+                <img src="./img/cliente-pinta-gaucha.svg" alt="" aria-hidden="true" class="trusted-logo trusted-logo--lg">
+                <img src="./img/cliente-espacio_maisha.svg" alt="" aria-hidden="true" class="trusted-logo trusted-logo--lg">
+                <img src="./img/clientes-runakay.svg" alt="" aria-hidden="true" class="trusted-logo">
+                <img src="./img/clientes-bears.svg" alt="" aria-hidden="true" class="trusted-logo">
+                <img src="./img/clientes-vdr.svg" alt="" aria-hidden="true" class="trusted-logo">
+            </div>
+        </div>
+    </section>
 
     <section class="selected-work light-version" id="featured-works">
         <div class="sw-inner">
             <div class="sw-header scroll-reveal">
                 <span class="mono-tag">// PROYECTOS SELECCIONADOS</span>
-                <h2 class="sw-title">
+                <h2 class="sw-title section-display-title">
                     <span class="text-reveal"><span>Proyectos</span></span>
                     <span class="text-reveal"><span>destacados.</span></span>
                 </h2>
@@ -290,63 +324,97 @@
         </div>
     </section>
 
-    <section class="services-v2">
-        <div class="obys-container">
-            <header class="services-hero scroll-reveal">
-                <div class="hero-text-wrapper">
-                    <span class="mono-tag">//PROGRAMA DE SERVICIOS</span>
-                    <h2 class="display-title">
-                        <span class="text-reveal"><span>Diseño estratégico con</span></span>
-                        <span class="text-reveal"><span class="bold-highlight">precisión técnica.</span></span>
-                    </h2>
-                </div>
-                <div class="circular-text-box">
-                    <svg viewBox="0 0 100 100" class="rotating-svg">
-                        <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="transparent" />
-                        <text>
-                            <textPath xlink:href="#circlePath" class="mono-label">
-                                • ESTRATEGIA • DISEÑO • INNOVACIÓN • CRUZ ESTUDIO •
-                            </textPath>
-                        </text>
-                    </svg>
-                </div>
+    <!-- ==========================================================
+         SERVICES V4 — Grid 3 columnas: canvas + título + descripción
+         Cada columna tiene su propia geometría 3D (Icosaedro / Cilindro
+         / TorusKnot) wireframe con wave morph + hover GSAP independiente.
+         ========================================================== -->
+    <section class="services-grid-v4" id="services">
+        <div class="sv4-container">
+            <header class="sv4-header scroll-reveal">
+                <span class="mono-tag sv4-eyebrow">// PROGRAMA DE SERVICIOS</span>
+                <h2 class="sv4-title section-display-title">
+                    <span class="text-reveal"><span>Capas donde</span></span>
+                    <span class="text-reveal"><span class="bold-highlight">operamos.</span></span>
+                </h2>
             </header>
-            <div class="services-list-v2 scroll-reveal-stagger">
-                <article class="service-block">
-                    <div class="block-number">[01]</div>
-                    <div class="block-main">
-                        <h3>Branding & Estrategia</h3>
-                        <p>Definimos los atributos que debe expresar la marca antes de diseñarla para asegurar su máximo rendimiento.</p>
-                        <div class="method-pills">
-                            <div class="pill"><span>//DIAGNÓSTICO</span>Evaluación del capital simbólico acumulado.</div>
-                            <div class="pill"><span>//ESTRATEGIA</span>Trazamos el mapa funcional de la marca.</div>
-                            <div class="pill"><span>//DISEÑO</span>Sistemas visuales eficaces y pertinentes.</div>
-                        </div>
+
+            <div class="sv4-grid" data-sv4-grid>
+                <!-- Columna 01: Branding y diseño de marcas (Icosahedron) -->
+                <article class="sv4-col" data-shape="0">
+                    <span class="sv4-num">[01]</span>
+                    <div class="sv4-canvas-wrap">
+                        <canvas class="sv4-canvas" data-shape-canvas="0" aria-hidden="true"></canvas>
+                    </div>
+                    <div class="sv4-content">
+                        <h3 class="sv4-h3">Branding y diseño de marcas</h3>
+                        <p class="sv4-desc">Definimos los atributos que debe expresar la marca antes de diseñarla para asegurar su máximo rendimiento.</p>
+                        <a href="./pages/metodologia.html" class="sv4-cta link-location" data-magnetic data-magnetic-strength="0.2">
+                            <span class="btn-text">NUESTRO PROCESO</span>
+                            <span class="material-symbols-outlined">north_east</span>
+                        </a>
                     </div>
                 </article>
-                <article class="service-block">
-                    <div class="block-number">[02]</div>
-                    <div class="block-main">
-                        <h3>Estrategia & Contenido</h3>
-                        <p>Planes integrales de comunicación medibles y ajustables para conectar con audiencias específicas.</p>
+
+                <!-- Columna 02: Estrategia y contenido (Cylinder) -->
+                <article class="sv4-col" data-shape="1">
+                    <span class="sv4-num">[02]</span>
+                    <div class="sv4-canvas-wrap">
+                        <canvas class="sv4-canvas" data-shape-canvas="1" aria-hidden="true"></canvas>
+                    </div>
+                    <div class="sv4-content">
+                        <h3 class="sv4-h3">Estrategia y contenido</h3>
+                        <p class="sv4-desc">Planes integrales de comunicación medibles y ajustables para conectar con audiencias específicas.</p>
                     </div>
                 </article>
-                <article class="service-block">
-                    <div class="block-number">[03]</div>
-                    <div class="block-main">
-                        <h3>Producción Audiovisual</h3>
-                        <p>Cobertura institucional y spots que combinan ritmo narrativo, estética y funcionalidad.</p>
+
+                <!-- Columna 03: Producción visual (TorusKnot) -->
+                <article class="sv4-col" data-shape="2">
+                    <span class="sv4-num">[03]</span>
+                    <div class="sv4-canvas-wrap">
+                        <canvas class="sv4-canvas" data-shape-canvas="2" aria-hidden="true"></canvas>
+                    </div>
+                    <div class="sv4-content">
+                        <h3 class="sv4-h3">Producción visual</h3>
+                        <p class="sv4-desc">Cobertura institucional y spots que combinan ritmo narrativo, estética y funcionalidad.</p>
                     </div>
                 </article>
             </div>
         </div>
     </section>
-    
+
+    <!-- ==========================================================
+         WHY US — 2-col Swiss editorial layout
+         H2 grande a la izquierda + body con scroll-to-type reveal a la derecha.
+         La animación scrubea el color de cada palabra con GSAP ScrollTrigger.
+         ========================================================== -->
+    <!-- ==========================================================
+         WHY US — Single column, centered, scroll-to-type effect
+         La sección entera es el "grupo" para una única ScrollTrigger
+         que scrubea el color de cada CARÁCTER del H2 + el body en
+         secuencia, sincronizada con el scroll del usuario.
+         ========================================================== -->
+    <!-- ==========================================================
+         WHY US — Pinned scroll-to-type (estilo jh3y CodePen)
+         La sección se ancla al viewport mientras el usuario scrollea,
+         y los caracteres del H2 + P se iluminan uno a uno en
+         secuencia, atados directamente al scroll wheel (scrub: true).
+         ========================================================== -->
+    <section class="why-us" id="why-us" data-type-pin>
+        <div class="why-us-container">
+            <span class="mono-tag why-us-eyebrow">// POR QUÉ NOSOTROS</span>
+
+            <h2 class="why-us-title section-display-title" data-type-reveal>Integramos el diseño y la estrategia para que las empresas compitan en el mercado.</h2>
+
+            <p class="why-us-body" data-type-reveal>No hacemos estética vacía. Las transformaciones tradicionales suelen quedarse cortas porque solo maquillan la superficie. Nosotros vamos un paso más allá: construimos identidades preparadas para escalar, competir y perdurar. Entendemos la marca gráfica no como un simple dibujo, sino como la firma institucional que avala la calidad de tus servicios. ¿El resultado? Una identidad inconfundible que deja de pedir atención y empieza a comandar respeto.</p>
+        </div>
+    </section>
+
 
     <section class="contact-section" id="contact">
         <div class="contact-wrapper">
             <header class="contact-intro scroll-reveal">
-                <h2 class="contact-display">Hablemos de tu<br>próximo proyecto.</h2>
+                <h2 class="contact-display section-display-title">Hablemos de tu<br>próximo proyecto.</h2>
                 <p class="mono-label">// DISEÑO ESTRATÉGICO — BUENOS AIRES</p>
             </header>
             <form action="https://formspree.io/f/xrbekqeb" method="POST" class="form-sistematizado ux-form-grid">
@@ -451,9 +519,12 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<script src="./java/loader.js"></script> 
+<script src="./java/loader.js"></script>
 <script src="./java/hero-3d.js"></script>
 <script src="./java/script.js" defer></script>
+<script src="./java/capas.js" defer></script>
+<script src="./java/text-reveal.js" defer></script>
+<script src="./java/type.js" defer></script>
 
 <a href="https://wa.me/5491161105751?text=Hola%20Cruz%20Estudio,%20me%20gustaría%20consultar%20por%20un%20proyecto." class="whatsapp-fixed" target="_blank" rel="noopener noreferrer" aria-label="Contacto por WhatsApp">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
