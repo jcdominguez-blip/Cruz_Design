@@ -27,7 +27,20 @@
 .featured .visual-box { aspect-ratio: 21 / 9; margin-bottom: 15px; }
 .visual-box img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
 .project-item:hover img { filter: grayscale(0%); transform: scale(1.04); }
-.inner-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 25px; display: flex; justify-content: space-between; align-items: flex-end; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%); }
+.inner-info {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%;
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+    z-index: 5;
+    transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
 .project-name { font-size: 22px; font-weight: 600; color: #FFFDF3; margin: 0; }
 .tag-outline { font-family: 'cofo-sans-mono-variable', monospace; font-size: 9px; color: #FFFDF3; border: 1px solid #FFFDF3; padding: 5px 12px; border-radius: 20px; text-transform: uppercase; }
 
@@ -199,4 +212,86 @@
         align-items: flex-start !important;
         text-align: left !important;
     }
+}
+/* ==========================================================================
+   HOVER CAROUSEL — En cada .project-item las imágenes adicionales se
+   stackean dentro del .visual-box y crossfadean al hover (estilo
+   estrela.studio/work). JS controla la imagen activa via .is-active.
+   ========================================================================== */
+
+.visual-box {
+    isolation: isolate;
+}
+
+/* Las imágenes adicionales se inyectan como .pi-cycle-img dentro del visual-box.
+   Stack absoluto, opacity 0 por defecto, crossfade suave. */
+.visual-box .pi-cycle-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    opacity: 0;
+    transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                filter 1.0s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Imagen actualmente activa en el ciclo */
+.visual-box .pi-cycle-img.is-active {
+    opacity: 1;
+}
+
+/* Al hover, las imágenes del carousel (incluida la base) salen de grayscale */
+.project-item:hover .visual-box .pi-cycle-img {
+    filter: grayscale(0%);
+    transform: scale(1.04);
+}
+
+/* Indicador de progreso del carousel — pequeña línea inferior */
+.visual-box .pi-cycle-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: rgba(255, 253, 243, 0.08);
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+.project-item:hover .visual-box .pi-cycle-indicator {
+    opacity: 1;
+}
+.visual-box .pi-cycle-indicator-fill {
+    height: 100%;
+    width: 0;
+    background: #FFD700;
+    transition: width 0.6s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .visual-box .pi-cycle-img,
+    .visual-box .pi-cycle-indicator-fill {
+        transition: none !important;
+    }
+}
+
+/* Card placeholder cuando solo tenemos el logo SVG (sin foto principal) */
+.visual-box.pi-logo-cover {
+    background: linear-gradient(135deg, #1a1a18 0%, #2a2a26 100%);
+}
+.visual-box.pi-logo-cover .pi-logo-placeholder {
+    object-fit: contain;
+    padding: 18%;
+    filter: brightness(0) invert(1) opacity(0.85);
+    transition: filter 0.5s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.project-item:hover .visual-box.pi-logo-cover .pi-logo-placeholder {
+    filter: brightness(0) invert(1) opacity(1);
+    transform: scale(1.04);
 }

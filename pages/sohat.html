@@ -22,10 +22,14 @@
                 <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </div>
            <ul class="nav-links-brands" id="nav-links">
-                <li><a href="../index.html" class="link-location" data-en="/WORKS" data-es="/TRABAJOS">/INICIO</a></li>
-                <li><a href="./about.html" class="link-location" data-en="/STUDIO" data-es="/ESTUDIO" >/ESTUDIO</a></li>               
-                <li><a href="./contacto.html" class="link-location" data-en="/CONTACT" data-es="/CONTACTOS">/CONTACTOS</a></li>
+                <li><a href="./trabajos.html" class="link-location is-active" aria-current="page">[PROYECTOS]</a></li>
+                <li><a href="./metodologia.html" class="link-location">[METODOLOGÍA]</a></li>
+                <li><a href="./about.html" class="link-location">[ESTUDIO]</a></li>
+                <li class="mobile-contact-item"><a href="./contacto.html" class="link-location">CONTACTO</a></li>
             </ul>
+            <div class="nav-right-cta">
+                <a href="./contacto.html" class="nav-cta-btn">CONTACTO</a>
+            </div>
         </div>
     </nav>
 
@@ -71,25 +75,25 @@
 
         <section class="modular-grid-gallery">
             <div class="gallery-row full">
-                <figure class="reveal-frame"><img src="https://i.ibb.co/c8NBv0J/SC.jpg" alt="SoHat 1"></figure>
+                <figure class="reveal-frame fit-contain"><img src="https://i.ibb.co/c8NBv0J/SC.jpg" alt="SoHat 1"></figure>
             </div>
 
             <div class="gallery-row split-equal">
-                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/dpDrQpN/3-SH.jpg" alt="SoHat 2"></figure>
-                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/bRjM3N4/6-SH.jpg" alt="SoHat 3"></figure>
+                <figure class="reveal-frame aspect-framed fit-contain"><img src="https://i.ibb.co/dpDrQpN/3-SH.jpg" alt="SoHat 2"></figure>
+                <figure class="reveal-frame aspect-framed fit-contain"><img src="https://i.ibb.co/bRjM3N4/6-SH.jpg" alt="SoHat 3"></figure>
             </div>
             
             <div class="gallery-row split-equal">
-                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/vc7J7r1/2-SH.jpg" alt="SoHat 4"></figure>
-                <figure class="reveal-frame aspect-framed"><img src="https://i.ibb.co/JttHBPM/7-SH.jpg" alt="SoHat 5"></figure>
+                <figure class="reveal-frame aspect-framed fit-contain"><img src="https://i.ibb.co/vc7J7r1/2-SH.jpg" alt="SoHat 4"></figure>
+                <figure class="reveal-frame aspect-framed fit-contain"><img src="https://i.ibb.co/JttHBPM/7-SH.jpg" alt="SoHat 5"></figure>
             </div>
 
             <div class="gallery-row full">
-                <figure class="reveal-frame long-frame"><img src="https://i.ibb.co/kGFLK50/5-SCH.jpg" alt="SoHat Detail"></figure>
+                <figure class="reveal-frame long-frame fit-contain"><img src="https://i.ibb.co/kGFLK50/5-SCH.jpg" alt="SoHat Detail"></figure>
             </div>
 
             <div class="gallery-row full">
-                <figure class="reveal-frame long-frame"><img src="https://i.ibb.co/N95JnX7/4-SH.jpg" alt="SoHat Lookbook"></figure>
+                <figure class="reveal-frame long-frame fit-contain"><img src="https://i.ibb.co/N95JnX7/4-SH.jpg" alt="SoHat Lookbook"></figure>
             </div>
         </section>
 
@@ -106,16 +110,35 @@
     </footer>
 
     <script src="../java/script.js"></script>
-    <script>
+        <script>
+        // Menú hamburguesa + scroll reveal sistematizado
         document.addEventListener('DOMContentLoaded', () => {
-            const observer = new IntersectionObserver((entries) => {
+            const menuBtn  = document.getElementById('mobile-menu');
+            const navLinks = document.getElementById('nav-links');
+            if (menuBtn && navLinks) {
+                menuBtn.addEventListener('click', () => {
+                    menuBtn.classList.toggle('open');
+                    navLinks.classList.toggle('active');
+                });
+            }
+
+            const io = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
+                        io.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
+            }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+
+            document.querySelectorAll('.scroll-reveal, .scroll-reveal-stagger, .reveal-frame')
+                .forEach(el => io.observe(el));
+
+            // Failsafe: a los 4.5s todo lo no revelado se fuerza visible
+            setTimeout(() => {
+                document.querySelectorAll('.scroll-reveal, .scroll-reveal-stagger, .reveal-frame')
+                    .forEach(el => el.classList.add('visible'));
+            }, 4500);
         });
     </script>
 </body>

@@ -36,20 +36,24 @@
 </head>
 <body class="bg-dark site-wrapper">
 
+    <!-- NAVBAR — glass style match index, [PROYECTOS] active porque estamos en el archivo -->
     <nav class="navbar-brand">
         <div class="containerNav">
-           <a href="../index.html" class="logo">
+            <a href="../index.html" class="logo link-location">
                 <img src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
             </a>
             <div class="menu-toggle" id="mobile-menu">
                 <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </div>
             <ul class="nav-links-brands" id="nav-links">
-                <li><a href="../index.html">/INICIO</a></li>
-                
-                <li><a href="./about.html">/ESTUDIO</a></li>
-                <li><a href="./contacto.html">/CONTACTOS</a></li>
+                <li><a href="./trabajos.html" class="link-location is-active" aria-current="page">[PROYECTOS]</a></li>
+                <li><a href="./metodologia.html" class="link-location">[METODOLOGÍA]</a></li>
+                <li><a href="./about.html" class="link-location">[ESTUDIO]</a></li>
+                <li class="mobile-contact-item"><a href="./contacto.html" class="link-location">CONTACTO</a></li>
             </ul>
+            <div class="nav-right-cta">
+                <a href="./contacto.html" class="nav-cta-btn">CONTACTO</a>
+            </div>
         </div>
     </nav>
 
@@ -72,8 +76,11 @@
             </header>
 
             <section class="projects-container grid-mode" id="archive-main">
-                
-                <article class="project-item featured" onclick="location.href='../pages/trenescargas.html'">
+
+                <!-- 01 — TRENES ARGENTINOS CARGAS (featured) -->
+                <article class="project-item featured"
+                    onclick="location.href='../pages/trenescargas.html'"
+                    data-images='["https://i.ibb.co/dmkbM0K/tac.jpg","../img/tac-1.jpg","../img/tac-2.png","../img/tac-3.png","../img/tac-4.jpg"]'>
                     <div class="grid-component">
                         <div class="visual-box">
                             <img src="https://i.ibb.co/dmkbM0K/tac.jpg" alt="TAC">
@@ -93,22 +100,57 @@
                     </div>
                 </article>
 
-                <article class="project-item" onclick="location.href='../pages/suuam.html'">
+                <!-- 02 — ESTACIÓN SUR VINOS (nuevo) -->
+                <article class="project-item"
+                    onclick="location.href='../pages/estacion-sur.html'"
+                    data-images='["../img/estacion-sur-img-1.png","../img/estacion-sur-img-2.png","../img/estacion-sur-img-6.png","../img/estacion-sur-img-10.png","../img/estacion-sur-img-13.png"]'>
+                    <div class="grid-component">
+                        <div class="visual-box">
+                            <img src="../img/estacion-sur-img-1.png" alt="Estación Sur Vinos">
+                            <div class="inner-info">
+                                <h4 class="project-name">Estación Sur Vinos</h4>
+                                <div class="tags-group"><span class="tag-outline">BRANDING</span><span class="tag-outline">SOCIAL MEDIA</span><span class="tag-outline">2024</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-component">
+                        <div class="list-row">
+                            <span class="l-name">Estación Sur Vinos</span>
+                            <span class="l-cat">Branding / Estrategia de Contenido</span>
+                            <span class="l-year">2024</span>
+                            <span class="l-link">VIEW CASE ↗</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 03 — SUUAM -->
+                <article class="project-item"
+                    onclick="location.href='../pages/suuam.html'"
+                    data-images='["https://i.ibb.co/8BbCKvj/1.jpg","https://i.ibb.co/k2V6qRc/simbolo.jpg","https://i.ibb.co/MDn31W8/6.jpg"]'>
                     <div class="grid-component"><div class="visual-box"><img src="https://i.ibb.co/8BbCKvj/1.jpg" alt="SUUAM"><div class="inner-info"><h4 class="project-name">SUUAM® Super App</h4><div class="tags-group"><span class="tag-outline">UX/UI</span><span class="tag-outline">2024</span></div></div></div></div>
                     <div class="list-component"><div class="list-row"><span class="l-name">SUUAM® Super App</span><span class="l-cat">UX/UI / Product</span><span class="l-year">2024</span><span class="l-link">VIEW CASE ↗</span></div></div>
                 </article>
 
-                <article class="project-item" onclick="location.href='../pages/prisma.html'">
+                <!-- 04 — PRISMA DASHBOARD -->
+                <article class="project-item"
+                    onclick="location.href='../pages/prisma.html'"
+                    data-images='["https://i.ibb.co/svwVxV1L/pr13.jpg","https://i.ibb.co/DD4psWX9/pr1.jpg","https://i.ibb.co/Vc8DfSxH/pr14.jpg","https://i.ibb.co/DP6MRRMX/pr12.jpg","https://i.ibb.co/8L1VtzNx/pr1VS.jpg"]'>
                     <div class="grid-component"><div class="visual-box"><img src="https://i.ibb.co/svwVxV1L/pr13.jpg" alt="Prisma"><div class="inner-info"><h4 class="project-name">Prisma Dashboard</h4><div class="tags-group"><span class="tag-outline">UX/UI</span><span class="tag-outline">2024</span></div></div></div></div>
                     <div class="list-component"><div class="list-row"><span class="l-name">Prisma Dashboard</span><span class="l-cat">Product Design</span><span class="l-year">2024</span><span class="l-link">VIEW CASE ↗</span></div></div>
                 </article>
 
-                <article class="project-item" onclick="location.href='../pages/union-ferroviaria.html'">
+                <!-- 05 — UNIÓN FERROVIARIA -->
+                <article class="project-item"
+                    onclick="location.href='../pages/union-ferroviaria.html'"
+                    data-images='["https://i.ibb.co/GfT5Pyk2/ejmUF.jpg","https://i.ibb.co/KzRz5CLS/UF.jpg","https://i.ibb.co/fV5dN2Xm/UF-1.jpg","https://i.ibb.co/wZQBvMsk/3UF.jpg","https://i.ibb.co/dJwBP4yF/UFAPP.jpg","https://i.ibb.co/qLMBLkgC/UFAPP3.jpg"]'>
                     <div class="grid-component"><div class="visual-box"><img src="https://i.ibb.co/GfT5Pyk2/ejmUF.jpg" alt="Union Ferroviaria"><div class="inner-info"><h4 class="project-name">Unión Ferroviaria</h4><div class="tags-group"><span class="tag-outline">BRANDING</span><span class="tag-outline">UX/UI</span><span class="tag-outline">2023</span></div></div></div></div>
                     <div class="list-component"><div class="list-row"><span class="l-name">Unión Ferroviaria</span><span class="l-cat">Branding / App</span><span class="l-year">2023</span><span class="l-link">VIEW CASE ↗</span></div></div>
                 </article>
 
-                <article class="project-item" onclick="location.href='../pages/rovex.html'">
+                <!-- 06 — ROVEX -->
+                <article class="project-item"
+                    onclick="location.href='../pages/rovex.html'"
+                    data-images='["../img/header-rovex.png","../img/rovex-1.jpeg","../img/rovex-3.jpg","../img/rovex-4.jpg"]'>
                     <div class="grid-component">
                         <div class="visual-box">
                             <img src="../img/header-rovex.png" alt="ROVEX">
@@ -132,35 +174,76 @@
                     </div>
                 </article>
 
-                <article class="project-item" onclick="location.href='../pages/sc.html'">
+                <!-- 07 — SAN CRISTÓBAL -->
+                <article class="project-item"
+                    onclick="location.href='../pages/sc.html'"
+                    data-images='["https://i.ibb.co/qMQcwjt/SC.jpg","../img/1-SC.jpg","../img/3-SC.jpg","../img/sc-12.jpeg","../img/sc-13.jpeg"]'>
                     <div class="grid-component"><div class="visual-box"><img src="https://i.ibb.co/qMQcwjt/SC.jpg" alt="SC"><div class="inner-info"><h4 class="project-name">Muni. San Cristóbal</h4><div class="tags-group"><span class="tag-outline">BRAND IDENTITY</span><span class="tag-outline">2023</span></div></div></div></div>
                     <div class="list-component"><div class="list-row"><span class="l-name">Municipio San Cristóbal</span><span class="l-cat">Government Branding</span><span class="l-year">2023</span><span class="l-link">VIEW CASE ↗</span></div></div>
                 </article>
 
-                <article class="project-item" onclick="location.href='../pages/vientos-de-ruta.html'">
+                <!-- 08 — PINTA GAUCHA -->
+                <article class="project-item"
+                    onclick="location.href='../pages/pinta-gaucha.html'"
+                    data-images='["../img/pinta-02.jpg","../img/pinta-03.jpg","../img/pinta-04.png","../img/pinta-06.png","../img/pinta-07.png","../img/pinta-01.gif"]'>
+                    <div class="grid-component">
+                        <div class="visual-box">
+                            <img src="../img/pinta-02.jpg" alt="Pinta Gaucha">
+                            <div class="inner-info">
+                                <h4 class="project-name">Cervecería Pinta Gaucha</h4>
+                                <div class="tags-group"><span class="tag-outline">BRANDING</span><span class="tag-outline">RETAIL</span><span class="tag-outline">2024</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-component">
+                        <div class="list-row">
+                            <span class="l-name">Cervecería Pinta Gaucha</span>
+                            <span class="l-cat">Branding / Retail Experience / UI-UX</span>
+                            <span class="l-year">2024</span>
+                            <span class="l-link">VIEW CASE ↗</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 09 — VIENTOS DE RUTA -->
+                <article class="project-item"
+                    onclick="location.href='../pages/vientos-de-ruta.html'"
+                    data-images='["https://i.ibb.co/tPZ8KBHk/VD15.jpg","https://i.ibb.co/0VCtmdzg/VD1.jpg","https://i.ibb.co/nN3Zcmg2/VD12.jpg","https://i.ibb.co/wf8nVhT/VD13.jpg","https://i.ibb.co/BVL3PNKZ/VD14.jpg"]'>
                     <div class="grid-component"><div class="visual-box"><img src="https://i.ibb.co/tPZ8KBHk/VD15.jpg" alt="VDR"><div class="inner-info"><h4 class="project-name">Vientos de Ruta</h4><div class="tags-group"><span class="tag-outline">FRONT-END</span><span class="tag-outline">2022</span></div></div></div></div>
                     <div class="list-component"><div class="list-row"><span class="l-name">Vientos de Ruta (VDR)</span><span class="l-cat">Development / Brand</span><span class="l-year">2022</span><span class="l-link">VIEW CASE ↗</span></div></div>
                 </article>
 
-                <article class="project-item" onclick="location.href='../pages/sohat.html'">
+                <!-- 10 — SO HAT -->
+                <article class="project-item"
+                    onclick="location.href='../pages/sohat.html'"
+                    data-images='["https://i.ibb.co/RYZ1CJ7/sh-1.jpg","https://i.ibb.co/vc7J7r1/2-SH.jpg","https://i.ibb.co/dpDrQpN/3-SH.jpg","https://i.ibb.co/N95JnX7/4-SH.jpg","https://i.ibb.co/bRjM3N4/6-SH.jpg","https://i.ibb.co/JttHBPM/7-SH.jpg"]'>
                     <div class="grid-component"><div class="visual-box"><img src="https://i.ibb.co/RYZ1CJ7/sh-1.jpg" alt="So Hat"><div class="inner-info"><h4 class="project-name">So Hat Accessories</h4><div class="tags-group"><span class="tag-outline">BRANDING</span><span class="tag-outline">2024</span></div></div></div></div>
                     <div class="list-component"><div class="list-row"><span class="l-name">So Hat Accessories</span><span class="l-cat">Branding / Fashion</span><span class="l-year">2024</span><span class="l-link">VIEW CASE ↗</span></div></div>
                 </article>
 
-                <article class="project-item" onclick="location.href='../pages/typefusion.html'">
+                <!-- 11 — TYPEFUSION -->
+                <article class="project-item"
+                    onclick="location.href='../pages/typefusion.html'"
+                    data-images='["https://i.ibb.co/1tBtbRyC/TF14.jpg","https://i.ibb.co/KjsBTZrH/TF1.jpg"]'>
                     <div class="grid-component"><div class="visual-box"><img src="https://i.ibb.co/1tBtbRyC/TF14.jpg" alt="Typefusion"><div class="inner-info"><h4 class="project-name">Typefusion® App</h4><div class="tags-group"><span class="tag-outline">UX/UI</span><span class="tag-outline">2022</span></div></div></div></div>
                     <div class="list-component"><div class="list-row"><span class="l-name">Typefusion® App</span><span class="l-cat">Product Design</span><span class="l-year">2022</span><span class="l-link">VIEW CASE ↗</span></div></div>
                 </article>
 
-                <article class="project-item" onclick="location.href='../pages/runakay.html'">
+                <!-- 12 — RUNAKAY -->
+                <article class="project-item"
+                    onclick="location.href='../pages/runakay.html'"
+                    data-images='["https://i.ibb.co/2YChXbhZ/tp2.jpg","https://i.ibb.co/357FqBCw/tp1.jpg","https://i.ibb.co/k2V6qRc/simbolo.jpg","https://i.ibb.co/CNVbY9w/ilustraciones.png","https://i.ibb.co/vxxhfz6P/Mesa-de-trabajo-4.jpg"]'>
                     <div class="grid-component"><div class="visual-box"><img src="https://i.ibb.co/2YChXbhZ/tp2.jpg" alt="Runakay"><div class="inner-info"><h4 class="project-name">Runakay Identity</h4><div class="tags-group"><span class="tag-outline">BRANDING</span><span class="tag-outline">2023</span></div></div></div></div>
                     <div class="list-component"><div class="list-row"><span class="l-name">Runakay Identity</span><span class="l-cat">Brand Design</span><span class="l-year">2023</span><span class="l-link">VIEW CASE ↗</span></div></div>
                 </article>
 
-                <article class="project-item" onclick="location.href='../pages/aurea.html'">
+                <!-- 13 — AUREA -->
+                <article class="project-item"
+                    onclick="location.href='../pages/aurea.html'"
+                    data-images='["https://i.ibb.co/XxgN2CDM/AUR1.png","https://i.ibb.co/27RTq5yV/AUR12.png","https://i.ibb.co/sZCVRjN/AUR13.png","https://i.ibb.co/TMXVptDr/AUR14.png"]'>
                     <div class="grid-component">
                         <div class="visual-box">
-                            <img src="https://i.ibb.co/XxgN2CDM/AUR1.png" alt="Aurea"> 
+                            <img src="https://i.ibb.co/XxgN2CDM/AUR1.png" alt="Aurea">
                             <div class="inner-info">
                                 <h4 class="project-name">Aurea® Identity</h4>
                                 <div class="tags-group">

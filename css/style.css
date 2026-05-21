@@ -1208,7 +1208,7 @@ body.scroll-locked {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url('../img/background-section.svg');
+    background-image: url('../img/bg-section.png');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -4341,7 +4341,7 @@ h2.section-display-title {
         padding: 10px 35px !important; 
         height: 60px;
         /* EFECTO GLASS MÓVIL */
-        background-color: rgba(131, 243, 19, 0.7);
+        background-color: rgba(28, 28, 28, 0.7);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(5px);
         border-bottom: none;
@@ -4509,3 +4509,23 @@ h2.section-display-title {
 }
 
 
+
+/* ==========================================================================
+   NAV ACTIVE STATE — Página actual marcada en el navbar
+   (about, contacto, metodologia, trabajos, política, etc.)
+   ========================================================================== */
+.nav-links-brands a.is-active {
+    opacity: 0.4;
+    pointer-events: none;
+    position: relative;
+}
+.nav-links-brands a.is-active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 22px;
+    height: 1px;
+    background: #f2c335;
+    opacity: 0.9;
+}
