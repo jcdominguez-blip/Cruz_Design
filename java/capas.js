@@ -1,11 +1,12 @@
 /**
  * ============================================================
- *  CRUZ ESTUDIO ® — Services V4 (3-col Wireframe Grid)
+ *  CRUZ ESTUDIO ® — Services V4 (4-col Wireframe Grid)
  *
  *  Cada columna del grid renderiza una geometría 3D distinta:
  *    [0] IcosahedronGeometry  (esférica subdividida)
  *    [1] CylinderGeometry     (tubo abierto)
  *    [2] TorusKnotGeometry    (nudo retorcido)
+ *    [3] TorusGeometry        (anillo limpio)
  *
  *  Wave morph continuo: cada vértice se desplaza a lo largo de su
  *  normal radial usando una función de ruido 3D (suma de senos).
@@ -31,7 +32,7 @@
     const warn = (...args) => console.warn(LOG_PREFIX, ...args);
 
     /**
-     * Scroll reveal dedicado para las 3 cards de Services V4.
+     * Scroll reveal dedicado para las cards de Services V4.
      * - Usa GSAP si está disponible para una curva premium (expo.out + stagger).
      * - Fallback con CSS si no hay GSAP (toggle de clase .is-revealed).
      * - IntersectionObserver con threshold 0.12 → dispara cuando ~12% del grid
@@ -198,8 +199,12 @@
                 // Cilindro abierto (sin tapas) — tubo
                 return new THREE.CylinderGeometry(0.85, 0.85, 2.4, 36, 28, true);
             }
-            // TorusKnot — retorcido
-            return new THREE.TorusKnotGeometry(0.85, 0.30, 120, 18);
+            if (idx === 2) {
+                // TorusKnot — nudo retorcido
+                return new THREE.TorusKnotGeometry(0.85, 0.30, 120, 18);
+            }
+            // Torus — anillo limpio
+            return new THREE.TorusGeometry(0.95, 0.40, 26, 110);
         }
 
         // ── Función de "noise" 3D barata: 3 senos compuestos ─
@@ -430,7 +435,7 @@
             io.observe(section);
         }
 
-        log('Inicializado con', scenes.length, 'escenas (Icosa / Cyl / Knot).');
+        log('Inicializado con', scenes.length, 'escenas (Icosa / Cyl / Knot / Torus).');
     }
 
     if (document.readyState === 'loading') {

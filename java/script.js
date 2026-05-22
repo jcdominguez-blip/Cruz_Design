@@ -308,131 +308,6 @@ window.toggleAccordion = function(element) {
     }
 };
 
-/* ============================================================
-   SELECTED WORK — Floating Cursor Preview Card
-   ============================================================
-   - Posiciona la card siguiendo al cursor con Lerp (interpolación lineal)
-     y rAF, escribiendo solo CSS vars (--sw-x, --sw-y) que el CSS
-     consume dentro de translate3d() para acelerar por GPU.
-   - mouseenter en cada .sw-item: carga la PRIMERA imagen del data-images
-     y los textos (categoría + título).
-   - mouseleave en el <ul.sw-list> (no por item): fade out suave.
-   - El fade in / scale up corre 100% por CSS (transition).
-============================================================ */
-function initSelectedWorkCursor() {
-    const card        = document.getElementById('sw-cursor-card');
-    const cardImg     = document.getElementById('sw-card-img');
-    const cardCategory= document.getElementById('sw-card-category');
-    const cardTitle   = document.getElementById('sw-card-title');
-    const list        = document.querySelector('.sw-list');
-    const items       = list ? list.querySelectorAll('.sw-item') : [];
-
-    if (!card || !cardImg || !list || !items.length) return;
-
-    // ── 1. Sacamos la card del flujo de la <section> (que puede tener transforms
-    //       en ancestros vía animaciones de reveal) y la anclamos al <body> para
-    //       que position:fixed funcione siempre respecto al viewport.
-    if (card.parentElement !== document.body) {
-        document.body.appendChild(card);
-    }
-
-    // ── 2. Preload de la primera imagen de cada proyecto (las únicas que se usan).
-    items.forEach((item) => {
-        try {
-            const arr = JSON.parse(item.getAttribute('data-images') || '[]');
-            if (arr[0]) { const pre = new Image(); pre.src = arr[0]; }
-        } catch (_) {}
-    });
-
-    // ── 3. Estado de seguimiento (Lerp).
-    let mouseX  = window.innerWidth  / 2;
-    let mouseY  = window.innerHeight / 2;
-    let cardX   = mouseX;
-    let cardY   = mouseY;
-    let rafId   = null;
-    let active  = false;
-    const EASE  = 0.16; // factor de Lerp — más bajo = más arrastre / inercia
-
-    // Helper: escribe las CSS vars que el transform consume.
-    const writeTransform = (x, y) => {
-        card.style.setProperty('--sw-x', x + 'px');
-        card.style.setProperty('--sw-y', y + 'px');
-    };
-
-    // ── 4. Loop de animación con Lerp + rAF.
-    function tick() {
-        cardX += (mouseX - cardX) * EASE;
-        cardY += (mouseY - cardY) * EASE;
-        writeTransform(cardX, cardY);
-
-        // Si la card sigue activa, o aún no alcanzó al cursor, seguimos animando.
-        const dx = mouseX - cardX;
-        const dy = mouseY - cardY;
-        if (active || (dx * dx + dy * dy) > 0.25) {
-            rafId = requestAnimationFrame(tick);
-        } else {
-            rafId = null;
-        }
-    }
-
-    function startTick() {
-        if (rafId === null) rafId = requestAnimationFrame(tick);
-    }
-
-    // ── 5. Captura del mouse global (para que la card pueda "alcanzar" al cursor
-    //       incluso si entra por arriba de un item exacto).
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-
-        // Si la card no está activa, snapeamos sin lerp para que el primer
-        // mouseenter ya la haga aparecer en el lugar correcto.
-        if (!active) {
-            cardX = mouseX;
-            cardY = mouseY;
-            writeTransform(cardX, cardY);
-        } else {
-            startTick();
-        }
-    }, { passive: true });
-
-    // ── 6. mouseenter por item: cargamos data y mostramos.
-    items.forEach((item) => {
-        item.addEventListener('mouseenter', () => {
-            // Parse del JSON; tomamos SOLO la primera URL.
-            let firstImage = '';
-            try {
-                const arr = JSON.parse(item.getAttribute('data-images') || '[]');
-                firstImage = arr[0] || '';
-            } catch (_) {}
-
-            if (!firstImage) return;
-
-            // Solo actualizamos el src si cambió, para evitar flicker entre items.
-            if (cardImg.getAttribute('src') !== firstImage) {
-                cardImg.src = firstImage;
-            }
-
-            const catEl   = item.querySelector('.sw-category');
-            const titleEl = item.querySelector('.sw-project-title');
-            if (cardCategory) cardCategory.textContent = catEl   ? catEl.textContent.trim()   : '';
-            if (cardTitle)    cardTitle.textContent    = titleEl ? titleEl.textContent.trim() : '';
-
-            active = true;
-            card.classList.add('visible');
-            startTick();
-        });
-    });
-
-    // ── 7. mouseleave en el <ul> entero: fade out (CSS hace la transición).
-    list.addEventListener('mouseleave', () => {
-        active = false;
-        card.classList.remove('visible');
-        // El loop sigue un frame más por inercia y se autodetiene cuando
-        // la distancia al cursor es despreciable (ver tick()).
-    });
-}
-
 // --- Scroll Progress Bar ---
 function initScrollProgress() {
     const bar = document.getElementById('scroll-progress');
@@ -659,7 +534,6 @@ function initStudioWaves() {
 }
 
 function bootCruzInteractions() {
-    initSelectedWorkCursor();
     initScrollProgress();
     initMagneticCursor();
     initHeroWeBadge();

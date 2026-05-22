@@ -2097,15 +2097,9 @@ html.reveal-fallback .text-reveal > span {
    CURSOR CARD — preview siguiendo al cursor (estilo Studio Namma)
    ============================================ */
 
-/* Registramos --sw-scale como propiedad animable para que solo el "scale up"
-   transicione, mientras --sw-x / --sw-y se actualizan vía rAF + Lerp desde JS
-   sin transición (movimiento controlado por interpolación, no por CSS). */
-@property --sw-scale {
-    syntax: '<number>';
-    initial-value: 0.85;
-    inherits: false;
-}
-
+/* La posición, rotación, escala y opacidad las controla GSAP
+   (cursor-preview.js) vía gsap.quickTo() / gsap.to(). El CSS solo
+   define el aspecto visual de la card. */
 .sw-cursor-card {
     position: fixed;
     top: 0;
@@ -2118,34 +2112,8 @@ html.reveal-fallback .text-reveal > span {
     border-radius: 6px;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
     will-change: transform, opacity;
-    visibility: hidden;
-
-    /* CSS vars escritas desde JS cada frame (translate3d acelerado por GPU) */
-    --sw-x: 0px;
-    --sw-y: 0px;
-    --sw-scale: 0.85;
-
     opacity: 0;
-    /* translate3d primero (posicionamiento), luego centrado al cursor (-50%, -50%),
-       luego scale (transición animada vía @property --sw-scale). */
-    transform:
-        translate3d(var(--sw-x), var(--sw-y), 0)
-        translate(-50%, -50%)
-        scale(var(--sw-scale));
-    transition:
-        opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1),
-        --sw-scale 0.55s cubic-bezier(0.34, 1.4, 0.64, 1),
-        visibility 0s linear 0.35s;
-}
-
-.sw-cursor-card.visible {
-    opacity: 1;
-    visibility: visible;
-    --sw-scale: 1;
-    transition:
-        opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1),
-        --sw-scale 0.55s cubic-bezier(0.34, 1.4, 0.64, 1),
-        visibility 0s linear 0s;
+    visibility: hidden;
 }
 
 .sw-card-image {
@@ -2161,11 +2129,6 @@ html.reveal-fallback .text-reveal > span {
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: opacity 0.35s ease;
-}
-
-.sw-card-image img.sw-fade {
-    opacity: 0;
 }
 
 .sw-card-label {
@@ -3811,10 +3774,10 @@ h2.section-display-title {
     font-style: normal;
 }
 
-/* Grid 3 columnas separadas por líneas verticales 1px (no cajas) */
+/* Grid 4 columnas separadas por líneas verticales 1px (no cajas) */
 .sv4-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 0;
     border-top: 1px solid rgba(255, 253, 243, 0.10);
 }
@@ -4027,11 +3990,14 @@ h2.section-display-title {
     .sv4-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    /* En 2 columnas, la tercera ocupa el ancho completo abajo */
-    .sv4-col:nth-child(3) {
-        grid-column: 1 / -1;
-        border-left: none;
+    /* En 2×2: la fila inferior (cards 3 y 4) lleva separador superior */
+    .sv4-col:nth-child(3),
+    .sv4-col:nth-child(4) {
         border-top: 1px solid rgba(255, 253, 243, 0.10);
+    }
+    /* La card 3 inicia fila → sin línea izquierda */
+    .sv4-col:nth-child(3) {
+        border-left: none;
     }
     .sv4-col {
         padding: 60px 32px 52px;
@@ -4060,11 +4026,6 @@ h2.section-display-title {
     .sv4-col + .sv4-col {
         border-left: none;
         border-top: 1px solid rgba(255, 253, 243, 0.10);
-    }
-    .sv4-col:nth-child(3) {
-        grid-column: auto;
-        border-top: 1px solid rgba(255, 253, 243, 0.10);
-        border-left: none;
     }
     .sv4-col {
         padding: 50px 0 44px;

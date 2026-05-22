@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cervecería Pinta Gaucha — Cruz Estudio ®</title>
     <meta name="description" content="Branding, retail experience y UI-UX para Pinta Gaucha: el encuentro argentino, redefinido.">
-
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://i.ibb.co">
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
     <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
@@ -35,7 +37,7 @@
     <nav class="navbar-brand">
         <div class="containerNav">
             <a href="../index.html" class="logo link-location">
-                <img src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
+                <img decoding="async" src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
             </a>
             <div class="menu-toggle" id="mobile-menu">
                 <span class="bar"></span><span class="bar"></span><span class="bar"></span>
@@ -66,7 +68,7 @@
         <header class="projv2-hero">
             <div class="projv2-hero-image">
                 <video autoplay muted loop playsinline preload="metadata">
-                    <source src="../img/video-pinta-01.mp4" type="video/mp4">
+                    <source src="../video/video-pinta-01.mp4" type="video/mp4">
                 </video>
             </div>
             <div class="projv2-hero-content scroll-reveal">
@@ -112,32 +114,35 @@
              GALERÍA 1 — GIF de apertura + fotos clave + video destacado
              ============================================================ -->
         <section class="projv2-gallery">
-            <!-- Row 1: GIF animado, full ancho — marca el ritmo del proyecto -->
+            <!-- Row 1: motion full ancho — marca el ritmo del proyecto
+                 (ex-GIF 6.1MB → MP4 ~1MB, mismo loop visual) -->
             <figure class="reveal-frame span-12 ratio-21 fit-contain">
-                <img src="../img/pinta-01.gif" alt="Pinta Gaucha — sistema gráfico en movimiento">
+                <video autoplay muted loop playsinline preload="metadata" aria-label="Pinta Gaucha — sistema gráfico en movimiento">
+                    <source src="../video/pinta-01.mp4" type="video/mp4">
+                </video>
             </figure>
 
             <!-- Row 2: split 6/6 -->
             <figure class="reveal-frame span-6 ratio-43 fit-contain">
-                <img src="../img/pinta-02.jpg" alt="Pinta Gaucha — aplicación 02">
+                <img loading="lazy" decoding="async" src="../img/pinta-02.jpg" alt="Pinta Gaucha — aplicación 02">
             </figure>
             <figure class="reveal-frame span-6 ratio-43 fit-contain">
-                <img src="../img/pinta-03.jpg" alt="Pinta Gaucha — aplicación 03">
+                <img loading="lazy" decoding="async" src="../img/pinta-03.jpg" alt="Pinta Gaucha — aplicación 03">
             </figure>
 
             <!-- Row 3: video destacado, full ancho 16/9 -->
             <figure class="reveal-frame span-12 ratio-16 fit-contain">
                 <video autoplay muted loop playsinline preload="metadata">
-                    <source src="../img/video-pinta-02.mp4" type="video/mp4">
+                    <source src="../video/video-pinta-02.mp4" type="video/mp4">
                 </video>
             </figure>
 
             <!-- Row 4: split 7/5 -->
             <figure class="reveal-frame span-7 ratio-43 fit-contain">
-                <img src="../img/pinta-04.png" alt="Pinta Gaucha — aplicación 04">
+                <img loading="lazy" decoding="async" src="../img/pinta-04.png" alt="Pinta Gaucha — aplicación 04">
             </figure>
             <figure class="reveal-frame span-5 ratio-11 fit-contain">
-                <img src="../img/pinta-05.png" alt="Pinta Gaucha — aplicación 05">
+                <img loading="lazy" decoding="async" src="../img/pinta-05.jpg" alt="Pinta Gaucha — aplicación 05">
             </figure>
         </section>
 
@@ -173,7 +178,7 @@
                 <h3>Versión positiva</h3>
             </div>
             <div class="projv2-asset-visual pg-mark-visual">
-                <img src="../img/Marca-positiva.svg" alt="Marca positiva — Pinta Gaucha (uso sobre fondo oscuro)">
+                <img loading="lazy" decoding="async" src="../img/Marca-positiva.svg" alt="Marca positiva — Pinta Gaucha (uso sobre fondo oscuro)">
             </div>
         </section>
 
@@ -184,26 +189,26 @@
             <!-- Row 1: dos videos en split 6/6, 16/9 cada uno -->
             <figure class="reveal-frame span-6 ratio-16 fit-contain">
                 <video autoplay muted loop playsinline preload="metadata">
-                    <source src="../img/video-pinta-03.mp4" type="video/mp4">
+                    <source src="../video/video-pinta-03.mp4" type="video/mp4">
                 </video>
             </figure>
             <figure class="reveal-frame span-6 ratio-16 fit-contain">
                 <video autoplay muted loop playsinline preload="metadata">
-                    <source src="../img/video-pinta-04.mp4" type="video/mp4">
+                    <source src="../video/video-pinta-04.mp4" type="video/mp4">
                 </video>
             </figure>
 
             <!-- Row 2: imagen full ancho -->
             <figure class="reveal-frame span-12 ratio-21 fit-contain">
-                <img src="../img/pinta-06.png" alt="Pinta Gaucha — aplicación 06">
+                <img loading="lazy" decoding="async" src="../img/pinta-06.jpg" alt="Pinta Gaucha — aplicación 06">
             </figure>
 
             <!-- Row 3: split 6/6 (apps + retail) -->
             <figure class="reveal-frame span-6 ratio-43 fit-contain">
-                <img src="../img/pinta-07.png" alt="Pinta Gaucha — aplicación 07">
+                <img loading="lazy" decoding="async" src="../img/pinta-07.jpg" alt="Pinta Gaucha — aplicación 07">
             </figure>
             <figure class="reveal-frame span-6 ratio-43 fit-contain">
-                <img src="../img/pinta-08.png" alt="Pinta Gaucha — aplicación 08">
+                <img loading="lazy" decoding="async" src="../img/pinta-08.jpg" alt="Pinta Gaucha — aplicación 08">
             </figure>
         </section>
 
@@ -213,12 +218,12 @@
         <section class="projv2-gallery">
             <figure class="reveal-frame span-6 ratio-16 fit-contain">
                 <video autoplay muted loop playsinline preload="metadata">
-                    <source src="../img/video-pinta-05.mp4" type="video/mp4">
+                    <source src="../video/video-pinta-05.mp4" type="video/mp4">
                 </video>
             </figure>
             <figure class="reveal-frame span-6 ratio-16 fit-contain">
                 <video autoplay muted loop playsinline preload="metadata">
-                    <source src="../img/video-pinta-06.mp4" type="video/mp4">
+                    <source src="../video/video-pinta-06.mp4" type="video/mp4">
                 </video>
             </figure>
         </section>
@@ -232,34 +237,34 @@
         <section class="projv2-gallery">
             <!-- Row 1: full ancho 16:9 (más amigable que 21:9 para fotos comunes) -->
             <figure class="reveal-frame fit-contain span-12 ratio-16">
-                <img src="../img/nueva-img-pinta-01.png" alt="Pinta Gaucha — pieza nueva 01">
+                <img loading="lazy" decoding="async" src="../img/nueva-img-pinta-01.png" alt="Pinta Gaucha — pieza nueva 01">
             </figure>
 
             <!-- Row 2: split 6 / 6 con ratio 4:3 (par balanceado) -->
             <figure class="reveal-frame fit-contain span-6 ratio-43">
-                <img src="../img/nueva-img-pinta-02.png" alt="Pinta Gaucha — pieza nueva 02">
+                <img loading="lazy" decoding="async" src="../img/nueva-img-pinta-02.png" alt="Pinta Gaucha — pieza nueva 02">
             </figure>
             <figure class="reveal-frame fit-contain span-6 ratio-43">
-                <img src="../img/nueva-img-pinta-03.png" alt="Pinta Gaucha — pieza nueva 03">
+                <img loading="lazy" decoding="async" src="../img/nueva-img-pinta-03.png" alt="Pinta Gaucha — pieza nueva 03">
             </figure>
 
             <!-- Row 3: trío 4 / 4 / 4 con 4:3 (apaisado, lectura más natural) -->
             <figure class="reveal-frame fit-contain span-4 ratio-43">
-                <img src="../img/nueva-img-pinta-04.png" alt="Pinta Gaucha — pieza nueva 04">
+                <img loading="lazy" decoding="async" src="../img/nueva-img-pinta-04.png" alt="Pinta Gaucha — pieza nueva 04">
             </figure>
             <figure class="reveal-frame fit-contain span-4 ratio-43">
-                <img src="../img/nueva-img-pinta-05.png" alt="Pinta Gaucha — pieza nueva 05">
+                <img loading="lazy" decoding="async" src="../img/nueva-img-pinta-05.png" alt="Pinta Gaucha — pieza nueva 05">
             </figure>
             <figure class="reveal-frame fit-contain span-4 ratio-43">
-                <img src="../img/nueva-img-pinta-06.png" alt="Pinta Gaucha — pieza nueva 06">
+                <img loading="lazy" decoding="async" src="../img/nueva-img-pinta-06.png" alt="Pinta Gaucha — pieza nueva 06">
             </figure>
 
             <!-- Row 4: split 6 / 6 con 4:3 (cierre balanceado del bloque) -->
             <figure class="reveal-frame fit-contain span-6 ratio-43">
-                <img src="../img/nueva-img-pinta-07.png" alt="Pinta Gaucha — pieza nueva 07">
+                <img loading="lazy" decoding="async" src="../img/nueva-img-pinta-07.png" alt="Pinta Gaucha — pieza nueva 07">
             </figure>
             <figure class="reveal-frame fit-contain span-6 ratio-43">
-                <img src="../img/nueva-img-pinta-08.png" alt="Pinta Gaucha — pieza nueva 08">
+                <img loading="lazy" decoding="async" src="../img/nueva-img-pinta-08.png" alt="Pinta Gaucha — pieza nueva 08">
             </figure>
         </section>
 
