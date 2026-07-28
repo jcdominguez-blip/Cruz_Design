@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Editor / herramientas
+.claude/
+.vscode/
+.idea/
+
+# Logs y temporales
+*.log
+Thumbs.db
