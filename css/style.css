@@ -3002,10 +3002,11 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
 
 /* --- 1. CONTACT COMPONENT --- */
 .contact-section {
+    /* Mismo fondo OPACO que why-us (unificado). Sin border-top → la línea se
+       disuelve por el feather del Silk (ver .section-silk mask). */
     background-color: var(--bg-dark) !important;
     padding: 160px 45px;
     width: 100%;
-    border-top: 1px solid rgba(255, 253, 243, 0.05);
 }
 
 .contact-wrapper {
@@ -4121,6 +4122,12 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
+    /* Feather: el Silk se desvanece hacia el fondo dark SÓLIDO en los bordes
+       superior/inferior. Así, en el borde why-us↔contact ambos canvas llegan al
+       mismo negro sólido → la costura entre los dos canvas desaparece (sin línea)
+       manteniendo el fondo opaco original. */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 140px, #000 calc(100% - 140px), transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, #000 140px, #000 calc(100% - 140px), transparent 100%);
 }
 /* !important: THREE.setSize escribe width/height en px inline (medidos al cargar);
    al pinear why-us el ancho cambia y quedaba una franja negra a la derecha.

@@ -29,7 +29,7 @@
 
     const DIM    = 0.14;   // opacidad inicial: TENUE (el texto se ve, con poco contraste)
     const BRIGHT = 1.00;   // opacidad final: full crema
-    const RISE   = 45;     // yPercent inicial: cada char arranca abajo y SUBE al iluminarse (NWJbgOm)
+    const RISE   = 0;      // yPercent inicial: 0 → SIN rise, sólo revela por opacidad (pedido cliente)
 
     /**
      * Splitea el texto en <span class="tp-char"> dentro de <span class="tp-word">.
@@ -92,30 +92,21 @@
 
         try { gsap.registerPlugin(window.ScrollTrigger); } catch (_) {}
 
-        // Estado inicial explícito: tenue y desplazado hacia abajo.
+        // Estado inicial explícito: tenue (RISE=0 → sin desplazamiento).
         gsap.set(allChars, { opacity: DIM, yPercent: RISE });
 
-        // Pin distance: proporcional a la cantidad de chars, mínimo 800px.
-        // ~6px de scroll por carácter → ritmo cinematográfico (no demasiado
-        // lento que aburra, ni tan rápido que se pierda el efecto).
-        const PIXELS_PER_CHAR = 6;
-        const MIN_DISTANCE   = 800;
-        const pinDistance = Math.max(MIN_DISTANCE, allChars.length * PIXELS_PER_CHAR);
-
-        // Timeline maestra. scrub:true → mapping directo al scroll wheel
-        // (sin smoothing → la respuesta se siente como en jh3y).
-        // Pineamos en top:top para que la sección cubra el viewport completo
-        // (incluida el área detrás de la navbar), evitando la franja gris
-        // que el canvas fixed (z-index:2) produce en ese espacio descubierto.
+        // SIN PIN: el pin fijaba la sección ~2600px y (a) trababa el scroll y
+        // (b) al insertar el pin-spacer corría la posición del contact, haciendo
+        // que sus reveals (una sola vez) dispararan mientras el contact estaba
+        // fuera de pantalla. Ahora la opacidad de cada char se revela atada al
+        // scroll NATURAL mientras la sección cruza el viewport → fluido, sin trabar,
+        // y sin romper los triggers de las secciones de abajo.
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: pinSection,
-                start: 'top top',
-                end: '+=' + pinDistance,      // pin durante esta distancia de scroll
-                pin: true,
-                pinSpacing: true,
-                scrub: true,                  // ← directo, sin smoothing
-                anticipatePin: 1,
+                start: 'top 80%',   // arranca cuando el top entra al viewport
+                end: 'bottom 45%',  // termina cuando el bottom pasa el 45%
+                scrub: 0.5,         // atado al scroll, con un suavizado leve
                 invalidateOnRefresh: true
             }
         });
@@ -135,9 +126,7 @@
             }, i * slice);
         });
 
-        log('Inicializado.',
-            allChars.length, 'chars,',
-            'pin distance:', pinDistance + 'px');
+        log('Inicializado (sin pin).', allChars.length, 'chars.');
     }
 
     function init() {

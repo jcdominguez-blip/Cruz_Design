@@ -51,13 +51,15 @@
             return;
         }
 
-        // Timeline pineada — pin distance generosa para que TODO se vea antes
-        // de que termine el pin, con un "hold" largo de lectura al final.
+        // Timeline pineada — pin CORTO (sin "hold" muerto) para que el scroll no
+        // se sienta trabado al bajar hacia "Proyectos destacados". El zoom del
+        // video + el reveal del texto ocupan TODO el recorrido del pin: se scrollea
+        // y siempre hay movimiento, nunca una pantalla congelada.
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: section,
                 start: 'top top',
-                end: '+=280%',           // pin generoso: video + texto + hold
+                end: '+=110%',           // pin corto: solo dura lo que dura la animación
                 pin: stage,
                 pinSpacing: true,
                 scrub: 0.3,              // scrub tight, menos lag
@@ -99,13 +101,9 @@
             stagger: 0.08,
         }, 0.32);
 
-        // 5. HOLD largo: todo queda quieto y legible entre 0.58 y 1.0,
-        //    o sea durante ~117vh de scroll antes de que termine el pin.
-        //    Esto garantiza tiempo de lectura y que el reveal complete aunque
-        //    el usuario scrollee rápido.
-        tl.to({}, { duration: 0.42 }, 0.58);
-
-        // Panel-stack removido — el flujo natural funciona bien.
+        // (Sin "hold" muerto: antes había un tramo de ~117vh donde el pin seguía
+        //  activo pero nada se movía → se sentía trabado. Ahora el pin termina
+        //  apenas el reveal del texto completa, así el scroll sigue fluido.)
 
         // Fuerza un refresh INMEDIATO para que el pinSpacer se inyecte ya y
         // los scripts que corren después (type.js para el pin de why-us, etc)

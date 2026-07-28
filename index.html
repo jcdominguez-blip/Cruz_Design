@@ -6,6 +6,15 @@
     <title>Cruz Estudio</title>
     <meta name="description" content="Somos un estudio especializado en identidades corporativas, con experiencia en proyectos destacados como Trenes Argentinos Cargas, la Municipalidad de San Cristóbal Y Unión Ferroviaria entre otras empresas y organizacines." >
     <meta name="keywords" content="diseño, marcas, branding, diseño grafico, instagram, corporativo, empresas, brand design, diseño ux ui, diseño web">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18005988800"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18005988800');
+</script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -14,7 +23,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
-    <link rel="stylesheet" href="./css/style.css?v=21">
+    <link rel="stylesheet" href="./css/style.css?v=24">
     <link rel="icon" sizes="32x32" href="./img/favicon-32x32.png">
     
     <script>
@@ -40,9 +49,9 @@
         .skip-loader #loader, .skip-loader .loader { display: none !important; visibility: hidden !important; }
         .skip-loader body:not(.menu-open) { overflow-y: auto !important; height: auto !important; }
     </style>
-    <script src="./java/page-loader.js?v=21"></script>
-    <link rel="stylesheet" href="./css/nav-menu.css?v=21">
-    <link rel="stylesheet" href="./css/cursor.css?v=21">
+    <script src="./java/page-loader.js?v=24"></script>
+    <link rel="stylesheet" href="./css/nav-menu.css?v=24">
+    <link rel="stylesheet" href="./css/cursor.css?v=24">
 </head>
 <body data-bg="dark">
 
@@ -442,15 +451,16 @@
 
 
     <section class="contact-section" id="contact" data-theme="dark">
-        <!-- Fondo Silk oscuro (mismo efecto reactbits que el hero). Opaco. -->
+        <!-- Mismo fondo Silk oscuro OPACO que why-us (unificado). El seam entre
+             ambos canvas se disuelve por el mask/feather de .section-silk. -->
         <div class="section-silk" data-dark-silk aria-hidden="true"></div>
         <div class="contact-wrapper">
-            <header class="contact-intro scroll-reveal">
+            <header class="contact-intro">
                 <h2 class="contact-display section-display-title" data-split>Hablemos de tu próximo proyecto.</h2>
-                <p class="mono-label">// DISEÑO ESTRATÉGICO — BUENOS AIRES</p>
+                <p class="mono-label" data-split>// DISEÑO ESTRATÉGICO — BUENOS AIRES</p>
             </header>
-            <form action="https://formspree.io/f/xrbekqeb" method="POST" class="form-sistematizado ux-form-grid">
-                <div class="form-intent scroll-reveal">
+            <form action="https://formspree.io/f/xrbekqeb" method="POST" class="form-sistematizado ux-form-grid" data-rise-stagger>
+                <div class="form-intent" data-rise-item>
                     <span class="mono-tag">[01] — ¿EN QUÉ PODEMOS AYUDARTE?</span>
                     <div class="services-grid">
                         <label class="service-chip"><input type="checkbox" name="Servicio" value="Branding"><span class="chip-box">BRANDING</span></label>
@@ -459,21 +469,21 @@
                         <label class="service-chip"><input type="checkbox" name="Servicio" value="Audiovisual"><span class="chip-box">AUDIOVISUAL</span></label>
                     </div>
                 </div>
-                <div class="form-data scroll-reveal">
-                    <span class="mono-tag">[02] — TUS DATOS</span>
-                    <div class="input-container full-col">
+                <div class="form-data">
+                    <span class="mono-tag" data-rise-item>[02] — TUS DATOS</span>
+                    <div class="input-container full-col" data-rise-item>
                         <input type="text" name="name" id="userName" placeholder=" " required>
                         <label for="userName">Tu nombre o empresa (obligatorio)</label>
                     </div>
-                    <div class="input-container full-col">
+                    <div class="input-container full-col" data-rise-item>
                         <input type="email" name="email" id="userEmail" placeholder=" " required>
                         <label for="userEmail">Correo electrónico (obligatorio)</label>
                     </div>
-                    <div class="input-container full-col">
+                    <div class="input-container full-col" data-rise-item>
                         <textarea name="message" id="userMsg" placeholder=" " rows="1" required></textarea>
                         <label for="userMsg">Contanos un poco más sobre tu proyecto</label>
                     </div>
-                    <div class="reference-block" style="margin-top: 20px; margin-bottom: 20px;">
+                    <div class="reference-block" data-rise-item style="margin-top: 20px; margin-bottom: 20px;">
                         <span class="mono-tag">[03] — REFERENCIA</span>
                         <p style="color: rgba(255, 253, 243, 0.7); font-family: var(--font-reading); font-size: 16px; margin-bottom: 20px; font-weight: 300;">
                             ¿A través de qué medio llegaste a Cruz Estudio?
@@ -485,7 +495,7 @@
                             <label class="service-chip"><input type="radio" name="Origin" value="Anuncios" required><span class="chip-box">ANUNCIOS</span></label>
                         </div>
                     </div>
-                    <button type="submit" class="cta-submit ux-submit-btn" data-magnetic data-magnetic-strength="0.2">
+                    <button type="submit" class="cta-submit ux-submit-btn" data-rise-item data-magnetic data-magnetic-strength="0.2">
                         <span class="cta-text">SOLICITAR REUNIÓN INFORMATIVA</span>
                         <span class="material-symbols-outlined">north_east</span>
                     </button>
@@ -545,41 +555,41 @@
 
 
 </div> <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script defer src="./java/silk-bg.js?v=21"></script>
-<script defer src="./java/intro-loader.js?v=21"></script>
+<script defer src="./java/silk-bg.js?v=24"></script>
+<script defer src="./java/intro-loader.js?v=24"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
 <script defer src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<script defer src="./java/loader.js?v=21"></script>
-<script defer src="./java/hero-3d.js?v=21"></script>
-<script defer src="./java/script.js?v=21"></script>
-<script defer src="./java/nav-menu.js?v=21"></script>
+<script defer src="./java/loader.js?v=24"></script>
+<script defer src="./java/hero-3d.js?v=24"></script>
+<script defer src="./java/script.js?v=24"></script>
+<script defer src="./java/nav-menu.js?v=24"></script>
 <!-- IMPORTANTE: studio-scroll.js DEBE ir antes que type.js y capas.js.
      Crea el pinSpacer del video (280vh) que shiftea las posiciones de las
      secciones siguientes. Si los otros pin-triggers (type.js para why-us)
      se calculan con posiciones viejas, why-us pinea prematuramente y tapa
      servicios. -->
-<script defer src="./java/studio-scroll.js?v=21"></script>
-<script defer src="./java/featured-work.js?v=21"></script>
-<script defer src="./java/services-accordion.js?v=21"></script>
-<script defer src="./java/text-reveal.js?v=21"></script>
-<script defer src="./java/reveal-headers.js?v=21"></script>
-<script defer src="./java/split-reveal.js?v=21"></script>
-<script defer src="./java/type.js?v=21"></script>
-<script defer src="./java/cursor-preview.js?v=21"></script>
-<script defer src="./java/theme-watcher.js?v=21"></script>
+<script defer src="./java/studio-scroll.js?v=24"></script>
+<script defer src="./java/featured-work.js?v=24"></script>
+<script defer src="./java/services-accordion.js?v=24"></script>
+<script defer src="./java/text-reveal.js?v=24"></script>
+<script defer src="./java/reveal-headers.js?v=24"></script>
+<script defer src="./java/split-reveal.js?v=24"></script>
+<script defer src="./java/type.js?v=24"></script>
+<script defer src="./java/cursor-preview.js?v=24"></script>
+<script defer src="./java/theme-watcher.js?v=24"></script>
 
 <a href="https://wa.me/5491161105751?text=Hola%20Cruz%20Estudio,%20me%20gustaría%20consultar%20por%20un%20proyecto." class="whatsapp-fixed" target="_blank" rel="noopener noreferrer" aria-label="Contacto por WhatsApp">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.63 1.43h.004c6.557 0 11.892-5.335 11.895-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
     </svg>
 </a>
-<script defer src="./java/nav-contrast.js?v=21"></script>
-<script defer src="./java/cursor.js?v=21"></script>
-<script defer src="./java/lib/lenis.min.js?v=21"></script>
-<script defer src="./java/smooth-scroll.js?v=21"></script>
+<script defer src="./java/nav-contrast.js?v=24"></script>
+<script defer src="./java/cursor.js?v=24"></script>
+<script defer src="./java/lib/lenis.min.js?v=24"></script>
+<script defer src="./java/smooth-scroll.js?v=24"></script>
 </body>
 </html>

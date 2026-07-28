@@ -82,6 +82,38 @@
             });
         });
 
+        // ── Reveal rise+stagger a nivel BLOQUE (mismo feel que el split de palabras,
+        //    pero para contenido que no se puede partir en palabras: el formulario).
+        //    Grupo: [data-rise-stagger]. Sus [data-rise-item] suben + aparecen en
+        //    cascada cuando el grupo cruza el viewport. Si GSAP/ScrollTrigger no
+        //    corre, los items quedan visibles (nunca se ocultan por CSS). ──
+        var groups = Array.prototype.slice.call(
+            document.querySelectorAll('[data-rise-stagger]')
+        );
+        groups.forEach(function (group) {
+            var items = Array.prototype.slice.call(
+                group.querySelectorAll('[data-rise-item]')
+            );
+            if (!items.length) return;
+
+            gsap.set(items, { y: 40, opacity: 0 });
+
+            window.ScrollTrigger.create({
+                trigger: group,
+                start: 'top 85%',
+                once: true,
+                onEnter: function () {
+                    gsap.to(items, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.9,
+                        ease: 'power3.out',
+                        stagger: 0.08
+                    });
+                }
+            });
+        });
+
         window.addEventListener('load', function () {
             requestAnimationFrame(function () {
                 try { window.ScrollTrigger.refresh(); } catch (_) {}
