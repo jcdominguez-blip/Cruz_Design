@@ -1,0 +1,54 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   CURSOR CUSTOM — punto + aro (ref. kau.studio).
+   El aro sigue al puntero con lag y se ACHICA al pasar sobre interactivos.
+   mix-blend-mode: difference → contraste garantizado sobre cualquier fondo,
+   igual que la lógica de contraste dinámico del navbar.
+   Solo en dispositivos con puntero fino (desktop).
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Reemplaza al cursor viejo (punto amarillo) */
+.custom-cursor { display: none !important; }
+
+@media (hover: hover) and (pointer: fine) {
+  .cx-dot,
+  .cx-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 10000;
+    border-radius: 50%;
+    mix-blend-mode: difference;
+    will-change: transform;
+    opacity: 0;
+    transition: opacity .3s ease;
+  }
+
+  body.cx-ready .cx-dot,
+  body.cx-ready .cx-ring { opacity: 1; }
+
+  .cx-dot {
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    background: #fff;
+  }
+
+  /* Tamaño fijo: la contracción sobre interactivos se anima con scale desde
+     el JS (compositor-friendly; animar width/height provocaría layout). */
+  .cx-ring {
+    width: 38px;
+    height: 38px;
+    margin: -19px 0 0 -19px;
+    border: 1px solid #fff;
+    transition: opacity .3s ease;
+  }
+
+  /* Oculta el cursor nativo solo si el custom está activo */
+  body.cx-ready,
+  body.cx-ready * { cursor: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cx-dot, .cx-ring { display: none !important; }
+}

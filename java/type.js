@@ -27,8 +27,9 @@
     const log  = (...a) => console.log(TAG, ...a);
     const warn = (...a) => console.warn(TAG, ...a);
 
-    const DIM    = 0.00;   // opacidad inicial: completamente invisible
+    const DIM    = 0.14;   // opacidad inicial: TENUE (el texto se ve, con poco contraste)
     const BRIGHT = 1.00;   // opacidad final: full crema
+    const RISE   = 45;     // yPercent inicial: cada char arranca abajo y SUBE al iluminarse (NWJbgOm)
 
     /**
      * Splitea el texto en <span class="tp-char"> dentro de <span class="tp-word">.
@@ -91,8 +92,8 @@
 
         try { gsap.registerPlugin(window.ScrollTrigger); } catch (_) {}
 
-        // Estado inicial explícito
-        gsap.set(allChars, { opacity: DIM });
+        // Estado inicial explícito: tenue y desplazado hacia abajo.
+        gsap.set(allChars, { opacity: DIM, yPercent: RISE });
 
         // Pin distance: proporcional a la cantidad de chars, mínimo 800px.
         // ~6px de scroll por carácter → ritmo cinematográfico (no demasiado
@@ -128,6 +129,7 @@
         allChars.forEach((char, i) => {
             tl.to(char, {
                 opacity: BRIGHT,
+                yPercent: 0,          // sube a su lugar mientras gana contraste
                 ease: 'none',
                 duration: lightSpan
             }, i * slice);

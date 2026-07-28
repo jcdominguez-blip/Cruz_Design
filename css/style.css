@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap');
 /**
  * SISTEMA DE DISEÑO CRUZ ESTUDIO ® 2026
  * Tipografías: Neue Haas Grotesk + IBM Plex Sans + Cofo Sans Mono
@@ -10,7 +11,7 @@
     --amarillo-acento: #f2c335;
     
     /* Tipografías */
-    --font-header: 'neue-haas-grotesk-display', sans-serif;
+    --font-header: 'Geist', sans-serif;
     --font-reading: 'IBM Plex Sans', sans-serif;
     --font-mono: 'cofo-sans-mono-variable', monospace;
 
@@ -128,7 +129,8 @@ body.scroll-locked {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100vh;
-    background-color: #111110;          
+    height: 100dvh; /* mobile: cubre bien con la barra de navegador dinámica */
+    background-color: #111110;
     color: #FFFDF3;
     z-index: 10000;
     display: flex;
@@ -141,6 +143,101 @@ body.scroll-locked {
 #loader.hidden {
     transform: translateY(-100%);
     visibility: hidden;
+}
+
+/* Textura de grano sutil en el loader (mismo recurso que el Hero) */
+#loader::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.16;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 260px 260px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LOADER INTRODUCTORIO — maquetación fiel (counter 01% + esfera wireframe +
+   cruz giratoria + bajada de estudio). Transición de salida zoom+fade (intrkt).
+   ══════════════════════════════════════════════════════════════════════════ */
+#silk-loader {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+#silk-loader canvas { display: block; width: 100%; height: 100%; }
+
+.intro-counter {
+    position: absolute;
+    top: clamp(30px, 6.5vh, 84px);
+    left: clamp(28px, 6vw, 96px);
+    color: #FFFDF3;
+    font-family: var(--font-header), 'Helvetica Neue', sans-serif;
+    font-weight: 800;
+    font-size: clamp(60px, 10vw, 150px);
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    z-index: 3;
+}
+.intro-stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    transform-origin: center center;
+}
+.intro-cross {
+    position: relative;
+    width: clamp(40px, 5vw, 76px);
+    height: auto;
+    filter: brightness(0) invert(1); /* SVG fill #181a17 → blanco */
+    animation: intro-cross-spin 8s linear infinite;
+    z-index: 2;
+    opacity: 0.95;
+}
+@keyframes intro-cross-spin { to { transform: rotate(360deg); } }
+.intro-desc {
+    position: absolute;
+    left: clamp(28px, 6vw, 96px);
+    bottom: clamp(30px, 6.5vh, 84px);
+    margin: 0;
+    max-width: 320px;
+    font-family: var(--font-reading), sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255, 253, 243, 0.55);
+    z-index: 3;
+}
+
+/* Salida estilo intrkt: crossfade suave + leve zoom; el vuelo de cámara del
+   hero arranca a la vez (evento cruz:intro-exit) → reveal continuo, sin salto. */
+#loader.intro-out {
+    opacity: 0;
+    transition: opacity 1.05s cubic-bezier(0.65, 0, 0.35, 1);
+}
+#loader.intro-out .intro-stage {
+    transform: scale(1.12);
+    transition: transform 1.15s cubic-bezier(0.65, 0, 0.35, 1);
+}
+#loader.intro-out .intro-counter,
+#loader.intro-out .intro-desc {
+    opacity: 0;
+    transition: opacity 0.55s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .intro-cross { animation: none !important; }
+    #loader.intro-out, #loader.intro-out .intro-stage { transition: opacity 0.3s ease !important; transform: none !important; }
+}
+@media (max-width: 700px) {
+    .intro-desc { max-width: 72vw; font-size: 12px; }
 }
 
 .loader-vline {
@@ -290,7 +387,7 @@ position: relative; /* Posiciona el cursor relativo al texto */
 
 /* Estilo para el texto */
 #text {
-font-family: "neue-haas-grotesk-display", sans-serif;
+font-family: "Geist", sans-serif;
 font-size: 120px;
 font-weight: 700;
 color: #FFFDF3;
@@ -428,7 +525,7 @@ cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" wid
 /* --- NAVBAR BRAND (ESPACIADO) --- */
 
 .navbar-brand {
-    padding: 10px 65px !important; 
+    padding: 10px 65px !important;
     border-bottom: 1px solid rgba(255, 253, 243, 0.1);
     /* EFECTO GLASS */
     background-color: rgba(29, 30, 28, 0.70);
@@ -450,6 +547,10 @@ cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" wid
     justify-content: space-between;
     position: relative; /* ¡CRÍTICO para el centrado perfecto! */
 }
+
+/* NAVBAR MODERNO (toggle + overlay del menú): movido a css/nav-menu.css,
+   que se linkea en TODAS las páginas (incluidas las de proyecto que usan
+   styleproyect.css). Editar los estilos del menú ahí. */
 
 
 /* Botón hamburguesa */
@@ -615,28 +716,67 @@ margin: 3px 0;
    NUEVO SISTEMA HERO ESFERA 3D CRUZ ESTUDIO
    ========================================================================== */
    /* Grid de fondo y Canvas fijo */
-.grid-bg {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 56px 56px;
+/* La retícula del hero se reemplazó por la textura global de grano (body::after). */
+.grid-bg { display: none; }
+
+/* Fondo Silk del hero (shader animado), detrás de la esfera (#canvas-wrap z2). */
+#silk-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+#silk-bg canvas { display: block; width: 100%; height: 100%; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   TEXTURA GLOBAL DE GRANO (estilo basicagency.com)
+   Capa fija sobre toda la página. Con mix-blend-mode 'overlay' el mismo ruido
+   funciona en fondos NEGROS (los aclara) y BLANCOS (los oscurece) → grano
+   consistente en todas las secciones y páginas. Por debajo de loaders y cursor.
+   ══════════════════════════════════════════════════════════════════════════ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  pointer-events: none;
+  opacity: 0.32;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.6' intercept='-0.8'/%3E%3CfeFuncG type='linear' slope='2.6' intercept='-0.8'/%3E%3CfeFuncB type='linear' slope='2.6' intercept='-0.8'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 260px 260px;
 }
 #canvas-wrap { position: fixed; inset: 0; z-index: 2; }
 #canvas-wrap canvas { display: block; }
 
-/* --- TEXTOS DEL HERO (FIX FINAL SIN ERRORES) --- */
+/* --- CAPA DE INVERSIÓN CROMÁTICA DEL HERO (scroll-driven) ---
+   Se ubica sobre el Silk (z1) y bajo la esfera (canvas z2). El scroll
+   la enciende y cruza su color entre negro y crema para invertir el fondo
+   sin tapar el wireframe. */
+#hero-invert-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  background-color: var(--bg-dark);
+  will-change: opacity, background-color;
+}
+
+/* --- TEXTOS DEL HERO — statements centrados con reveal por líneas --- */
 #hero-text {
-  position: fixed; 
-  top: 50%; 
-  left: 48px; 
-  transform: translateY(-50%);
-  z-index: 20; 
-  /* 1. AMPLIAMOS LA CAJA: Ahora tiene espacio para la tipografía masiva */
-  width: calc(100% - 100px);
-  max-width: 1100px; 
-  opacity: 0; 
-  pointer-events: none; 
-  will-change: opacity;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  width: calc(100% - 48px);
+  max-width: 1720px;
+  text-align: center;
+  color: var(--crema);
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity, color;
 }
 
 .label-tag {
@@ -647,40 +787,67 @@ margin: 3px 0;
   text-transform: uppercase; 
   display: flex; 
   align-items: center; 
-  gap: 12px; 
-  margin-bottom: 28px;
-}
-.label-tag::before { content: ''; display: block; width: 20px; height: 1px; background: var(--amarillo-acento); flex-shrink: 0; }
-
-#hero-text h1 {
-  font-family: var(--font-header); 
-  font-weight: 700; 
-  /* 2. ESCALA SUIZA: Clamp ajustado para que nunca desborde */
-  font-size: clamp(45px, 8vw, 110px); 
-  line-height: 0.95; /* Interlineado cerrado para mayor impacto visual */
-  letter-spacing: -0.05em; 
-  color: var(--crema); 
+  gap: 12px;
   margin-bottom: 28px;
 }
 
-#hero-text h1 .hl { 
-  color: var(--amarillo-acento); 
-  font-style: normal; /* CORRECCIÓN: 'none' era el error */
+/* Contenedor grid: los 3 statements se apilan en la misma celda para
+   hacer crossfade/relevo sin saltos de layout. */
+.hero-statements {
+  position: relative;
+  display: grid;
 }
 
-#hero-text h1 .out { 
-  -webkit-text-stroke: 1.5px rgba(255, 253, 243, 0.38); 
-  color: transparent; /* CORRECCIÓN: 'none' era el error */
+#hero-text h1.hero-statement {
+  grid-area: 1 / 1;
+  margin: 0;
+  font-family: var(--font-header);
+  font-weight: 800;
+  font-size: clamp(42px, 7.5vw, 140px);
+  line-height: 1.02;            /* interlineado con aire (antes 0.9, se empastaba) */
+  letter-spacing: -0.035em;
+  color: inherit;               /* hereda el color invertible de #hero-text */
+  opacity: 0;
+}
+
+/* Cintillo mono sobre la frase (hereda el color invertible del hero) */
+.hs-eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: clamp(10px, 0.95vw, 14px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: inherit;
+  opacity: 0.55;
+  margin-bottom: clamp(14px, 1.6vw, 26px);
+}
+
+/* Reveal palabra por palabra: cada .hs-word entra con slide + blur + opacity. */
+.hs-line { display: block; }
+.hs-inner { display: block; }
+.hs-word {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+
+#hero-text h1 .hl {
+  color: var(--amarillo-acento);
+  font-style: normal;
+}
+
+#hero-text h1 .out {
+  -webkit-text-stroke: 1.5px currentColor;
+  color: transparent;
 }
 
 .body-copy {
   font-family: var(--font-reading);
   font-size: 16px;
   font-weight: 300;
-  color: rgba(255, 253, 243, 0.85); 
+  color: rgba(255, 253, 243, 0.85);
   line-height: 1.6;
-  border-left: 1px solid rgba(255, 253, 243, 0.25); 
-  padding-left: 20px;
   max-width: 520px;
 }
 
@@ -688,13 +855,13 @@ margin: 3px 0;
 
 @media (max-width: 768px) {
     #hero-text {
-        left: 25px;
-        max-width: calc(100% - 50px);
+        width: calc(100% - 44px);
     }
-    #hero-text h1 {
-        font-size: clamp(38px, 10vw, 60px);
-        line-height: 1.0;
+    #hero-text h1.hero-statement {
+        font-size: clamp(28px, 7.8vw, 50px);
+        line-height: 1.06;
     }
+    .hs-eyebrow { margin-bottom: 12px; letter-spacing: 0.15em; }
 }
 
 /* --- HERO WE.DIRECTORY BADGE (Featured on WeDirectory) ---
@@ -815,17 +982,27 @@ margin: 3px 0;
 
 /* --- CONTEXT BAR (LEVEL: DETAIL / SWISS EDITORIAL) --- */
 #stat-strip {
-  position: fixed; 
-  bottom: 40px; 
-  left: 48px; 
+  position: fixed;
+  bottom: 40px;
+  left: 48px;
   right: 48px;
-  z-index: 20; 
-  display: flex; 
-  justify-content: flex-start;
-  gap: 60px; 
-  opacity: 0; 
-  pointer-events: none; 
+  z-index: 20;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;   /* LOCATION | LIVE DATA | SAY HELLO */
+  align-items: end;
+  gap: 24px;
+  opacity: 0;
+  pointer-events: none;
   transition: opacity 0.8s ease;
+}
+
+/* Posiciones: LOCATION abajo-izq · LIVE DATA centrado (alineado con el H1) ·
+   SAY HELLO abajo-der. La columna central 'auto' entre dos 1fr iguales queda
+   perfectamente centrada en el viewport, sin importar el ancho de los lados. */
+@media (min-width: 769px) {
+  #stat-strip .context-item:nth-child(1) { justify-self: start;  align-items: flex-start; text-align: left; }
+  #stat-strip .context-item:nth-child(2) { justify-self: center; align-items: center;     text-align: center; }
+  #stat-strip .context-item:nth-child(3) { justify-self: end;    align-items: flex-end;    text-align: right; }
 }
 
 .context-item {
@@ -871,11 +1048,13 @@ margin: 3px 0;
 @media (max-width: 768px) {
     /* --- 1. CONTENEDOR PRINCIPAL (STACK VERTICAL) --- */
     #stat-strip {
-        bottom: 35px;
+        bottom: 44px; /* despeja el ticker (~28px) que vive en bottom:0 */
         left: 25px;
         right: 25px;
         display: flex;
         flex-direction: column; /* Alineación vertical como la imagen */
+        align-items: flex-start; /* FIX: resetea el align-items:end heredado (base) que empujaba todo a la derecha en móvil */
+        text-align: left;
         gap: 8px; /* Espaciado estrecho y técnico */
         opacity: 0;
         pointer-events: none;
@@ -956,9 +1135,16 @@ margin: 3px 0;
 }
 
 /* Ajuste de la animación para mantener el color */
-@keyframes pulse { 
-  0%, 100% { opacity: 0.28; } 
-  50% { opacity: 0.9; } 
+@keyframes pulse {
+  0%, 100% { opacity: 0.28; }
+  50% { opacity: 0.9; }
+}
+
+/* En móvil el hint quedaba montado sobre el ticker (bottom:0). Lo elevamos y
+   acortamos la línea para que respire por encima de la barra amarilla. */
+@media (max-width: 768px) {
+  #click-hint { bottom: 44px; }
+  #click-hint .hint-line { height: 24px; }
 }
 
 /* Ticker Footer Hero */
@@ -985,11 +1171,57 @@ margin: 3px 0;
 .pc-close:hover { color: var(--yellow); }
 
 /* ESPACIADOR Y CUBIERTA DEL SITIO (CRÍTICO PARA EL SCROLL) */
-#spacer { height: 350vh; } 
+#spacer { height: 520vh; }
 .site-content-wrapper {
   position: relative;
   z-index: 100; /* Se desliza por encima de la esfera fija */
-  background-color: var(--dark); /* Oculta lo que queda atrás */
+  background-color: transparent; /* El Silk sticky (#silk-content) hace de fondo/cobertor */
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SILK GLOBAL DEL CONTENIDO — un único canvas sticky que hace de fondo de
+   TODAS las secciones (colorea por zona: oscuro/blanco+amarillo). Los fondos
+   de sección quedan al 85% para preservar legibilidad y dejar ver el Silk.
+   ══════════════════════════════════════════════════════════════════════════ */
+#silk-content {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  margin-bottom: -100vh;   /* no consume alto: las secciones lo solapan */
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+#silk-content canvas { display: block; width: 100%; height: 100%; }
+
+.site-content-wrapper > section,
+.site-content-wrapper > footer {
+  position: relative;
+  z-index: 1;              /* por encima del Silk sticky */
+}
+
+/* Fondos de sección al 85% (base manda la legibilidad, el Silk se cuela sutil) */
+.studio-section        { background-color: rgba(29, 30, 28, 0.85); }
+.trusted-by            { background: rgba(255, 253, 243, 0.85); }
+.selected-work.light-version { background-color: rgba(255, 253, 243, 0.85); }
+.selected-work.dark-version  { background-color: var(--bg-dark); }
+.services-grid-v4      { background: rgba(29, 30, 28, 0.85); }
+.why-us                { background: rgba(29, 30, 28, 0.85); }
+.contact-section       { background-color: rgba(29, 30, 28, 0.85) !important; }
+.footer-global         { background-color: rgba(255, 253, 243, 0.85); }
+
+/* Mobile: sin Silk de contenido (perf) → secciones sólidas para que se vean iguales */
+@media (max-width: 700px) {
+  .studio-section        { background-color: var(--bg-dark); }
+  .trusted-by            { background: var(--crema); }
+  .selected-work.light-version { background-color: var(--crema); }
+  .selected-work.dark-version  { background-color: var(--bg-dark); }
+  .services-grid-v4      { background: var(--bg-dark); }
+  .why-us                { background: var(--bg-dark); }
+  .contact-section       { background-color: var(--bg-dark) !important; }
+  .footer-global         { background-color: var(--crema); }
+  .site-content-wrapper  { background-color: var(--dark); }
 }
 
 /* Estilos para la imagen dentro de la Card */
@@ -1166,20 +1398,37 @@ body.scroll-locked {
 .studio-section {
     position: relative;
     width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--bg-dark); /* #1D1E1C corporativo */
-    overflow: hidden;
+    /* IMPORTANTE: height:auto y overflow:visible para que ScrollTrigger pueda
+       extender el pinSpacer interno y NO quede cortado el scroll del pin.
+       El .studio-stage hijo es 100vh con su propio overflow:hidden. */
+    height: auto;
+    background-color: var(--bg-dark);
     z-index: 10;
 }
 
-/* --- BLOQUE DE VIDEO (60% de la altura) --- */
-.studio-video-container {
-    flex: 6;
-    width: 100%;
+/* Stage = ventana visible mientras la sección está pineada */
+.studio-stage {
     position: relative;
+    width: 100%;
+    height: 100vh;
     overflow: hidden;
+    background-color: var(--bg-dark);
+}
+
+/* --- BLOQUE DE VIDEO (arranca chico, crece con scroll) --- */
+.studio-video-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* tamaño inicial del "recuadro" pequeño */
+    width: 38vw;
+    height: 58vh;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    border-radius: 6px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+    will-change: width, height, border-radius;
+    z-index: 1;
 }
 
 .studio-video {
@@ -1189,32 +1438,26 @@ body.scroll-locked {
     display: block;
 }
 
-/* --- BLOQUE DE TEXTO (40% de la altura) --- */
-/* Fondo: background-section.svg como detalle (opacidad baja) sobre negro corporativo */
+.video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.45) 100%);
+    pointer-events: none;
+}
+
+/* --- BLOQUE DE TEXTO (overlay sobre el video cuando llega a full-bleed) --- */
 .studio-text-container {
-    flex: 4;
-    position: relative;
-    background-color: var(--bg-dark);
+    position: absolute;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 40px 45px;
     box-sizing: border-box;
-    overflow: hidden;
-}
-
-/* Pseudo con la imagen de fondo a baja opacidad → queda como textura sutil */
-.studio-text-container::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url('../img/bg-section.png');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 0.18; /* Detalle, no protagonista */
     pointer-events: none;
-    z-index: 0;
+    z-index: 5;
+    opacity: 0;       /* GSAP revela */
+    will-change: opacity;
 }
 
 /* Wrapper que centra el frame */
@@ -1224,6 +1467,7 @@ body.scroll-locked {
     width: 100%;
     max-width: 1080px;
     box-sizing: border-box;
+    pointer-events: auto;
 }
 
 /* Frame translúcido con marcadores en las esquinas */
@@ -1236,23 +1480,6 @@ body.scroll-locked {
     border: 1px solid rgba(255, 253, 243, 0.05);
     border-radius: 2px;
     text-align: center;
-
-    /* Animación de entrada: clip-path abriendo desde el centro
-       + leve scale + fade. Se dispara con .studio-section.visible. */
-    opacity: 0;
-    transform: scale(0.97);
-    clip-path: inset(48% 8% 48% 8%);
-    will-change: clip-path, transform, opacity;
-    transition:
-        opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1) 0.05s,
-        transform 1.05s cubic-bezier(0.25, 1, 0.5, 1) 0.05s,
-        clip-path 1.15s cubic-bezier(0.77, 0, 0.175, 1);
-}
-
-.studio-section.visible .studio-frame {
-    opacity: 1;
-    transform: scale(1);
-    clip-path: inset(0 0 0 0);
 }
 
 /* Marcadores + en las esquinas (estilo blueprint editorial) */
@@ -1298,7 +1525,7 @@ body.scroll-locked {
 /* Statement: 3 líneas con máscara individual */
 .studio-statement-v2 {
     margin: 0;
-    font-family: 'neue-haas-grotesk-display', var(--font-header), sans-serif;
+    font-family: 'Geist', var(--font-header), sans-serif;
     font-weight: 500;
     font-size: clamp(1.05rem, 1.6vw, 1.5rem);
     line-height: 1.45;
@@ -1312,25 +1539,13 @@ body.scroll-locked {
     line-height: 1.45;
 }
 
+/* GSAP controla transform/opacity por scrub — no usamos transition CSS
+   acá para que no compita con la timeline. Estado inicial oculto. */
 .studio-reveal-line > span {
     display: inline-block;
-    transform: translateY(110%);
     opacity: 0;
     will-change: transform, opacity;
-    transition:
-        transform 1.15s cubic-bezier(0.77, 0, 0.175, 1),
-        opacity 0.9s ease;
 }
-
-.studio-section.visible .studio-reveal-line > span {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-/* Stagger editorial entre líneas */
-.studio-section.visible .studio-reveal-line:nth-child(1) > span { transition-delay: 0.70s; }
-.studio-section.visible .studio-reveal-line:nth-child(2) > span { transition-delay: 0.85s; }
-.studio-section.visible .studio-reveal-line:nth-child(3) > span { transition-delay: 1.00s; }
 
 /* ==========================================================================
    STUDIO INTRO — RESPONSIVE
@@ -1818,6 +2033,9 @@ body.scroll-locked {
 :root {
     --reveal-easing: cubic-bezier(0.25, 1, 0.5, 1);
     --reveal-duration: 1.4s;
+    /* Curva expo.out (awwwards / produx.design): arranca rápido y desacelera
+       largo → sensación fluida y "premium". La usan los reveals de headers. */
+    --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Reveal básico: SOLO se oculta si <html> tiene .js-ready (inline en <head>).
@@ -1859,6 +2077,37 @@ html.reveal-fallback .text-reveal > span {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+}
+
+/* EXCEPCIÓN: los headers [data-rh] NO se dejan mostrar por el failsafe nuclear.
+   Su reveal lo dispara java/reveal-headers.js con ScrollTrigger (en la posición
+   real, post-refresh de pins), así se ve la animación al llegar scrolleando y no
+   estático. Mantenemos el estado enmascarado hasta que reveal-headers agrega
+   .visible, re-habilitando la transición expo. */
+html.reveal-fallback [data-rh]:not(.visible) .mono-tag {
+    opacity: 0 !important;
+    transform: translateY(28px) !important;
+    transition: opacity 0.7s var(--ease-expo) !important,
+                transform 0.7s var(--ease-expo) !important;
+}
+html.reveal-fallback [data-rh]:not(.visible) .section-display-title .text-reveal > span {
+    transform: translateY(115%) !important;
+    transition: transform 1s var(--ease-expo) !important;
+}
+html.reveal-fallback [data-rh]:not(.visible) .pw-viewall {
+    opacity: 0 !important;
+    transform: translateY(18px) !important;
+    transition: opacity 0.7s var(--ease-expo) 0.42s !important,
+                transform 0.7s var(--ease-expo) 0.42s !important;
+}
+/* Al revelarse (scroll), los headers [data-rh] animan a su posición final */
+html.reveal-fallback [data-rh].visible .mono-tag,
+html.reveal-fallback [data-rh].visible .pw-viewall {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+html.reveal-fallback [data-rh].visible .section-display-title .text-reveal > span {
+    transform: translateY(0) !important;
 }
 
 .scroll-reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; }
@@ -1923,6 +2172,17 @@ html.reveal-fallback .text-reveal > span {
     }
 }
 
+/* Split-text reveal (motion.dev): cada palabra sube + aparece con stagger.
+   El estado inicial lo fija GSAP inline (java/split-reveal.js). Sin JS o con
+   reduced-motion, las palabras quedan visibles (failsafe natural). */
+.sr-word {
+    display: inline-block;
+    will-change: transform, opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+    .sr-word { opacity: 1 !important; transform: none !important; }
+}
+
 /* ===================================================
    SCROLL PROGRESS BAR — finita, color amarillo acento
    =================================================== */
@@ -1962,6 +2222,49 @@ html.reveal-fallback .text-reveal > span {
     border-top: 1px solid rgba(29, 30, 28, 0.1);
 }
 
+/* Variante oscura (Proyectos destacados): el Silk temático se adapta solo,
+   porque decide las zonas por la luminancia del fondo de cada sección. */
+.selected-work.dark-version {
+    position: relative;
+    background-color: var(--bg-dark);   /* SÓLIDO: al 85% se colaba el hero */
+    /* Sin padding vertical acá: el Silk es sticky dentro de la caja de
+       contenido, así que el padding lo dejaba sin cubrir y aparecía una franja
+       de otro tono arriba y abajo. El padding va en .sw-inner. */
+    padding: 0;
+    /* Sin border-top: sobre fondo oscuro se leía como una línea gris. El corte
+       con la sección crema anterior ya es contraste suficiente. */
+    border-top: 0;
+    isolation: isolate;
+}
+.selected-work.dark-version .sw-inner { padding-top: 100px; padding-bottom: 90px; }
+/* Textura de grano — la misma del hero y el loader */
+.selected-work.dark-version::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.16;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 260px 260px;
+}
+/* Silk propio de la sección (mismo efecto que el hero) sobre el negro sólido */
+.pw-silk {
+    /* absolute y NO sticky: html tiene overflow-x:hidden (→ overflow-y:auto),
+       que lo vuelve contenedor de scroll y rompe position:sticky. Con sticky el
+       Silk se despegaba y dejaba media sección sin cubrir. Cubrimos toda la
+       sección y compensamos el costo capando el DPR del canvas (maxDpr:1). */
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+.pw-silk canvas { display: block; width: 100%; height: 100%; }
+.selected-work.dark-version .sw-inner { position: relative; z-index: 2; }
+.selected-work.dark-version .sw-title { color: var(--crema); }
+.selected-work.dark-version .mono-tag { color: var(--amarillo-acento); }
+
 .sw-inner {
     max-width: 1440px;
     margin: 0 auto;
@@ -1981,6 +2284,232 @@ html.reveal-fallback .text-reveal > span {
     font-weight: 700;
     color: #1D1E1C;
     margin-top: 12px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ETAPA II — REVEAL DE HEADERS DE SECCIÓN (estilo produx.design)
+   Sistema UNIFICADO para todo header marcado con [data-rh]:
+   · "Proyectos destacados"  (.sw-header)
+   · "Capas donde operamos"  (.sv4-header, servicios)
+   Secuencia: overline → líneas del título (máscara) → link/CTA.
+   Curva expo.out (--ease-expo), motion marcado y stagger snappy → la misma
+   fluidez/dinamismo que produx. Corre por CSS + IntersectionObserver (.visible),
+   sin depender de rAF/ScrollTrigger, así se ve en cualquier dispositivo.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* El contenedor NO viaja como bloque: cada pieza entra por separado. */
+.js-ready [data-rh].scroll-reveal {
+    opacity: 1;
+    transform: none;
+}
+
+/* 1 · Overline "// …" — sube y aparece primero */
+.js-ready [data-rh] .mono-tag {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+        opacity 0.7s var(--ease-expo),
+        transform 0.7s var(--ease-expo);
+    will-change: opacity, transform;
+}
+.js-ready [data-rh].visible .mono-tag {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 2 · Título por líneas (máscara) — snappy y escalonadas tras el overline.
+   Motion más marcado (115%) + expo.out para que el reveal se "sienta". */
+.js-ready [data-rh] .section-display-title .text-reveal > span {
+    transform: translateY(115%);
+    transition: transform 1s var(--ease-expo);
+    transition-delay: 0.12s;
+    will-change: transform;
+}
+.js-ready [data-rh] .section-display-title .text-reveal:nth-child(2) > span {
+    transition-delay: 0.22s;
+}
+.js-ready [data-rh].visible .section-display-title .text-reveal > span {
+    transform: translateY(0);
+}
+
+/* 3 · Link / CTA — cierra la secuencia (solo donde exista .pw-viewall) */
+.js-ready [data-rh] .pw-viewall {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+        opacity 0.7s var(--ease-expo) 0.42s,
+        transform 0.7s var(--ease-expo) 0.42s,
+        color 0.35s ease,
+        border-color 0.35s ease;
+}
+.js-ready [data-rh].visible .pw-viewall {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PROYECTOS DESTACADOS — grilla asimétrica escalonada, fondo oscuro.
+   · Reveal: el contenedor se "abre" (clip-path) y la imagen se desescala.
+     Lo dispara .is-in (IntersectionObserver en java/featured-work.js) → CSS.
+   · Parallax: GSAP mueve la imagen en Y dentro del contenedor al scrollear.
+   Los transforms van en elementos distintos a propósito: .pw-img-wrap lleva
+   el scale (CSS) y .pw-img el desplazamiento (GSAP), así no se pisan.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.sw-head-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+.pw-viewall {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--crema);
+    text-decoration: none;
+    white-space: nowrap;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(255, 253, 243, 0.32);
+    transition: color .35s ease, border-color .35s ease;
+}
+.pw-viewall:hover { color: var(--amarillo-acento); border-color: var(--amarillo-acento); }
+
+.pw-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: clamp(30px, 4vw, 72px) clamp(20px, 2.5vw, 40px);
+    margin-top: clamp(40px, 6vh, 80px);
+}
+.pw-item { grid-column: 1 / -1; }
+
+/* ── Contenedor que se abre ── */
+.pw-media {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: rgba(255, 253, 243, 0.06);
+    clip-path: inset(46% 0 46% 0);
+    transition: clip-path 1.15s cubic-bezier(.7, 0, .2, 1);
+}
+.pw-item.is-in .pw-media { clip-path: inset(0 0 0 0); }
+
+/* Scale del reveal (CSS) */
+.pw-img-wrap {
+    position: absolute;
+    inset: 0;
+    display: block;
+    transform: scale(1.14);
+    transition: transform 1.5s cubic-bezier(.7, 0, .2, 1);
+    will-change: transform;
+}
+.pw-item.is-in .pw-img-wrap { transform: scale(1); }
+.pw-media:hover .pw-img-wrap {
+    transform: scale(1.04);
+    transition: transform .9s cubic-bezier(.7, 0, .2, 1);
+}
+
+/* Imagen sobredimensionada en alto: deja margen para el parallax (GSAP mueve
+   yPercent) sin que asomen bordes dentro del contenedor. */
+.pw-img {
+    position: absolute;
+    top: -9%;
+    left: 0;
+    width: 100%;
+    height: 118%;
+    object-fit: cover;
+    display: block;
+    will-change: transform;
+}
+
+/* Tags sobre la imagen */
+.pw-tags {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
+}
+.pw-tags span {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 9px;
+    color: var(--crema);
+    background: rgba(29, 30, 28, 0.55);
+    border: 1px solid rgba(255, 253, 243, 0.2);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* Texto */
+.pw-info {
+    margin-top: 16px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity .7s ease .3s, transform .7s cubic-bezier(.7, 0, .2, 1) .3s;
+}
+.pw-item.is-in .pw-info { opacity: 1; transform: none; }
+
+.pw-name {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-family: var(--font-header);
+    font-weight: 600;
+    font-size: clamp(16px, 1.25vw, 20px);
+    letter-spacing: -0.01em;
+    margin: 0 0 8px;
+}
+/* Marcador del sistema: barras mono en amarillo */
+.pw-name::before {
+    content: '//';
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 0.62em;
+    letter-spacing: 0.06em;
+    color: var(--amarillo-acento);
+    flex-shrink: 0;
+}
+.pw-name a { color: var(--crema); text-decoration: none; transition: color .35s ease; }
+.pw-item:hover .pw-name a { color: var(--amarillo-acento); }
+
+.pw-desc {
+    margin: 0;
+    max-width: 46ch;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1.8;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 253, 243, 0.5);
+}
+
+/* ── Escalonado asimétrico (desktop) ── */
+@media (min-width: 861px) {
+    .pw-item--1 { grid-column: 1 / 8; }
+    .pw-item--2 { grid-column: 9 / 13; margin-top: 130px; }
+    .pw-item--3 { grid-column: 3 / 11; margin-top: 40px; }
+    .pw-item--4 { grid-column: 1 / 6; margin-top: 30px; }
+
+    .pw-item--1 .pw-media { aspect-ratio: 16 / 10; }
+    .pw-item--2 .pw-media { aspect-ratio: 3 / 4; }
+    .pw-item--3 .pw-media { aspect-ratio: 16 / 9; }
+    .pw-item--4 .pw-media { aspect-ratio: 4 / 5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pw-media { clip-path: none !important; }
+    .pw-img-wrap { transform: none !important; }
+    .pw-info { opacity: 1 !important; transform: none !important; }
 }
 
 .sw-list {
@@ -2205,6 +2734,8 @@ html.reveal-fallback .text-reveal > span {
     .selected-work.light-version {
         padding: 80px 0 70px;
     }
+    .selected-work.dark-version { padding: 0; }
+    .selected-work.dark-version .sw-inner { padding-top: 80px; padding-bottom: 70px; }
 
     .sw-header {
         margin-bottom: 50px;
@@ -2382,7 +2913,7 @@ padding: 0;
 
 
 .works-list .accordion span {
-font-family: "neue-haas-grotesk-display"; /* Tipografía específica */
+font-family: "Geist"; /* Tipografía específica */
 font-size: 20px;
 font-weight: 400;
 color: #1D1E1C; /* Cambia el color del texto según tu diseño */
@@ -2463,7 +2994,7 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     --bg-dark: #1D1E1C;
     --crema: #FFFDF3;
     --amarillo-acento: #f2c335;
-    --font-header: 'neue-haas-grotesk-display', sans-serif;
+    --font-header: 'Geist', sans-serif;
     --font-reading: 'IBM Plex Sans', sans-serif;
     --font-mono: 'cofo-sans-mono-variable', monospace;
     --swiss-easing: cubic-bezier(0.25, 1, 0.5, 1);
@@ -2679,6 +3210,13 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
 }
 
 .whatsapp-fixed svg { width: 26px; height: 26px; fill: var(--crema); z-index: 2; }
+
+/* En la home el stat-strip ocupa la línea inferior; elevamos el botón de
+   WhatsApp para que no pise el email de SAY HELLO (abajo-derecha). Solo aplica
+   en páginas que tienen #stat-strip (la home). */
+@media (min-width: 769px) {
+  body:has(#stat-strip) .whatsapp-fixed { bottom: 116px; }
+}
 
 .wa-tooltip {
     position: absolute;
@@ -3095,8 +3633,8 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
 /* Ajuste Responsive */
 @media (max-width: 768px) {
     .whatsapp-fixed {
-        bottom: 25px;
-        right: 25px;
+        bottom: 44px; /* despeja el ticker (bottom:0, ~28px); el stat-strip queda alineado a la izquierda, sin colisión */
+        right: 20px;
         width: 50px;
         height: 50px;
     }
@@ -3115,7 +3653,7 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     --bg-dark: #1D1E1C;
     --crema: #FFFDF3;
     --amarillo-acento: #f2c335;
-    --font-header: 'neue-haas-grotesk-display', sans-serif;
+    --font-header: 'Geist', sans-serif;
     --font-reading: 'IBM Plex Sans', sans-serif;
     --font-mono: 'cofo-sans-mono-variable', monospace;
 }
@@ -3573,6 +4111,29 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
    Inspirado en https://codepen.io/jh3y/pen/ZYzKyXx
    ========================================================================== */
 
+/* ── Fondo Silk oscuro dedicado (why-us + contact): mismo efecto reactbits que
+   el hero, sobre negro SÓLIDO (nunca transparente → no deja ver el hero).
+   Se monta en desktop (java/silk-bg.js vía [data-dark-silk]); en móvil queda el
+   negro sólido, igual criterio de perf que #silk-content. ── */
+.section-silk {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+/* !important: THREE.setSize escribe width/height en px inline (medidos al cargar);
+   al pinear why-us el ancho cambia y quedaba una franja negra a la derecha.
+   Forzamos 100% para que el canvas SIEMPRE cubra toda la sección. */
+.section-silk canvas { display: block; width: 100% !important; height: 100% !important; }
+
+/* Contenido por encima del Silk */
+.why-us-container,
+.contact-wrapper { position: relative; z-index: 1; }
+
+/* Opaco garantizado (contact venía al 85% → lo forzamos sólido para el Silk) */
+.contact-section { background-color: var(--bg-dark) !important; }
+
 .why-us {
     position: relative;
     background: var(--bg-dark);
@@ -3644,17 +4205,22 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
    GSAP scrubea opacidad → 1 ligada directamente al scroll wheel,
    revelando cada char a medida que el usuario scrollea.
    Soporta tanto .tp-char (módulo type.js) como .stw-char (text-reveal.js). */
+.why-us-eyebrow .tp-char,
 .why-us-title .tp-char,
 .why-us-body  .tp-char,
 .why-us-title .stw-char,
 .why-us-body  .stw-char {
     color: var(--crema);
-    opacity: 0;
-    will-change: opacity;
+    display: inline-block;    /* permite el rise (translateY) del efecto NWJbgOm */
+    opacity: 0.14;            /* NO invisible: el texto "se ve" tenue antes de scrollear */
+    will-change: opacity, transform;
     font-style: normal;
 }
+/* El eyebrow conserva su amarillo institucional */
+.why-us-eyebrow .tp-char { color: var(--amarillo-acento); }
 
 /* Word wrapper: mantiene la integridad de cada palabra (no se parte mid-word) */
+.why-us-eyebrow .tp-word,
 .why-us-title .tp-word,
 .why-us-body  .tp-word,
 .why-us-title .stw-word,
@@ -3672,11 +4238,13 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
 
 /* Respeta reduced-motion: muestra texto en estado final sin scrub */
 @media (prefers-reduced-motion: reduce) {
+    .why-us-eyebrow .tp-char,
     .why-us-title .tp-char,
     .why-us-body  .tp-char,
     .why-us-title .stw-char,
     .why-us-body  .stw-char {
         opacity: 1 !important;
+        transform: none !important;
     }
 }
 
@@ -4058,6 +4626,243 @@ h2.section-display-title {
     }
 }
 
+/* ══════════════════════════════════════════════════════════════════════════
+   PROGRAMA DE SERVICIOS — ACORDEÓN EDITORIAL (ETAPA II · ref. redondo.design)
+   Tema CLARO: crema al 85% → el Silk (#silk-content) muestra su rama blanca+
+   amarilla detrás (inversión negro→blanco manteniendo el efecto reactbits).
+   Filas 01–04, título grande, toggle +/−, panel con descripción.
+   Apertura por grid-template-rows (0fr→1fr): animable y sin depender de rAF.
+   Reveal de filas + toggle: java/services-accordion.js.
+   ══════════════════════════════════════════════════════════════════════════ */
+.services-accordion {
+    position: relative;
+    z-index: 1;
+    background: var(--crema);   /* OPACO — nunca deja ver el hero detrás */
+    color: var(--bg-dark);
+    padding: clamp(90px, 12vh, 140px) 0;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* Grano fino sobre el crema (misma textura que el loader de proyectos) */
+.services-accordion::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.12;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 260px 260px;
+}
+
+/* Silk en modo claro (blanco como textura, acento casi al tono base) — mismo
+   look que la pantalla de loading de las páginas de proyecto. */
+.sva-silk {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0.9;
+}
+.sva-silk canvas { display: block; width: 100%; height: 100%; }
+
+/* Capa de inversión negro→blanco (OJoROgY). Cubre TODA la sección (incluye el
+   contenido) con el mismo dark texturado de "Proyectos destacados" y se
+   desvanece con el scroll → el fondo pasa de negro a blanco manteniendo grano.
+   opacity base 0 = failsafe (si no hay JS/GSAP, la sección se ve clara y opaca). */
+.sva-cover {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    background-color: var(--bg-dark);
+    will-change: opacity;
+}
+.sva-cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.16;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 260px 260px;
+}
+
+.sva-container {
+    position: relative;
+    z-index: 2;   /* contenido por encima del Silk y el grano, debajo del cover */
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+/* ── Header ── */
+.sva-header {
+    margin-bottom: clamp(48px, 7vh, 90px);
+    max-width: 1100px;
+}
+.sva-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(29, 30, 28, 0.5);
+    margin-bottom: 18px;
+}
+.sva-title {
+    margin: 0;
+    font-family: var(--font-header);
+    font-size: clamp(2.6rem, 5.5vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    color: var(--bg-dark);
+}
+
+/* ── Lista ── */
+.sva-list {
+    border-top: 1px solid rgba(29, 30, 28, 0.16);
+}
+.sva-item {
+    border-bottom: 1px solid rgba(29, 30, 28, 0.16);
+}
+.sva-heading { margin: 0; }
+
+/* Fila clickeable (botón full-width, accesible) */
+.sva-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: clamp(14px, 2.4vw, 34px);
+    background: none;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+    padding: clamp(18px, 2.2vw, 30px) 0;
+    color: var(--bg-dark);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.sva-num,
+.sva-name {
+    font-family: var(--font-header);
+    font-weight: 700;
+    /* Nivel de lectura 2: bajo el título de sección (grande) → ítems ~27.7px.
+       Sistematizado: cap 1.73rem (27.7px en root 16px), baja suave en pantallas chicas. */
+    font-size: clamp(1.5rem, 2.3vw, 1.73rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    transition: color 0.4s var(--ease-expo), transform 0.55s var(--ease-expo);
+}
+.sva-num { color: rgba(29, 30, 28, 0.32); }
+.sva-name { color: var(--bg-dark); }
+
+/* Toggle +/− (dos barras; la vertical colapsa al abrir → signo −) */
+.sva-toggle {
+    position: relative;
+    width: clamp(16px, 1.6vw, 20px);
+    height: clamp(16px, 1.6vw, 20px);
+    flex-shrink: 0;
+    color: rgba(29, 30, 28, 0.55);
+    transition: color 0.4s var(--ease-expo);
+}
+.sva-toggle::before,
+.sva-toggle::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+    transition: transform 0.45s var(--ease-expo), opacity 0.45s var(--ease-expo);
+}
+.sva-toggle::before {
+    left: 0; top: 50%;
+    width: 100%; height: 1.5px;
+    transform: translateY(-50%);
+}
+.sva-toggle::after {
+    top: 0; left: 50%;
+    width: 1.5px; height: 100%;
+    transform: translateX(-50%);
+}
+
+/* Hover (solo puntero fino) */
+@media (hover: hover) and (pointer: fine) {
+    .sva-row:hover .sva-num { color: var(--amarillo-acento); }
+    .sva-row:hover .sva-name { transform: translateX(10px); }
+    .sva-row:hover .sva-toggle { color: var(--amarillo-acento); }
+}
+.sva-row:focus-visible {
+    outline: 2px solid var(--amarillo-acento);
+    outline-offset: 6px;
+}
+
+/* Estado ABIERTO */
+.sva-item.open .sva-num,
+.sva-item.open .sva-toggle { color: var(--amarillo-acento); }
+.sva-item.open .sva-toggle::after { transform: translateX(-50%) scaleY(0); opacity: 0; }
+
+/* ── Panel (descripción) — altura animada por grid-template-rows ── */
+.sva-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.55s var(--ease-expo);
+}
+.sva-item.open .sva-panel {
+    grid-template-rows: 1fr;
+}
+.sva-panel-inner {
+    min-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s var(--ease-expo), transform 0.5s var(--ease-expo);
+}
+.sva-item.open .sva-panel-inner {
+    opacity: 1;
+    transform: none;
+}
+.sva-desc {
+    margin: 0;
+    padding-bottom: clamp(28px, 3.5vw, 48px);
+    max-width: 680px;
+    font-family: var(--font-reading);
+    font-weight: 300;
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+    line-height: 1.55;
+    color: rgba(29, 30, 28, 0.72);
+}
+
+/* El reveal de la lista ahora lo hace el split-text sobre cada .sva-name
+   (java/split-reveal.js): las palabras suben + aparecen con stagger. El reveal
+   a nivel sección lo aporta el cover OJoROgY (negro→blanco). */
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .sva-container { padding: 0 40px; }
+}
+@media (max-width: 720px) {
+    .sva-container { padding: 0 24px; }
+    .sva-row { gap: 14px; padding: 18px 0; }
+    .sva-num,
+    .sva-name { font-size: clamp(1.35rem, 5vw, 1.55rem); }
+    .sva-toggle { width: 18px; height: 18px; }
+    .sva-desc { font-size: 1rem; max-width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sva-item,
+    .sva-num,
+    .sva-name,
+    .sva-toggle,
+    .sva-panel,
+    .sva-panel-inner {
+        transition: none !important;
+    }
+    .js-sva .sva-item { opacity: 1 !important; transform: none !important; }
+}
+
 /* ==========================================================================
    ADAPTACIÓN RESPONSIVE DEFINITIVA (CRUZ ESTUDIO ®)
    ========================================================================== */
@@ -4304,7 +5109,7 @@ h2.section-display-title {
         /* EFECTO GLASS MÓVIL */
         background-color: rgba(28, 28, 28, 0.7);
         backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(12px);
         border-bottom: none;
         display: flex;
         justify-content: space-between;
@@ -4369,7 +5174,7 @@ h2.section-display-title {
     }
     .nav-links-brands.active { transform: translateY(0); }
     .nav-links-brands a {
-        font-family: 'neue-haas-grotesk-display', sans-serif;
+        font-family: 'Geist', sans-serif;
         font-size: 32px !important;
         font-weight: 700;
         text-transform: uppercase;
@@ -4403,7 +5208,7 @@ h2.section-display-title {
  
     /* Título: Justificado a la izquierda y con espacio reservado */
     .hero-title {
-        font-family: 'neue-haas-grotesk-display', sans-serif;
+        font-family: 'Geist', sans-serif;
         font-weight: 700;
         font-size: clamp(3.2rem, 11vw, 4rem);
         line-height: 1.05;
@@ -4490,3 +5295,63 @@ h2.section-display-title {
     background: #f2c335;
     opacity: 0.9;
 }
+
+/* ==========================================================================
+   WE SIDE TAG — Etiqueta vertical fija pegada al margen derecho
+   Cambia de blanco→negro según body[data-bg] para mantener contraste.
+   ========================================================================== */
+.we-side-tag {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    /* Wrapper representa el tamaño VISIBLE (vertical) tras rotar la imagen.
+       Aspecto SVG 609x185 ≈ 3.29:1. width 38px → height 38 * 3.29 = 125px */
+    width: 38px;
+    height: 125px;
+    z-index: 95;
+    transform: translateY(-50%);
+    pointer-events: auto;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    display: block;
+}
+
+.we-side-tag.is-ready { opacity: 1; }
+
+.we-side-tag:hover {
+    transform: translateY(-50%) translateX(-4px);
+}
+
+.we-side-tag-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 125px;        /* tamaño horizontal nativo previo a rotar */
+    height: auto;
+    transform: translate(-50%, -50%) rotate(-90deg);
+    transform-origin: center center;
+    display: block;
+    transition: opacity 0.35s ease;
+    user-select: none;
+    pointer-events: none;
+}
+
+.we-side-tag-img--white { opacity: 1; }
+.we-side-tag-img--black { opacity: 0; }
+
+body[data-bg="light"] .we-side-tag-img--white { opacity: 0; }
+body[data-bg="light"] .we-side-tag-img--black { opacity: 1; }
+
+/* Mobile: levemente más chica para no robar área */
+@media (max-width: 760px) {
+    .we-side-tag {
+        width: 30px;
+        height: 99px;
+    }
+    .we-side-tag-img {
+        width: 99px;
+    }
+}
+
+/* PANEL STACK removido — causaba conflictos de stacking con secciones
+   posteriores. Flujo natural sin transforms ni z-indexes elevados. */

@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://i.ibb.co">
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
-    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="stylesheet" href="../css/style.css?v=13"> 
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     <style>
         .privacy-wrapper {
@@ -16,14 +16,14 @@
             max-width: 800px; /* Ancho optimizado para lectura legal */
         }
         .privacy-title {
-            font-family: 'neue-haas-grotesk-display', sans-serif;
+            font-family: 'Geist', sans-serif;
             font-size: clamp(2.5rem, 5vw, 60px);
             font-weight: 700;
             color: #FFFDF3;
             margin-bottom: 60px;
         }
         .privacy-content {
-            font-family: 'neue-haas-grotesk-display', sans-serif;
+            font-family: 'Geist', sans-serif;
             color: rgba(255, 253, 243, 0.7);
             line-height: 1.8;
             font-size: 16px;
@@ -40,26 +40,39 @@
             .privacy-wrapper { padding: 120px 25px 60px 25px; }
         }
     </style>
+    <script src="../java/page-loader.js?v=13"></script>
+    <link rel="stylesheet" href="../css/nav-menu.css?v=13">
+    <link rel="stylesheet" href="../css/cursor.css?v=13">
 </head>
 <body class="bg-dark">
 
-   <nav class="navbar-brand">
+   <nav class="navbar-brand navbar-modern">
     <div class="containerNav">
-        <a href="index.html" class="logo link-location">
-            <img decoding="async" src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
+        <a href="../index.html" class="logo link-location">
+            <img decoding="async" src="../img/nuevo-logo-cre.svg" alt="Cruz Estudio Logo" class="logo-vectorial">
         </a>
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-        <ul class="nav-links-brands" id="nav-links">
-            <li><a href="#work" class="link-location" data-en="/WORKS" data-es="/TRABAJOS">/TRABAJOS</a></li>
-            <li><a href="./pages/about.html" class="link-location" data-en="/STUDIO" data-es="/ESTUDIO">/ESTUDIO</a></li>               
-            <li><a href="#contact" class="link-location" data-en="/CONTACT" data-es="/CONTACTOS">/CONTACTOS</a></li>
-        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navOverlay">
+            <span class="nav-toggle-box" aria-hidden="true"><i></i><i></i><i></i></span>
+        </button>
     </div>
 </nav>
+
+<!-- Overlay del menú (orquestado vía CSS) -->
+<div class="nav-overlay" id="navOverlay" aria-hidden="true">
+    <div class="nav-overlay-bg"></div>
+    <div class="nav-overlay-inner">
+        <ul class="nav-overlay-links">
+            <li><a href="./trabajos.html"><span class="nol-idx">01</span><span class="nol-txt">Proyectos</span></a></li>
+            <li><a href="./metodologia.html"><span class="nol-idx">02</span><span class="nol-txt">Metodología</span></a></li>
+            <li><a href="./about.html"><span class="nol-idx">03</span><span class="nol-txt">Estudio</span></a></li>
+            <li><a href="./contacto.html"><span class="nol-idx">04</span><span class="nol-txt">Contacto</span></a></li>
+        </ul>
+        <div class="nav-overlay-foot">
+            <a href="mailto:estudiocruzdesign@gmail.com" class="nof-mail">estudiocruzdesign@gmail.com</a>
+            <span class="nof-loc">Buenos Aires, ARG · GMT-3</span>
+        </div>
+    </div>
+</div>
 
     <main class="privacy-wrapper">
         <h1 class="privacy-title">Política de Privacidad</h1>
@@ -99,5 +112,10 @@
         </div>
     </footer>
 
+<script defer src="../java/nav-menu.js?v=13"></script>
+<script defer src="../java/nav-contrast.js?v=13"></script>
+<script defer src="../java/cursor.js?v=13"></script>
+<script defer src="../java/lib/lenis.min.js?v=13"></script>
+<script defer src="../java/smooth-scroll.js?v=13"></script>
 </body>
 </html>

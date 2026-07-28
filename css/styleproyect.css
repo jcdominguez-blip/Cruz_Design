@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap');
 /* ==========================================================================
    MAESTRO CRUZ DISEÑO ® - VERSIÓN FINAL AMPLIADA
    ========================================================================== */
@@ -11,22 +12,54 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+html { background-color: var(--bg-dark); } /* fallback si el Silk no carga */
 body {
-    background-color: var(--bg-dark);
+    background-color: transparent; /* deja ver el Silk global (#silk-global) */
     color: var(--crema);
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+}
+
+/* Silk global de fondo (oscuro) — inyectado por page-loader.js en páginas de proyecto */
+#silk-global {
+    position: fixed;
+    inset: 0;
+    z-index: -1;            /* detrás del contenido estático */
+    pointer-events: none;
+    overflow: hidden;
+}
+#silk-global canvas { display: block; width: 100%; height: 100%; }
+
+/* Fondos grandes al 85% para que el Silk se cuele sutil (legibilidad intacta) */
+.gretel-hero        { background-color: rgba(29, 30, 28, 0.85); }
+.footer-project-nav { background-color: rgba(29, 30, 28, 0.85); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   TEXTURA GLOBAL DE GRANO (estilo basicagency.com)
+   Mismo recurso que en style.css: capa fija sobre toda la página con
+   mix-blend-mode 'overlay' → grano consistente en fondos negros y blancos.
+   ══════════════════════════════════════════════════════════════════════════ */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    pointer-events: none;
+    opacity: 0.32;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.6' intercept='-0.8'/%3E%3CfeFuncG type='linear' slope='2.6' intercept='-0.8'/%3E%3CfeFuncB type='linear' slope='2.6' intercept='-0.8'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 260px 260px;
 }
 
 /* ==========================================================================
    COMPONENTE: BACK ARROW CTA (SISTEMATIZADO)
    ========================================================================== */
 
-/* Contenedor que posiciona el botón debajo del Navbar */
+/* Contenedor que posiciona el botón debajo del Navbar (con respiro) */
 .back-nav-container {
     position: fixed;
-    top: 85px; /* Altura calculada para quedar debajo del Navbar */
+    top: 120px; /* Respiro de ~25px bajo el Navbar */
     left: 0;
     width: 100%;
     padding: 0 var(--grid-margin);
@@ -79,20 +112,104 @@ body {
     transform: translateY(0);
 }
 
-/* --- NAVBAR GLOBAL --- */
+/* --- NAVBAR GLOBAL (glass, match index) --- */
 .navbar-brand {
-    padding: 30px var(--grid-margin) !important;
-    background-color: var(--bg-dark);
-    width: 100%; position: fixed; top: 0; z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 243, 0.1);
+    padding: 10px 65px;
+    background-color: rgba(29, 30, 28, 0.70);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 253, 243, 0.10);
 }
 
-.containerNav { display: flex; justify-content: space-between; align-items: center; }
+.containerNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
 .logo-vectorial { height: 20px; width: auto; filter: brightness(1.1); }
-.nav-links-brands { display: flex; list-style: none; gap: 50px; }
-.nav-links-brands a { 
-    font-family: "cofo-sans-mono-variable", monospace; 
-    font-size: 13px; color: var(--crema); text-decoration: none; 
+
+.nav-links-brands {
+    display: flex;
+    list-style: none;
+    gap: 50px;
+    margin: 0 0 0 auto;
+    padding: 0;
+    align-items: center;
+}
+.nav-links-brands li { margin: 0; }
+.nav-links-brands a {
+    font-family: "cofo-sans-mono-variable", monospace;
+    font-size: 14px;
+    color: var(--crema);
+    letter-spacing: 0.02em;
+    padding: 30px 0;
+    display: inline-block;
+    line-height: 1;
+    transition: opacity 0.3s ease, color 0.3s ease;
+    text-decoration: none !important;
+}
+.nav-links-brands a:hover { opacity: 0.65; }
+
+/* Active state — la página actual queda atenuada e inclickable */
+.nav-links-brands a.is-active {
+    color: var(--crema);
+    opacity: 0.4;
+    pointer-events: none;
+    position: relative;
+}
+.nav-links-brands a.is-active::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 20px;
+    height: 1px;
+    background: #f2c335;
+    opacity: 0.9;
+}
+
+/* Mobile contact (oculto en desktop) */
+.mobile-contact-item { display: none; }
+
+/* Hamburguesa (oculta en desktop) */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 1100;
+}
+.menu-toggle .bar {
+    height: 2px;
+    width: 100%;
+    background-color: var(--crema);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* CTA "CONTACTO" derecha (match index) */
+.nav-right-cta { display: flex; align-items: center; margin-left: 24px; }
+.nav-cta-btn {
+    font-family: "cofo-sans-mono-variable", monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--bg-dark);
+    background: #f2c335;
+    text-decoration: none !important;
+    padding: 12px 22px;
+    border-radius: 50px;
+    transition: transform 0.4s var(--reveal-curve), background 0.4s ease;
+}
+.nav-cta-btn:hover {
+    transform: translateY(-2px);
+    background: var(--crema);
 }
 
 /* --- HERO REPARADO: FULL SCREEN --- */
@@ -137,7 +254,7 @@ body {
 
 /* H1 hero legacy — alineado a .projv2-hero-title */
 .display-title {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: clamp(2.8rem, 8.5vw, 7.5rem);
     line-height: 0.92;
     letter-spacing: -0.04em;
@@ -177,7 +294,7 @@ body {
 
 /* Ficha técnica legacy — alineado a .projv2-meta-cell */
 .meta-item p {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: 17px;
     font-weight: 500;
     line-height: 1.4;
@@ -187,7 +304,7 @@ body {
 
 /* Statement body legacy — alineado a .projv2-statement-title */
 .lectura-proyect {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: clamp(1.7rem, 3.6vw, 3rem);
     line-height: 1.15;
     font-weight: 600;
@@ -199,7 +316,7 @@ body {
 
 /* Break quote legacy — alineado a .projv2-break-quote */
 .break-text {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: clamp(1.5rem, 3.5vw, 2.6rem);
     line-height: 1.25;
     letter-spacing: -0.018em;
@@ -212,7 +329,7 @@ body {
 
 /* Footer "siguiente proyecto" — sistematizado */
 .next-title-display {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: clamp(2rem, 5.5vw, 4rem);
     line-height: 0.95;
     letter-spacing: -0.025em;
@@ -303,11 +420,20 @@ body {
 
 @media (max-width: 768px) {
     .navbar-brand {
-        padding: 20px 30px !important; /* Respiro lateral en móvil */
-        height: 80px;
+        padding: 14px 24px;
+        min-height: 60px;
     }
 
-    /* Ocultar el menú original y convertirlo en Overlay */
+    /* Hamburguesa visible */
+    .menu-toggle {
+        display: flex;
+        order: 2;
+    }
+
+    /* Ocultar CTA amarillo del lado derecho */
+    .nav-right-cta { display: none; }
+
+    /* Convertir menú en overlay full screen */
     .nav-links-brands {
         position: fixed;
         top: 0;
@@ -320,45 +446,36 @@ body {
         justify-content: center;
         align-items: center;
         gap: 3.5rem;
-        transform: translateY(-100%); /* Escondido arriba */
+        transform: translateY(-100%);
         transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
-        z-index: 999;
-        margin: 0; padding: 0;
+        z-index: 1000;
+        margin: 0;
+        padding: 0;
     }
 
     .nav-links-brands.active {
-        transform: translateY(0); /* Desliza hacia abajo */
+        transform: translateY(0);
     }
 
-    .nav-links-brands li {
-        margin: 0; /* Reset de márgenes de desktop */
-    }
+    .nav-links-brands li { margin: 0; }
 
     .nav-links-brands a {
-        font-size: 32px !important; /* Tipografía grande e impactante */
+        font-family: 'Geist', sans-serif;
+        font-size: 32px;
         font-weight: 700;
         text-transform: uppercase;
+        padding: 0;
+        color: var(--crema);
     }
 
-    /* Hamburguesa */
-    .menu-toggle {
-        display: flex !important;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 30px;
-        height: 20px;
-        cursor: pointer;
-        z-index: 1001; /* Siempre sobre el overlay */
-    }
+    /* Mostrar contacto dentro del menú overlay, destacado */
+    .mobile-contact-item { display: block; }
+    .mobile-contact-item a { color: #f2c335; }
 
-    .bar {
-        height: 2px;
-        width: 100%;
-        background-color: var(--crema);
-        transition: all 0.3s ease;
-    }
+    /* Quitar subrayado de active state en mobile (el overlay no lo necesita) */
+    .nav-links-brands a.is-active::after { display: none; }
 
-    /* Animación a X */
+    /* Animación hamburguesa → X */
     .menu-toggle.open .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
     .menu-toggle.open .bar:nth-child(2) { opacity: 0; }
     .menu-toggle.open .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
@@ -373,8 +490,8 @@ body {
 /* --- RESPONSIVE ADJUSTMENTS --- */
 @media (max-width: 1024px) {
     .back-nav-container {
-        top: 75px; /* Ajuste fino para móviles */
-        padding: 0 20px;
+        top: 100px; /* Respiro bajo el navbar en tablet */
+        padding: 0 24px;
     }
     .back-arrow-cta {
         width: 40px; /* Un poco más pequeño en móvil */
@@ -382,6 +499,13 @@ body {
     }
     .back-arrow-cta .material-symbols-outlined {
         font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .back-nav-container {
+        top: 85px; /* Navbar mobile ≈ 60px + ~25px de respiro */
+        padding: 0 18px;
     }
 }
 /* --- RESPONSIVE MOBILE --- */
@@ -427,72 +551,8 @@ body {
 }
 /* ==========================================================================
    PROJECT V2 — Sistema editorial estilo estrela.studio
-   Glass navbar (match index) + active state + scroll reveal refinado
-   + estructura modular para case studies.
+   (navbar consolidado arriba; ver "NAVBAR GLOBAL")
    ========================================================================== */
-
-/* --- GLASS NAVBAR (match index) -------------------------------------- */
-.navbar-brand {
-    padding: 10px 65px !important;
-    background-color: rgba(29, 30, 28, 0.70) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 253, 243, 0.10);
-}
-
-/* Espaciado y tipografía del menú (match index) */
-.nav-links-brands {
-    gap: 50px;
-    margin-left: auto;
-}
-.nav-links-brands a {
-    font-family: "cofo-sans-mono-variable", monospace;
-    font-size: 14px;
-    color: var(--crema);
-    letter-spacing: 0.02em;
-    padding: 30px 0;
-    display: inline-block;
-    line-height: 1;
-    transition: opacity 0.3s ease, color 0.3s ease;
-    text-decoration: none !important;
-}
-.nav-links-brands a:hover { opacity: 0.65; }
-
-/* Active state — la página actual queda atenuada e inclickable */
-.nav-links-brands a.is-active {
-    color: var(--crema);
-    opacity: 0.4;
-    pointer-events: none;
-    position: relative;
-}
-.nav-links-brands a.is-active::after {
-    content: '';
-    position: absolute;
-    left: 0; right: 0;
-    bottom: 20px;
-    height: 1px;
-    background: #f2c335;
-    opacity: 0.9;
-}
-
-/* CTA "CONTACTO" derecha (match index) */
-.nav-right-cta { display: flex; align-items: center; margin-left: 24px; }
-.nav-cta-btn {
-    font-family: "cofo-sans-mono-variable", monospace;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    color: var(--bg-dark);
-    background: #f2c335;
-    text-decoration: none !important;
-    padding: 12px 22px;
-    border-radius: 50px;
-    transition: transform 0.4s var(--reveal-curve), background 0.4s ease;
-}
-.nav-cta-btn:hover {
-    transform: translateY(-2px);
-    background: var(--crema);
-}
 
 /* --- SCROLL REVEAL REFINADO (estrela style) -------------------------- */
 .scroll-reveal {
@@ -599,7 +659,7 @@ body {
     margin-bottom: 28px;
 }
 .projv2-hero-title {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: clamp(2.8rem, 8.5vw, 7.5rem);
     line-height: 0.92;
     letter-spacing: -0.04em;
@@ -628,7 +688,7 @@ body {
     margin-bottom: 14px;
 }
 .projv2-meta-cell p {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: 17px;
     font-weight: 500;
     color: var(--crema);
@@ -649,7 +709,7 @@ body {
     margin-bottom: 36px;
 }
 .projv2-statement-title {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: clamp(1.7rem, 3.6vw, 3rem);
     line-height: 1.15;
     font-weight: 600;
@@ -659,7 +719,7 @@ body {
     max-width: 1100px;
 }
 .projv2-statement-body {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: 1.05rem;
     line-height: 1.7;
     color: rgba(255, 253, 243, 0.72);
@@ -728,7 +788,7 @@ body {
 .projv2-challenge-list li:first-child { padding-top: 0; }
 .projv2-challenge-list li:last-child  { border-bottom: none; }
 .projv2-challenge-list h4 {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: clamp(1.2rem, 2vw, 1.55rem);
     font-weight: 600;
     letter-spacing: -0.012em;
@@ -736,7 +796,7 @@ body {
     margin: 0 0 10px;
 }
 .projv2-challenge-list p {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: 1rem;
     line-height: 1.65;
     color: rgba(255, 253, 243, 0.7);
@@ -761,7 +821,7 @@ body {
     margin-bottom: 16px;
 }
 .projv2-asset h3 {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: clamp(1.3rem, 2.2vw, 1.7rem);
     font-weight: 600;
     letter-spacing: -0.015em;
@@ -802,7 +862,7 @@ body {
     gap: 64px;
 }
 .projv2-tone-item h4 {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: clamp(1.3rem, 2.2vw, 1.7rem);
     font-weight: 600;
     letter-spacing: -0.012em;
@@ -810,7 +870,7 @@ body {
     margin: 0 0 14px;
 }
 .projv2-tone-item p {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: 1.02rem;
     line-height: 1.65;
     color: rgba(255, 253, 243, 0.72);
@@ -824,7 +884,7 @@ body {
     border-top: 1px solid rgba(255,253,243,0.10);
 }
 .projv2-break-quote {
-    font-family: "neue-haas-grotesk-display", sans-serif;
+    font-family: "Geist", sans-serif;
     font-size: clamp(1.5rem, 3.5vw, 2.6rem);
     line-height: 1.25;
     letter-spacing: -0.018em;
@@ -860,7 +920,7 @@ body {
 }
 
 @media (max-width: 640px) {
-    .navbar-brand { padding: 20px 24px !important; }
+    .navbar-brand { padding: 12px 18px; }
     .projv2-hero { padding: 0 22px; }
     .projv2-meta,
     .projv2-statement,
@@ -950,4 +1010,4 @@ figure.fit-contain video,
 .reveal-frame.fit-contain:hover img,
 .reveal-frame.fit-contain:hover video {
     transform: scale(1.02) !important;
-}
+}

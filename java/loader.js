@@ -26,11 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
             progress = 100;
             clearInterval(loadInterval);
             setTimeout(() => {
-                if (loader) loader.classList.add('hidden');
-                body.classList.remove('scroll-locked');
-                body.style.overflow = 'auto';
-                body.style.height = 'auto';
-            }, 500);
+                const finish = () => {
+                    body.classList.remove('scroll-locked');
+                    body.style.overflow = 'auto';
+                    body.style.height = 'auto';
+                };
+                if (typeof window.cruzIntroExit === 'function') {
+                    window.cruzIntroExit(finish);
+                } else {
+                    if (loader) loader.classList.add('hidden');
+                    finish();
+                }
+            }, 400);
         }
         // Actualizar número fantasma
         if (percentage) percentage.textContent = String(progress).padStart(2, '0');

@@ -10,31 +10,42 @@
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styleproyect.css">
+    <link rel="stylesheet" href="../css/styleproyect.css?v=13">
     <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png">
+    <script src="../java/page-loader.js?v=13"></script>
+    <link rel="stylesheet" href="../css/nav-menu.css?v=13">
+    <link rel="stylesheet" href="../css/cursor.css?v=13">
 </head>
 <body class="project-page">
     <div class="page-transition"></div>
 
-    <nav class="navbar-brand">
-        <div class="containerNav">
-            <a href="../index.html" class="logo link-location">
-                <img decoding="async" src="../img/nuevo-logo-cre.svg" alt="Cruz Diseño Logo" class="logo-vectorial">
-            </a>
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-            </div>
-           <ul class="nav-links-brands" id="nav-links">
-                <li><a href="./trabajos.html" class="link-location is-active" aria-current="page">[PROYECTOS]</a></li>
-                <li><a href="./metodologia.html" class="link-location">[METODOLOGÍA]</a></li>
-                <li><a href="./about.html" class="link-location">[ESTUDIO]</a></li>
-                <li class="mobile-contact-item"><a href="./contacto.html" class="link-location">CONTACTO</a></li>
-            </ul>
-            <div class="nav-right-cta">
-                <a href="./contacto.html" class="nav-cta-btn">CONTACTO</a>
-            </div>
+    <nav class="navbar-brand navbar-modern">
+    <div class="containerNav">
+        <a href="../index.html" class="logo link-location">
+            <img decoding="async" src="../img/nuevo-logo-cre.svg" alt="Cruz Estudio Logo" class="logo-vectorial">
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navOverlay">
+            <span class="nav-toggle-box" aria-hidden="true"><i></i><i></i><i></i></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Overlay del menú (orquestado vía CSS) -->
+<div class="nav-overlay" id="navOverlay" aria-hidden="true">
+    <div class="nav-overlay-bg"></div>
+    <div class="nav-overlay-inner">
+        <ul class="nav-overlay-links">
+            <li><a href="./trabajos.html"><span class="nol-idx">01</span><span class="nol-txt">Proyectos</span></a></li>
+            <li><a href="./metodologia.html"><span class="nol-idx">02</span><span class="nol-txt">Metodología</span></a></li>
+            <li><a href="./about.html"><span class="nol-idx">03</span><span class="nol-txt">Estudio</span></a></li>
+            <li><a href="./contacto.html"><span class="nol-idx">04</span><span class="nol-txt">Contacto</span></a></li>
+        </ul>
+        <div class="nav-overlay-foot">
+            <a href="mailto:estudiocruzdesign@gmail.com" class="nof-mail">estudiocruzdesign@gmail.com</a>
+            <span class="nof-loc">Buenos Aires, ARG · GMT-3</span>
         </div>
-    </nav>
+    </div>
+</div>
 
      <div class="back-nav-container">
         <a href="trabajos.html" class="back-arrow-cta" aria-label="Volver a Trabajos">
@@ -120,20 +131,11 @@
     </footer>
     
 
-    <script src="../java/script.js"></script>
+    <script src="../java/script.js?v=13"></script>
     <script>
         // Menú hamburguesa + scroll reveal sistematizado
         document.addEventListener('DOMContentLoaded', () => {
-            const menuBtn  = document.getElementById('mobile-menu');
-            const navLinks = document.getElementById('nav-links');
-            if (menuBtn && navLinks) {
-                menuBtn.addEventListener('click', () => {
-                    menuBtn.classList.toggle('open');
-                    navLinks.classList.toggle('active');
-                });
-            }
-
-            const io = new IntersectionObserver((entries) => {
+const io = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
@@ -152,5 +154,10 @@
             }, 4500);
         });
     </script>
+<script defer src="../java/nav-menu.js?v=13"></script>
+<script defer src="../java/nav-contrast.js?v=13"></script>
+<script defer src="../java/cursor.js?v=13"></script>
+<script defer src="../java/lib/lenis.min.js?v=13"></script>
+<script defer src="../java/smooth-scroll.js?v=13"></script>
 </body>
 </html>

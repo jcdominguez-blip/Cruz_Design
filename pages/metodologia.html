@@ -13,37 +13,45 @@
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/metodologia.css">
+    <link rel="stylesheet" href="../css/style.css?v=13">
+    <link rel="stylesheet" href="../css/metodologia.css?v=13">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="../java/page-loader.js?v=13"></script>
+    <link rel="stylesheet" href="../css/nav-menu.css?v=13">
+    <link rel="stylesheet" href="../css/cursor.css?v=13">
 </head>
 <body class="bg-dark">
 
-<nav class="navbar-brand">
+<nav class="navbar-brand navbar-modern">
     <div class="containerNav">
-        <a href="../index.html" class="logo">
+        <a href="../index.html" class="logo link-location">
             <img decoding="async" src="../img/nuevo-logo-cre.svg" alt="Cruz Estudio Logo" class="logo-vectorial">
         </a>
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-        </div>
-        <ul class="nav-links-brands" id="nav-links">
-                <li><a href="./trabajos.html" class="link-location">[PROYECTOS]</a></li>
-                <li><a href="./metodologia.html" class="link-location is-active" aria-current="page">[METODOLOGÍA]</a></li>
-                <li><a href="./about.html" class="link-location">[ESTUDIO]</a></li>
-                <li class="mobile-contact-item"><a href="./contacto.html" class="link-location">CONTACTO</a></li>
-            </ul>
-            <div class="nav-right-cta">
-                <a href="./contacto.html" class="nav-cta-btn">CONTACTO</a>
-            </div>
-        <div class="nav-right-cta">
-            <a href="contacto.html" class="nav-cta-btn">CONTACTO</a>
-        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navOverlay">
+            <span class="nav-toggle-box" aria-hidden="true"><i></i><i></i><i></i></span>
+        </button>
     </div>
 </nav>
+
+<!-- Overlay del menú (orquestado vía CSS) -->
+<div class="nav-overlay" id="navOverlay" aria-hidden="true">
+    <div class="nav-overlay-bg"></div>
+    <div class="nav-overlay-inner">
+        <ul class="nav-overlay-links">
+            <li><a href="./trabajos.html"><span class="nol-idx">01</span><span class="nol-txt">Proyectos</span></a></li>
+            <li><a href="./metodologia.html"><span class="nol-idx">02</span><span class="nol-txt">Metodología</span></a></li>
+            <li><a href="./about.html"><span class="nol-idx">03</span><span class="nol-txt">Estudio</span></a></li>
+            <li><a href="./contacto.html"><span class="nol-idx">04</span><span class="nol-txt">Contacto</span></a></li>
+        </ul>
+        <div class="nav-overlay-foot">
+            <a href="mailto:estudiocruzdesign@gmail.com" class="nof-mail">estudiocruzdesign@gmail.com</a>
+            <span class="nof-loc">Buenos Aires, ARG · GMT-3</span>
+        </div>
+    </div>
+</div>
 
 <div class="site-content-wrapper" style="padding-top: 100px;">
     
@@ -60,7 +68,7 @@
             
             <div class="hero-split reveal-item">
                 <p class="hero-desc">
-                    No diseñamos signos aislados; sistematizamos identidades que capitalizan el valor de tu empresa. Nuestro método asegura que cada decisión visual sea la consecuencia lógica de la estrategia, logrando que la marca <span class="txt-crema">evoca</span> los atributos correctos en cada punto de contacto.
+                    No diseñamos signos aislados; sistematizamos identidades que capitalizan el valor de tu empresa. Nuestro método asegura que cada decisión visual sea la consecuencia lógica de la estrategia, logrando que la marca <span class="txt-crema">evoque</span> los atributos correctos en cada punto de contacto.
                 </p>
             </div>
         </div>
@@ -96,7 +104,7 @@
                 <h2 class="fase-title">Sistema de identidad</h2>
             </div>
             <div class="fase-body">
-                <p>Desarrollo del <span class="txt-yellow">logotipo con símbolo</span> y el lenguaje visual completo. Traducimos conceptos técnicos en una estética diferencial y soberbia.</p>
+                <p>Desarrollo del <span class="txt-yellow">logotipo con símbolo</span> y el lenguaje visual completo. Traducimos la estrategia en una estética diferencial y sobresaliente.</p>
                 <div class="fase-tags"><span>LOGOTIPO</span><span>TIPOGRAFÍA</span><span>CROMATISMO</span></div>
             </div>
         </div>
@@ -107,7 +115,7 @@
                 <h2 class="fase-title">Implementación normativa</h2>
             </div>
             <div class="fase-body">
-                <p>Sistematizamos la marca en un brandbook técnico. Aseguramos la coherencia y el crecimiento del activo visual a largo plazo.</p>
+                <p>Sistematizamos la marca en un brandbook técnico y realizamos la transferencia total de los activos. Aseguramos la coherencia y el crecimiento del sistema visual a largo plazo.</p>
                 <div class="fase-tags"><span>MANUAL DE MARCA</span><span>ACTIVOS DIGITALES</span></div>
             </div>
         </div>
@@ -147,7 +155,12 @@
     </section>
 </div>
 
-<script src="../java/script.js" defer></script>
-<script src="../java/metodologia.js" defer></script>
+<script src="../java/script.js?v=13" defer></script>
+<script src="../java/metodologia.js?v=13" defer></script>
+<script defer src="../java/nav-menu.js?v=13"></script>
+<script defer src="../java/nav-contrast.js?v=13"></script>
+<script defer src="../java/cursor.js?v=13"></script>
+<script defer src="../java/lib/lenis.min.js?v=13"></script>
+<script defer src="../java/smooth-scroll.js?v=13"></script>
 </body>
 </html>

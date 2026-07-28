@@ -1,0 +1,213 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   NAVBAR MODERNO — hoja AUTOCONTENIDA (se linkea en TODAS las páginas).
+   Antes vivía en style.css, pero las páginas de proyecto usan styleproyect.css
+   (sin estas reglas ni todas las variables) → el menú salía sin estilos.
+   Este archivo define sus propias variables para funcionar en cualquier página.
+   Requiere en el layout: .navbar-brand (z-index:1000) + .containerNav (flex).
+   ═══════════════════════════════════════════════════════════════════════ */
+:root {
+  --bg-dark: #1D1E1C;
+  --crema: #FFFDF3;
+  --amarillo-acento: #f2c335;
+  --font-header: 'Geist', sans-serif;
+  --font-mono: 'cofo-sans-mono-variable', monospace;
+}
+
+/* ── Navbar SIN contenedor: flota sobre el contenido en todos los tamaños ── */
+.navbar-brand.navbar-modern {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: none !important;
+}
+.navbar-modern .logo-vectorial { transition: filter .45s ease; }
+
+/* Contraste dinámico: sobre fondos claros, logo y toggle pasan a negro.
+   La clase .nav-light la setea java/nav-contrast.js (muestrea el fondo real). */
+body.nav-light .navbar-modern .logo-vectorial { filter: invert(1) !important; }
+body.nav-light .navbar-modern .nav-toggle { color: var(--bg-dark); }
+
+/* Con el menú abierto el overlay es oscuro → logo y toggle siempre claros */
+body.nav-open .navbar-modern .logo-vectorial { filter: none !important; }
+body.nav-open .navbar-modern .nav-toggle { color: var(--crema); }
+
+/* ── Toggle: 3 barras horizontales (→ X) arriba a la derecha ── */
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--crema);
+  z-index: 1;
+  /* vuelta suave del efecto magnético (java/cursor.js) */
+  transition: transform .35s cubic-bezier(.2,.8,.2,1);
+}
+/* Sin contenedor: solo las 3 barras. La caja mantiene el área de click. */
+.nav-toggle-box {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 5px;
+  width: 46px;
+  height: 46px;
+}
+.nav-toggle-box i {
+  width: 24px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform .4s cubic-bezier(.7,0,.2,1), opacity .3s ease;
+}
+.nav-toggle:hover { color: var(--amarillo-acento); }
+/* Abierto → X (gap 5 + barra 2 → centros a ±7px del medio) */
+.nav-toggle.is-open .nav-toggle-box i:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.is-open .nav-toggle-box i:nth-child(2) { opacity: 0; }
+.nav-toggle.is-open .nav-toggle-box i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-toggle:focus:not(:focus-visible) { outline: none; }
+
+/* ── Overlay del menú ── */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 990;                /* sobre el contenido y el back-arrow (z900); la nav va en 1000 */
+  display: flex;
+  visibility: hidden;
+  transition: visibility 0s linear .5s;
+}
+.nav-overlay.is-open {
+  visibility: visible;
+  transition: visibility 0s linear 0s;
+}
+.nav-overlay-bg {
+  position: absolute; inset: 0;
+  background: var(--bg-dark);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform .4s cubic-bezier(.7,0,.2,1);
+  will-change: transform;
+}
+.nav-overlay.is-open .nav-overlay-bg {
+  transform: scaleY(1);
+  transition: transform .7s cubic-bezier(.7,0,.2,1);
+}
+.nav-overlay-inner {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 130px 65px 60px;
+}
+.nav-overlay-links { list-style: none; margin: 0; padding: 0; }
+.nav-overlay-links li { overflow: hidden; }
+.nav-overlay-links a {
+  display: flex;
+  align-items: baseline;
+  gap: 28px;
+  text-decoration: none;
+  color: var(--crema);
+  font-family: var(--font-header);
+  font-weight: 800;
+  font-size: clamp(42px, 7.6vw, 116px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  padding: 2px 0;
+  transform: translateY(120%);
+  transition: transform .34s cubic-bezier(.55,0,.5,1) 0s,
+              color .35s ease 0s,
+              padding-left .45s cubic-bezier(.7,0,.2,1) 0s;
+  will-change: transform;
+}
+.nav-overlay.is-open .nav-overlay-links a {
+  transform: translateY(0);
+  transition: transform .72s cubic-bezier(.16,1,.3,1) var(--rd, 0s),
+              color .35s ease 0s,
+              padding-left .45s cubic-bezier(.7,0,.2,1) 0s;
+}
+.nav-overlay.is-open .nav-overlay-links li:nth-child(1) a { --rd: .14s; }
+.nav-overlay.is-open .nav-overlay-links li:nth-child(2) a { --rd: .22s; }
+.nav-overlay.is-open .nav-overlay-links li:nth-child(3) a { --rd: .30s; }
+.nav-overlay.is-open .nav-overlay-links li:nth-child(4) a { --rd: .38s; }
+.nav-overlay-links .nol-idx {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: clamp(12px, 1.1vw, 16px);
+  color: rgba(255, 253, 243, 0.4);
+  letter-spacing: 0.1em;
+}
+.nav-overlay-links a:hover { color: var(--amarillo-acento); }
+
+/* Micro-interacción: subrayado que se dibuja de izquierda a derecha
+   y el número acompaña con un leve desplazamiento. */
+.nav-overlay-links .nol-txt {
+  position: relative;
+  display: inline-block;
+}
+.nav-overlay-links .nol-txt::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0.1em;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform .55s cubic-bezier(.7,0,.2,1);
+}
+.nav-overlay-links a:hover .nol-txt::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+.nav-overlay-links .nol-idx { transition: transform .45s cubic-bezier(.7,0,.2,1), color .35s ease; }
+.nav-overlay-links a:hover .nol-idx { transform: translateY(-0.4em); }
+
+/* Página actual: link resaltado con acento + punto marcador */
+.nav-overlay-links a.is-current { color: var(--amarillo-acento); }
+.nav-overlay-links a.is-current .nol-idx { color: var(--amarillo-acento); opacity: .85; }
+.nav-overlay-links a.is-current::after {
+  content: '';
+  align-self: center;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--amarillo-acento);
+  flex-shrink: 0;
+}
+
+.nav-overlay-foot {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 54px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 253, 243, 0.12);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 253, 243, 0.6);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .3s ease 0s, transform .3s ease 0s;
+}
+.nav-overlay.is-open .nav-overlay-foot {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .5s ease .48s, transform .5s ease .48s;
+}
+.nav-overlay-foot a { color: inherit; text-decoration: none; }
+.nav-overlay-foot a:hover { color: var(--amarillo-acento); }
+
+body.nav-open { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-overlay, .nav-overlay-bg, .nav-overlay-links a, .nav-overlay-foot { transition-duration: .01ms !important; }
+}
+@media (max-width: 768px) {
+  .nav-overlay-inner { padding: 110px 25px 40px; }
+  .nav-overlay-links a { gap: 16px; }
+  .nav-overlay-foot { flex-direction: column; gap: 8px; margin-top: 36px; }
+}

@@ -7,10 +7,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const navLinks = document.getElementById("nav-links");
     const logo = document.querySelector(".logo");
 
-    menuToggle.addEventListener("click", function () {
-        navLinks.classList.toggle("active");
-        logo.classList.toggle("hidden"); // Agrega o quita la clase para ocultar el logo
-    });
+    // El nav viejo (#mobile-menu / #nav-links) ya no existe: el menú moderno lo
+    // maneja nav-menu.js. Guarda para no romper si los elementos no están.
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener("click", function () {
+            navLinks.classList.toggle("active");
+            logo?.classList.toggle("hidden");
+        });
+    }
 });
 
 

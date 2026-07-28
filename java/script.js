@@ -26,10 +26,17 @@ document.addEventListener('DOMContentLoaded', () => {
             progress = 100;
             clearInterval(loadInterval);
             setTimeout(() => {
-                if (loader) loader.classList.add('hidden');
-                body.classList.remove('scroll-locked');
-                body.style.overflow = 'auto';
-            }, 500);
+                const finish = () => {
+                    body.classList.remove('scroll-locked');
+                    body.style.overflow = 'auto';
+                };
+                if (typeof window.cruzIntroExit === 'function') {
+                    window.cruzIntroExit(finish);
+                } else {
+                    if (loader) loader.classList.add('hidden');
+                    finish();
+                }
+            }, 400);
         }
         // Formato '00' para estética técnica suiza
         if (percentage) percentage.textContent = String(progress).padStart(2, '0');
@@ -71,10 +78,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    if (menuBtn) {
+    if (menuBtn && navLinks) {
+        const closeMenu = () => {
+            menuBtn.classList.remove('open');
+            navLinks.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        };
         menuBtn.addEventListener('click', () => {
             menuBtn.classList.toggle('open');
-            navLinks?.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+        // Cierre automático al tocar un link del menú (overlay mobile)
+        navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+        // Cierre con tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navLinks.classList.contains('active')) closeMenu();
         });
     }
 
@@ -114,16 +133,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
 
-    const revealSelector = '.works-header, .works-preview, .featured-work-item, #studio-intro, .scroll-reveal, .scroll-reveal-stagger';
+    const revealSelector = '.works-header, .works-preview, .featured-work-item, .scroll-reveal, .scroll-reveal-stagger';
     document.querySelectorAll(revealSelector).forEach((el) => {
+        // Los headers [data-rh] los maneja java/reveal-headers.js con ScrollTrigger
+        // (post-refresh), porque el observer acá dispara prematuramente por los pins.
+        if (el.hasAttribute('data-rh')) return;
         revealObserver.observe(el);
     });
 
-    // Failsafe: si por algún motivo el observer no dispara (loader, transforms, etc.),
-    // forzamos visible a cualquier elemento que ya esté dentro del viewport pasados 1.5s.
+    // Failsafe SUAVE viewport-aware (1.5s): rescata SOLO lo que ya está en
+    // pantalla y no se reveló (loader, transforms, etc.).
     setTimeout(() => {
         const vh = window.innerHeight;
         document.querySelectorAll(revealSelector).forEach((el) => {
+            if (el.hasAttribute('data-rh')) return; // headers → reveal-headers.js
             if (el.classList.contains('visible')) return;
             const rect = el.getBoundingClientRect();
             if (rect.top < vh && rect.bottom > 0) {
@@ -133,10 +156,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, 1500);
 
-    // Escape hatch absoluto: a los 4s, todo lo que aún no se reveló se vuelve visible.
-    // Garantiza que el contenido NUNCA quede oculto si algo falla.
+    // Escape hatch absoluto (4s): todo lo que aún no se reveló se vuelve visible,
+    // EXCEPTO los headers [data-rh]. Esos los maneja reveal-headers.js con
+    // ScrollTrigger (post-refresh); si los reveláramos acá por temporizador se
+    // verían ESTÁTICOS al llegar scrolleando (el hero mide 520vh).
     setTimeout(() => {
         document.querySelectorAll(revealSelector).forEach((el) => {
+            if (el.hasAttribute('data-rh')) return;
             if (!el.classList.contains('visible')) el.classList.add('visible');
         });
     }, 4000);
