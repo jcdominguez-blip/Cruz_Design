@@ -56,7 +56,7 @@ body.about-page {
     font-size: clamp(3rem, 7vw, 9rem);
     line-height: 0.9;
     letter-spacing: -0.03em;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     color: var(--a-ink);
     /* perspectiva para el rotateX del reveal */
     perspective: 1000px;
