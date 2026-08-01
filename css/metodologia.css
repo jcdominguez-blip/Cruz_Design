@@ -1,147 +1,438 @@
-/* --- METODOLOGÍA: IMPACTO Y SISTEMA --- */
+/* ═══════════════════════════════════════════════════════════════════════════
+   METODOLOGÍA — "Sistema Operativo de Diseño"
+   Redesign clínico / suizo (Soft Brutalism) sobre el DESIGN SYSTEM del estudio:
+     · Títulos  → var(--font-header)   (Geist)
+     · Cuerpo   → var(--font-reading)  (IBM Plex Sans)
+     · Mono     → var(--font-mono)     (Cofo Sans Mono)  · etiquetas, nº, tags
+     · Tinta    → #1D1E1C (bg-dark corporativo)  ·  Acento → #F2C335 (amarillo)
+     · Base clara (crema corporativo), separadores hairline, mucho whitespace.
+   Interacción: línea de progreso que se "prende" al scrollear y activa los 4
+   pasos en secuencia (ref. wearemotto.com/motto-method).  java/metodologia.js
+   Reveal de hero/CTA: fade-in-up con stagger (IntersectionObserver).
+   ═══════════════════════════════════════════════════════════════════════════ */
 
-.metodo-hero {
-    padding: 120px 45px 80px;
-    position: relative;
-    overflow: hidden;
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
+.metodo-page {
+    --m-bg:          #FFFDF3;   /* crema corporativo */
+    --m-surface:     #FFFFFF;
+    --m-ink:         #1D1E1C;   /* tinta = bg-dark corporativo */
+    --m-ink-soft:    rgba(29, 30, 28, 0.60);
+    --m-ink-mid:     rgba(29, 30, 28, 0.45);
+    --m-ink-faint:   rgba(29, 30, 28, 0.28);
+    --m-line:        rgba(29, 30, 28, 0.10);
+    --m-line-2:      rgba(29, 30, 28, 0.16);
+    --m-accent:      #F2C335;   /* amarillo institucional (único acento) */
+    --m-accent-soft: rgba(242, 195, 53, 0.16);
+
+    --m-heading: var(--font-header, 'Geist', sans-serif);
+    --m-body:    var(--font-reading, 'IBM Plex Sans', sans-serif);
+    --m-mono:    var(--font-mono, 'cofo-sans-mono-variable', monospace);
+    --m-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.content-limit { max-width: 1200px; width: 100%; }
+/* Reset del tema oscuro global (style.css pinta el body en dark) */
+body.metodo-page {
+    background: var(--m-bg);
+    color: var(--m-ink);
+    font-family: var(--m-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
 
-.hero-bg-num {
-    position: absolute;
-    right: -5%;
-    top: 5%;
-    font-family: var(--font-header);
-    font-size: clamp(300px, 40vw, 550px);
-    font-weight: 700;
-    color: rgba(255, 253, 243, 0.03); /* Sutil presencia parallax */
-    line-height: 1;
-    pointer-events: none;
+/* Fondo animado (reactbits) fijo detrás de todo; el contenido va semitransparente
+   para que el efecto se filtre sutil (mismo criterio que el index). */
+#mtd-bg {
+    position: fixed;
+    inset: 0;
     z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
 }
+#mtd-bg canvas { display: block; width: 100%; height: 100%; }
 
-.metodo-h1 {
-    font-family: var(--font-header);
-    font-size: clamp(3.5rem, 8vw, 110px);
-    line-height: 0.95;
-    letter-spacing: -0.04em;
-    text-transform: none; /* Caja baja suiza */
-    color: var(--crema);
-    z-index: 1;
+.mtd-main {
     position: relative;
-    margin-bottom: 40px;
+    z-index: 1;
+    background: rgba(255, 253, 243, 0.78);   /* 78% crema → el efecto se nota un poco más */
 }
 
-.hero-desc {
-    font-family: var(--font-reading);
-    font-size: 20px;
-    line-height: 1.6;
-    color: rgba(255, 253, 243, 0.6);
-    max-width: 650px;
+.mtd-container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-inline: clamp(22px, 5vw, 64px);
 }
 
-/* --- CLASES DE UTILIDAD (TEXTOS) --- */
-.txt-yellow {
-    color: var(--amarillo-acento) !important;
+/* ── Reveal base (fade in up) ─────────────────────────────────────────────── */
+.metodo-page [data-reveal] {
+    opacity: 0;
+    transform: translateY(46px);
+    /* entrada más larga y suave (curva expo) */
+    transition: opacity 1.1s var(--m-ease), transform 1.15s var(--m-ease);
+    transition-delay: var(--d, 0s);
+    will-change: opacity, transform;
+}
+.metodo-page [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
+
+/* ═══════════════════════ HERO ═══════════════════════ */
+.mtd-hero {
+    padding-top: clamp(128px, 17vh, 200px);
+    padding-bottom: clamp(64px, 10vh, 130px);
 }
 
-.txt-crema {
-    color: var(--crema) !important;
-}
-
-.txt-italic {
-    font-style: none;
-}
-
-/* --- LISTA DE FASES TÉCNICAS --- */
-.fases-container {
-    padding: 0 45px 100px;
-}
-
-.fase-row {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    padding: 80px 0;
-    border-top: 1px solid rgba(255, 253, 243, 0.1);
-    transition: background 0.4s ease;
-}
-
-.fase-row:hover { background: rgba(242, 195, 53, 0.02); }
-
-.fase-header { display: flex; flex-direction: column; gap: 15px; }
-
-.fase-index {
-    font-family: var(--font-mono);
-    color: var(--amarillo-acento);
-    font-size: 12px;
+.mtd-eyebrow {
+    font-family: var(--m-mono);
+    font-size: clamp(10px, 1.4vw, 12px);
     letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--m-ink-soft);
+    margin: 0 0 clamp(26px, 4vw, 40px);
 }
 
-.fase-title {
-    font-family: var(--font-header);
-    font-size: 42px;
+.mtd-hero-title {
+    font-family: var(--m-heading);
     font-weight: 700;
-    color: var(--crema);
-    text-transform: none;
+    font-size: clamp(2.4rem, 7.2vw, 6rem);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    color: var(--m-ink);
+    max-width: 15ch;
+    margin: 0 0 clamp(32px, 5vw, 56px);
+    text-wrap: balance;
 }
 
-.fase-body p {
-    font-family: var(--font-reading);
-    font-size: 18px;
-    line-height: 1.7;
-    color: rgba(255, 253, 243, 0.7);
-    max-width: 500px;
-    margin-bottom: 30px;
+.mtd-hero-lead {
+    font-family: var(--m-body);
+    font-weight: 300;
+    font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+    line-height: 1.6;
+    color: var(--m-ink-soft);
+    max-width: 62ch;
+    margin: 0;
 }
 
-.fase-tags { display: flex; gap: 10px; }
-.fase-tags span {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    padding: 6px 14px;
-    border: 1px solid rgba(255, 253, 243, 0.2);
-    border-radius: 50px;
-    color: var(--amarillo-acento);
+/* ═══════════════════════ PROCESO — TIMELINE INTERACTIVO ═══════════════════════ */
+.mtd-process { padding-bottom: clamp(60px, 10vh, 120px); }
+
+.mtd-steps {
+    --rail-x:   clamp(18px, 2.4vw, 32px);   /* x del riel (centro de la línea) */
+    --rail-gap: clamp(54px, 8vw, 104px);    /* sangría del contenido para librar el riel */
+    list-style: none;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--m-line);
 }
 
-/* --- AJUSTE DE INPUTS (SISTEMA) --- */
-.input-container input {
-    font-size: 24px !important; /* Reforzamos el tamaño del sistema */
-    font-weight: 400;
-    color: var(--crema) !important;
-}
-
-.input-container label {
-    font-size: 16px;
-    color: rgba(255, 253, 243, 0.5) !important;
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
-    .fase-row { grid-template-columns: 1fr; gap: 30px; padding: 60px 0; }
-    .hero-bg-num { font-size: 180px; top: 15%; }
-}
-/* --- CONFIGURACIÓN DE ESFERA BACKGROUND 3D --- */
-#canvas-metodo-wrap {
+/* Riel + relleno que se "prende" con el scroll */
+.mtd-track {
     position: absolute;
     top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
+    bottom: 0;
+    left: var(--rail-x);
+    width: 2px;
+    transform: translateX(-50%);
+    background: var(--m-line-2);
+    pointer-events: none;
+    overflow: hidden;
     z-index: 0;
-    pointer-events: none; /* Crucial para no interferir con clicks/scroll */
+}
+.mtd-track-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--m-accent);
+    transform: scaleY(0);
+    transform-origin: top center;
+    /* la altura la controla el JS (scaleY); transición corta suaviza el fallback */
+    transition: transform 0.1s linear;
 }
 
-/* Elevamos el z-index del texto para asegurar lectura sobre el canvas */
-.content-limit { 
-    max-width: 1200px; 
-    width: 100%; 
-    z-index: 2; 
+.mtd-step {
     position: relative;
+    padding: clamp(40px, 5.6vw, 68px) 0;
+    padding-left: var(--rail-gap);
+    border-bottom: 1px solid var(--m-line);
 }
 
-/* (Opcional) Borra del CSS las reglas de .hero-bg-num ya que eliminamos el "04" */
+/* Nodo sobre el riel, alineado con el número del paso */
+.mtd-node {
+    position: absolute;
+    left: var(--rail-x);
+    top: clamp(52px, 6.4vw, 82px);
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--m-bg);
+    border: 2px solid var(--m-line-2);
+    transform: translate(-50%, -50%);
+    transition: border-color 0.45s var(--m-ease), background 0.45s var(--m-ease),
+                box-shadow 0.45s var(--m-ease), transform 0.45s var(--m-ease);
+    z-index: 1;
+}
+
+.mtd-step-num {
+    display: block;
+    font-family: var(--m-mono);
+    font-weight: 500;
+    font-size: clamp(1.4rem, 2.8vw, 2.1rem);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--m-ink-faint);
+    margin-bottom: clamp(16px, 2vw, 22px);
+    transition: color 0.45s var(--m-ease);
+}
+
+.mtd-step-title {
+    font-family: var(--m-heading);
+    font-weight: 600;
+    font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--m-ink-mid);   /* inactivo: atenuado → se "prende" a full al activarse */
+    margin: 0;
+    transition: color 0.45s var(--m-ease), transform 0.45s var(--m-ease);
+}
+
+.mtd-step-content { margin-top: clamp(20px, 2.4vw, 28px); }
+
+.mtd-step-desc {
+    font-family: var(--m-body);
+    font-weight: 300;
+    font-size: clamp(1rem, 1.25vw, 1.15rem);
+    line-height: 1.65;
+    color: var(--m-ink-soft);
+    margin: 0 0 26px;
+    max-width: 56ch;
+}
+
+.mtd-tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+.mtd-tags li {
+    font-family: var(--m-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--m-ink-soft);
+    padding: 7px 14px;
+    border: 1px solid var(--m-line-2);
+    border-radius: 100px;
+    transition: border-color 0.4s var(--m-ease), color 0.4s var(--m-ease);
+}
+
+/* ── Estado ACTIVADO (lo aplica el timeline al llegar la línea) ── */
+.mtd-step.is-active .mtd-node {
+    border-color: var(--m-accent);
+    background: var(--m-accent);
+    box-shadow: 0 0 0 6px var(--m-accent-soft);
+    transform: translate(-50%, -50%) scale(1.12);
+}
+.mtd-step.is-active .mtd-step-num  { color: var(--m-ink); }
+.mtd-step.is-active .mtd-step-title { color: var(--m-ink); }
+
+/* Hover (puntero fino): refuerza interactividad sin pisar la activación */
+@media (hover: hover) and (pointer: fine) {
+    .mtd-step:hover .mtd-step-title { transform: translateX(8px); }
+    .mtd-step:hover .mtd-node { border-color: var(--m-accent); }
+}
+
+/* Desktop: número+título a la izquierda, cuerpo a la derecha */
+@media (min-width: 900px) {
+    .mtd-step {
+        display: grid;
+        grid-template-columns: minmax(240px, 1fr) minmax(0, 1.15fr);
+        grid-template-rows: auto auto;
+        column-gap: clamp(32px, 4.5vw, 80px);
+        align-items: start;
+    }
+    .mtd-step-num     { grid-column: 1; grid-row: 1; }
+    .mtd-step-title   { grid-column: 1; grid-row: 2; }
+    .mtd-step-content { grid-column: 2; grid-row: 1 / span 2; margin-top: 4px; }
+}
+
+/* ═══════════════════════ CTA FINAL ═══════════════════════ */
+.mtd-cta {
+    padding-top: clamp(64px, 10vh, 130px);
+    padding-bottom: clamp(80px, 14vh, 170px);
+}
+
+.mtd-cta-title {
+    font-family: var(--m-heading);
+    font-weight: 700;
+    font-size: clamp(2.1rem, 6vw, 4.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    color: var(--m-ink);
+    max-width: 14ch;
+    margin: 0 0 clamp(44px, 6vw, 72px);
+    text-wrap: balance;
+}
+
+.mtd-form { display: grid; gap: clamp(40px, 5vw, 60px); max-width: 760px; }
+.mtd-field { margin: 0; padding: 0; border: 0; }
+
+.mtd-legend {
+    font-family: var(--m-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--m-ink-soft);
+    padding: 0;
+    margin-bottom: 18px;
+}
+
+.mtd-chips { display: flex; flex-wrap: wrap; gap: 12px; }
+.mtd-chip input { position: absolute; opacity: 0; pointer-events: none; }
+.mtd-chip span {
+    display: inline-block;
+    font-family: var(--m-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--m-ink);
+    padding: 13px 24px;
+    border: 1px solid var(--m-line-2);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.35s var(--m-ease);
+}
+@media (hover: hover) and (pointer: fine) {
+    .mtd-chip:hover span { border-color: var(--m-ink); }
+}
+.mtd-chip input:checked + span {
+    background: var(--m-accent);
+    border-color: var(--m-accent);
+    color: var(--m-ink);
+}
+.mtd-chip input:focus-visible + span { outline: 2px solid var(--m-ink); outline-offset: 3px; }
+
+.mtd-inputs { display: grid; gap: clamp(28px, 3.5vw, 40px); }
+.mtd-input { position: relative; }
+.mtd-input input {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--m-line-2);
+    padding: 12px 2px;
+    font-family: var(--m-body);
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    font-weight: 400;
+    color: var(--m-ink);
+    transition: border-color 0.4s var(--m-ease);
+}
+.mtd-input input::placeholder { color: transparent; }
+.mtd-input input:focus { outline: none; border-bottom-color: var(--m-accent); }
+.mtd-input label {
+    position: absolute;
+    left: 2px;
+    top: 14px;
+    font-family: var(--m-body);
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    color: var(--m-ink-soft);
+    pointer-events: none;
+    transition: transform 0.35s var(--m-ease), font-size 0.35s var(--m-ease), color 0.35s var(--m-ease);
+}
+.mtd-input input:focus + label,
+.mtd-input input:not(:placeholder-shown) + label {
+    transform: translateY(-26px);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--m-ink-soft);
+    font-family: var(--m-mono);
+}
+
+.mtd-submit {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--m-ink);
+    color: var(--m-bg);
+    border: 0;
+    border-radius: 100px;
+    padding: 18px 34px;
+    cursor: pointer;
+    font-family: var(--m-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: transform 0.3s var(--m-ease), background 0.3s var(--m-ease);
+}
+.mtd-submit .material-symbols-outlined { font-size: 19px; transition: transform 0.4s var(--m-ease); }
+@media (hover: hover) and (pointer: fine) {
+    .mtd-submit:hover { background: #000; }
+    .mtd-submit:hover .material-symbols-outlined { transform: translate(3px, -3px); }
+}
+.mtd-submit:active { transform: translateY(1px) scale(0.99); }
+.mtd-submit:focus-visible { outline: 2px solid var(--m-accent); outline-offset: 4px; }
+
+/* ═══════════════════════ FOOTER — entrada animada ═══════════════════════ */
+.mtd-footer { position: relative; z-index: 1; }
+
+/* La línea del footer se "dibuja" de izquierda a derecha al entrar (mantiene
+   su opacidad hairline; solo animamos el transform). Badge + columnas usan el
+   reveal base (fade-in-up con stagger). */
+.mtd-footer .footer-line[data-reveal] {
+    opacity: 0.1;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.9s var(--m-ease);
+    will-change: transform;
+}
+.mtd-footer .footer-line[data-reveal].is-visible { opacity: 0.1; transform: scaleX(1); }
+
+/* ── Footer INVERTIDO: negro corporativo de fondo · tipografía en crema ── */
+.mtd-footer {
+    background: var(--bg-dark) !important;   /* #1D1E1C */
+    color: var(--crema);
+}
+.mtd-footer .footer-line[data-reveal],
+.mtd-footer .footer-line { background: var(--crema); }   /* mantiene su opacidad hairline */
+.mtd-footer .footer-link { color: var(--crema); }
+.mtd-footer .reading-small { color: rgba(255, 253, 243, 0.7); }
+.mtd-footer .mono-label { color: var(--crema) !important; }   /* opacity 0.5 → crema atenuada */
+.mtd-footer .pluma-seal { filter: brightness(0) invert(1); }  /* sello → blanco */
+
+/* Badge WE sobre fondo oscuro (estado por defecto ya "claro sobre oscuro") */
+.mtd-footer .we-directory-badge { border-color: rgba(255, 253, 243, 0.22); color: var(--crema); }
+.mtd-footer .we-badge-label { color: rgba(255, 253, 243, 0.55); }
+.mtd-footer .we-badge-title,
+.mtd-footer .we-badge-link { color: var(--crema); }
+.mtd-footer .we-badge-logo { filter: invert(1); }            /* logo WE → blanco */
+/* Hover: se invierte a claro (crema llena, texto/logo a oscuro) */
+.mtd-footer .we-directory-badge::before { background: var(--crema); }
+.mtd-footer .we-directory-badge:hover { border-color: var(--crema); }
+.mtd-footer .we-directory-badge:hover .we-badge-label,
+.mtd-footer .we-directory-badge:hover .we-badge-title,
+.mtd-footer .we-directory-badge:hover .we-badge-link { color: var(--bg-dark); }
+.mtd-footer .we-directory-badge:hover .we-badge-logo { filter: none; }
+
+/* ═══════════════════════ RESPONSIVE ═══════════════════════ */
+@media (max-width: 520px) {
+    .mtd-steps { --rail-gap: clamp(44px, 12vw, 60px); }
+    .mtd-chips { gap: 10px; }
+    .mtd-submit { width: 100%; justify-content: space-between; }
+}
+
+/* ── Accesibilidad: reduce motion → todo visible/activo, sin animación ── */
+@media (prefers-reduced-motion: reduce) {
+    .metodo-page [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .mtd-track-fill { transform: scaleY(1) !important; transition: none !important; }
+    .mtd-step-title, .mtd-step-num { color: var(--m-ink) !important; }
+    .mtd-node {
+        border-color: var(--m-accent) !important;
+        background: var(--m-accent) !important;
+    }
+    .mtd-node, .mtd-step-title, .mtd-step-num, .mtd-chip span,
+    .mtd-input input, .mtd-input label, .mtd-submit,
+    .mtd-submit .material-symbols-outlined { transition: none !important; }
+}

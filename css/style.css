@@ -1522,16 +1522,33 @@ body.scroll-locked {
     transition-delay: 0.55s;
 }
 
-/* Statement: 3 líneas con máscara individual */
-.studio-statement-v2 {
-    margin: 0;
-    font-family: 'Geist', var(--font-header), sans-serif;
-    font-weight: 500;
-    font-size: clamp(1.05rem, 1.6vw, 1.5rem);
-    line-height: 1.45;
-    letter-spacing: -0.005em;
+/* Título de la sección — jerarquía de HEADING (Geist 700, mismo sistema que los
+   títulos de sección del sitio; escala menor por ir en el frame sobre el video). */
+.studio-title-v2 {
+    margin: 0 0 clamp(20px, 2.4vw, 34px);
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: clamp(2rem, 3.6vw, 3.1rem);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
     color: var(--crema);
 }
+
+/* Cuerpo — fuente de LECTURA del sistema (IBM Plex Sans light), claramente
+   subordinado al título → jerarquía tipográfica limpia. */
+.studio-statement-v2 {
+    margin: 0 auto;                 /* centra el bloque dentro del frame */
+    max-width: 60ch;
+    text-align: center;            /* centra el texto (alineado con el título) */
+    font-family: var(--font-reading);
+    font-weight: 300;
+    font-size: clamp(1rem, 1.2vw, 1.18rem);
+    line-height: 1.6;
+    letter-spacing: 0;
+    color: rgba(255, 253, 243, 0.72);
+}
+.studio-statement-v2 .studio-reveal-line { line-height: 1.6; }
+.studio-statement-v2 .studio-reveal-line + .studio-reveal-line { margin-top: 0.9em; }
 
 .studio-reveal-line {
     display: block;
@@ -1557,9 +1574,13 @@ body.scroll-locked {
     .studio-frame-wrap {
         padding: 0 28px;
     }
+    .studio-title-v2 {
+        font-size: clamp(1.6rem, 5.6vw, 2.2rem);
+        margin-bottom: 18px;
+    }
     .studio-statement-v2 {
-        font-size: clamp(0.95rem, 3.2vw, 1.15rem);
-        line-height: 1.5;
+        font-size: clamp(0.95rem, 3.2vw, 1.1rem);
+        line-height: 1.55;
     }
     .studio-corner {
         font-size: 14px;

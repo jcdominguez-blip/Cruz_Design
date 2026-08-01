@@ -160,24 +160,35 @@
         window.addEventListener('resize', resize, { passive: true });
 
         // Modo temático: actualizar las regiones claras (secciones con fondo claro)
+        // Perf: la clasificación claro/oscuro de cada sección NO cambia con el
+        // scroll, pero getComputedStyle fuerza un recálculo de estilos. Antes se
+        // llamaba por sección en cada frame de scroll (reflow por cuadro, parte de
+        // la trabada en MacBook). Ahora se cachea sólo las secciones claras una vez.
+        let lightSecs = null;
+        function collectLightSecs() {
+            const all = document.querySelectorAll('.site-content-wrapper > section, .site-content-wrapper > footer');
+            lightSecs = Array.prototype.filter.call(all, sec =>
+                luminance(getComputedStyle(sec).backgroundColor) >= 0.5);
+        }
         let regionRaf = null;
         function updateRegions() {
             regionRaf = null;
+            if (!lightSecs) collectLightSecs();
             const vh = window.innerHeight || 1;
-            const secs = document.querySelectorAll('.site-content-wrapper > section, .site-content-wrapper > footer');
             let count = 0;
-            secs.forEach(sec => {
-                if (count >= MAX_REGIONS) return;
-                if (luminance(getComputedStyle(sec).backgroundColor) < 0.5) return; // oscura
-                const rect = sec.getBoundingClientRect();
-                if (rect.bottom < 0 || rect.top > vh) return; // fuera de vista
+            for (let i = 0; i < lightSecs.length && count < MAX_REGIONS; i++) {
+                const rect = lightSecs[i].getBoundingClientRect();
+                if (rect.bottom < 0 || rect.top > vh) continue; // fuera de vista
                 const top = Math.max(0, Math.min(1, rect.top / vh));
                 const bot = Math.max(0, Math.min(1, rect.bottom / vh));
                 regions[count].set(top, bot);
                 count++;
-            });
+            }
             uniforms.uLightCount.value = count;
         }
+        // El layout/tema puede cambiar en resize o al cargar imágenes → recachear.
+        window.addEventListener('resize', () => { lightSecs = null; }, { passive: true });
+        window.addEventListener('load', () => { lightSecs = null; });
         if (themed) {
             const onScroll = () => { if (!regionRaf) regionRaf = requestAnimationFrame(updateRegions); };
             window.addEventListener('scroll', onScroll, { passive: true });
@@ -186,20 +197,61 @@
             updateRegions();
         }
 
+        // ── Gate de visibilidad (perf) ──
+        // Cada Silk es un contexto WebGL con su propio rAF. En pantallas retina
+        // (MacBook, DPR 2) tener 5 canvas renderizando SIEMPRE a pantalla completa
+        // colapsa el frame rate y traba el scroll (la rueda se encola con Lenis).
+        // Solución: solo renderizamos cuando el mount aporta algo en pantalla.
+        //   · themed (#silk-content): sticky y cubre todo → siempre activo.
+        //   · gateHero (#silk-bg, fixed): activo solo mientras el hero está a la
+        //     vista; más abajo queda tapado por el contenido → puro gasto.
+        //   · resto (secciones): IntersectionObserver sobre el propio mount.
+        // Cuando está oculto NO acumulamos uTime, así al volver el patrón no salta.
+        let visible = true;
+        if (opts.gateHero) {
+            // El hero se pinea sobre #spacer (520vh). El fondo fijo debe seguir
+            // animando TODA esa zona; recién se pausa cuando el spacer pasó por
+            // completo y el contenido tapa el hero. Usar el spacer se auto-ajusta
+            // al alto real (depende de innerHeight) sin hardcodear el 520vh.
+            const spacer = document.getElementById('spacer');
+            const gate = () => {
+                if (!spacer) { visible = true; return; }
+                visible = spacer.getBoundingClientRect().bottom > 0;
+            };
+            window.addEventListener('scroll', gate, { passive: true });
+            window.addEventListener('resize', gate, { passive: true });
+            gate();
+        } else if (!themed && 'IntersectionObserver' in window) {
+            visible = false;
+            new IntersectionObserver((entries) => {
+                visible = entries[0].isIntersecting;
+            }, { rootMargin: '200px 0px' }).observe(mount);
+        }
+
         const clock = new THREE.Clock();
         (function loop() {
             requestAnimationFrame(loop);
-            uniforms.uTime.value += clock.getDelta();
+            const dt = clock.getDelta();
+            if (!visible) return;               // oculto: no renderiza ni avanza el tiempo
+            uniforms.uTime.value += dt;
             renderer.render(scene, camera);
         })();
     }
 
     window.cruzCreateSilk = createSilk;
 
-    ['silk-bg', 'silk-loader', 'silk-content']
-        .map(id => document.getElementById(id))
-        .filter(Boolean)
-        .forEach(createSilk);
+    // Silks a pantalla completa: DPR capado a 1.5. Son degradés suaves; a DPR 2
+    // en retina no se ganan detalle pero cuadruplican el trabajo de fragment
+    // shader (causa principal de la trabada de scroll en MacBook).
+    //   · #silk-bg (fixed, fondo del hero) → además gateHero: se pausa al salir.
+    //   · #silk-content (sticky global) → siempre activo, pero DPR capado.
+    //   · #silk-loader → efímero (intro), sin cambios.
+    const silkBg = document.getElementById('silk-bg');
+    if (silkBg) createSilk(silkBg, { maxDpr: 1.5, gateHero: true });
+    const silkLoader = document.getElementById('silk-loader');
+    if (silkLoader) createSilk(silkLoader);
+    const silkContent = document.getElementById('silk-content');
+    if (silkContent) createSilk(silkContent, { maxDpr: 1.5 });
 
     // Fondos de sección oscuros con el MISMO Silk que el hero (why-us, contact).
     // Desktop only (perf), igual criterio que #silk-content; en móvil quedan sólidos.
@@ -219,7 +271,7 @@
             const sc = document.getElementById('silk-content');
             if (sc && sc.dataset.silkInit !== '1' &&
                 !window.matchMedia('(max-width: 700px)').matches) {
-                createSilk(sc);
+                createSilk(sc, { maxDpr: 1.5 });
             }
         }, 200);
     }, { passive: true });

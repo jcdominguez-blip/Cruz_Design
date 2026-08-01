@@ -488,9 +488,25 @@ document.addEventListener("DOMContentLoaded", () => {
     scheduleIntro();
 
     // ── RENDER LOOP (CON OPACIDAD DINÁMICA ACTUALIZADA) ────────────
+    // Perf: la esfera vive en un canvas fixed a pantalla completa. Pasado el hero
+    // queda tapada por el contenido, pero seguía renderizando cada frame (contexto
+    // WebGL extra que, junto a los Silks, trababa el scroll en MacBook retina).
+    // La pausamos cuando el hero sale de vista; la intro nunca se congela.
+    // El hero se pinea sobre #spacer (520vh); la esfera debe animar toda esa zona
+    // y recién pausarse cuando el spacer pasó del todo (el contenido la tapa).
+    let heroVisible = true;
+    const spacerEl = document.getElementById('spacer');
+    const updateHeroVisible = () => {
+      heroVisible = !spacerEl || spacerEl.getBoundingClientRect().bottom > 0;
+    };
+    window.addEventListener('scroll', updateHeroVisible, { passive: true });
+    window.addEventListener('resize', updateHeroVisible, { passive: true });
+    updateHeroVisible();
+
     let time=0;
     (function animate(){
       requestAnimationFrame(animate);
+      if (!heroVisible && !introActive) return;  // fuera del hero: no renderiza
       time+=0.003;
       sphere.rotation.y+=0.0013;
       sphere.rotation.x=Math.sin(time*.28)*.04;

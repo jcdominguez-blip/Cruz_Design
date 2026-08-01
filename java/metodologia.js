@@ -1,123 +1,119 @@
 /**
  * METODOLOGÍA — CRUZ ESTUDIO ®
- * Motor de animaciones y Esfera 3D pasiva (Background)
+ *
+ * 1) Scroll reveal "fade in up" con stagger (IntersectionObserver, vanilla) para
+ *    hero y CTA.
+ * 2) TIMELINE interactivo (ref. wearemotto.com/motto-method): una línea vertical
+ *    que se "prende" al scrollear y va ACTIVANDO los pasos 01→04 en secuencia.
+ *    El relleno se controla con GSAP ScrollTrigger (scrub) — ya cargado en la
+ *    página e integrado con Lenis. Cada paso se activa cuando la línea llega a su
+ *    nodo; se apaga si volvés a subir.
+ *
+ * Fallbacks: sin IntersectionObserver / sin GSAP / prefers-reduced-motion →
+ * todo queda visible y activo (la página nunca se rompe).
  */
+(function () {
+    'use strict';
 
-document.addEventListener("DOMContentLoaded", () => {
-    gsap.registerPlugin(ScrollTrigger);
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // ── 1. ANIMACIONES DE TEXTO (GSAP) ──────────────────────────────────
-    
-    // Entrada del Hero
-    gsap.from(".reveal-item", {
-        y: 40,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.2,
-        ease: "power4.out"
-    });
+    /* ── 1 · REVEAL (hero / CTA) ─────────────────────────────────────────── */
+    function initReveal() {
+        var nodes = Array.prototype.slice.call(
+            document.querySelectorAll('.metodo-page [data-reveal]')
+        );
+        if (!nodes.length) return;
 
-    // Revelado de Fases
-    gsap.utils.toArray(".reveal-fase").forEach(fase => {
-        gsap.from(fase, {
-            x: -30,
-            opacity: 0,
-            duration: 1,
-            scrollTrigger: {
-                trigger: fase,
-                start: "top 85%",
-                toggleActions: "play none none reverse"
+        // Stagger según posición entre hermanos [data-reveal] del mismo bloque
+        nodes.forEach(function (el) {
+            var parent = el.parentElement;
+            if (!parent) return;
+            // Los pasos del timeline entran de a uno al scrollear: sin stagger
+            // acumulado (cada uno revela apenas entra).
+            if (parent.hasAttribute('data-timeline')) return;
+            var sibs = Array.prototype.filter.call(parent.children, function (c) {
+                return c.hasAttribute && c.hasAttribute('data-reveal');
+            });
+            var i = sibs.indexOf(el);
+            if (i > 0) el.style.setProperty('--d', (i * 0.1).toFixed(2) + 's');
+        });
+
+        var show = function (el) { el.classList.add('is-visible'); };
+
+        if (reduce || !('IntersectionObserver' in window)) {
+            nodes.forEach(show);
+            return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) { show(e.target); io.unobserve(e.target); }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+        nodes.forEach(function (el) { io.observe(el); });
+    }
+
+    /* ── 2 · TIMELINE (línea que se prende + activación de pasos) ─────────── */
+    function initTimeline() {
+        var list = document.querySelector('.mtd-steps[data-timeline]');
+        if (!list) return;
+        var fill = list.querySelector('.mtd-track-fill');
+        var steps = Array.prototype.slice.call(list.querySelectorAll('.mtd-step'));
+        if (!fill || !steps.length) return;
+
+        var hasST = typeof gsap !== 'undefined' &&
+                    typeof window.ScrollTrigger !== 'undefined';
+
+        // Fallback: sin scroll-driven → línea completa y todos los pasos activos.
+        if (reduce || !hasST) {
+            fill.style.transform = 'scaleY(1)';
+            steps.forEach(function (s) { s.classList.add('is-active'); });
+            return;
+        }
+
+        try { gsap.registerPlugin(window.ScrollTrigger); } catch (_) {}
+
+        // Fracción [0..1] de la altura del riel donde vive el nodo de cada paso.
+        // Un paso se activa cuando el relleno (scaleY = progreso) supera su nodo.
+        var ratios = [];
+        function computeRatios() {
+            var h = list.offsetHeight || 1;
+            ratios = steps.map(function (step) {
+                var node = step.querySelector('.mtd-node');
+                var y = step.offsetTop + (node ? node.offsetTop : 0);
+                return Math.max(0, Math.min(1, y / h));
+            });
+        }
+        computeRatios();
+
+        window.ScrollTrigger.create({
+            trigger: list,
+            start: 'top 62%',      // la línea empieza a prenderse al entrar la lista
+            end: 'bottom 72%',     // termina de prenderse al salir por abajo
+            scrub: true,
+            invalidateOnRefresh: true,
+            onRefresh: computeRatios,
+            onUpdate: function (self) {
+                var p = self.progress;
+                fill.style.transform = 'scaleY(' + p + ')';
+                for (var i = 0; i < steps.length; i++) {
+                    steps[i].classList.toggle('is-active', p >= ratios[i] - 0.001);
+                }
             }
         });
-    });
 
-
-    // ── 2. ESFERA 3D BACKGROUND (SISTEMA CRUZ ESTUDIO) ──────────────────
-    const container = document.getElementById('canvas-metodo-wrap');
-    if (!container) return;
-
-    // Setup Básico
-    let W = container.clientWidth, H = container.clientHeight;
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(52, W / H, 0.1, 100);
-    camera.position.z = 5.5;
-    
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(W, H);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
-
-    // Funciones de Ruido (Perlin simplificado para textura)
-    const _p = Array.from({length:256},(_,i)=>i).sort(()=>Math.random()-.5);
-    const PP = [..._p,..._p];
-    const fd = t=>t*t*t*(t*(t*6-15)+10);
-    const lp = (t,a,b)=>a+t*(b-a);
-    function gr(h,x,y,z){h&=15;const u=h<8?x:y,v=h<4?y:(h===12||h===14?x:z);return((h&1)?-u:u)+((h&2)?-v:v);}
-    function noise(x,y,z){
-      const X=Math.floor(x)&255,Y=Math.floor(y)&255,Z=Math.floor(z)&255;
-      x-=Math.floor(x);y-=Math.floor(y);z-=Math.floor(z);
-      const u=fd(x),v=fd(y),w=fd(z);
-      const A=PP[X]+Y,AA=PP[A]+Z,AB=PP[A+1]+Z,B=PP[X+1]+Y,BA=PP[B]+Z,BB=PP[B+1]+Z;
-      return lp(w,lp(v,lp(u,gr(PP[AA],x,y,z),gr(PP[BA],x-1,y,z)),lp(u,gr(PP[AB],x,y-1,z),gr(PP[BB],x-1,y-1,z))),lp(v,lp(u,gr(PP[AA+1],x,y,z-1),gr(PP[BA+1],x-1,y,z-1)),lp(u,gr(PP[AB+1],x,y-1,z-1),gr(PP[BB+1],x-1,y-1,z-1))));
+        // Layout definitivo tras fuentes/imágenes/pins.
+        window.addEventListener('load', function () {
+            requestAnimationFrame(function () {
+                try { window.ScrollTrigger.refresh(); } catch (_) {}
+            });
+        });
     }
 
-    // Geometría y Material
-    const geo = new THREE.SphereGeometry(2.2, 64, 64);
-    const pos = geo.attributes.position;
-    const base = new Float32Array(pos.count * 3);
-    
-    for (let i = 0; i < pos.count; i++) {
-        const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
-        const len = Math.sqrt(x*x + y*y + z*z);
-        const nx = x/len, ny = y/len, nz = z/len;
-        const n = noise(nx*2.4, ny*2.4, nz*2.4)*0.32;
-        const r = 2.2 + n;
-        base[i*3]=nx*r; base[i*3+1]=ny*r; base[i*3+2]=nz*r;
-        pos.setXYZ(i, nx*r, ny*r, nz*r);
+    function init() { initReveal(); initTimeline(); }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
     }
-    pos.needsUpdate = true;
-    geo.computeVertexNormals();
-
-    // Material sutil (Opacidad bajada al 6% para no competir con el H1)
-    const mat = new THREE.MeshBasicMaterial({ 
-        color: 0xffffff, 
-        wireframe: true, 
-        transparent: true, 
-        opacity: 0.06 // <--- ACÁ ESTÁ EL VALOR EXACTO PARA MODIFICAR
-    });
-    const sphere = new THREE.Mesh(geo, mat);
-    
-    // Posicionamos la esfera hacia la derecha para que solo se vea la mitad
-    sphere.position.x = 2.8; 
-    scene.add(sphere);
-
-    // Efecto Parallax atado al Scroll (Baja lentamente)
-    ScrollTrigger.create({
-        trigger: ".metodo-hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-        onUpdate: (self) => {
-            sphere.position.y = -(self.progress * 2); 
-        }
-    });
-
-    // Render Loop (Rotación lenta y constante)
-    let time = 0;
-    function animate() {
-        requestAnimationFrame(animate);
-        time += 0.002;
-        sphere.rotation.y += 0.001;
-        sphere.rotation.x = Math.sin(time) * 0.05;
-        renderer.render(scene, camera);
-    }
-    animate();
-
-    // Resize
-    window.addEventListener('resize', () => {
-        W = container.clientWidth; H = container.clientHeight;
-        camera.aspect = W / H;
-        camera.updateProjectionMatrix();
-        renderer.setSize(W, H);
-    });
-});
+})();

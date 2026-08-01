@@ -23,7 +23,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
-    <link rel="stylesheet" href="./css/style.css?v=24">
+    <link rel="stylesheet" href="./css/style.css?v=27">
     <link rel="icon" sizes="32x32" href="./img/favicon-32x32.png">
     
     <script>
@@ -51,7 +51,8 @@
     </style>
     <script src="./java/page-loader.js?v=24"></script>
     <link rel="stylesheet" href="./css/nav-menu.css?v=24">
-    <link rel="stylesheet" href="./css/cursor.css?v=24">
+    <link rel="stylesheet" href="./css/cursor.css?v=25">
+    <link rel="stylesheet" href="./css/faq.css?v=26">
 </head>
 <body data-bg="dark">
 
@@ -218,10 +219,14 @@
 
                         <span class="studio-eyebrow">// QUIÉNES SOMOS</span>
 
+                        <h3 class="studio-title-v2">
+                            <span class="studio-reveal-line"><span>Democratizando el diseño</span></span>
+                            <span class="studio-reveal-line"><span>de alto rendimiento.</span></span>
+                        </h3>
+
                         <p class="studio-statement-v2">
-                            <span class="studio-reveal-line"><span>En Cruz Estudio estamos para ayudarte. Somos un estudio de diseño gráfico y</span></span>
-                            <span class="studio-reveal-line"><span>comunicación visual centrado en la estrategia, especializado en transformar y</span></span>
-                            <span class="studio-reveal-line"><span>acompañar a las marcas en su camino para mejorar la comunicación con su público.</span></span>
+                            <span class="studio-reveal-line"><span>Somos un equipo especializado en diseño estratégico. Trabajamos a la par de tu empresa para traducir sus objetivos comerciales en identidades sólidas.</span></span>
+                            <span class="studio-reveal-line"><span>Nos apasiona acompañar a marcas en crecimiento, aportando el rigor técnico necesario para transformar su calidad real en calidad percibida, aportando un valor tangible al día a día de tu negocio.</span></span>
                         </p>
                     </div>
                 </div>
@@ -450,6 +455,103 @@
     </section>
 
 
+    <!-- ==========================================================
+         PREGUNTAS FRECUENTES — Acordeón minimalista (ref. Kudos / NK Studio)
+         Va ANTES del contacto: primero se resuelven dudas, después el CTA final.
+         Reveal "fade in up" con stagger (java/faq.js, GSAP ScrollTrigger).
+         Design system: IBM Plex Sans (títulos/cuerpo) + IBM Plex Mono (números),
+         texto #212121 sobre fondo claro corporativo.
+         ========================================================== -->
+    <section class="faq-section" id="faq" aria-labelledby="faq-title" data-theme="light">
+        <div class="faq-inner">
+            <div class="faq-head" data-faq-reveal>
+                <span class="faq-eyebrow">// PREGUNTAS FRECUENTES</span>
+                <h2 class="faq-title" id="faq-title">Preguntas frecuentes</h2>
+                <p class="faq-sub">Respuestas directas para decisiones estratégicas. Todo lo que necesitás saber sobre nuestra metodología, tiempos de trabajo y cómo empezar a potenciar el rendimiento visual de tu empresa.</p>
+            </div>
+
+            <ul class="faq-list" data-faq-list>
+                <li class="faq-item" data-faq-item data-faq-reveal>
+                    <button class="faq-q" id="faq-b1" aria-expanded="false" aria-controls="faq-a1">
+                        <span class="faq-q-num">01</span>
+                        <span class="faq-q-text">¿Cuánto cuesta trabajar con Cruz Estudio?</span>
+                        <span class="faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-b1">
+                        <div class="faq-a-inner">
+                            <p>No trabajamos con "paquetes genéricos" ni tarifas estandarizadas, porque no hacemos diseño en serie. Entendemos que la identidad de tu empresa no es un gasto estético, sino un activo comercial. El valor de la inversión depende exclusivamente de la escala del desafío, la complejidad del sistema visual y los entregables que tu negocio realmente necesite. Una vez que tenemos nuestra primera sesión de diagnóstico y entendemos tu realidad, armamos una propuesta y un presupuesto a la medida exacta de tu proyecto.</p>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="faq-item" data-faq-item data-faq-reveal>
+                    <button class="faq-q" id="faq-b2" aria-expanded="false" aria-controls="faq-a2">
+                        <span class="faq-q-num">02</span>
+                        <span class="faq-q-text">Solo necesito un "logo", ¿pueden hacerlo?</span>
+                        <span class="faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-a" id="faq-a2" role="region" aria-labelledby="faq-b2">
+                        <div class="faq-a-inner">
+                            <p>En Cruz Estudio no diseñamos "dibujos lindos" ni logotipos aislados. Creemos que una marca gráfica es la firma institucional de tu empresa y debe funcionar dentro de un ecosistema sólido. Por eso, no entregamos un logo suelto; desarrollamos sistemas visuales completos de alto rendimiento (que incluyen estrategia, normativas tipográficas, paletas y aplicaciones) para que tu marca se exprese con coherencia en cada punto de contacto.</p>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="faq-item" data-faq-item data-faq-reveal>
+                    <button class="faq-q" id="faq-b3" aria-expanded="false" aria-controls="faq-a3">
+                        <span class="faq-q-num">03</span>
+                        <span class="faq-q-text">Mi empresa ya está funcionando hace años, ¿tengo que cambiar todo desde cero?</span>
+                        <span class="faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-b3">
+                        <div class="faq-a-inner">
+                            <p>Absolutamente no. Cuando un negocio ya está consolidado, el buen diseño no te disfraza de alguien que no sos; revela tu mejor versión. Hacemos un trabajo profundo de auditoría para conservar la esencia y los activos que ya funcionan en tu marca, y optimizamos lo que se quedó en el tiempo. El objetivo es que tu imagen alcance el mismo nivel de calidad y profesionalismo que ya tienen tus servicios.</p>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="faq-item" data-faq-item data-faq-reveal>
+                    <button class="faq-q" id="faq-b4" aria-expanded="false" aria-controls="faq-a4">
+                        <span class="faq-q-num">04</span>
+                        <span class="faq-q-text">¿Cuánto tiempo lleva desarrollar un sistema de identidad visual?</span>
+                        <span class="faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-a" id="faq-a4" role="region" aria-labelledby="faq-b4">
+                        <div class="faq-a-inner">
+                            <p>El rigor técnico requiere método. Un proyecto integral de branding estratégico suele llevar entre 6 y 10 semanas, dependiendo de la magnitud de la empresa. Nuestro proceso no es improvisado: lo dividimos en etapas claras que van desde el Diagnóstico Institucional (Fase 1), pasando por el Desarrollo del sistema visual y verbal (Fase 2), hasta la Sistematización y el Manual de Normas (Fase 3).</p>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="faq-item" data-faq-item data-faq-reveal>
+                    <button class="faq-q" id="faq-b5" aria-expanded="false" aria-controls="faq-a5">
+                        <span class="faq-q-num">05</span>
+                        <span class="faq-q-text">¿Trabajan solo con grandes corporaciones o también con PyMEs?</span>
+                        <span class="faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-a" id="faq-a5" role="region" aria-labelledby="faq-b5">
+                        <div class="faq-a-inner">
+                            <p>Uno de nuestros propósitos principales es la democratización del diseño de alto rendimiento. Esto significa que llevamos el rigor metodológico que usan las grandes marcas internacionales a PyMEs y empresas en pleno crecimiento. Trabajamos tanto con entidades de alcance nacional como con negocios B2B locales que buscan dejar de competir por precio para empezar a comandar respeto en su sector.</p>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="faq-item" data-faq-item data-faq-reveal>
+                    <button class="faq-q" id="faq-b6" aria-expanded="false" aria-controls="faq-a6">
+                        <span class="faq-q-num">06</span>
+                        <span class="faq-q-text">No sé bien qué servicio necesito, ¿cómo empezamos?</span>
+                        <span class="faq-icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-a" id="faq-a6" role="region" aria-labelledby="faq-b6">
+                        <div class="faq-a-inner">
+                            <p>Todo empieza con una charla. No esperamos que tengas todas las respuestas técnicas; ese es nuestro trabajo. Te invitamos a agendar una sesión de diagnóstico inicial (sin costo). En esos 15 o 20 minutos vamos a escuchar los dolores comerciales de tu empresa, evaluar cómo se está comunicando hoy y contarte con total honestidad si podemos ayudarlos y cuál sería la hoja de ruta ideal.</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
     <section class="contact-section" id="contact" data-theme="dark">
         <!-- Mismo fondo Silk oscuro OPACO que why-us (unificado). El seam entre
              ambos canvas se disuelve por el mask/feather de .section-silk. -->
@@ -503,7 +605,7 @@
             </form>
         </div>
     </section>
-       
+
     <footer class="footer-global" data-theme="dark">
         <div class="footer-line"></div>
 
@@ -555,7 +657,7 @@
 
 
 </div> <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script defer src="./java/silk-bg.js?v=24"></script>
+<script defer src="./java/silk-bg.js?v=25"></script>
 <script defer src="./java/intro-loader.js?v=24"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
@@ -564,7 +666,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <script defer src="./java/loader.js?v=24"></script>
-<script defer src="./java/hero-3d.js?v=24"></script>
+<script defer src="./java/hero-3d.js?v=25"></script>
 <script defer src="./java/script.js?v=24"></script>
 <script defer src="./java/nav-menu.js?v=24"></script>
 <!-- IMPORTANTE: studio-scroll.js DEBE ir antes que type.js y capas.js.
@@ -581,6 +683,7 @@
 <script defer src="./java/type.js?v=24"></script>
 <script defer src="./java/cursor-preview.js?v=24"></script>
 <script defer src="./java/theme-watcher.js?v=24"></script>
+<script defer src="./java/faq.js?v=25"></script>
 
 <a href="https://wa.me/5491161105751?text=Hola%20Cruz%20Estudio,%20me%20gustaría%20consultar%20por%20un%20proyecto." class="whatsapp-fixed" target="_blank" rel="noopener noreferrer" aria-label="Contacto por WhatsApp">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -588,7 +691,7 @@
     </svg>
 </a>
 <script defer src="./java/nav-contrast.js?v=24"></script>
-<script defer src="./java/cursor.js?v=24"></script>
+<script defer src="./java/cursor.js?v=25"></script>
 <script defer src="./java/lib/lenis.min.js?v=24"></script>
 <script defer src="./java/smooth-scroll.js?v=24"></script>
 </body>

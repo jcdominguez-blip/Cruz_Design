@@ -47,6 +47,72 @@
   /* Oculta el cursor nativo solo si el custom está activo */
   body.cx-ready,
   body.cx-ready * { cursor: none !important; }
+
+  /* ─────────────────────────────────────────────────────────────────────
+     HINT "SCROLL DOWN" — etiqueta que sigue al cursor en el hero.
+     Capa externa: la posición (transform) y el desvanecido por scroll
+     (opacity) los maneja el JS. Capa interna: animación de entrada por CSS.
+     ───────────────────────────────────────────────────────────────────── */
+  .cx-scroll {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 10000;
+    opacity: 0;                       /* el JS sube la opacidad al aparecer */
+    transition: opacity .45s ease;
+    will-change: transform, opacity;
+    mix-blend-mode: difference;       /* contraste sobre cualquier fondo, igual que dot/ring */
+  }
+
+  /* Centra el bloque respecto al punto del cursor (el JS posiciona .cx-scroll
+     en la coordenada del cursor) y lo baja debajo del aro (Ø38 → radio 19). */
+  .cx-scroll-center {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, 30px);
+    white-space: nowrap;
+  }
+
+  .cx-scroll-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: "cofo-sans-mono-variable", monospace;
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #fff;
+    white-space: nowrap;
+    /* estado previo a la animación de entrada */
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .cx-scroll.is-in .cx-scroll-inner {
+    animation: cxScrollIn .6s cubic-bezier(.22, .61, .36, 1) forwards;
+  }
+
+  @keyframes cxScrollIn {
+    from { opacity: 0; transform: translateY(10px); filter: blur(4px); letter-spacing: .4em; }
+    to   { opacity: 1; transform: translateY(0);    filter: blur(0);   letter-spacing: .18em; }
+  }
+
+  /* Flechita con un rebote sutil e infinito (refuerza "hacia abajo") */
+  .cx-scroll-arrow {
+    display: inline-block;
+    font-size: 12px;
+    animation: cxScrollBob 1.6s ease-in-out infinite;
+  }
+
+  @keyframes cxScrollBob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(3px); }
+  }
+
+  /* Sobre elementos interactivos, la etiqueta se esconde (no tapa los CTA) */
+  .cx-scroll.cx-scroll--hidden { opacity: 0 !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {

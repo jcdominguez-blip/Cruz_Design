@@ -27,12 +27,54 @@
         document.body.appendChild(ring);
         document.body.classList.add('cx-ready');
 
+        // ── Hint "SCROLL DOWN" (ref. produx.design) ──
+        // Etiqueta que sigue al cursor SOLO en el hero del home. Se detecta por
+        // #spacer (existe únicamente en index.html); en páginas internas no se crea.
+        // Aparece con animación, sigue al puntero con lag y se desvanece al
+        // scrollear hacia el contenido, indicando al usuario que haga scroll.
+        const hasHero = !!document.getElementById('spacer');
+        let label = null;
+        if (hasHero) {
+            label = document.createElement('div');
+            label.className = 'cx-scroll';
+            label.setAttribute('aria-hidden', 'true');
+            // Capa .cx-scroll-center: centra el bloque sobre el cursor (translate
+            // -50% en CSS), independiente de la animación de entrada del inner.
+            label.innerHTML = '<span class="cx-scroll-center">' +
+                '<span class="cx-scroll-inner">Scroll down' +
+                ' <span class="cx-scroll-arrow">↓</span></span></span>';
+            document.body.appendChild(label);
+        }
+
         let mx = window.innerWidth / 2, my = window.innerHeight / 2;
         let rx = mx, ry = my;
+        let lx = mx, ly = my;               // posición con lag de la etiqueta
         let scale = 1, targetScale = 1;     // 1 = aro normal · 0.42 = contraído
+        let hintAppeared = false;
+
+        // Desvanecido por scroll: opacidad plena arriba de todo → 0 al bajar
+        // ~media pantalla (ya pasando al contenido). Reaparece si vuelve al top.
+        function updateHint() {
+            if (!label || !hintAppeared) return;
+            const y = window.scrollY || window.pageYOffset || 0;
+            const fade = Math.max(0, Math.min(1, 1 - y / ((window.innerHeight || 1) * 0.5)));
+            label.style.opacity = String(fade);
+        }
+        function showHint() {
+            if (!label || hintAppeared) return;
+            hintAppeared = true;
+            label.classList.add('is-in');
+            updateHint();
+        }
+        if (label) {
+            window.addEventListener('scroll', updateHint, { passive: true });
+            // Aparece con el primer movimiento del mouse; si no hay, a los 1.4s.
+            setTimeout(showHint, 1400);
+        }
 
         document.addEventListener('mousemove', e => {
             mx = e.clientX; my = e.clientY;
+            if (label && !hintAppeared) showHint();
         }, { passive: true });
 
         (function loop() {
@@ -42,6 +84,13 @@
             scale += (targetScale - scale) * 0.15;
             dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
             ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) scale(' + scale + ')';
+            if (label) {
+                lx += (mx - lx) * 0.14;         // la etiqueta trailea un poco más
+                ly += (my - ly) * 0.14;
+                // Posición en el punto del cursor; el centrado real (horizontal +
+                // debajo del aro) lo resuelve .cx-scroll-center en el CSS.
+                label.style.transform = 'translate(' + lx + 'px,' + ly + 'px)';
+            }
         })();
 
         // Hover sobre interactivos → el aro se contrae hacia el punto (delegación)
@@ -49,6 +98,7 @@
             if (e.target.closest && e.target.closest(INTERACTIVE)) {
                 targetScale = 0.42;
                 document.body.classList.add('cx-hover');
+                if (label) label.classList.add('cx-scroll--hidden');
             }
         }, { passive: true });
 
@@ -60,6 +110,7 @@
             if (from && !to) {
                 targetScale = 1;
                 document.body.classList.remove('cx-hover');
+                if (label) label.classList.remove('cx-scroll--hidden');
             }
         }, { passive: true });
 

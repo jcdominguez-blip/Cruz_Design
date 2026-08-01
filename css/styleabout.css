@@ -1,363 +1,269 @@
-/* ==========================================================================
-   SISTEMA DE DISEÑO CRUZ ESTUDIO ® — ABOUT PAGE
-   Inspiración: Mother Design / Studio Okay
-   ========================================================================== */
+/* ═══════════════════════════════════════════════════════════════════════════
+   CRUZ ESTUDIO ® — ABOUT / ESTUDIO  (rediseño Awwwards)
+   Manifiesto corporativo dark. Design system del sitio:
+     · Títulos → var(--font-header) (Geist)  · Cuerpo → var(--font-reading) (IBM Plex Sans)
+     · Mono    → var(--font-mono)   (Cofo Sans Mono)
+     · Fondo oscuro corporativo #1D1E1C · texto crema #FFFDF3 · acento #F2C335
+   Animaciones (GSAP + ScrollTrigger) en java/about.js. Smooth scroll: Lenis.
+   ═══════════════════════════════════════════════════════════════════════════ */
 
-:root {
-    --bg-dark: #1D1E1C;
-    --crema: #FFFDF3;
-    --amarillo-acento: #f2c335;
-    
-    --font-header: 'Geist', sans-serif;
-    --font-reading: 'IBM Plex Sans', sans-serif;
-    --font-mono: 'cofo-sans-mono-variable', monospace;
-
-    --swiss-easing: cubic-bezier(0.25, 1, 0.5, 1);
+.about-page {
+    --a-bg:      #1D1E1C;   /* dark corporativo (equivalente al #121212 del brief) */
+    --a-ink:     #FFFDF3;   /* crema */
+    --a-ink-soft: rgba(255, 253, 243, 0.7);
+    --a-ink-faint: rgba(255, 253, 243, 0.42);
+    --a-line:    rgba(255, 253, 243, 0.12);
+    --a-accent:  #F2C335;
+    --a-heading: var(--font-header, 'Geist', sans-serif);
+    --a-body:    var(--font-reading, 'IBM Plex Sans', sans-serif);
+    --a-mono:    var(--font-mono, 'cofo-sans-mono-variable', monospace);
+    --a-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* --- 1. RESET & SCROLL (FIX) --- */
-html, body {
-    background-color: var(--bg-dark);
-    color: var(--crema);
+body.about-page {
+    background: var(--a-bg);
+    color: var(--a-ink);
+    font-family: var(--a-body);
+    -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
-    scroll-behavior: smooth;
 }
 
-.page-transition {
-    pointer-events: none;
+.about-main { position: relative; z-index: 1; }
+
+.about-eyebrow {
+    font-family: var(--a-mono);
+    font-size: clamp(10px, 1.3vw, 12px);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--a-accent);
+    margin: 0;
 }
 
-/* --- 2. ABOUT HERO (JERARQUÍA MASIVA) --- */
+/* ═══════════ 1 · HERO MANIFESTO ═══════════ */
 .about-hero {
-    padding: 180px 45px 100px 45px;
-    min-height: 80vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
+    padding: 0 5vw;
+    gap: clamp(28px, 4vw, 48px);
 }
 
-.about-title {
-    font-family: var(--font-header);
-    font-size: clamp(3rem, 5vw, 6.5rem);
+.about-hero-title {
+    margin: 0;
+    font-family: var(--a-heading);
     font-weight: 700;
-    line-height: 0.85;
-    letter-spacing: -0.05em;
-    margin-bottom: 60px;
-}
-
-.about-title span.txt-yellow {
-    color: var(--amarillo-acento);
-}
-
-.overview-description {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    width: 100%;
-}
-
-.about-subtitle {
-    grid-column: 7 / 13; /* Desplazamiento asimétrico suizo */
-    font-family: var(--font-reading);
-    font-size: clamp(1.2rem, 2vw, 1.8rem);
-    line-height: 1.4;
-    font-weight: 300;
-    color: rgba(255, 253, 243, 0.8);
-}
-
-/* --- 3. DESCRIPTION (TRANSICIÓN EDITORIAL) --- */
-.description {
-    padding: 100px 45px;
-    border-top: 1px solid rgba(255, 253, 243, 0.1);
-}
-
-.texto-about {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-}
-
-.texto-about p {
-    grid-column: 1 / 8;
-    font-family: var(--font-reading);
-    font-size: clamp(1.1rem, 1.5vw, 1.4rem);
-    line-height: 1.6;
-    color: var(--crema);
-}
-
-/* --- 4. TEAM SECTION (GRID TÉCNICO) --- */
-.team-section {
-    padding: 140px 45px;
-    background-color: var(--bg-dark);
-}
-
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    border-bottom: 1px solid var(--amarillo-acento);
-    margin-bottom: 80px;
-    padding-bottom: 20px;
-}
-
-.team-title {
-    font-family: var(--font-header);
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    font-weight: 700;
+    font-size: clamp(3rem, 7vw, 9rem);
+    line-height: 0.9;
     letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--a-ink);
+    /* perspectiva para el rotateX del reveal */
+    perspective: 1000px;
 }
 
-.team-grid {
+/* Cada línea es una máscara; el span interno sube desde abajo (GSAP) */
+.line-mask {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.06em;   /* aire para tildes/descendentes al recortar */
+}
+.reveal-text {
+    display: inline-block;
+    transform-origin: left top;
+    will-change: transform, opacity;
+}
+/* Segunda mitad del manifiesto en acento (jerarquía) */
+.about-hero-title .line-mask:nth-child(3) .reveal-text,
+.about-hero-title .line-mask:nth-child(4) .reveal-text { color: var(--a-accent); }
+
+/* ═══════════ 2 · INMERSIÓN VISUAL (PARALLAX) ═══════════ */
+.about-image-section { position: relative; }
+
+.image-wrapper {
+    width: 100vw;
+    height: 130vh;
+    overflow: hidden;
+    position: relative;
+}
+.image-wrapper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(29, 30, 28, 0.32);   /* overlay dark corporativo sutil */
+    z-index: 1;
+    pointer-events: none;
+}
+.studio-photo {
+    width: 100%;
+    height: 150%;          /* margen de recorrido para el parallax */
+    object-fit: cover;
+    position: absolute;
+    top: -25%;
+    left: 0;
+    will-change: transform;
+}
+
+/* ═══════════ 3 · MANIFIESTO / RIGOR TÉCNICO (BENTO) ═══════════ */
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10vw;
+    padding: 15vh 5vw;
+    align-items: start;
+}
+
+.about-statement {
+    margin: 0;
+    font-family: var(--a-heading);
+    font-weight: 500;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--a-ink);
+    max-width: 18ch;
+}
+/* La marca clave en acento */
+.about-statement { text-wrap: balance; }
+
+.about-col-right { position: relative; }
+
+.about-bolt {
+    display: block;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1;
+    margin-bottom: clamp(28px, 4vw, 44px);
+    filter: grayscale(0);
+    opacity: 0.9;
+}
+
+.method-item {
+    padding: clamp(24px, 3vw, 34px) 0;
+    border-top: 1px solid var(--a-line);
+}
+.method-item:last-child { border-bottom: 1px solid var(--a-line); }
+
+.method-label {
+    display: block;
+    font-family: var(--a-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--a-accent);
+    margin-bottom: 14px;
+}
+.method-item p {
+    margin: 0;
+    font-family: var(--a-body);
+    font-weight: 300;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--a-ink-soft);
+    max-width: 46ch;
+}
+
+/* ═══════════ 4 · EQUIPO ═══════════ */
+.about-team {
+    padding: clamp(60px, 10vh, 120px) 5vw clamp(70px, 12vh, 140px);
+    border-top: 1px solid var(--a-line);
+}
+.about-team-head { margin-bottom: clamp(40px, 6vw, 72px); }
+.about-team-title {
+    margin: 14px 0 0;
+    font-family: var(--a-heading);
+    font-weight: 600;
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--a-ink);
+}
+
+.about-team-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    gap: clamp(24px, 3vw, 48px);
 }
-
-.team-member {
-    text-align: left;
-    transition: transform 0.4s var(--swiss-easing);
+.team-member { display: flex; flex-direction: column; }
+.team-photo {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    background: rgba(255, 253, 243, 0.04);
 }
-
-.team-member:hover {
-    transform: translateY(-10px);
-}
-
-.team-member img {
+.team-photo img {
     width: 100%;
-    filter: grayscale(1);
-    transition: filter 0.5s ease;
-    margin-bottom: 25px;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.05);
+    transition: filter 0.6s var(--a-ease), transform 0.9s var(--a-ease);
 }
-
-.team-member:hover img {
-    filter: grayscale(0);
+@media (hover: hover) and (pointer: fine) {
+    .team-member:hover .team-photo img { filter: grayscale(0); transform: scale(1.04); }
 }
-
 .member-name {
-    font-family: var(--font-header);
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 5px;
+    margin: 0 0 4px;
+    font-family: var(--a-heading);
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+    color: var(--a-ink);
 }
-
 .member-role {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
+    margin: 0 0 14px;
+    font-family: var(--a-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--amarillo-acento);
-    letter-spacing: 0.1em;
+    color: var(--a-accent);
 }
-
-.icon-links {
-    margin-top: 15px;
-    display: flex;
-    gap: 15px;
-    opacity: 0.4;
-    transition: opacity 0.3s ease;
-}
-
-.team-member:hover .icon-links {
-    opacity: 1;
-}
-
-/* --- 5. SERVICES ACCORDION (MINIMAL) --- */
-.services-section {
-    padding: 140px 45px;
-    border-top: 1px solid rgba(255, 253, 243, 0.1);
-}
-
-.services-title {
-    font-family: var(--font-header);
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    font-weight: 700;
-    margin-bottom: 60px;
-}
-
-.accordion-service {
-    border-top: 1px solid rgba(255, 253, 243, 0.1);
-}
-
-.accordion-item-service {
-    border-bottom: 1px solid rgba(255, 253, 243, 0.1);
-}
-
-.accordion-button-service {
-    width: 100%;
-    padding: 40px 0;
-    display: grid;
-    grid-template-columns: 80px 1fr 50px;
-    align-items: center;
-    background: none;
-    border: none;
-    color: var(--crema);
-    text-align: left;
-    transition: color 0.3s ease;
-}
-
-.service-number {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-}
-
-.service-name {
-    font-family: var(--font-header);
-    font-size: 2rem;
-    font-weight: 700;
-}
-
-.accordion-button-service:hover {
-    color: var(--amarillo-acento);
-}
-
-.accordion-content-service p {
-    font-family: var(--font-reading);
-    font-size: 1.1rem;
-    max-width: 800px;
-    padding-bottom: 40px;
-    line-height: 1.6;
-    color: rgba(255, 253, 243, 0.7);
-}
-
-/* --- 6. UTILITIES & RESPONSIVE --- */
-.txt-yellow { color: var(--amarillo-acento); }
-
-@media (max-width: 1024px) {
-    .team-grid { grid-template-columns: repeat(2, 1fr); }
-    .about-subtitle, .texto-about p { grid-column: 1 / 13; }
-}
-
-@media (max-width: 768px) {
-    .team-grid { grid-template-columns: 1fr; }
-    .about-hero { padding-top: 120px; }
-    .accordion-button-service { grid-template-columns: 40px 1fr 30px; }
-    .service-name { font-size: 1.5rem; }
-}
-
-/* --- BOTÓN WHATSAPP MONOCROMO --- */
-.whatsapp-fixed {
-    position: fixed;
-    bottom: 40px; /* Alineación suiza con el footer */
-    right: 45px;  /* Sigue tu grilla de 45px */
-    width: 60px;
-    height: 60px;
-    background-color: var(--bg-dark); /* Fondo oscuro por defecto */
-    border: 1px solid rgba(255, 253, 243, 0.1);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-.whatsapp-fixed svg {
-    width: 28px;
-    height: 28px;
-    fill: var(--crema); /* Icono crema sobre fondo oscuro */
-    transition: transform 0.4s ease, fill 0.4s ease;
-}
-
-/* Interacción: Aquí revelamos el Amarillo Acento */
-.whatsapp-fixed:hover {
-    background-color: var(--amarillo-acento);
-    transform: translateY(-5px) scale(1.05);
-    border-color: var(--amarillo-acento);
-}
-
-.whatsapp-fixed:hover svg {
-    fill: var(--bg-dark); /* El icono se vuelve oscuro en hover */
-    transform: rotate(10deg);
-}
-
-/* Ajuste Responsive */
-@media (max-width: 768px) {
-    .whatsapp-fixed {
-        bottom: 25px;
-        right: 25px;
-        width: 50px;
-        height: 50px;
-    }
-    .whatsapp-fixed svg {
-        width: 24px;
-        height: 24px;
-    }
-}
-
-/*footer*/
-
-/* ==========================================================================
-   FOOTER SISTEMATIZADO - LIGHT CONTRAST
-   Fondo: Crema | Texto: Dark | Estilo: Swiss Editorial
-   ========================================================================== */
-/* --- FOOTER GLOBAL --- */
-.footer-global {
-    background-color: var(--crema);
-    color: var(--bg-dark);
-    padding: 100px 45px 60px 45px;
-    width: 100%;
-    position: relative;
-    cursor: none; /* Rigor Flair Digital: el cursor amarillo manda */
-}
-
-.footer-global .footer-link, 
-.footer-global .copyright-text, 
-.footer-global .reading-small {
-    color: #1D1E1C !important;
+.member-links { display: flex; gap: 18px; }
+.member-links a {
+    font-family: var(--a-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--a-ink-soft);
     text-decoration: none;
+    transition: color 0.3s var(--a-ease);
+}
+@media (hover: hover) and (pointer: fine) {
+    .member-links a:hover { color: var(--a-accent); }
 }
 
-.footer-global .footer-link:hover {
-    color: #f2c335 !important; /* Amarillo acento */
+/* ═══════════ FOOTER — invertido a dark corporativo ═══════════ */
+.about-footer {
+    background: var(--a-bg) !important;
+    color: var(--a-ink);
+    border-top: 1px solid var(--a-line);
 }
+.about-footer .footer-line { background: var(--a-ink); }
+.about-footer .footer-link { color: var(--a-ink); }
+.about-footer .reading-small { color: var(--a-ink-soft); }
+.about-footer .mono-label { color: var(--a-ink) !important; }
+.about-footer .pluma-seal { filter: brightness(0) invert(1); }
 
-.pluma-seal {
-    height: 45px;
-    width: auto;
-    filter: brightness(0); /* Asegura que el logo sea negro sobre crema */
-}
-
+/* ═══════════ RESPONSIVE ═══════════ */
 @media (max-width: 768px) {
-    .footer-global {
-        grid-template-columns: 1fr;
-        padding: 60px 25px;
+    .about-hero { min-height: 92vh; padding: 0 24px; }
+    .image-wrapper { height: 80vh; }
+    .about-content {
+        grid-template-columns: 1fr;   /* colapsa a 1 columna */
+        gap: 48px;
+        padding: 10vh 24px;
     }
-}
-/* ==========================================================================
-   RESPONSIVE: FIX ENCUADRE
-   ========================================================================== */
-
-@media (max-width: 1024px) {
-    .footer {
-        grid-template-columns: 1fr 1fr;
-        gap: 50px;
-    }
-    .footer-center {
-        grid-column: 1 / -1;
-        order: 3;
-    }
+    .about-statement { max-width: none; }
+    .about-team { padding: 60px 24px 80px; }
+    .about-team-grid { grid-template-columns: 1fr; gap: 40px; }
+    .team-photo { aspect-ratio: 3 / 4; }
 }
 
-/* --- AJUSTE PARA MÓVILES (768px) --- */
-@media (max-width: 768px) {
-    .footer-global {
-        grid-template-columns: 1fr;
-        padding: 60px 35px;
-        gap: 50px;
-    }
+@media (max-width: 480px) {
+    .about-hero-title { font-size: clamp(2.4rem, 12vw, 3.4rem); }
+}
 
-    /* Reducción del logo para responsive */
-    .pluma-seal {
-        height: 30px; /* Tamaño reducido de 45px a 30px */
-        margin-bottom: 15px;
-    }
-
-    .footer-global .copyright-text {
-        font-size: 1.6rem; /* Ajuste proporcional del texto */
-        letter-spacing: -0.03em;
-    }
-
-    .footer-col, 
-    .footer-brand-end {
-        align-items: flex-start !important;
-        text-align: left !important;
-    }
+/* ═══════════ Accesibilidad: reduce motion ═══════════ */
+@media (prefers-reduced-motion: reduce) {
+    .reveal-text { transform: none !important; opacity: 1 !important; }
+    .team-photo img { transition: none !important; }
 }
