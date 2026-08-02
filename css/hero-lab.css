@@ -1,0 +1,101 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   HERO LAB (Etapas 3 + 4) — banco de pruebas del hero premium
+   Dark Mode + tipografía oversized (split-text) + canvas WebGL (rayo) detrás.
+   Design system: Geist (título) · IBM Plex Sans (bajada) · Cofo Sans Mono (label)
+   Dark corporativo #1D1E1C · crema #FFFDF3 · acento #F2C335.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.hero-lab {
+    --h-bg: #1D1E1C;      /* dark corporativo (equivalente al #121212 del brief) */
+    --h-ink: #FFFDF3;     /* crema (equivalente al #EBEBEB del brief) */
+    --h-ink-soft: rgba(255, 253, 243, 0.6);
+    --h-accent: #F2C335;
+    --h-heading: var(--font-header, 'Geist', sans-serif);
+    --h-body: var(--font-reading, 'IBM Plex Sans', sans-serif);
+    --h-mono: var(--font-mono, 'cofo-sans-mono-variable', monospace);
+}
+
+body.hero-lab {
+    background: var(--h-bg);
+    color: var(--h-ink);
+    font-family: var(--h-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+.hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 5vw;
+    overflow: hidden;
+    background: var(--h-bg);
+}
+
+/* Canvas WebGL (Etapa 4) — detrás de la tipografía */
+#hero-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+#hero-canvas canvas { display: block; width: 100%; height: 100%; }
+
+.hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    pointer-events: none;   /* deja pasar el mouse al canvas para el parallax 3D */
+}
+.hero-inner > * { pointer-events: auto; }
+
+.hero-eyebrow {
+    font-family: var(--h-mono);
+    font-size: clamp(10px, 1.3vw, 12px);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--h-accent);
+    margin: 0 0 clamp(24px, 3vw, 36px);
+}
+
+.hero-title {
+    margin: 0;
+    font-family: var(--h-heading);
+    font-weight: 700;
+    font-size: clamp(4rem, 10vw, 12rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--h-ink);
+    max-width: 15ch;
+    perspective: 1000px;
+}
+
+/* Split text: cada palabra en máscara, el interior sube desde abajo (GSAP) */
+.hero-title .word {
+    display: inline-block;
+    overflow: hidden;
+    padding-bottom: 0.08em;   /* aire para descendentes al recortar */
+    vertical-align: bottom;
+}
+.hero-title .word-inner {
+    display: inline-block;
+    will-change: transform, opacity;
+}
+
+.hero-bajada {
+    margin: clamp(28px, 4vw, 44px) 0 0;
+    max-width: 52ch;
+    font-family: var(--h-body);
+    font-weight: 300;
+    font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+    line-height: 1.6;
+    color: var(--h-ink-soft);
+}
+
+@media (max-width: 768px) {
+    .hero-title { max-width: none; }
+    .hero-section { padding: 0 24px; }
+}
