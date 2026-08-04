@@ -59,6 +59,18 @@
             scrollTrigger: { trigger: SEL.content, start: 'top 80%' }
         });
 
+        // ── 4 · FOOTER reveal (línea que se dibuja + columnas en cascada) ───
+        var footer = document.querySelector('.about-footer');
+        if (footer) {
+            var line = footer.querySelector('.footer-line');
+            var cols = footer.querySelectorAll('.footer-col');
+            var ftl = gsap.timeline({ scrollTrigger: { trigger: footer, start: 'top 88%' } });
+            if (line) ftl.from(line, { scaleX: 0, duration: 0.9, ease: 'power3.out' });
+            if (cols.length) ftl.from(cols, {
+                y: 30, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.1
+            }, '-=0.5');
+        }
+
         // Layout definitivo tras fuentes/imágenes.
         window.addEventListener('load', function () {
             requestAnimationFrame(function () {

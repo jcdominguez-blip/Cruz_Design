@@ -254,17 +254,18 @@ body.about-page {
     .member-links a:hover { color: var(--a-accent); }
 }
 
-/* ═══════════ FOOTER — invertido a dark corporativo ═══════════ */
+/* ═══════════ FOOTER — crema (mismo look que el index) ═══════════
+   Usa los estilos base de .footer-global (crema + texto oscuro). El reveal de
+   entrada (línea que se dibuja + columnas en cascada) lo maneja java/about.js.
+   Va sólido y por encima del Silk para leer limpio. */
 .about-footer {
-    background: var(--a-bg) !important;
-    color: var(--a-ink);
-    border-top: 1px solid var(--a-line);
+    position: relative;
+    z-index: 1;
 }
-.about-footer .footer-line { background: var(--a-ink); }
-.about-footer .footer-link { color: var(--a-ink); }
-.about-footer .reading-small { color: var(--a-ink-soft); }
-.about-footer .mono-label { color: var(--a-ink) !important; }
-.about-footer .pluma-seal { filter: brightness(0) invert(1); }
+.about-footer .footer-line {
+    transform-origin: left center;
+    will-change: transform;
+}
 
 /* ═══════════ RESPONSIVE ═══════════ */
 @media (max-width: 768px) {
