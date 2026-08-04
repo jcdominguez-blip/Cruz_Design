@@ -128,8 +128,8 @@ body.about-page {
 
 .about-col-right { position: relative; perspective: 700px; }
 
-/* Símbolo Cruz (signo-cruz.svg) pintado en amarillo vía mask, rotando en su
-   eje Y para sumar dinamismo (reemplaza al rayo ⚡). */
+/* Símbolo Cruz (signo-cruz.svg) pintado en amarillo vía mask. GIRA plano sobre
+   su centro (como el spinner del loader: transform rotate + linear), no un flip 3D. */
 .about-symbol {
     display: block;
     width: clamp(46px, 5vw, 68px);
@@ -138,12 +138,11 @@ body.about-page {
     background-color: var(--a-accent);
     -webkit-mask: url(../img/signo-cruz.svg) center / contain no-repeat;
             mask: url(../img/signo-cruz.svg) center / contain no-repeat;
-    transform-style: preserve-3d;
-    animation: cruzSpin 7s linear infinite;
+    animation: cruzSpin 8s linear infinite;
     will-change: transform;
 }
 @keyframes cruzSpin {
-    to { transform: rotateY(360deg); }
+    to { transform: rotate(360deg); }   /* giro plano (mismo estilo que el loader) */
 }
 @media (prefers-reduced-motion: reduce) {
     .about-symbol { animation: none; }
