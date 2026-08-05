@@ -1,0 +1,382 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   CRUZ ESTUDIO ® — GALERÍA INMERSIVA DE TRABAJOS (canvas arrastrable + zoom)
+   Adaptación del reference "Fashion Gallery" al design system del sitio:
+     · Fondo var(--bg-dark) · texto var(--crema) · acento var(--amarillo-acento)
+     · Títulos Geist · lectura IBM Plex Sans · labels Cofo Sans Mono
+   Namespaced .cg-* para no colisionar con el archivo (grid/list) ni con .viewport.
+   Lógica en java/trabajos-canvas.js.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* La capa inmersiva sólo existe cuando la vista está activa (body.cg-active) */
+.cg-viewport {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+    opacity: 0;
+    display: none;
+    background: var(--bg-dark);
+}
+body.cg-active .cg-viewport { display: block; }
+body.cg-active .archive-main-content,
+body.cg-active .footer-global { display: none; }
+body.cg-active { overflow: hidden; height: 100vh; cursor: grab; }
+body.cg-active.cg-dragging { cursor: grabbing; }
+body.cg-active.cg-zoom-mode { cursor: default; }
+
+.cg-canvas {
+    position: absolute;
+    top: 0; left: 0;
+    transform-origin: 0 0;
+    will-change: transform;
+    isolation: isolate;
+}
+.cg-grid { position: relative; width: 100%; height: 100%; }
+
+.cg-item {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background: #111;
+    cursor: pointer;
+    overflow: hidden;
+    will-change: transform, opacity;
+    z-index: 1;
+}
+.cg-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(100%);
+    transition: filter 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    user-select: none;
+}
+.cg-item:hover { z-index: 2; }
+.cg-item:hover img { filter: grayscale(0%); transform: scale(1.04); }
+
+/* ── Split-screen: imagen a la DERECHA, panel de texto a la IZQUIERDA ── */
+.cg-split {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    z-index: 2;
+    opacity: 0;
+    pointer-events: none;
+}
+.cg-split.active { opacity: 1; pointer-events: all; }
+.cg-split-left,
+.cg-split-right {
+    position: relative;
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+/* Lado del TEXTO (izquierda): fondo bien oscuro para máximo contraste de la
+   tipografía; se aclara hacia el centro para no cortar de golpe con la imagen. */
+.cg-split-left {
+    background: linear-gradient(90deg,
+        rgba(29, 30, 28, 0.97) 0%,
+        rgba(29, 30, 28, 0.9) 55%,
+        rgba(29, 30, 28, 0.66) 100%);
+}
+/* Lado de la IMAGEN (derecha): la foto lo cubre; scrim tenue detrás. */
+.cg-split-right { background: rgba(29, 30, 28, 0.55); }
+.cg-zoom-target {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* La imagen que hace el Flip por encima del target */
+.cg-scaling-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 3;
+    pointer-events: none;
+    will-change: transform;
+    opacity: 1 !important;
+}
+.cg-scaling-overlay img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ── Panel de texto (izquierda) — jerarquía de lectura ── */
+.cg-info {
+    position: fixed;
+    left: clamp(28px, 5vw, 72px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: min(40vw, 480px);
+    z-index: 4;
+    color: var(--crema);
+    opacity: 0;
+    pointer-events: none;
+}
+.cg-info.active { pointer-events: auto; }
+
+/* Cada bloque = máscara con clip para el reveal (sube desde abajo, JS) */
+.cg-info-num,
+.cg-info-client,
+.cg-info-title,
+.cg-info-desc {
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+.cg-info-num { margin-bottom: 10px; }
+.cg-info-num span {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--amarillo-acento);
+    will-change: transform, opacity;
+}
+.cg-info-client { margin-bottom: 18px; }
+.cg-info-client span {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 253, 243, 0.6);
+    will-change: transform, opacity;
+}
+.cg-info-title { margin-bottom: 20px; }
+.cg-info-title h2 {
+    margin: 0;
+    font-family: var(--font-header);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 2.6vw, 2.3rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--crema);
+    text-wrap: balance;
+    will-change: transform, opacity;
+}
+.cg-info-desc { margin-bottom: 24px; }
+.cg-desc-line {
+    display: block;
+    font-family: var(--font-reading);
+    font-weight: 300;
+    font-size: clamp(0.95rem, 1.15vw, 1.08rem);
+    line-height: 1.55;
+    color: rgba(255, 253, 243, 0.72);
+    will-change: transform, opacity;
+}
+.cg-info-ficha {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 253, 243, 0.5);
+    margin-bottom: 22px;
+    will-change: transform, opacity;
+}
+.cg-info-link {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amarillo-acento);
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 1px solid rgba(242, 195, 53, 0.4);
+    transition: border-color 0.3s ease, color 0.3s ease;
+    will-change: transform, opacity;
+}
+.cg-info-link:hover { color: var(--crema); border-bottom-color: var(--crema); }
+
+/* ── Controles (switch de zoom + %) — bottom center, estilo del sistema ── */
+.cg-controls {
+    position: fixed;
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    z-index: 6;
+    opacity: 0;
+    transition: left 1.1s cubic-bezier(0.87, 0, 0.13, 1);
+}
+.cg-controls.cg-split-mode { left: 25%; }   /* se corre bajo la imagen (derecha) */
+.cg-pct {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bg-dark);
+    background: var(--crema);
+    padding: 10px 16px;
+    border-radius: 6px;
+    min-width: 64px;
+    text-align: center;
+    white-space: nowrap;
+}
+.cg-switch {
+    display: flex;
+    gap: 18px;
+    background: rgba(255, 253, 243, 0.06);
+    border: 1px solid rgba(255, 253, 243, 0.12);
+    padding: 10px 18px;
+    border-radius: 6px;
+    backdrop-filter: blur(6px);
+}
+.cg-switch-button {
+    position: relative;
+    background: none;
+    border: none;
+    color: rgba(255, 253, 243, 0.45);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+.cg-switch-button:hover { color: var(--crema); }
+.cg-switch-button.is-current { color: var(--amarillo-acento); }
+.cg-switch-button .cg-dot {
+    position: absolute;
+    left: -6px; top: 50%;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--amarillo-acento);
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: opacity 0.3s ease;
+}
+.cg-switch-button:hover .cg-dot,
+.cg-switch-button.is-current .cg-dot { opacity: 1; }
+
+/* Toggle de sonido (SÍ / NO) */
+.cg-sound {
+    background: rgba(255, 253, 243, 0.06);
+    border: 1px solid rgba(255, 253, 243, 0.12);
+    color: rgba(255, 253, 243, 0.5);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    backdrop-filter: blur(6px);
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+.cg-sound:hover { color: var(--crema); }
+.cg-sound em { font-style: normal; }
+.cg-sound.is-on { color: var(--amarillo-acento); border-color: rgba(242, 195, 53, 0.35); }
+
+/* ── Botón cerrar (flecha) ── */
+.cg-close {
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    width: 56px; height: 56px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 7;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-40px, -50%);
+}
+.cg-close.active { pointer-events: all; }
+.cg-close:hover { opacity: 0.7 !important; }
+.cg-close svg { width: 40px; height: 40px; }
+.cg-close svg path { fill: var(--crema); }
+
+/* ── Viñeta sutil ── */
+.cg-vignette {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    mix-blend-mode: multiply;
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 130%);
+}
+
+/* ── Hint "arrastrá para explorar" que sigue al cursor (estilo hero) ── */
+.cg-hint {
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 8;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    will-change: transform, opacity;
+}
+.cg-hint.is-in { opacity: 1; }
+.cg-hint-inner {
+    display: inline-block;
+    transform: translate(18px, 20px);   /* offset abajo-derecha del cursor */
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--bg-dark);
+    background: var(--crema);
+    padding: 8px 14px;
+    border-radius: 40px;
+    white-space: nowrap;
+}
+.cg-hint-inner em { font-style: normal; margin-left: 5px; opacity: 0.55; }
+
+/* ── Switcher de vistas (fijo, siempre accesible) ── */
+.cg-viewswitch {
+    position: fixed;
+    top: 96px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    gap: 4px;
+    background: rgba(29, 30, 28, 0.6);
+    border: 1px solid rgba(255, 253, 243, 0.12);
+    padding: 5px;
+    border-radius: 8px;
+    backdrop-filter: blur(8px);
+    z-index: 900;
+}
+.cg-viewswitch .view-btn {
+    background: none; border: none;
+    color: rgba(255, 253, 243, 0.45);
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.35s;
+}
+.cg-viewswitch .view-btn.active { background: var(--crema); color: var(--bg-dark); font-weight: 700; }
+
+/* ── Mobile: la inmersiva no aplica; se usa GRID ── */
+@media (max-width: 768px) {
+    .cg-viewport, .cg-controls, .cg-close, .cg-vignette, .cg-hint { display: none !important; }
+    .cg-viewswitch [data-view="canvas"] { display: none; }
+    .cg-viewswitch { top: auto; bottom: 24px; }
+    body.cg-active { overflow: auto; height: auto; cursor: auto; }
+    body.cg-active .archive-main-content, body.cg-active .footer-global { display: block; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cg-item img { transition: none !important; }
+}

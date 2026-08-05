@@ -7,14 +7,14 @@
     <meta name="description" content="Cruz Estudio: no hacemos estética vacía, construimos identidades que perduran. Diagnóstico, estrategia y producción visual con rigor técnico.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://use.typekit.net" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/style.css?v=26">
-    <link rel="stylesheet" href="../css/styleabout.css?v=39">
+    <link rel="stylesheet" href="../css/style.css?v=31">
+    <link rel="stylesheet" href="../css/styleabout.css?v=48">
     <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -63,13 +63,14 @@
 
     <!-- ═══════════ 1 · HERO MANIFESTO ═══════════ -->
     <section class="about-hero">
-        <p class="about-eyebrow">// EL ESTUDIO</p>
+        <p class="about-eyebrow">// el estudio</p>
         <h1 class="about-hero-title">
-            <span class="line-mask"><span class="reveal-text">No hacemos</span></span>
-            <span class="line-mask"><span class="reveal-text">estética vacía.</span></span>
-            <span class="line-mask"><span class="reveal-text">Construimos identidades</span></span>
-            <span class="line-mask"><span class="reveal-text">que perduran.</span></span>
+            <span class="line-mask"><span class="reveal-text">No es sobre diseño,</span></span>
+            <span class="line-mask"><span class="reveal-text">es sobre visión.</span></span>
         </h1>
+        <p class="about-hero-sub">
+            <span class="line-mask"><span class="reveal-text">Nacimos con una convicción clara: las empresas de alto nivel merecen identidades que les hagan justicia.</span></span>
+        </p>
     </section>
 
     <!-- ═══════════ 2 · INMERSIÓN VISUAL (PARALLAX) ═══════════ -->
@@ -79,33 +80,55 @@
         </div>
     </section>
 
-    <!-- ═══════════ 3 · MANIFIESTO / RIGOR TÉCNICO ═══════════ -->
-    <section class="about-content">
-        <div class="about-col-left">
-            <h2 class="about-statement">Entendemos la marca como la firma institucional que avala la calidad de tus servicios.</h2>
+    <!-- ═══════════ 3 · CÍRCULO DORADO (valores y cultura · recorrido por scroll) ═══════════ -->
+    <section class="about-golden-circle" aria-label="La profundidad de nuestro pensamiento">
+        <!-- Columna texto · jerarquía H2 (sección) → H3 (estado) → P (cuerpo) -->
+        <div class="golden-text-wrapper">
+            <span class="about-eyebrow">// nuestros valores</span>
+            <h2 class="golden-section-title">La profundidad de nuestro pensamiento.</h2>
+            <div class="golden-state">
+                <span class="golden-label" data-golden-label>01</span>
+                <h3 class="golden-title line-mask"><span class="reveal-text" data-golden-title>Nuestra creencia</span></h3>
+                <p class="golden-desc" data-golden-desc>Creemos que detrás de cada gran empresa hay directores y equipos dejando la piel. Nuestro propósito humano es honrar ese esfuerzo. No existimos para ganar premios de estética, existimos para que la verdadera calidad de tu trabajo se refleje innegablemente en tu imagen.</p>
+            </div>
+            <span class="golden-hint" aria-hidden="true">// scrolleá para recorrer las tres capas</span>
         </div>
-        <div class="about-col-right">
-            <span class="about-symbol" aria-hidden="true"></span>
-            <div class="method-item">
-                <span class="method-label">01 — Diagnóstico</span>
-                <p>Auditamos el capital simbólico de la marca y su entorno competitivo. Antes de una sola decisión estética, definimos qué debe decir y qué atributos debe evocar.</p>
-            </div>
-            <div class="method-item">
-                <span class="method-label">02 — Estrategia</span>
-                <p>Construimos la plataforma conceptual: posicionamiento, tono de voz y personalidad. La estrategia es la que ordena cada decisión visual posterior.</p>
-            </div>
-            <div class="method-item">
-                <span class="method-label">03 — Producción visual</span>
-                <p>Traducimos la estrategia en un sistema de identidad completo y sistematizado, listo para expresarse con coherencia en cada punto de contacto.</p>
-            </div>
+
+        <!-- Columna gráfica: 3 anillos concéntricos con nombre (llenado acumulativo) -->
+        <div class="golden-graphic-wrapper">
+            <svg class="golden-svg" viewBox="0 0 400 400" role="img" aria-label="Círculo dorado: la convicción, la cultura y quiénes somos">
+                <!-- Anillo exterior · 03 quiénes somos -->
+                <g class="golden-ring" data-ring="3" tabindex="0" role="button" aria-label="Quiénes somos">
+                    <circle class="ring-hit" cx="200" cy="200" r="184"></circle>
+                    <circle class="ring-shape ring-outer" cx="200" cy="200" r="184"></circle>
+                </g>
+                <!-- Anillo medio · 02 la cultura -->
+                <g class="golden-ring" data-ring="2" tabindex="0" role="button" aria-label="La cultura">
+                    <circle class="ring-hit" cx="200" cy="200" r="120"></circle>
+                    <circle class="ring-shape ring-middle" cx="200" cy="200" r="120"></circle>
+                </g>
+                <!-- Anillo interior · 01 la convicción (actual por defecto) -->
+                <g class="golden-ring is-current" data-ring="1" tabindex="0" role="button" aria-label="La convicción">
+                    <circle class="ring-hit" cx="200" cy="200" r="64"></circle>
+                    <circle class="ring-shape ring-inner" cx="200" cy="200" r="64"></circle>
+                </g>
+                <!-- Nombres de cada capa (reemplazan a los números) -->
+                <text class="ring-name" x="200" y="48" data-name="3">Quiénes somos</text>
+                <text class="ring-name" x="200" y="108" data-name="2">La cultura</text>
+                <text class="ring-name ring-name--center is-filled" x="200" y="200" data-name="1">La convicción</text>
+            </svg>
         </div>
     </section>
 
-    <!-- ═══════════ 4 · EQUIPO ═══════════ -->
+    <!-- ═══════════ 4 · EL ORIGEN Y EL EQUIPO ═══════════ -->
     <section class="about-team">
         <div class="about-team-head">
-            <span class="about-eyebrow gsap-reveal">// EQUIPO</span>
-            <h2 class="about-team-title gsap-reveal">Las personas detrás del método.</h2>
+            <span class="about-eyebrow gsap-reveal">// el origen</span>
+            <h2 class="about-team-title gsap-reveal">Los rostros detrás del sistema.</h2>
+        </div>
+        <div class="about-origin">
+            <p class="about-origin-lead gsap-reveal">Estudio cruz nació al detectar un problema recurrente en el mercado: pymes e instituciones con servicios de excelencia, pero con identidades que los hacían lucir como uno más del montón. nos consolidamos como un estudio de diseño independiente para tender un puente definitivo entre la estrategia de negocios y el alto rendimiento visual.</p>
+            <p class="about-origin-sec gsap-reveal">Hoy, conectamos el rigor técnico de nuestra disciplina con la visión de empresarios audaces. somos una estructura ágil y nos involucramos hasta la médula en cada proyecto que elegimos tomar.</p>
         </div>
         <div class="about-team-grid">
             <article class="team-member gsap-reveal">
@@ -141,29 +164,29 @@
 </main>
 
 <footer class="footer-global about-footer" data-theme="light">
-    <div class="footer-line"></div>
+    <div class="footer-line" data-reveal></div>
     <div class="footer-grid">
-        <div class="footer-col">
+        <div class="footer-col" data-reveal>
             <span class="mono-label">UBICACIÓN</span>
             <div class="col-content">
                 <p class="reading-small">Buenos Aires, ARG <br> (GMT-3) <span id="footer-clock">00:00</span></p>
             </div>
         </div>
-        <div class="footer-col">
+        <div class="footer-col" data-reveal>
             <span class="mono-label">SAY HELLO</span>
             <div class="col-content">
                 <a href="mailto:estudiocruzdesign@gmail.com" class="footer-link">estudiocruzdesign@gmail.com </a>
                 <p class="reading-small">Branding & Estrategia de marca</p>
             </div>
         </div>
-        <div class="footer-col">
+        <div class="footer-col" data-reveal>
             <span class="mono-label">SEGUINOS</span>
             <div class="col-content">
                 <a href="https://www.instagram.com/cruzestudio_/" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram</a>
                 <a href="https://www.linkedin.com/company/cruzdesign" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
             </div>
         </div>
-        <div class="footer-col footer-brand-end">
+        <div class="footer-col footer-brand-end" data-reveal>
             <span class="mono-label">©2018—2026</span>
             <div class="col-content">
                 <img loading="lazy" decoding="async" src="../img/positivo-pluma.svg" alt="Sello Cruz Estudio" class="pluma-seal">
@@ -183,7 +206,7 @@
     </svg>
 </a>
 <script defer src="../java/silk-bg.js?v=26"></script>
-<script defer src="../java/about.js?v=35"></script>
+<script defer src="../java/about.js?v=43"></script>
 <script defer src="../java/gsap-reveal.js?v=34"></script>
 <script defer src="../java/nav-menu.js?v=26"></script>
 <script defer src="../java/nav-contrast.js?v=26"></script>

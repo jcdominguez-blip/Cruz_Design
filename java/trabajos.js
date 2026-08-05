@@ -11,24 +11,32 @@
  */
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* ---------- 1. VIEW SWITCHER (Grid / List) ---------- */
-    const viewBtns  = document.querySelectorAll('.view-btn');
+    /* ---------- 1. VIEW SWITCHER (Inmersiva / Grid / List) ----------
+       La vista INMERSIVA (canvas arrastrable) es la default en desktop; en mobile
+       arranca en GRID (la inmersiva no aplica en touch). El canvas lo controla
+       window.CruzCanvas (java/trabajos-canvas.js). */
+    const viewBtns  = document.querySelectorAll('.cg-viewswitch .view-btn');
     const container = document.getElementById('archive-main');
+    const isDesktop = window.matchMedia('(min-width: 769px)').matches;
+
+    function setView(view) {
+        viewBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-view') === view));
+        if (view === 'canvas') {
+            if (window.CruzCanvas) window.CruzCanvas.activate();
+        } else {
+            if (window.CruzCanvas) window.CruzCanvas.deactivate();
+            container.classList.toggle('list-mode', view === 'list');
+            container.classList.toggle('grid-mode', view !== 'list');
+        }
+    }
 
     viewBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            viewBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const view = btn.getAttribute('data-view');
-            if (view === 'list') {
-                container.classList.remove('grid-mode');
-                container.classList.add('list-mode');
-            } else {
-                container.classList.remove('list-mode');
-                container.classList.add('grid-mode');
-            }
-        });
+        btn.addEventListener('click', () => setView(btn.getAttribute('data-view')));
     });
+
+    // Vista por defecto: inmersiva en desktop, grid en mobile.
+    if (isDesktop && window.CruzCanvas) setView('canvas');
+    else setView('grid');
 
     /* ---------- 2. MENÚ HAMBURGUESA (match index) ---------- */
     const menuToggle = document.getElementById('mobile-menu');

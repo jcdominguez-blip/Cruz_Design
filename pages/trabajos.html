@@ -8,8 +8,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://i.ibb.co">
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
-    <link rel="stylesheet" href="../css/style.css?v=13"> 
-    <link rel="stylesheet" href="../css/trabajos.css?v=13">
+    <link rel="stylesheet" href="../css/style.css?v=31">
+    <link rel="stylesheet" href="../css/trabajos.css?v=14">
+    <link rel="stylesheet" href="../css/trabajos-canvas.css?v=3">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     <script>
     (function() {
@@ -71,15 +72,64 @@
     </div>
 </div>
 
+    <!-- Switcher de vistas (fijo, siempre accesible: inmersiva / grid / list) -->
+    <div class="cg-viewswitch" id="cg-viewswitch">
+        <button class="view-btn active" data-view="canvas">INMERSIVA</button>
+        <button class="view-btn" data-view="grid">GRID</button>
+        <button class="view-btn" data-view="list">LIST</button>
+    </div>
+
+    <!-- ═══════════ VISTA INMERSIVA (canvas arrastrable + zoom) ═══════════ -->
+    <div class="cg-viewport" id="cg-viewport" aria-label="Galería inmersiva de proyectos">
+        <div class="cg-canvas" id="cg-canvas">
+            <div class="cg-grid" id="cg-grid"><!-- celdas generadas por JS --></div>
+        </div>
+    </div>
+
+    <!-- Split-screen (imagen derecha · panel de texto izquierda) -->
+    <div class="cg-split" id="cg-split">
+        <div class="cg-split-left" id="cg-split-left"></div>
+        <div class="cg-split-right" id="cg-split-right">
+            <div class="cg-zoom-target" id="cg-zoom-target"></div>
+        </div>
+    </div>
+
+    <!-- Panel de texto del proyecto seleccionado -->
+    <div class="cg-info" id="cg-info">
+        <div class="cg-info-num" id="cg-info-num"><span>01</span></div>
+        <div class="cg-info-client" id="cg-info-client"><span>[ CLIENTE: — ]</span></div>
+        <div class="cg-info-title" id="cg-info-title"><h2>—</h2></div>
+        <div class="cg-info-desc" id="cg-info-desc"></div>
+        <div class="cg-info-ficha" id="cg-info-ficha"></div>
+        <a class="cg-info-link" id="cg-info-link" href="#">ver caso ↗</a>
+    </div>
+
+    <!-- Controles de zoom + porcentaje -->
+    <div class="cg-controls" id="cg-controls">
+        <div class="cg-pct" id="cg-pct">60%</div>
+        <div class="cg-switch">
+            <button class="cg-switch-button" data-cg-zoom="0.3"><span class="cg-dot"></span>ZOOM OUT</button>
+            <button class="cg-switch-button is-current" data-cg-zoom="0.6"><span class="cg-dot"></span>NORMAL</button>
+            <button class="cg-switch-button" data-cg-zoom="1.0"><span class="cg-dot"></span>ZOOM IN</button>
+            <button class="cg-switch-button" data-cg-zoom="fit"><span class="cg-dot"></span>FIT</button>
+        </div>
+        <button class="cg-sound is-on" id="cg-sound" aria-label="Sonido">SONIDO <em class="cg-sound-label">SÍ</em></button>
+    </div>
+
+    <!-- Botón cerrar (flecha) -->
+    <button class="cg-close" id="cg-close" aria-label="Cerrar">
+        <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M8.10127 0L9.64051 1.52L4.17217 6.92H16V9.08H4.17217L9.64051 14.48L8.10127 16L0 8L8.10127 0Z"/>
+        </svg>
+    </button>
+
+    <div class="cg-vignette" aria-hidden="true"></div>
+
     <main class="archive-main-content">
         <div class="archive-wrapper">
             <header class="archive-header">
                 <div class="header-left">
                     <h3 class="all-projects-title">ALL PROJECTS</h3>
-                    <div class="view-switcher-cta">
-                        <button class="view-btn active" data-view="grid">GRID VIEW</button>
-                        <button class="view-btn" data-view="list">LIST VIEW</button>
-                    </div>
                 </div>
                 <div class="header-right">
                     <p class="intro-text">
@@ -331,8 +381,12 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/Draggable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/Flip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/CustomEase.min.js"></script>
     <script src="../java/cursor-preview.js?v=13"></script>
-    <script src="../java/trabajos.js?v=13"></script>
+    <script src="../java/trabajos-canvas.js?v=7"></script>
+    <script src="../java/trabajos.js?v=15"></script>
 <script defer src="../java/nav-menu.js?v=13"></script>
 <script defer src="../java/nav-contrast.js?v=13"></script>
 <script defer src="../java/cursor.js?v=13"></script>

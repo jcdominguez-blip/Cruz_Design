@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap');
 /**
  * SISTEMA DE DISEÑO CRUZ ESTUDIO ® 2026
- * Tipografías: Neue Haas Grotesk + IBM Plex Sans + Cofo Sans Mono
+ * Tipografías: Geist (títulos) + IBM Plex Sans (cuerpo/lectura) + Cofo Sans Mono (labels)
  */
 
 /* --- 1. VARIABLES Y FUENTES SISTEMATIZADAS --- */
@@ -9,20 +9,45 @@
     --bg-dark: #1D1E1C;
     --crema: #FFFDF3;
     --amarillo-acento: #f2c335;
-    
+
     /* Tipografías */
     --font-header: 'Geist', sans-serif;
     --font-reading: 'IBM Plex Sans', sans-serif;
     --font-mono: 'cofo-sans-mono-variable', monospace;
 
-    /* Escala */
+    /* ═══════════ ESCALA TIPOGRÁFICA — SISTEMA ÚNICO (repaso 2026) ═══════════
+       Jerarquía a respetar en TODAS las páginas/secciones. Familia:
+         · display/h1/h2/h3 → var(--font-header) (Geist)
+         · body/body-lg/small → var(--font-reading) (IBM Plex Sans)
+         · label/eyebrow → var(--font-mono) (Cofo Sans Mono, UPPERCASE)
+       Los heroes muy grandes de cada página pueden usar --fs-display o su propio
+       tamaño de impacto; el resto de la jerarquía usa estos tokens. */
+    --fs-display: clamp(3.5rem, 9vw, 9rem);
+    --fs-h1:      clamp(2.6rem, 6vw, 5rem);
+    --fs-h2:      clamp(2.2rem, 4.6vw, 4.2rem);   /* titular de sección ÚNICO = el de "Preguntas frecuentes" (toda la web) */
+    --fs-h3:      clamp(1.35rem, 2vw, 1.7rem);
+    --fs-body-lg: clamp(1.1rem, 1.5vw, 1.35rem);
+    --fs-body:    clamp(1rem, 1.25vw, 1.18rem);
+    --fs-small:   clamp(0.9rem, 1.1vw, 1rem);
+    --fs-label:   12px;
+    --fs-eyebrow: clamp(10px, 1.3vw, 12px);
+    /* Interletrado / interlineado canónicos por rol */
+    --ls-display: -0.03em;
+    --ls-h:       -0.02em;
+    --ls-eyebrow: 0.18em;
+    --ls-label:   0.1em;
+    --lh-tight:   1.0;
+    --lh-h:       1.15;
+    --lh-body:    1.6;
+
+    /* Escala legacy (se mantiene por compatibilidad con reglas existentes) */
   /* ESCALA DE IMPACTO SUIZO */
     --h1-size: clamp(4.2rem, 10vw, 150px); /* Tamaño masivo según referencia */
     --h1-leading: 0.90;                   /* Interlineado extremadamente cerrado */
     --h1-spacing: -0.05rem;                /* Tensión en el kerning */
     --body-size: 18px;
     --detail-size: 14px;
-    
+
     --loader-yellow: #f2c335;
     --loader-black: #1D1E1C;
     --loader-transition: cubic-bezier(0.77, 0, 0.175, 1);
@@ -36,6 +61,10 @@
     box-sizing: border-box;
     font-family: var(--font-header), var(--font-mono), sans-serif;
 }
+
+/* Sin outline del navegador al enfocar con MOUSE/click (el recuadro azul de
+   Chrome). El foco por TECLADO conserva su estilo donde se define :focus-visible. */
+:focus:not(:focus-visible) { outline: none; }
 
 body {
     font-family: var(--font-reading), sans-serif;
@@ -815,8 +844,8 @@ body::after {
   display: block;
   font-family: var(--font-mono);
   font-weight: 400;
-  font-size: clamp(10px, 0.95vw, 14px);
-  letter-spacing: 0.18em;
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
   line-height: 1.4;
   color: inherit;
@@ -1503,8 +1532,8 @@ body.scroll-locked {
 .studio-eyebrow {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.18em;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
     text-transform: uppercase;
     color: rgba(255, 253, 243, 0.4);
     margin-bottom: 28px;
@@ -3449,6 +3478,39 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     opacity: 0.1;
 }
 
+/* Reveal del footer (index / páginas con body[data-bg]) — MISMO efecto que
+   about/metodología: columnas "fade-in-up con stagger" + línea "line draw" (scaleX).
+   Lo dispara el IntersectionObserver inline (agrega .is-visible + el stagger --d). */
+body[data-bg] .footer-global [data-reveal] {
+    opacity: 0;
+    transform: translateY(46px);
+    transition: opacity 1.1s var(--ease-expo), transform 1.15s var(--ease-expo);
+    transition-delay: var(--d, 0s);
+    will-change: opacity, transform;
+}
+body[data-bg] .footer-global [data-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* La línea se dibuja con scaleX manteniendo su hairline (opacity 0.1). */
+body[data-bg] .footer-global .footer-line[data-reveal] {
+    opacity: 0.1;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.9s var(--ease-expo);
+}
+body[data-bg] .footer-global .footer-line[data-reveal].is-visible {
+    opacity: 0.1;
+    transform: scaleX(1);
+}
+@media (prefers-reduced-motion: reduce) {
+    body[data-bg] .footer-global [data-reveal],
+    body[data-bg] .footer-global .footer-line[data-reveal] {
+        opacity: 1; transform: none; transition: none;
+    }
+    body[data-bg] .footer-global .footer-line[data-reveal] { opacity: 0.1; }
+}
+
 /* Grilla Técnica Asimétrica */
 .footer-grid {
     display: grid;
@@ -3918,8 +3980,8 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
 .services-v3 .svc-eyebrow {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.16em;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
     text-transform: uppercase;
     color: var(--amarillo-acento); /* eyebrow en amarillo per spec */
     margin-bottom: 18px;
@@ -4191,8 +4253,8 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
 .why-us-eyebrow {
     display: block;
     font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.18em;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
     text-transform: uppercase;
     color: var(--amarillo-acento);
     margin-bottom: 8px;
@@ -4307,8 +4369,9 @@ h2.section-display-title * {
 
 h2.section-display-title {
     font-family: var(--font-header);
-    font-size: clamp(2.8rem, 5.8vw, 6rem);
-    line-height: 0.93;
+    /* Titular de sección ÚNICO en toda la web = el de "Preguntas frecuentes". */
+    font-size: var(--fs-h2);
+    line-height: 0.95;
     letter-spacing: -0.04em;
     font-weight: 700;
     margin: 0;
@@ -4345,8 +4408,8 @@ h2.section-display-title {
 .sv4-eyebrow {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.16em;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
     text-transform: uppercase;
     color: var(--amarillo-acento);
     margin-bottom: 18px;
@@ -4734,8 +4797,8 @@ h2.section-display-title {
 .sva-eyebrow {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.16em;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
     text-transform: uppercase;
     color: rgba(29, 30, 28, 0.5);
     margin-bottom: 18px;
@@ -4822,10 +4885,13 @@ h2.section-display-title {
     .sva-row:hover .sva-name { transform: translateX(10px); }
     .sva-row:hover .sva-toggle { color: var(--amarillo-acento); }
 }
-.sva-row:focus-visible {
-    outline: 2px solid var(--amarillo-acento);
-    outline-offset: 6px;
-}
+/* Sin contorno de ningún tipo (ni azul del navegador ni amarillo) al foco/click.
+   El foco por teclado se señala SIN caja (misma afordancia que el hover). */
+.sva-row:focus,
+.sva-row:focus-visible { outline: none; }
+.sva-row:focus-visible .sva-num { color: var(--amarillo-acento); }
+.sva-row:focus-visible .sva-name { transform: translateX(10px); }
+.sva-row:focus-visible .sva-toggle { color: var(--amarillo-acento); }
 
 /* Estado ABIERTO */
 .sva-item.open .sva-num,

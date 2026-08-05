@@ -81,8 +81,8 @@ body.metodo-page {
 
 .mtd-eyebrow {
     font-family: var(--m-mono);
-    font-size: clamp(10px, 1.4vw, 12px);
-    letter-spacing: 0.2em;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
     text-transform: uppercase;
     color: var(--m-ink-soft);
     margin: 0 0 clamp(26px, 4vw, 40px);
@@ -91,7 +91,7 @@ body.metodo-page {
 .mtd-hero-title {
     font-family: var(--m-heading);
     font-weight: 700;
-    font-size: clamp(2.4rem, 7.2vw, 6rem);
+    font-size: var(--fs-display);
     line-height: 0.98;
     letter-spacing: -0.04em;
     color: var(--m-ink);
@@ -103,8 +103,8 @@ body.metodo-page {
 .mtd-hero-lead {
     font-family: var(--m-body);
     font-weight: 300;
-    font-size: clamp(1.05rem, 1.5vw, 1.35rem);
-    line-height: 1.6;
+    font-size: var(--fs-body-lg);
+    line-height: var(--lh-body);
     color: var(--m-ink-soft);
     max-width: 62ch;
     margin: 0;
@@ -184,7 +184,7 @@ body.metodo-page {
 .mtd-step-title {
     font-family: var(--m-heading);
     font-weight: 600;
-    font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+    font-size: clamp(1.7rem, 3.2vw, 2.6rem);   /* título de paso del timeline (sub-nivel, no titular de sección) */
     line-height: 1.05;
     letter-spacing: -0.025em;
     color: var(--m-ink-mid);   /* inactivo: atenuado → se "prende" a full al activarse */
@@ -197,7 +197,7 @@ body.metodo-page {
 .mtd-step-desc {
     font-family: var(--m-body);
     font-weight: 300;
-    font-size: clamp(1rem, 1.25vw, 1.15rem);
+    font-size: var(--fs-body);
     line-height: 1.65;
     color: var(--m-ink-soft);
     margin: 0 0 26px;
@@ -264,7 +264,7 @@ body.metodo-page {
 .mtd-cta-title {
     font-family: var(--m-heading);
     font-weight: 700;
-    font-size: clamp(2.1rem, 6vw, 4.6rem);
+    font-size: var(--fs-h2);   /* titular de sección (CTA) = sistema único */
     line-height: 0.98;
     letter-spacing: -0.035em;
     color: var(--m-ink);

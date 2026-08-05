@@ -54,8 +54,8 @@ body.hero-lab {
 
 .hero-eyebrow {
     font-family: var(--h-mono);
-    font-size: clamp(10px, 1.3vw, 12px);
-    letter-spacing: 0.2em;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
     text-transform: uppercase;
     color: var(--h-accent);
     margin: 0 0 clamp(24px, 3vw, 36px);
@@ -90,8 +90,8 @@ body.hero-lab {
     max-width: 52ch;
     font-family: var(--h-body);
     font-weight: 300;
-    font-size: clamp(1.05rem, 1.5vw, 1.35rem);
-    line-height: 1.6;
+    font-size: var(--fs-body-lg);
+    line-height: var(--lh-body);
     color: var(--h-ink-soft);
 }
 
