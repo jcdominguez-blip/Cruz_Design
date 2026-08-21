@@ -349,9 +349,44 @@ document.addEventListener("DOMContentLoaded", () => {
       const cy = Math.max(70, Math.min(ey-60, H-200));
       card.style.left=cx+'px'; card.style.top=cy+'px';
       card.classList.add('show');
+      lockScroll(true);
     }
-    
-    function hideCard(){ card.classList.remove('show'); }
+
+    function hideCard(){ card.classList.remove('show'); lockScroll(false); }
+
+    // ── Bloqueo de scroll mientras la card está abierta ──────────────────────
+    // No alcanza con overflow:hidden en <body> (el scroller real es <html>) ni
+    // con lenis.stop() (el observer de smooth-scroll.js puede reiniciarlo). El
+    // método a prueba de todo es CANCELAR los eventos de scroll en captura:
+    // wheel, touchmove y las teclas de navegación. Así no scrollea ni nativo ni
+    // Lenis; al cerrar se quitan los listeners y todo vuelve a la normalidad.
+    const SCROLL_KEYS = [32, 33, 34, 35, 36, 38, 40]; // space, pgup/pgdn, end, home, ↑, ↓
+    function blockWheel(e){ e.preventDefault(); }
+    function blockKeys(e){
+      if (SCROLL_KEYS.indexOf(e.keyCode) > -1 &&
+          !/^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || ''))) {
+        e.preventDefault();
+      }
+    }
+    let scrollLocked = false;
+    function lockScroll(on){
+      if (on === scrollLocked) return;
+      scrollLocked = on;
+      document.body.classList.toggle('card-open', on);
+      // 1) Frenamos Lenis (scroll suave).
+      if (window.cruzLenis) { on ? window.cruzLenis.stop() : window.cruzLenis.start(); }
+      // 2) overflow:hidden DIRECTO en <html> y <body>: mata el scrollbar y el
+      //    scroll nativo (el scroller real es <html>, no <body>). Sin position
+      //    fixed → no hay salto de posición.
+      document.documentElement.style.overflow = on ? 'hidden' : '';
+      document.body.style.overflow = on ? 'hidden' : '';
+      // 3) Cancelamos los eventos de scroll (rueda, táctil y teclas de navegación)
+      //    como red final: cubre inercia y cualquier resto que se escape.
+      const method = on ? 'addEventListener' : 'removeEventListener';
+      window[method]('wheel', blockWheel, { passive: false });
+      window[method]('touchmove', blockWheel, { passive: false });
+      window[method]('keydown', blockKeys, { passive: false });
+    }
     
     document.getElementById('card-close').addEventListener('click',e=>{
       e.stopPropagation(); hideCard(); retract(); animateHintText('[CLICK EN LA ESFERA]');

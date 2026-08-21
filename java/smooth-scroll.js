@@ -57,7 +57,8 @@
         function syncLock() {
             const locked = getComputedStyle(document.body).overflowY === 'hidden' ||
                 document.body.classList.contains('nav-open') ||
-                document.body.classList.contains('scroll-locked');
+                document.body.classList.contains('scroll-locked') ||
+                document.body.classList.contains('card-open');
             if (locked) lenis.stop(); else lenis.start();
         }
         new MutationObserver(syncLock).observe(document.body, {

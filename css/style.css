@@ -103,6 +103,14 @@ body.scroll-locked {
     overflow: hidden !important;
     /* Elimina 'position: fixed' si ves que el scroll salta a lugares raros al hacer clic */
 }
+
+/* Bloqueo de scroll mientras la card de proyecto (esfera) está abierta.
+   Simple, sin position:fixed, para no perder la posición del hero. El scroll
+   suave (Lenis) se frena por JS; esto cubre el scroll nativo y el táctil. */
+body.card-open,
+html:has(body.card-open) {
+    overflow: hidden !important;
+}
 /* TRANSICION */
 
 
@@ -1157,13 +1165,27 @@ body::after {
 .tick-dot { display: inline-block; width: 3px; height: 3px; background: rgba(17,17,16,0.32); border-radius: 50%; vertical-align: middle; margin: 0 14px; }
 @keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-/* Card Interactiva */
+/* Card Interactiva — contenedor glassmorphism (mantiene la jerarquía interna:
+   label amarillo · título · descripción · imagen). El blur deja ver la esfera
+   y las partículas detrás, reforzando la sensación "premium". */
 #proj-card {
-  position: fixed; z-index: 60; background: rgba(13,13,12,0.97); border: 0.5px solid rgba(240,192,64,0.5);
+  position: fixed; z-index: 60;
+  background: rgba(13, 13, 12, 0.55);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 0.5px solid rgba(240, 192, 64, 0.35);
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45),
+              inset 0 1px 0 rgba(255, 255, 255, 0.07);
   padding: 20px 22px 18px; min-width: 230px; max-width: 280px;
   opacity: 0; transform: translateY(10px) scale(0.97); pointer-events: none; transition: opacity 0.22s ease, transform 0.22s ease;
 }
 #proj-card.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+
+/* Fallback: navegadores sin backdrop-filter → fondo casi opaco para legibilidad. */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  #proj-card { background: rgba(13, 13, 12, 0.95); }
+}
 .pc-label { font-family: var(--f-mono); font-size: 8px; color: var(--yellow); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 8px; }
 .pc-title { font-family: var(--f-display); font-weight: 700; font-size: 17px; color: var(--white); letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 8px; }
 .pc-desc { font-family: var(--f-body); font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 14px; }
@@ -1231,8 +1253,9 @@ body::after {
   height: 130px; /* Altura controlada para no tapar el texto */
   margin-bottom: 16px;
   overflow: hidden;
+  border-radius: 8px 8px 0 0; /* Acompaña el radio de la card glass */
   border-bottom: 1px solid rgba(242, 195, 53, 0.3); /* Línea amarilla sutil */
-  background-color: #111110;
+  background-color: rgba(17, 17, 16, 0.6); /* Semitransparente para no romper el glass */
 }
 
 .pc-image-container img {
