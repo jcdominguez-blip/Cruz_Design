@@ -893,119 +893,91 @@ body::after {
     .hs-eyebrow { margin-bottom: 12px; letter-spacing: 0.15em; }
 }
 
-/* --- HERO WE.DIRECTORY BADGE (Featured on WeDirectory) ---
-   Pieza editorial pequeña, anclada bottom-left del hero.
-   Se oculta al hacer scroll-down (clase .hide vía JS). */
-.hero-we-badge {
+/* --- RECONOCIMIENTOS · LISTONES APILADOS (borde derecho) ---
+   Par de listones anclados al borde derecho, centrados en vertical como bloque:
+   Awwwards (Nominee · Web of the Day) arriba + WeDirectory debajo.
+   Mismo ancho (53.08px) para que lean como una unidad. */
+#award-ribbons {
     position: fixed;
-    bottom: 110px;
-    left: 48px;
-    z-index: 20;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: inherit;
-    pointer-events: auto;
-    opacity: 1;
-    transform: translateY(0);
-    transition:
-        opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1),
-        transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    top: 50%;
+    right: 0;
+    z-index: 999;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
-.hero-we-badge-logo {
-    height: 16px;
-    width: auto;
-    flex-shrink: 0;
-    opacity: 0.55;
+.award-ribbon {
+    display: block;
+    width: 53.08px;
+    line-height: 0;
+    text-decoration: none;
+    box-shadow: -2px 0 12px rgba(0, 0, 0, 0.18);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.award-ribbon:hover {
+    transform: translateX(-3px);
+}
+
+.award-ribbon:focus,
+.award-ribbon:focus-visible {
+    outline: 1px solid var(--amarillo-acento);
+    outline-offset: 4px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Awwwards: el SVG oficial trae su propio alto (171.358). */
+.award-ribbon--awwwards svg {
+    display: block;
+}
+
+/* WeDirectory: listón compañero en oscuro con el símbolo WE y el
+   texto en vertical (mono, crema), leyendo de abajo hacia arriba. */
+.award-ribbon--we {
+    background: #141414;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 0 17px;
+}
+
+.we-ribbon-mark {
+    width: 26px;
+    height: auto;
+    opacity: 0.92;
     transition: opacity 0.4s ease;
 }
 
-.hero-we-badge:hover .hero-we-badge-logo {
+.award-ribbon--we:hover .we-ribbon-mark {
     opacity: 1;
 }
 
-/* Wrapper de los dos textos: usamos grid para que ambos
-   ocupen la misma celda y hagan crossfade limpio en hover. */
-.hero-we-badge-text {
-    position: relative;
-    display: inline-grid;
+.we-ribbon-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
     font-family: var(--font-mono);
-    font-size: 9.5px;
-    letter-spacing: 0.12em;
+    font-size: 8px;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     line-height: 1;
     white-space: nowrap;
+    color: rgba(255, 253, 243, 0.72);
+    transition: color 0.4s ease;
 }
 
-.we-text-default,
-.we-text-hover {
-    grid-column: 1;
-    grid-row: 1;
-    transition:
-        opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-        transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-        color 0.4s ease;
-}
-
-.we-text-default {
-    color: rgba(255, 253, 243, 0.5);
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.we-text-hover {
+.award-ribbon--we:hover .we-ribbon-text {
     color: var(--amarillo-acento);
-    opacity: 0;
-    transform: translateY(4px);
-}
-
-.hero-we-badge:hover .we-text-default {
-    opacity: 0;
-    transform: translateY(-4px);
-}
-
-.hero-we-badge:hover .we-text-hover {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Subrayado amarillo corporativo dibujándose de izq. a der. */
-.hero-we-badge-text::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -4px;
-    height: 1px;
-    width: 100%;
-    background: var(--amarillo-acento);
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.55s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.hero-we-badge:hover .hero-we-badge-text::after {
-    transform: scaleX(1);
-}
-
-/* Estado oculto al scrollear (toggle vía JS) */
-.hero-we-badge.hide {
-    opacity: 0;
-    transform: translateY(20px);
-    pointer-events: none;
-}
-
-/* Outline amarillo en focus en lugar del azul del navegador */
-.hero-we-badge:focus,
-.hero-we-badge:focus-visible {
-    outline: 1px solid var(--amarillo-acento);
-    outline-offset: 6px;
 }
 
 @media (max-width: 768px) {
-    .hero-we-badge {
-        display: none; /* En móvil priorizamos espacio para el stat-strip */
+    /* En móvil reducimos el bloque para no comerle espacio al contenido. */
+    #award-ribbons {
+        transform: translateY(-50%) scale(0.72);
+        transform-origin: right center;
     }
 }
 

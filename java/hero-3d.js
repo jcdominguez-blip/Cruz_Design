@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         label: 'BRANDING · IDENTIDAD',
         title: 'Rovex',
         desc: 'Identidad sólida para maquinaria vial.',
-        img: './img/ROVEX-PREVIEW.png' 
+        img: '/img/ROVEX-PREVIEW.png' 
       }
     ];
     
@@ -279,7 +279,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Chrome del hero
         document.getElementById('click-hint')?.classList.toggle('hide', p > 0.01);
-        document.getElementById('hero-we-badge')?.classList.toggle('hide', p > 0.05);
         heroText.style.pointerEvents = target >= 0 ? 'auto' : 'none';
 
         // Contraste de la nav: durante el hero manda la fase (la 1 es crema).

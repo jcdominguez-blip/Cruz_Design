@@ -1,0 +1,406 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   CRUZ ESTUDIO ® — PÁGINA CONSULTA (/consulta)
+   Cuestionario de clientes potenciales.
+   Reutiliza el design system (css/style.css): tokens --fs-*, --font-*, colores
+   corporativos, y clases compartidas .mono-tag .mono-label .services-grid
+   .service-chip .chip-box .input-container .ux-submit-btn .footer-global.
+   Este archivo solo aporta el layout propio del cuestionario y el modal de éxito.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+    --cs-ease: cubic-bezier(0.77, 0, 0.175, 1);
+    --cs-hair: rgba(255, 253, 243, 0.15);
+}
+
+.consulta-page {
+    background-color: var(--bg-dark);
+    color: var(--crema);
+}
+
+/* Suelta el scroll aunque no exista loader en esta página */
+.consulta-page,
+html:has(.consulta-page) {
+    overflow-y: auto;
+    height: auto;
+}
+
+/* ───────────────── LAYOUT GENERAL ───────────────── */
+.cs-main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: clamp(130px, 16vh, 200px) 28px 120px;
+}
+
+/* ───────────────── HERO ───────────────── */
+.cs-hero {
+    margin-bottom: clamp(70px, 11vh, 130px);
+}
+
+.cs-eyebrow {
+    display: block;
+    color: var(--amarillo-acento);
+    margin-bottom: 26px;
+}
+
+.cs-title {
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: clamp(2.8rem, 7.5vw, 5.6rem);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    color: var(--crema);
+    margin: 0 0 32px;
+    max-width: 14ch;
+}
+
+/* Palabras partidas por JS para el reveal tipográfico (Etapa 2) */
+.cs-title .cs-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: 0.08em;   /* evita clip de descendentes (g, y, p) */
+}
+.cs-title .cs-word > span {
+    display: inline-block;
+    will-change: transform;
+}
+
+.cs-lead {
+    font-family: var(--font-reading);
+    font-weight: 300;
+    font-size: var(--fs-body-lg);
+    line-height: 1.55;
+    color: rgba(255, 253, 243, 0.72);
+    max-width: 52ch;
+}
+
+/* ───────────────── BLOQUES DE PREGUNTA ───────────────── */
+.cs-form {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(58px, 8vh, 92px);
+}
+
+.cs-block {
+    display: block;
+}
+
+.cs-block .mono-tag {
+    margin-bottom: 26px;
+    line-height: 1.5;
+    max-width: 46ch;
+}
+
+.cs-hint {
+    font-family: var(--font-reading);
+    font-weight: 300;
+    font-size: var(--fs-body);
+    color: rgba(255, 253, 243, 0.7);
+    margin: -12px 0 20px;
+}
+
+.cs-note {
+    font-family: var(--font-reading);
+    font-weight: 300;
+    font-size: var(--fs-small);
+    line-height: 1.55;
+    color: rgba(255, 253, 243, 0.5);
+    margin: 22px 0 0;
+    max-width: 58ch;
+}
+.cs-note .cs-star {
+    color: var(--amarillo-acento);
+    font-weight: 500;
+}
+
+/* ───────────────── SLIDER DE INVERSIÓN ───────────────── */
+.cs-slider {
+    margin-top: 8px;
+    --cs-fill: 0%;
+}
+
+.cs-slider-readout {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+.cs-slider-amount {
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--crema);
+    font-variant-numeric: tabular-nums;
+}
+.cs-slider-cur {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--amarillo-acento);
+}
+
+/* Input range multiplataforma */
+.cs-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    margin: 8px 0;
+    border-radius: 4px;
+    background: linear-gradient(90deg,
+        var(--amarillo-acento) 0 var(--cs-fill),
+        var(--cs-hair) var(--cs-fill) 100%);
+    outline: none;
+    cursor: pointer;
+}
+/* Thumb — WebKit */
+.cs-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--crema);
+    border: 2px solid var(--bg-dark);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    cursor: grab;
+    transition: transform 0.15s var(--cs-ease), background 0.2s var(--cs-ease);
+}
+.cs-range:active::-webkit-slider-thumb { cursor: grabbing; transform: scale(1.12); background: var(--amarillo-acento); }
+.cs-range:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--amarillo-acento); outline-offset: 3px; }
+/* Thumb — Firefox */
+.cs-range::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--crema);
+    border: 2px solid var(--bg-dark);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    cursor: grab;
+}
+.cs-range::-moz-range-track { height: 4px; border-radius: 4px; background: transparent; }
+.cs-range:active::-moz-range-thumb { cursor: grabbing; background: var(--amarillo-acento); }
+
+.cs-slider-ends {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: rgba(255, 253, 243, 0.45);
+}
+
+/* Honeypot: fuera de la vista, no lo completan humanos */
+.cs-honey {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Ajuste fino de las píldoras en el contexto del cuestionario */
+.cs-block .services-grid { margin-top: 0; }
+
+.cs-block .chip-box {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+}
+
+/* Foco accesible por teclado en las píldoras */
+.service-chip input:focus-visible + .chip-box {
+    outline: 2px solid var(--amarillo-acento);
+    outline-offset: 3px;
+}
+
+/* Estado de error de validación en un grupo/campo */
+.cs-block.cs-invalid .mono-tag { color: #ff6b5e; }
+.cs-block.cs-invalid .input-container { border-bottom-color: #ff6b5e; }
+
+/* ───────────────── ACCIÓN FINAL ───────────────── */
+.cs-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    margin-top: clamp(20px, 4vh, 40px);
+}
+
+.cs-error {
+    font-family: var(--font-reading);
+    font-size: var(--fs-small);
+    color: #ff6b5e;
+    margin: 0;
+}
+
+.cs-required {
+    color: rgba(255, 253, 243, 0.4);
+    margin: 4px 0 0;
+}
+
+.ux-submit-btn.is-sending {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+/* ═════════════════ MODAL DE ÉXITO (Etapa 3) ═════════════════ */
+.cs-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 4000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s var(--cs-ease), visibility 0s linear 0.5s;
+}
+.cs-modal.is-open {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s var(--cs-ease);
+}
+
+.cs-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(12, 13, 11, 0.78);
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+}
+
+.cs-modal-card {
+    position: relative;
+    width: min(560px, 100%);
+    background: var(--crema);
+    color: var(--bg-dark);
+    border-radius: 22px;
+    padding: clamp(40px, 6vw, 64px) clamp(30px, 5vw, 60px) clamp(34px, 5vw, 52px);
+    text-align: center;
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.45);
+    transform: translateY(24px) scale(0.97);
+    opacity: 0;
+    transition: transform 0.6s var(--cs-ease), opacity 0.6s var(--cs-ease);
+}
+.cs-modal.is-open .cs-modal-card {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    transition-delay: 0.08s;
+}
+
+.cs-modal-mark {
+    width: 66px;
+    height: 66px;
+    margin: 0 auto 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--bg-dark);
+}
+.cs-modal-symbol {
+    width: 32px;
+    height: 32px;
+    color: var(--crema);
+    animation: cs-mark-in 0.7s var(--cs-ease) 0.2s both;
+}
+.cs-modal-symbol path {
+    stroke-dasharray: 34;
+    stroke-dashoffset: 34;
+    animation: cs-check-draw 0.55s var(--cs-ease) 0.5s both;
+}
+@keyframes cs-check-draw {
+    to { stroke-dashoffset: 0; }
+}
+@keyframes cs-mark-in {
+    from { transform: rotate(-90deg) scale(0.4); opacity: 0; }
+    to   { transform: rotate(0) scale(1); opacity: 1; }
+}
+
+.cs-modal-eyebrow {
+    display: block;
+    color: rgba(29, 30, 28, 0.55);
+    margin-bottom: 18px;
+}
+
+.cs-modal-title {
+    font-family: var(--font-header);
+    font-weight: 700;
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 16px;
+    color: var(--bg-dark);
+}
+
+.cs-modal-body {
+    font-family: var(--font-reading);
+    font-weight: 300;
+    font-size: var(--fs-body);
+    line-height: 1.55;
+    color: rgba(29, 30, 28, 0.75);
+    margin: 0 auto 34px;
+    max-width: 42ch;
+}
+
+.cs-modal-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.cs-modal-home,
+.cs-modal-close {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 50px;
+    padding: 14px 30px;
+    transition: all 0.35s var(--cs-ease);
+    border: 1px solid transparent;
+    text-decoration: none;
+}
+.cs-modal-home {
+    background: var(--bg-dark);
+    color: var(--crema);
+}
+.cs-modal-home:hover {
+    background: var(--amarillo-acento);
+    color: var(--bg-dark);
+}
+.cs-modal-close {
+    background: transparent;
+    color: var(--bg-dark);
+    border-color: rgba(29, 30, 28, 0.25);
+}
+.cs-modal-close:hover {
+    border-color: var(--bg-dark);
+    background: rgba(29, 30, 28, 0.05);
+}
+
+/* ───────────────── RESPONSIVE ───────────────── */
+@media (max-width: 560px) {
+    .cs-main { padding-top: 120px; }
+    .cs-block .chip-box { padding: 14px 24px; }
+    .cs-modal-actions { flex-direction: column-reverse; }
+    .cs-modal-home,
+    .cs-modal-close { width: 100%; text-align: center; }
+}
+
+/* ───────────────── REDUCED MOTION ───────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .cs-modal,
+    .cs-modal-card,
+    .cs-modal-symbol { transition: none !important; animation: none !important; }
+    .cs-modal-symbol path { animation: none !important; stroke-dashoffset: 0 !important; }
+    .cs-title .cs-word > span { transform: none !important; }
+}

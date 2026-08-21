@@ -387,31 +387,6 @@ function initMagneticCursor() {
     });
 }
 
-// Ejecutar cuando el DOM esté listo (script tiene defer, así que ya debería estarlo)
-// --- Hero WE.directory badge: fallback de ocultamiento ---
-// La lógica principal vive en hero-3d.js (sincronizada con la aparición del hero text
-// vía ScrollTrigger del #spacer). Este listener solo actúa como red de seguridad
-// por si GSAP/ScrollTrigger no carga: oculta el badge a partir de un scroll alto.
-function initHeroWeBadge() {
-    const badge = document.getElementById('hero-we-badge');
-    if (!badge) return;
-
-    const FALLBACK_THRESHOLD = 600; // alto: solo entra si ScrollTrigger no actuó
-    let ticking = false;
-
-    function update() {
-        if (window.scrollY > FALLBACK_THRESHOLD) badge.classList.add('hide');
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            ticking = true;
-            requestAnimationFrame(update);
-        }
-    }, { passive: true });
-}
-
 /* ============================================================
    STUDIO INTRO — Malla 3D animada con waves interactivas
    Adaptado del demo classic de https://threejs.org (geometry-plane
@@ -562,7 +537,6 @@ function initStudioWaves() {
 function bootCruzInteractions() {
     initScrollProgress();
     initMagneticCursor();
-    initHeroWeBadge();
     initStudioWaves();       // no-op si no hay canvas
     // initServicesLayers() ahora vive en java/capas.js como módulo aislado.
 }
