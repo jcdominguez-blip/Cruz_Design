@@ -3454,6 +3454,135 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     }
 }
 
+/* --- RECONOCIMIENTOS: fila de 3 badges compactos (footer) ---
+   WE.directory (Website of the day) · Awwwards Nominee · Awwwards Honorable
+   Mention. Cada uno con su ícono a la izquierda; misma jerarquía tipográfica
+   (label mono + título) y el mismo barrido de relleno en hover que el badge
+   original. Íconos en amarillo corporativo. */
+
+/* Clase base de Material Symbols Sharp (el endpoint css2 solo trae el @font-face). */
+.material-symbols-sharp {
+    font-family: 'Material Symbols Sharp';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+.awards-row {
+    display: flex;
+    gap: 16px;
+    margin: 0 0 60px 0;
+}
+
+.award-badge {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px 24px;
+    border: 1px solid rgba(29, 30, 28, 0.15);
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--bg-dark);
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.5s var(--reveal-easing), transform 0.6s var(--reveal-easing);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.award-badge,
+.award-badge * { text-decoration: none !important; }
+
+/* Barrido de relleno oscuro en hover (igual que .we-directory-badge). */
+.award-badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--bg-dark);
+    transform: translateY(101%);
+    transition: transform 0.6s var(--reveal-easing);
+    z-index: 0;
+}
+
+.award-badge > * {
+    position: relative;
+    z-index: 1;
+    transition: color 0.5s var(--reveal-easing);
+}
+
+.award-badge:hover { border-color: var(--bg-dark); }
+.award-badge:hover::before { transform: translateY(0); }
+.award-badge:hover .award-badge-label,
+.award-badge:hover .award-badge-title { color: var(--crema); }
+
+.award-badge:focus,
+.award-badge:focus-visible {
+    outline: 2px solid var(--amarillo-acento);
+    outline-offset: 4px;
+}
+
+/* Ícono: amarillo corporativo en reposo y en hover (acento persistente). */
+.award-badge-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--amarillo-acento);
+    font-size: 30px;
+}
+.award-badge-icon.material-symbols-sharp {
+    font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 40;
+}
+.award-badge-icon svg {
+    width: 27px;
+    height: 27px;
+    display: block;
+    fill: currentColor;
+}
+
+.award-badge-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.award-badge-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(29, 30, 28, 0.5);
+    line-height: 1;
+}
+
+.award-badge-title {
+    font-family: var(--font-header);
+    font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: var(--bg-dark);
+}
+
+@media (max-width: 768px) {
+    .awards-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .award-badge { padding: 18px 20px; }
+}
+
 .footer-global {
     background-color: var(--crema);
     color: var(--bg-dark);
@@ -5444,3 +5573,127 @@ body[data-bg="light"] .we-side-tag-img--black { opacity: 1; }
 
 /* PANEL STACK removido — causaba conflictos de stacking con secciones
    posteriores. Flujo natural sin transforms ni z-indexes elevados. */
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CARD DE PROYECTO — sale al clickear la esfera (diseño tipo "profile card").
+   El desenfoque del fondo lo hace java/hero-3d.js (filter:blur sobre las capas
+   del hero, un grado menos → "mismo lugar"). El overlay solo tiñe suave y NO
+   captura clicks (pointer-events:none) para que la esfera siga clickeable y
+   cada click en otra zona muestre otro proyecto.
+   Motor: java/hero-3d.js  ·  Markup: #proj-overlay en index.html
+   ══════════════════════════════════════════════════════════════════════════ */
+#proj-overlay{
+  position: fixed; inset: 0; z-index: 2000;
+  opacity: 0; pointer-events: none;
+  background: radial-gradient(120% 120% at 50% 45%, rgba(12,13,12,.24), rgba(8,9,8,.58));
+  transition: opacity .5s cubic-bezier(.4,0,.2,1);
+}
+/* Con la card abierta el overlay captura los clicks: click en el fondo (fuera
+   de la card) cierra, y la esfera queda tapada → primero se cierra y recién ahí
+   se elige otro sector. */
+#proj-overlay.open{ opacity: 1; pointer-events: auto; }
+
+/* La card se POSICIONA por JS (left/top) en el punto donde se clickeó la esfera
+   (no centrada). Mostrar/ocultar y el bloom se hacen por TRANSICIONES CSS (las
+   corre el compositor y siempre llegan a su estado final; no dependen de ningún
+   ticker JS). Estado cerrado = base; abierto = #proj-overlay.open #proj-card. */
+#proj-card{
+  position: fixed; top: 0; left: 0;
+  width: 320px; height: 470px;
+  border-radius: 26px; overflow: hidden;
+  background: #0e0f0e; pointer-events: none;
+  transform-origin: center center; will-change: transform, opacity, filter;
+  box-shadow: 0 30px 80px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
+  border: .5px solid rgba(255,255,255,.1);
+  opacity: 0; transform: scale(.86) translateY(38px); filter: blur(10px);
+  transition: opacity .6s cubic-bezier(.16,1,.3,1),
+              transform .6s cubic-bezier(.16,1,.3,1),
+              filter .5s ease;
+}
+#proj-overlay.open #proj-card{
+  opacity: 1; transform: none; filter: blur(0px); pointer-events: auto;
+}
+
+.pj-inner{
+  position: absolute; inset: 0; will-change: transform, opacity, filter;
+  transition: opacity .26s ease, transform .26s ease, filter .26s ease;
+}
+/* Swap de proyecto: el contenido interno hace un crossfade rápido. */
+#proj-card.swapping .pj-inner{ opacity: 0; transform: translateY(-14px); filter: blur(6px); }
+
+.pj-media{
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; user-select: none; -webkit-user-drag: none;
+  will-change: transform; transform: scale(1.12);
+  transition: transform 1.3s cubic-bezier(.16,1,.3,1);
+}
+#proj-overlay.open #proj-card .pj-media{ transform: scale(1); }
+/* Veil: aclara arriba (imagen limpia) y oscurece abajo para la lectura del
+   texto. Doble parada para un degradado suave, no un corte. */
+.pj-veil{
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top, rgba(8,9,8,.96) 4%, rgba(8,9,8,.78) 26%, rgba(8,9,8,.15) 52%, transparent 72%);
+}
+
+.pj-body{ position: absolute; left: 24px; right: 22px; bottom: 22px; z-index: 2; }
+
+/* Jerarquía de lectura ── 1) título fuerte */
+.pj-title{
+  display: flex; align-items: flex-start; gap: 8px; margin: 0 0 9px;
+  font-family: var(--font-header); font-weight: 700; font-size: 25px;
+  line-height: 1.08; letter-spacing: -.02em; color: #fff;
+}
+.pj-badge{
+  flex: none; display: inline-grid; place-items: center; margin-top: 3px;
+  width: 21px; height: 21px; border-radius: 7px;
+  background: var(--amarillo-acento); color: #14150f;
+}
+/* 2) descripción secundaria (máx. 2 líneas) */
+.pj-desc{
+  margin: 0 0 16px; font-family: var(--font-reading); font-weight: 300;
+  font-size: 14.5px; line-height: 1.5; color: rgba(255,255,255,.66);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+/* 3) pie: meta a la izquierda + CTA a la derecha */
+.pj-foot{ display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.pj-meta{ display: flex; align-items: center; gap: 10px; min-width: 0; overflow: hidden; }
+.pj-tag{
+  position: relative; display: inline-flex; align-items: center;
+  font-family: var(--font-mono); font-size: 8px; letter-spacing: .1em;
+  color: rgba(255,255,255,.7); text-transform: uppercase; white-space: nowrap;
+}
+.pj-tag::before{
+  content: ''; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--amarillo-acento); margin-right: 6px; flex: none;
+}
+.pj-cta{
+  flex: none; display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .08em;
+  color: var(--bg-dark); background: var(--crema); text-transform: uppercase;
+  padding: 10px 15px; border-radius: 100px; text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.pj-cta span{ transition: transform .2s ease; }
+.pj-cta:hover{ background: #fff; box-shadow: 0 8px 22px rgba(0,0,0,.35); }
+.pj-cta:hover span{ transform: translateX(3px); }
+
+.pj-close{
+  position: absolute; top: 13px; right: 13px; z-index: 4;
+  width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+  background: rgba(20,21,20,.42); border: .5px solid rgba(255,255,255,.18);
+  color: #fff; font-size: 13px; display: grid; place-items: center;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  transition: background .2s, transform .2s;
+}
+.pj-close:hover{ background: rgba(242,195,53,.28); transform: rotate(90deg); }
+
+/* Con la card abierta (body.card-open) ocultamos el hint de scroll del hero
+   (#click-hint). El indicador del cursor (.cx-scroll) NO se oculta: se
+   repurposea para mostrar "Cerrar para elegir otro" (lo maneja cursor.js). */
+body.card-open #click-hint{ opacity: 0 !important; pointer-events: none !important; }
+
+@media (max-width: 768px){
+  #proj-card{ width: 300px; height: 440px; }
+  .pj-title{ font-size: 23px; }
+}
