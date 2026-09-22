@@ -108,7 +108,11 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     function buildShape(name) {
       const arr = new Float32Array(N * 3);
-      if (name === 'sphere') { arr.set(base); return arr; }   // esfera orgánica original
+      if (name === 'sphere') { arr.set(base); return arr; }        // esfera orgánica original
+      if (name === 'figure') return fitShape(buildFigure(arr));    // busto/figura
+      if (name === 'house')  return fitShape(buildHouse(arr));     // casa
+      if (name === 'tree')   return fitShape(buildTree(arr));      // árbol
+      if (name === 'bird')   return fitShape(buildBird(arr), 4.0); // ave (más ancha)
       const fn = SHAPE_RADIUS[name];
       for (let i = 0; i < N; i++) {
         const dx = dir[i*3], dy = dir[i*3+1], dz = dir[i*3+2];
@@ -119,10 +123,155 @@ document.addEventListener("DOMContentLoaded", () => {
       return arr;
     }
 
+    // Todas las formas complejas comparten el mismo truco: NO son radiales, sino
+    // un mapeo SUAVE por "anillos" — la latitud del vértice (s: 0 corona → 1 base)
+    // define la altura y su azimut lo ubica en el anillo. Así las latitudes de la
+    // esfera se vuelven secciones horizontales de la forma, conservando la
+    // vecindad de los vértices → el wireframe drapea limpio (sin aristas cruzadas)
+    // y vuelve a la esfera de forma natural.
+
+    // Busto/figura humana estilizada (cabeza → cuello → hombros).
+    function buildFigure(arr) {
+      for (let i = 0; i < N; i++) {
+        const dx = dir[i*3], dy = dir[i*3+1], dz = dir[i*3+2];
+        const ang = Math.atan2(dz, dx);
+        const s = (1 - dy) / 2;                 // 0 = arriba, 1 = abajo
+        let y, rx, rz, front = 0;
+        if (s < 0.34) {                          // CABEZA (elipsoide)
+          const u = s / 0.34;
+          y = 2.05 - u * 1.42;                   // corona → mentón
+          const w = Math.sin(u * Math.PI) * 0.52 + 0.5;
+          rx = 0.90 * w; rz = 1.00 * w;
+          // leve empuje frontal (z+) a media cara → insinúa nariz/frente
+          front = Math.max(0, Math.sin(u * Math.PI)) * Math.max(0, Math.sin(ang)) * 0.18;
+        } else if (s < 0.46) {                   // CUELLO
+          const u = (s - 0.34) / 0.12;
+          y = 0.63 - u * 0.5;
+          rx = 0.40 - u * 0.02; rz = 0.44;
+        } else {                                 // HOMBROS / TORSO
+          const u = (s - 0.46) / 0.54;
+          y = 0.13 - u * 2.5;
+          rx = 0.5 + u * 1.85;                   // se abre a los hombros
+          rz = 0.55 + u * 0.22;                  // busto poco profundo
+        }
+        const nz = noise(dx*3, dy*3, dz*3) * 0.03;
+        arr[i*3]   = Math.cos(ang) * rx + nz;
+        arr[i*3+1] = y + nz;
+        arr[i*3+2] = Math.sin(ang) * rz + front + nz;
+      }
+      return arr;
+    }
+
+    // Sección cuadrada (para formas "duras" como la casa): mapea el azimut a un
+    // cuadrado de semilado hw en vez de un círculo.
+    function squareXZ(ang, hw) {
+      const c = Math.cos(ang), s = Math.sin(ang);
+      const k = hw / Math.max(Math.abs(c), Math.abs(s), 1e-6);
+      return [c * k, s * k];
+    }
+
+    // Casa: cuerpo (caja) + techo (pirámide), sección cuadrada.
+    function buildHouse(arr) {
+      for (let i = 0; i < N; i++) {
+        const dx = dir[i*3], dy = dir[i*3+1], dz = dir[i*3+2];
+        const ang = Math.atan2(dz, dx);
+        const s = (1 - dy) / 2;
+        let y, hw;
+        if (s < 0.34) {                 // TECHO (pirámide)
+          const u = s / 0.34;           // 0 vértice → 1 alero
+          y = 2.0 - u * 1.0;
+          hw = u * 1.65;                // sale del pico y se abre (con alero)
+        } else {                        // CUERPO (caja)
+          const u = (s - 0.34) / 0.66;
+          y = 1.0 - u * 2.6;
+          hw = 1.28;
+        }
+        const [px, pz] = squareXZ(ang, hw);
+        const nz = noise(dx*3, dy*3, dz*3) * 0.02;
+        arr[i*3] = px + nz; arr[i*3+1] = y + nz; arr[i*3+2] = pz + nz;
+      }
+      return arr;
+    }
+
+    // Árbol: copa (esfera) arriba + tronco (cilindro fino) abajo.
+    function buildTree(arr) {
+      const R = 1.5, CY = 0.7;          // radio de copa y su centro
+      const canopyBottom = CY - R;      // y donde termina la copa
+      for (let i = 0; i < N; i++) {
+        const dx = dir[i*3], dy = dir[i*3+1], dz = dir[i*3+2];
+        const ang = Math.atan2(dz, dx);
+        const s = (1 - dy) / 2;
+        let x, y, z;
+        if (s < 0.66) {                 // COPA (esfera compacta)
+          const th = (s / 0.66) * Math.PI;      // 0..π como una sub-esfera
+          const ringR = Math.sin(th) * R;
+          y = CY + Math.cos(th) * R;
+          x = Math.cos(ang) * ringR;
+          z = Math.sin(ang) * ringR;
+        } else {                        // TRONCO (cilindro fino)
+          const u = (s - 0.66) / 0.34;
+          y = canopyBottom - u * 1.15;
+          const tr = 0.17;
+          x = Math.cos(ang) * tr;
+          z = Math.sin(ang) * tr;
+        }
+        const nz = noise(dx*3, dy*3, dz*3) * 0.04;
+        arr[i*3] = x + nz; arr[i*3+1] = y + nz; arr[i*3+2] = z + nz;
+      }
+      return arr;
+    }
+
+    // Ave estilizada en vuelo (gaviota): dos alas simétricas barridas hacia atrás
+    // con diedral en "V", cuerpo al centro y cola. Es la forma más abstracta del
+    // set. a = posición en la envergadura (−1 izq .. 1 der); s = cuerda (frente↔dorso).
+    function buildBird(arr) {
+      const SPAN = 2.9;
+      for (let i = 0; i < N; i++) {
+        const dx = dir[i*3], dy = dir[i*3+1], dz = dir[i*3+2];
+        const ang = Math.atan2(dz, dx);
+        const a  = Math.cos(ang);              // -1..1 a lo largo del ala
+        const aa = Math.abs(a);
+        const s  = (1 - dy) / 2;               // 0..1 cuerda del ala
+        // Envergadura
+        const x = a * SPAN;
+        // Cuerda: ancha en el cuerpo, angosta en la punta
+        const chord = (1 - aa) * 0.85 + 0.14;
+        // Frente/atrás: alas barridas hacia atrás (−z) y cuerpo/pico adelante
+        const z = (s - 0.5) * chord * 2.4 - aa * 1.15 + 0.55;
+        // Diedral en V (puntas arriba) + leve quiebre de gaviota + espesor mínimo
+        const y = aa * 0.62 - Math.sin(aa * Math.PI) * 0.14 - 0.05
+                  + (Math.sin(s * Math.PI) - 0.5) * 0.14 * (1 - aa);
+        const nz = noise(dx*3, dy*3, dz*3) * 0.025;
+        arr[i*3] = x + nz; arr[i*3+1] = y + nz; arr[i*3+2] = z + nz;
+      }
+      return arr;
+    }
+
+    // Escala/centra una forma para que encaje en el cuadro (mismo envoltorio que
+    // la esfera), tomando su bounding box. Solo para las formas complejas.
+    function fitShape(arr, targetMax = 3.5) {
+      let mnx=1e9,mny=1e9,mnz=1e9,mxx=-1e9,mxy=-1e9,mxz=-1e9;
+      for (let i = 0; i < N; i++) {
+        const x=arr[i*3], y=arr[i*3+1], z=arr[i*3+2];
+        if(x<mnx)mnx=x; if(x>mxx)mxx=x;
+        if(y<mny)mny=y; if(y>mxy)mxy=y;
+        if(z<mnz)mnz=z; if(z>mxz)mxz=z;
+      }
+      const cx=(mnx+mxx)/2, cy=(mny+mxy)/2, cz=(mnz+mxz)/2;
+      const ext=Math.max(mxx-mnx, mxy-mny, mxz-mnz) || 1;
+      const k=targetMax/ext;
+      for (let i = 0; i < N; i++) {
+        arr[i*3]   = (arr[i*3]-cx)*k;
+        arr[i*3+1] = (arr[i*3+1]-cy)*k;
+        arr[i*3+2] = (arr[i*3+2]-cz)*k;
+      }
+      return arr;
+    }
+
     const mat = new THREE.MeshBasicMaterial({ color:0xffffff, wireframe:true, transparent:true, opacity:0.42 });
     const sphere = new THREE.Mesh(geo, mat);
     scene.add(sphere);
-    
+
     const ray   = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     
@@ -443,10 +592,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ── CICLO DE MORPH ─────────────────────────────────────────────────────
     // Secuencia (siempre vuelve a la esfera entre forma y forma):
-    //   esfera → cruz → esfera → diamante → esfera → cubo → (loop)
-    // El morph arranca SIEMPRE desde la 'base' vigente (snapshot) hacia la forma
-    // destino, así se retoma suave tras abrir/cerrar una card.
-    const MORPH_SEQ  = ['cross', 'sphere', 'diamond', 'sphere', 'cube', 'sphere'];
+    //   esfera → cruz → figura → diamante → casa → árbol → ave → cubo → (loop)
+    // Todo en el MISMO wireframe lineal (nunca puntos): cada forma es un mapeo
+    // suave de la malla, así las aristas drapean limpias y vuelve a la esfera
+    // de forma natural. El morph arranca SIEMPRE desde la 'base' vigente
+    // (snapshot) hacia la forma destino → se retoma suave tras abrir/cerrar card.
+    const MORPH_SEQ  = ['cross', 'sphere', 'figure', 'sphere', 'diamond', 'sphere', 'house', 'sphere', 'tree', 'sphere', 'bird', 'sphere', 'cube', 'sphere'];
     const MORPH_HOLD = 3.0;    // segundos que se sostiene cada forma
     const MORPH_TIME = 1.15;   // segundos de la transición
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
