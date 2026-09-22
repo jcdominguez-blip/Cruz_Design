@@ -600,8 +600,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Híbrido: formas geométricas por morph de vértices (cruz/diamante/cubo) +
     // modelos 3D reales (cara, cerebro) re-muestreados. Vuelve a la esfera entre cada una.
     const MORPH_SEQ  = ['cross', 'sphere', 'face', 'sphere', 'brain', 'sphere', 'diamond', 'sphere', 'cube', 'sphere'];
-    // Nota: 'font' está cargado en MODELS pero fuera de la secuencia: el GLB es
-    // plano (texto 2D) y el morph radial no lo representa bien (ver charla).
+    // 'font' queda cargado en MODELS pero fuera de la secuencia: la tipografía es
+    // contorno+huecos y el morph radial la rellena de esfera (no se lee limpia).
     const MORPH_HOLD = 3.0;    // segundos que se sostiene cada forma
     const MORPH_TIME = 1.15;   // segundos de la transición
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
