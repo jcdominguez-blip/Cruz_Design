@@ -606,43 +606,61 @@ document.addEventListener("DOMContentLoaded", () => {
     const shapeCache = { sphere: buildShape('sphere') };
     const shapeOf = n => shapeCache[n] || (shapeCache[n] = buildShape(n));
 
-    // ── MODELO 3D REAL: cara wireframe (GLB · "Gregos face" de alban · CC-BY) ──
-    // Distinta topología que la esfera → se muestra por DISOLUCIÓN (la esfera se
-    // desvanece y aparece el modelo con su propio wireframe), no por morph de
-    // vértices. Crédito CC-BY visible solo mientras se ve la cara.
+    // ── MODELO 3D REAL: cara (GLB · "Gregos face" de alban · CC-BY) ───────────
+    // Se RE-MUESTREA sobre la misma grilla de la esfera: por cada vértice se lanza
+    // un rayo desde el centro y se toma la superficie de la cara. Así la esfera
+    // MORFA de verdad hacia la cara (mismo wireframe) y vuelve, sin disolución ni
+    // salto. Crédito CC-BY visible solo mientras se ve la cara.
     const creditEl = document.getElementById('hero-credit');
-    const faceMat = new THREE.MeshBasicMaterial({ color:0xffffff, wireframe:true, transparent:true, opacity:0 });
-    let faceModel = null, faceReady = false, faceActive = false;
-    const visMix = { sph: 1, face: 0 };   // opacidades (leídas por el render loop)
-    let visTween = null;
+    let faceReady = false;
+    function creditShow(on){ if (creditEl) creditEl.classList.toggle('show', on); }
 
     (function loadFace(){
       if (typeof THREE.GLTFLoader === 'undefined') return;   // sin loader → 'face' se saltea
       new THREE.GLTFLoader().load('/models/gregos-face.glb', (gltf) => {
-        const inner = new THREE.Group();
-        gltf.scene.updateMatrixWorld(true);
-        gltf.scene.traverse(o => {
-          if (o.isMesh && o.geometry) inner.add(new THREE.Mesh(o.geometry, faceMat));
-        });
-        // Normaliza: centra y escala para encajar como la esfera.
-        const box = new THREE.Box3().setFromObject(inner);
+        // Contenedor orientado para muestrear: rasgos hacia +Z (frente) y enderezado.
+        // Ajustá estos dos valores si querés recolocar la cara.
+        const FACE_TILT = 0.18;              // endereza la inclinación (eje X)
+        const FACE_YAW  = 3 * Math.PI / 2;   // rasgos al frente (+Z, hacia cámara)
+        const cont = new THREE.Object3D();
+        cont.add(gltf.scene);
+        cont.rotation.set(FACE_TILT, FACE_YAW, 0);
+        cont.updateMatrixWorld(true);
+        const meshes = [];
+        gltf.scene.traverse(o => { if (o.isMesh && o.geometry) meshes.push(o); });
+        // Normaliza a la envoltura de la esfera (centro en origen, maxDim ~4).
+        const box = new THREE.Box3().setFromObject(cont);
         const size = new THREE.Vector3(), center = new THREE.Vector3();
         box.getSize(size); box.getCenter(center);
-        const k = 3.2 / (Math.max(size.x, size.y, size.z) || 1);
-        inner.scale.setScalar(k);
-        inner.position.set(-center.x*k, -center.y*k, -center.z*k);
-        faceModel = new THREE.Group();
-        faceModel.add(inner);
-        faceModel.visible = false;
-        sphere.add(faceModel);            // hereda rotación/escala de la esfera
-        faceReady = true;
+        const k = 4.0 / (Math.max(size.x, size.y, size.z) || 1);
+        cont.scale.setScalar(k);
+        cont.position.set(-center.x*k, -center.y*k, -center.z*k);
+        cont.updateMatrixWorld(true);
+        // Muestreo radial en chunks (no bloquea): rayo desde el origen por cada
+        // dirección; se toma el hit más lejano (silueta externa). Sin hit → r=2.
+        const ray = new THREE.Raycaster();
+        const arr = new Float32Array(N * 3);
+        const O = new THREE.Vector3(0,0,0), D = new THREE.Vector3();
+        let si = 0;
+        (function sampleChunk(){
+          const end = Math.min(si + 250, N);
+          for (; si < end; si++){
+            D.set(dir[si*3], dir[si*3+1], dir[si*3+2]);
+            ray.set(O, D);                        // rayo desde el centro hacia afuera
+            const hits = ray.intersectObjects(meshes, true);
+            // hit más lejano = superficie externa en esa dirección; sin hit → r=2
+            const r = hits.length ? hits[hits.length - 1].distance : 2;
+            arr[si*3] = D.x*r; arr[si*3+1] = D.y*r; arr[si*3+2] = D.z*r;
+          }
+          if (si < N) requestAnimationFrame(sampleChunk);
+          else { shapeCache.face = arr; faceReady = true; }
+        })();
       }, undefined, (err) => { if (window.console) console.warn('[hero] GLB cara no cargó:', err); });
     })();
 
-    function creditShow(on){ if (creditEl) creditEl.classList.toggle('show', on); }
-
     let morphActive = false, morphTween = null, morphTimer = null;
-    let seqIdx = 0, pendingTarget = null;
+    let seqIdx = 0, pendingTarget = null, curShapeName = 'sphere';
+    let spinPaused = false, spinTween = null;
 
     function morphToShape(toName, onDone) {
       const fromArr = base.slice();          // snapshot de la forma actual
@@ -662,37 +680,25 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Disolución esfera ↔ modelo. on=true muestra la cara; false vuelve a la esfera.
-    function dissolveFace(on, onDone){
-      faceActive = on;
-      if (on && faceModel) {
-        faceModel.visible = true;
-        // Orienta la cara hacia la cámara al aparecer; luego deriva suave con el giro.
-        faceModel.rotation.y = Math.PI - (sphere.rotation.y % (Math.PI * 2));
-      }
-      creditShow(on);
-      if (visTween) visTween.kill();
-      visTween = gsap.to(visMix, {
-        sph: on ? 0 : 1, face: on ? 1 : 0,
-        duration: MORPH_TIME, ease: 'power2.inOut',
-        onComplete(){ visTween = null; if (!on && faceModel) faceModel.visible = false; if (onDone) onDone(); }
-      });
+    // Al mostrar la cara: pausa el giro y la lleva de frente (la cara mira +Z).
+    function faceForward(){
+      spinPaused = true;
+      if (spinTween) spinTween.kill();
+      const target = Math.round(sphere.rotation.y / (Math.PI*2)) * (Math.PI*2);
+      spinTween = gsap.to(sphere.rotation, { y: target, duration: MORPH_TIME, ease: 'power2.inOut' });
     }
+    function resumeSpin(){ spinPaused = false; if (spinTween){ spinTween.kill(); spinTween = null; } }
 
-    // Dispatcher: 'face' → disolución; el resto → morph de vértices. Al salir de la
-    // cara hacia una forma de vértices, primero disuelve de vuelta a la esfera.
+    // Todas las formas (incluida la cara) morfan por vértices. Al entrar/salir de
+    // la cara se muestra/oculta el crédito y se para/retoma el giro.
     function transitionTo(name, onDone){
-      if (name === 'face') {
-        if (!faceReady) { if (onDone) onDone(); return; }   // aún no cargó → saltear
-        dissolveFace(true, onDone);
-      } else if (faceActive) {
-        dissolveFace(false, () => {
-          if (name === 'sphere') { if (onDone) onDone(); }
-          else morphToShape(name, onDone);
-        });
-      } else {
-        morphToShape(name, onDone);
-      }
+      if (name === 'face' && !faceReady) { if (onDone) onDone(); return; }  // aún no cargó → saltear
+      const enteringFace = (name === 'face');
+      const leavingFace  = (curShapeName === 'face' && name !== 'face');
+      if (enteringFace) { creditShow(true); faceForward(); }
+      else if (leavingFace) { creditShow(false); resumeSpin(); }
+      curShapeName = name;
+      morphToShape(name, onDone);
     }
 
     function afterMorph() {
@@ -721,7 +727,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function pauseMorph() {
       if (morphTimer) { clearTimeout(morphTimer); morphTimer = null; }
       if (morphTween) { morphTween.kill(); morphTween = null; }
-      if (visTween) { visTween.kill(); visTween = null; }
     }
     function resumeMorph() {
       if (!morphActive) return;
@@ -985,7 +990,7 @@ document.addEventListener("DOMContentLoaded", () => {
       requestAnimationFrame(animate);
       if (!heroVisible && !introActive) return;  // fuera del hero: no renderiza
       time+=0.003;
-      sphere.rotation.y+=0.0013;
+      if (!spinPaused) sphere.rotation.y+=0.0013;   // se pausa mientras la cara mira de frente
       sphere.rotation.x=Math.sin(time*.28)*.04;
 
       // Esfera SIEMPRE centrada; el scroll solo controla el zoom (escala).
@@ -996,11 +1001,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // Opacidad: base 0.42, atenuada por 'dim' cuando aparece el texto por
       // encima (para contraste). El latido sutil se reduce al atenuarse.
       curDim += (sphereState.dim - curDim) * 0.06;
-      const wf = Math.max(0.05, 0.42 * (1 - curDim * 0.78) + Math.sin(time * 0.7) * 0.055 * (1 - curDim));
-      // Disolución esfera ↔ cara (modelo 3D real).
-      mat.opacity = wf * visMix.sph;
-      mat.visible = visMix.sph > 0.02;
-      faceMat.opacity = (0.45 * (1 - curDim * 0.55)) * visMix.face;
+      const base = 0.42 * (1 - curDim * 0.78);
+      mat.opacity = Math.max(0.05, base + Math.sin(time * 0.7) * 0.055 * (1 - curDim));
 
       // Durante la intro, la cámara sigue el recorrido orbital
       if (introActive) applyIntroCamera();
