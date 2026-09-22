@@ -72,7 +72,53 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     pos.needsUpdate = true;
     geo.computeVertexNormals();
-    
+
+    // ── MORPH DE FORMAS ("las ideas se transforman") ───────────────────────
+    // El keyvisual muta entre formas SIN romper el estilo lineal: se conserva la
+    // MISMA malla wireframe (mismos vértices y aristas) y solo cambia el radio
+    // por dirección (campos radiales). Todas las formas usadas son "estrelladas"
+    // respecto al centro → el morph es limpio, sin cruces raras de aristas.
+    const dir = new Float32Array(N * 3);   // dirección unitaria de cada vértice
+    for (let i = 0; i < N; i++) {
+      const x = base[i*3], y = base[i*3+1], z = base[i*3+2];
+      const l = Math.hypot(x, y, z) || 1;
+      dir[i*3] = x/l; dir[i*3+1] = y/l; dir[i*3+2] = z/l;
+    }
+    const EPS = 1e-6;
+    const SHAPE_RADIUS = {
+      // Cruz 3D: unión de 3 barras ortogonales (símbolo de la marca).
+      cross(dx, dy, dz) {
+        const L = 2.55, t = 0.72;                 // largo de brazo · semi-espesor
+        const ax = Math.abs(dx)||EPS, ay = Math.abs(dy)||EPS, az = Math.abs(dz)||EPS;
+        return Math.max(
+          Math.min(L/ax, t/ay, t/az),
+          Math.min(t/ax, L/ay, t/az),
+          Math.min(t/ax, t/ay, L/az)
+        );
+      },
+      // Diamante (octaedro): |x|+|y|+|z| = c.
+      diamond(dx, dy, dz) {
+        return 2.5 / (Math.abs(dx) + Math.abs(dy) + Math.abs(dz) || EPS);
+      },
+      // Cubo redondeado (superquadric de exponente alto).
+      cube(dx, dy, dz) {
+        const n = 6, c = 1.95;
+        return c / Math.pow(Math.pow(Math.abs(dx),n) + Math.pow(Math.abs(dy),n) + Math.pow(Math.abs(dz),n), 1/n);
+      }
+    };
+    function buildShape(name) {
+      const arr = new Float32Array(N * 3);
+      if (name === 'sphere') { arr.set(base); return arr; }   // esfera orgánica original
+      const fn = SHAPE_RADIUS[name];
+      for (let i = 0; i < N; i++) {
+        const dx = dir[i*3], dy = dir[i*3+1], dz = dir[i*3+2];
+        const nz = noise(dx*2.4, dy*2.4, dz*2.4) * 0.06;      // respiración sutil, como la esfera
+        const r = fn(dx, dy, dz) + nz;
+        arr[i*3] = dx*r; arr[i*3+1] = dy*r; arr[i*3+2] = dz*r;
+      }
+      return arr;
+    }
+
     const mat = new THREE.MeshBasicMaterial({ color:0xffffff, wireframe:true, transparent:true, opacity:0.42 });
     const sphere = new THREE.Mesh(geo, mat);
     scene.add(sphere);
@@ -395,6 +441,72 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let cardOpen = false, cycleIdx = 0;
 
+    // ── CICLO DE MORPH ─────────────────────────────────────────────────────
+    // Secuencia (siempre vuelve a la esfera entre forma y forma):
+    //   esfera → cruz → esfera → diamante → esfera → cubo → (loop)
+    // El morph arranca SIEMPRE desde la 'base' vigente (snapshot) hacia la forma
+    // destino, así se retoma suave tras abrir/cerrar una card.
+    const MORPH_SEQ  = ['cross', 'sphere', 'diamond', 'sphere', 'cube', 'sphere'];
+    const MORPH_HOLD = 3.0;    // segundos que se sostiene cada forma
+    const MORPH_TIME = 1.15;   // segundos de la transición
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const shapeCache = { sphere: buildShape('sphere') };
+    const shapeOf = n => shapeCache[n] || (shapeCache[n] = buildShape(n));
+
+    let morphActive = false, morphTween = null, morphTimer = null;
+    let seqIdx = 0, pendingTarget = null;
+
+    function morphToShape(toName, onDone) {
+      const fromArr = base.slice();          // snapshot de la forma actual
+      const toArr = shapeOf(toName);
+      const o = { t: 0 };
+      if (morphTween) morphTween.kill();
+      morphTween = gsap.to(o, {
+        t: 1, duration: MORPH_TIME, ease: 'power2.inOut',
+        onUpdate() {
+          if (cardOpen || isExtruded) return;  // congelado mientras hay card/extrusión
+          const t = o.t;
+          for (let i = 0; i < N * 3; i++) base[i] = fromArr[i] + (toArr[i] - fromArr[i]) * t;
+          pos.array.set(base);
+          pos.needsUpdate = true;
+        },
+        onComplete() { morphTween = null; if (onDone) onDone(); }
+      });
+    }
+
+    function afterMorph() {
+      pendingTarget = null;
+      seqIdx = (seqIdx + 1) % MORPH_SEQ.length;
+      scheduleNextMorph();
+    }
+    function runMorphStep() {
+      morphTimer = null;
+      if (!morphActive) return;
+      // Espera si hay card abierta, extrusión, o el hero no está a la vista.
+      if (cardOpen || isExtruded || !heroVisible) { morphTimer = setTimeout(runMorphStep, 600); return; }
+      pendingTarget = MORPH_SEQ[seqIdx];
+      morphToShape(pendingTarget, afterMorph);
+    }
+    function scheduleNextMorph() {
+      if (morphTimer) clearTimeout(morphTimer);
+      morphTimer = setTimeout(runMorphStep, MORPH_HOLD * 1000);
+    }
+    function startMorphCycle() {
+      if (reduceMotion || morphActive) return;   // respeta prefers-reduced-motion
+      morphActive = true;
+      seqIdx = 0;
+      scheduleNextMorph();   // primero sostiene la esfera, luego arranca el ciclo
+    }
+    function pauseMorph() {
+      if (morphTimer) { clearTimeout(morphTimer); morphTimer = null; }
+      if (morphTween) { morphTween.kill(); morphTween = null; }
+    }
+    function resumeMorph() {
+      if (!morphActive) return;
+      if (pendingTarget) morphToShape(pendingTarget, afterMorph);  // termina la transición interrumpida
+      else scheduleNextMorph();
+    }
+
     function fillCard(p){
       const label = (LANG === 'en' && p.labelEn) ? p.labelEn : p.label;
       const desc  = (LANG === 'en' && p.descEn)  ? p.descEn  : p.desc;
@@ -432,6 +544,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function openCard(idx, x, y){
       if (cardOpen) return;
       cardOpen = true;
+      pauseMorph();                               // congela la forma mientras se ve la card
       fillCard(PROJECTS[idx]);
       positionCard(x, y);                         // ← posición en el punto de click
       projOverlay.classList.add('open');          // → CSS: bloom de la card
@@ -446,6 +559,7 @@ document.addEventListener("DOMContentLoaded", () => {
       projOverlay.classList.remove('open');       // → CSS: la card se va (fade/scale)
       lockScroll(false);
       retract();                                  // la esfera retrae su protuberancia
+      resumeMorph();                              // retoma el ciclo de transformación
       animateHintText(T.hint);
       window.cruzCursorHint && window.cruzCursorHint(null);   // cursor vuelve al hint por defecto
       gsap.to(blurProxy, { b: 0, duration: 0.5, ease: 'power2.in', overwrite: true, onUpdate: applyHeroBlur });
@@ -598,6 +712,7 @@ document.addEventListener("DOMContentLoaded", () => {
           renderer.domElement.style.pointerEvents = '';
           // Hero en reposo → mostramos ya el par estático (LOCATION + SAY HELLO).
           revealStaticPair();
+          startMorphCycle();   // y arranca la transformación del keyvisual
         }
       });
     }
@@ -608,6 +723,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (reduce || document.documentElement.classList.contains('skip-loader')) {
         introDone = true;
         revealStaticPair();   // sin intro → mostramos el par estático de una
+        startMorphCycle();    // y arrancamos igual el ciclo de morph
         return;
       }
       const loaderEl = document.getElementById('loader');
