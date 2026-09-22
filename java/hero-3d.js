@@ -598,46 +598,56 @@ document.addEventListener("DOMContentLoaded", () => {
     // de forma natural. El morph arranca SIEMPRE desde la 'base' vigente
     // (snapshot) hacia la forma destino → se retoma suave tras abrir/cerrar card.
     // Híbrido: formas geométricas por morph de vértices (cruz/diamante/cubo) +
-    // modelo 3D real 'face' por disolución. Siempre vuelve a la esfera entre cada una.
-    const MORPH_SEQ  = ['cross', 'sphere', 'face', 'sphere', 'diamond', 'sphere', 'cube', 'sphere'];
+    // modelos 3D reales (cara, cerebro) re-muestreados. Vuelve a la esfera entre cada una.
+    const MORPH_SEQ  = ['cross', 'sphere', 'face', 'sphere', 'brain', 'sphere', 'diamond', 'sphere', 'cube', 'sphere'];
     const MORPH_HOLD = 3.0;    // segundos que se sostiene cada forma
     const MORPH_TIME = 1.15;   // segundos de la transición
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const shapeCache = { sphere: buildShape('sphere') };
     const shapeOf = n => shapeCache[n] || (shapeCache[n] = buildShape(n));
 
-    // ── MODELO 3D REAL: cara (GLB · "Gregos face" de alban · CC-BY) ───────────
-    // Se RE-MUESTREA sobre la misma grilla de la esfera: por cada vértice se lanza
-    // un rayo desde el centro y se toma la superficie de la cara. Así la esfera
-    // MORFA de verdad hacia la cara (mismo wireframe) y vuelve, sin disolución ni
-    // salto. Crédito CC-BY visible solo mientras se ve la cara.
+    // ── MODELOS 3D REALES (GLB) ───────────────────────────────────────────────
+    // Cada modelo se RE-MUESTREA sobre la misma grilla de la esfera: por cada
+    // vértice se lanza un rayo desde el centro y se toma la superficie del modelo.
+    // Así la esfera MORFA de verdad hacia el modelo (mismo wireframe) y vuelve,
+    // sin disolución ni salto. `tilt/yaw` orientan · `fit` escala · `credit` es el
+    // aviso (HTML) que aparece solo mientras se ve ese modelo (licencias).
+    const MODELS = {
+      face:  { url: '/models/gregos-face.glb', tilt: 0.18, yaw: 3 * Math.PI / 2, fit: 4.0,
+               credit: '“Wireframe Gregos face” by <a href="https://skfb.ly/U7uW" target="_blank" rel="noopener noreferrer">alban</a> · <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>' },
+      brain: { url: '/models/brain.glb',       tilt: 0,    yaw: 0,               fit: 3.9,
+               credit: '' }   // TODO: completar crédito/licencia del cerebro si corresponde
+    };
     const creditEl = document.getElementById('hero-credit');
-    let faceReady = false;
-    function creditShow(on){ if (creditEl) creditEl.classList.toggle('show', on); }
+    const modelReady = {};
+    function isModel(name){ return !!MODELS[name]; }
+    function creditSet(name){
+      const c = MODELS[name] && MODELS[name].credit;
+      if (!creditEl) return;
+      if (c) { creditEl.innerHTML = c; creditEl.classList.add('show'); }
+      else { creditEl.classList.remove('show'); }
+    }
 
-    (function loadFace(){
-      if (typeof THREE.GLTFLoader === 'undefined') return;   // sin loader → 'face' se saltea
-      new THREE.GLTFLoader().load('/models/gregos-face.glb', (gltf) => {
-        // Contenedor orientado para muestrear: rasgos hacia +Z (frente) y enderezado.
-        // Ajustá estos dos valores si querés recolocar la cara.
-        const FACE_TILT = 0.18;              // endereza la inclinación (eje X)
-        const FACE_YAW  = 3 * Math.PI / 2;   // rasgos al frente (+Z, hacia cámara)
+    function loadModel(name){
+      const cfg = MODELS[name];
+      if (!cfg || typeof THREE.GLTFLoader === 'undefined') return;   // sin loader → se saltea
+      new THREE.GLTFLoader().load(cfg.url, (gltf) => {
         const cont = new THREE.Object3D();
         cont.add(gltf.scene);
-        cont.rotation.set(FACE_TILT, FACE_YAW, 0);
+        cont.rotation.set(cfg.tilt || 0, cfg.yaw || 0, 0);
         cont.updateMatrixWorld(true);
         const meshes = [];
         gltf.scene.traverse(o => { if (o.isMesh && o.geometry) meshes.push(o); });
-        // Normaliza a la envoltura de la esfera (centro en origen, maxDim ~4).
+        // Normaliza a la envoltura de la esfera (centro en origen).
         const box = new THREE.Box3().setFromObject(cont);
         const size = new THREE.Vector3(), center = new THREE.Vector3();
         box.getSize(size); box.getCenter(center);
-        const k = 4.0 / (Math.max(size.x, size.y, size.z) || 1);
+        const k = (cfg.fit || 4.0) / (Math.max(size.x, size.y, size.z) || 1);
         cont.scale.setScalar(k);
         cont.position.set(-center.x*k, -center.y*k, -center.z*k);
         cont.updateMatrixWorld(true);
         // Muestreo radial en chunks (no bloquea): rayo desde el origen por cada
-        // dirección; se toma el hit más lejano (silueta externa). Sin hit → r=2.
+        // dirección; hit más lejano = silueta externa. Sin hit → r=2 (esfera).
         const ray = new THREE.Raycaster();
         const arr = new Float32Array(N * 3);
         const O = new THREE.Vector3(0,0,0), D = new THREE.Vector3();
@@ -646,17 +656,17 @@ document.addEventListener("DOMContentLoaded", () => {
           const end = Math.min(si + 250, N);
           for (; si < end; si++){
             D.set(dir[si*3], dir[si*3+1], dir[si*3+2]);
-            ray.set(O, D);                        // rayo desde el centro hacia afuera
+            ray.set(O, D);
             const hits = ray.intersectObjects(meshes, true);
-            // hit más lejano = superficie externa en esa dirección; sin hit → r=2
             const r = hits.length ? hits[hits.length - 1].distance : 2;
             arr[si*3] = D.x*r; arr[si*3+1] = D.y*r; arr[si*3+2] = D.z*r;
           }
           if (si < N) requestAnimationFrame(sampleChunk);
-          else { shapeCache.face = arr; faceReady = true; }
+          else { shapeCache[name] = arr; modelReady[name] = true; }
         })();
-      }, undefined, (err) => { if (window.console) console.warn('[hero] GLB cara no cargó:', err); });
-    })();
+      }, undefined, (err) => { if (window.console) console.warn('[hero] GLB no cargó (' + name + '):', err); });
+    }
+    Object.keys(MODELS).forEach(loadModel);
 
     let morphActive = false, morphTween = null, morphTimer = null;
     let seqIdx = 0, pendingTarget = null, curShapeName = 'sphere';
@@ -679,15 +689,12 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Todas las formas (incluida la cara) morfan por vértices y GIRAN en su eje
-    // como el resto (el giro nunca se pausa). Al entrar/salir de la cara solo se
-    // muestra/oculta el crédito CC-BY.
+    // Todas las formas (incluidos los modelos) morfan por vértices y GIRAN en su
+    // eje como el resto (el giro nunca se pausa). Al entrar en un modelo se muestra
+    // su crédito; en cualquier otra forma se oculta.
     function transitionTo(name, onDone){
-      if (name === 'face' && !faceReady) { if (onDone) onDone(); return; }  // aún no cargó → saltear
-      const enteringFace = (name === 'face');
-      const leavingFace  = (curShapeName === 'face' && name !== 'face');
-      if (enteringFace) creditShow(true);
-      else if (leavingFace) creditShow(false);
+      if (isModel(name) && !modelReady[name]) { if (onDone) onDone(); return; }  // modelo no listo → saltear
+      creditSet(name);
       curShapeName = name;
       morphToShape(name, onDone);
     }
