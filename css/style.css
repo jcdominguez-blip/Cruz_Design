@@ -1045,6 +1045,7 @@ body::after {
     border-bottom: 1px solid rgba(255, 253, 243, 0.15);
     padding-bottom: 2px;
     transition: all 0.3s ease;
+    pointer-events: auto; /* el email queda clickeable aunque el strip no capture eventos */
 }
 
 #hero-weather-icon {
@@ -1057,7 +1058,7 @@ body::after {
 @media (max-width: 768px) {
     /* --- 1. CONTENEDOR PRINCIPAL (STACK VERTICAL) --- */
     #stat-strip {
-        bottom: 44px; /* despeja el ticker (~28px) que vive en bottom:0 */
+        bottom: 28px; /* sin ticker, apoya más cerca del borde inferior */
         left: 25px;
         right: 25px;
         display: flex;
@@ -1111,8 +1112,8 @@ body::after {
 
 #click-hint {
   /* Posicionamiento centrado absoluto */
-  position: absolute; 
-  bottom: 4vh; /* Distancia desde abajo, ajustable según preferencia */
+  position: absolute;
+  bottom: 1.8vh; /* Baja un poco más al liberarse el espacio del ticker */
   left: 50%;
   transform: translateX(-50%); /* El truco matemático para centrar perfectamente */
   
@@ -1149,21 +1150,12 @@ body::after {
   50% { opacity: 0.9; }
 }
 
-/* En móvil el hint quedaba montado sobre el ticker (bottom:0). Lo elevamos y
-   acortamos la línea para que respire por encima de la barra amarilla. */
+/* En móvil acortamos la línea; sin ticker el hint puede respirar más abajo. */
 @media (max-width: 768px) {
-  #click-hint { bottom: 44px; }
+  #click-hint { bottom: 28px; }
   #click-hint .hint-line { height: 24px; }
 }
 
-/* Ticker Footer Hero */
-#ticker {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: var(--yellow); overflow: hidden; padding: 8px 0;
-}
-.tick-inner { display: flex; white-space: nowrap; animation: tick 22s linear infinite; }
-.tick-item { font-family: 'cofo-sans-mono-variable', monospace; font-size: 8px; font-weight: 700; color: var(--dark); letter-spacing: 0.14em; text-transform: uppercase; padding: 0 36px; }
-.tick-dot { display: inline-block; width: 3px; height: 3px; background: rgba(17,17,16,0.32); border-radius: 50%; vertical-align: middle; margin: 0 14px; }
-@keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
 /* Card Interactiva — contenedor glassmorphism (mantiene la jerarquía interna:
    label amarillo · título · descripción · imagen). El blur deja ver la esfera

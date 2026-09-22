@@ -9,33 +9,25 @@ document.addEventListener("DOMContentLoaded", () => {
     
     gsap.registerPlugin(ScrollTrigger);
     
-   // ── DATA PROYECTOS (ORDEN SINCRONIZADO CON LA LISTA) ──
+   // ── DATA PROYECTOS ── (label/desc bilingües: base ES + variantes EN; el título
+   //    es nombre propio, no se traduce). El idioma se sincroniza con el switch
+   //    del nav vía localStorage 'cruz-lang', igual que trabajos-canvas.js/about.js.
     const PROJECTS = [
-      {
-        label: 'BRANDING · IDENTIDAD',
-        title: 'Trenes Argentinos Cargas',
-        desc: 'Rediseño del sistema visual ferroviario.',
-        img: 'https://i.ibb.co/dmkbM0K/tac.jpg' 
-      },
-      {
-        label: 'MARCA GESTIÓN',
-        title: 'Municipalidad de San Cristobal',
-        desc: 'Revitalización del escudo y marca gestión.',
-        img: 'https://i.ibb.co/gb4PTXst/img4.jpg' 
-      },
-      {
-        label: 'BRANDING · IDENTIDAD',
-        title: 'SUUAM',
-        desc: 'Identidad de alto rendimiento gráfico.',
-        img: 'https://i.ibb.co/357FqBCw/tp1.jpg' 
-      },
-      {
-        label: 'BRANDING · IDENTIDAD',
-        title: 'Rovex',
-        desc: 'Identidad sólida para maquinaria vial.',
-        img: '/img/ROVEX-PREVIEW.png' 
-      }
+      { label: 'BRANDING · IDENTIDAD',   labelEn: 'BRANDING · IDENTITY',   title: 'Trenes Argentinos Cargas',       desc: 'Rediseño del sistema visual ferroviario.',    descEn: 'Redesign of the railway visual system.',        img: '/img/tac-index.png',            url: '/trenescargas' },
+      { label: 'MARCA GESTIÓN',          labelEn: 'GOVERNMENT BRANDING',   title: 'Municipalidad de San Cristóbal', desc: 'Revitalización del escudo y marca gestión.',  descEn: 'Revitalization of the crest and civic brand.',  img: '/img/sc-index.png',             url: '/sc' },
+      { label: 'BRANDING · IDENTIDAD',   labelEn: 'BRANDING · IDENTITY',   title: 'SUUAM',                          desc: 'Identidad de alto rendimiento gráfico.',      descEn: 'High-performance graphic identity.',            img: '/img/suuam-index.png',          url: '/suuam' },
+      { label: 'IDENTIDAD · MAQUINARIA', labelEn: 'IDENTITY · MACHINERY',  title: 'Rovex',                          desc: 'Identidad sólida para maquinaria vial.',      descEn: 'A solid identity for road machinery.',          img: '/img/rovex-index.png',          url: '/rovex' },
+      { label: 'BRANDING · TERRITORIO',  labelEn: 'BRANDING · TERRITORY',  title: 'Estación Sur',                   desc: 'Sistema de marca para un polo gastronómico.', descEn: 'Brand system for a gastronomic hub.',           img: '/img/estacion-sur-img-1.webp',  url: '/estacion-sur' },
+      { label: 'PACKAGING · MARCA',      labelEn: 'PACKAGING · BRAND',     title: 'Pinta Gaucha',                   desc: 'Identidad y packaging con raíz local.',       descEn: 'Identity and packaging with local roots.',      img: '/img/nueva-img-pinta-01.webp',  url: '/pinta-gaucha' },
+      { label: 'IDENTIDAD · EVENTOS',    labelEn: 'IDENTITY · EVENTS',     title: 'Vientos de Ruta',                desc: 'Marca para la experiencia en ruta.',          descEn: 'A brand for the on-the-road experience.',       img: '/img/vdr-header.webp',          url: '/vientos-de-ruta' },
     ];
+
+    // Idioma actual (el toggle del nav recarga la página, así que basta leerlo una vez).
+    const LANG = (function(){ try { return localStorage.getItem('cruz-lang') === 'en' ? 'en' : 'es'; } catch(e){ return 'es'; } })();
+    const T = {
+      es: { hint: '[CLICk EN LA ESFERA]', cursor: 'Cerrar para elegir otro', cta: 'Ver caso' },
+      en: { hint: '[CLICK THE SPHERE]',   cursor: 'Close to pick another',   cta: 'View case' }
+    }[LANG];
     
     // ── PERLIN NOISE ──────────────────────────────────────────
     const _p = Array.from({length:256},(_,i)=>i).sort(()=>Math.random()-.5);
@@ -101,6 +93,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const invertBg   = document.getElementById('hero-invert-bg');
     const statements = gsap.utils.toArray('.hero-statement');
 
+    // Stat-strip dividido en dos grupos:
+    //  · par estático (LOCATION + SAY HELLO): visible ya al ingresar al hero.
+    //  · LIVE DATA (reloj + clima): aparece recién al hacer scroll-down.
+    const liveItem    = document.getElementById('hero-live-item');
+    const staticItems = statStrip
+      ? [...statStrip.querySelectorAll('.context-item')].filter(it => it !== liveItem)
+      : [];
+
     // Colores del design system
     const C_CREMA = '#FFFDF3';
     const C_DARK  = '#1D1E1C';
@@ -149,6 +149,12 @@ document.addEventListener("DOMContentLoaded", () => {
     gsap.set(heroText, { color: C_CREMA, opacity: 0 });
     gsap.set(invertBg, { backgroundColor: C_DARK, opacity: 0 });
 
+    // El contenedor queda visible; la visibilidad se maneja por grupo de items.
+    // Par estático y LIVE DATA arrancan ocultos (el par se revela tras el intro).
+    if (statStrip) gsap.set(statStrip, { opacity: 1 });
+    if (staticItems.length) gsap.set(staticItems, { opacity: 0 });
+    if (liveItem) gsap.set(liveItem, { opacity: 0 });
+
     let currentPhase = -1, phaseTween = null;
 
     function resetHero() {
@@ -158,7 +164,10 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.set(heroText, { opacity: 0 });
       gsap.set(invertBg, { opacity: 0 });
       gsap.to(mat.color, { r: 1, g: 1, b: 1, duration: 0.4 });
-      gsap.to(statStrip, { opacity: 0, duration: 0.4, overwrite: 'auto' });
+      // En el tope (estado de ingreso) el par estático permanece visible y el
+      // LIVE DATA se oculta: reaparece solo al volver a scrollear hacia abajo.
+      revealStaticPair();
+      hideLiveData();
       statements.forEach(st => {
         gsap.set(st, { opacity: 0 });
         gsap.set(wordsOf(st), { yPercent: 115, opacity: 0, filter: 'blur(10px)' });
@@ -190,19 +199,38 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    let statStripRevealed = false;
-    function revealStatStrip() {
-      if (statStripRevealed || !statStrip) return;
-      statStripRevealed = true;
-      // Labels + valores estáticos (ubicación, email). El reloj/clima viven en
-      // tiempo real (setInterval) → se quedan con fade simple, sin scramble.
-      const targets = [...statStrip.querySelectorAll('.mono-tag')];
-      statStrip.querySelectorAll('.context-data').forEach(el => {
-        if (!el.querySelector('#hero-clock')) targets.push(el);
+    // Par estático (LOCATION + SAY HELLO): visible desde el ingreso al hero.
+    let staticRevealed = false;
+    function revealStaticPair() {
+      if (!statStrip || !staticItems.length) return;
+      gsap.to(staticItems, { opacity: 1, duration: 0.5, overwrite: 'auto' });
+      if (staticRevealed) return;   // scramble una sola vez
+      staticRevealed = true;
+      const targets = [];
+      staticItems.forEach(it => {
+        it.querySelectorAll('.mono-tag').forEach(t => targets.push(t));
+        it.querySelectorAll('.context-data').forEach(d => targets.push(d));
       });
       targets.forEach((el, i) => {
         gsap.delayedCall(0.15 + i * 0.1, () => scrambleReveal(el, 0.8));
       });
+    }
+    function hideStaticPair() {
+      if (staticItems.length) gsap.to(staticItems, { opacity: 0, duration: 0.4, overwrite: 'auto' });
+    }
+
+    // LIVE DATA (reloj + clima): aparece recién al hacer scroll-down.
+    let liveRevealed = false;
+    function revealLiveData() {
+      if (!liveItem) return;
+      gsap.to(liveItem, { opacity: 1, duration: 0.5, overwrite: 'auto' });
+      if (liveRevealed) return;     // scramble del label una sola vez
+      liveRevealed = true;
+      const tag = liveItem.querySelector('.mono-tag');
+      if (tag) gsap.delayedCall(0.1, () => scrambleReveal(tag, 0.8));
+    }
+    function hideLiveData() {
+      if (liveItem) gsap.to(liveItem, { opacity: 0, duration: 0.4, overwrite: 'auto' });
     }
 
     // Reveal autónomo de una fase (dinámico, tipo ouro-labs). Al cruzar el
@@ -217,9 +245,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const tl = gsap.timeline();
       gsap.set(heroText, { opacity: 1 });
-      // La franja de datos acompaña solo los estados oscuros (0 y 2).
-      gsap.to(statStrip, { opacity: (n === 1 ? 0 : 1), duration: 0.5, overwrite: 'auto' });
-      if (n !== 1) revealStatStrip();   // scramble solo la primera vez
+      // La franja de datos acompaña solo los estados oscuros (0 y 2). En la fase
+      // clara (1) se oculta todo por legibilidad. Al scrollear a un estado oscuro
+      // se muestra el par estático y además el LIVE DATA (pedido del hero).
+      if (n === 1) {
+        hideStaticPair();
+        hideLiveData();
+      } else {
+        revealStaticPair();
+        revealLiveData();
+      }
 
       const first = prev < 0;
 
@@ -332,27 +367,89 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
     
-    // ── CARD LOGIC ────────────────────────────────────────────────────────
-    const card  = document.getElementById('proj-card');
-    const pcLbl = document.getElementById('pc-lbl');
-    const pcTtl = document.getElementById('pc-title');
-    const pcDsc = document.getElementById('pc-desc');
-    const pcImg = document.getElementById('pc-img'); 
-    
-    function showCard(proj, ex, ey){
-      pcLbl.textContent = proj.label;
-      pcTtl.textContent = proj.title;
-      pcDsc.textContent = proj.desc;
-      if(pcImg && proj.img) pcImg.src = proj.img;
-      
-      const cx = Math.max(20, Math.min(ex+24, W-300));
-      const cy = Math.max(70, Math.min(ey-60, H-200));
-      card.style.left=cx+'px'; card.style.top=cy+'px';
-      card.classList.add('show');
-      lockScroll(true);
+    // ── CARD DE PROYECTO ──────────────────────────────────────────────────
+    // Al clickear la esfera sale UNA card del proyecto (diseño tipo "profile
+    // card"). El fondo se desenfoca un punto (para entender que seguís en el
+    // mismo lugar) y cada click en otra zona de la esfera muestra otro proyecto.
+    const projOverlay = document.getElementById('proj-overlay');
+    const projCard    = document.getElementById('proj-card');
+    const pjImg   = document.getElementById('pj-img');
+    const pjTitle = document.getElementById('pj-title');
+    const pjDesc  = document.getElementById('pj-desc');
+    const pjCta   = document.getElementById('pj-cta');
+    const pjMeta  = document.getElementById('pj-meta');
+    const NP = PROJECTS.length;
+
+    // Perillas de ajuste: desenfoque del fondo (un grado menos que antes).
+    const CARDCFG = { blur: 7 };
+
+    // Desenfoque animado de las capas del hero (fondo). filter:blur (no
+    // backdrop-filter) → fiable sobre el canvas WebGL.
+    const heroBlurEls = ['#silk-bg','#hero-invert-bg','#canvas-wrap','#hero-text','#stat-strip','#award-ribbons','.grid-bg']
+      .map(s => document.querySelector(s)).filter(Boolean);
+    const blurProxy = { b: 0 };
+    function applyHeroBlur(){
+      const f = blurProxy.b > 0.05 ? `blur(${blurProxy.b}px)` : '';
+      heroBlurEls.forEach(el => { el.style.filter = f; });
     }
 
-    function hideCard(){ card.classList.remove('show'); lockScroll(false); }
+    let cardOpen = false, cycleIdx = 0;
+
+    function fillCard(p){
+      const label = (LANG === 'en' && p.labelEn) ? p.labelEn : p.label;
+      const desc  = (LANG === 'en' && p.descEn)  ? p.descEn  : p.desc;
+      pjImg.src = p.img; pjImg.alt = p.title;
+      pjTitle.textContent = p.title;        // nombre propio: igual en ambos idiomas
+      pjDesc.textContent = desc;
+      pjCta.setAttribute('href', p.url);
+      pjCta.innerHTML = T.cta + ' <span aria-hidden="true">→</span>';
+      // El label ("BRANDING · IDENTIDAD") se parte en hasta 2 chips reales.
+      const tags = label.split('·').map(s => s.trim()).filter(Boolean).slice(0, 2);
+      pjMeta.innerHTML = tags.map(t => `<span class="pj-tag">${t}</span>`).join('');
+    }
+
+    const projInner = projCard.querySelector('.pj-inner');
+
+    // Mostrar/ocultar la card se maneja por CLASES + transiciones CSS (las corre
+    // el compositor y SIEMPRE llegan a su estado final; no dependen del ticker de
+    // GSAP). GSAP sólo anima el desenfoque del fondo.
+    //
+    // La card SALE en el punto donde se clickeó la esfera (no centrada). Se
+    // ubica centrada sobre el click y se recorta al viewport para que entre
+    // siempre entera.
+    function positionCard(x, y){
+      const pad = 16;
+      const cw = projCard.offsetWidth  || 320;
+      const ch = projCard.offsetHeight || 470;
+      const W = window.innerWidth, H = window.innerHeight;
+      let cx = x - cw / 2, cy = y - ch / 2;
+      cx = Math.max(pad, Math.min(cx, W - cw - pad));
+      cy = Math.max(pad, Math.min(cy, H - ch - pad));
+      projCard.style.left = cx + 'px';
+      projCard.style.top  = cy + 'px';
+    }
+
+    function openCard(idx, x, y){
+      if (cardOpen) return;
+      cardOpen = true;
+      fillCard(PROJECTS[idx]);
+      positionCard(x, y);                         // ← posición en el punto de click
+      projOverlay.classList.add('open');          // → CSS: bloom de la card
+      lockScroll(true);
+      window.cruzCursorHint && window.cruzCursorHint(T.cursor);
+      gsap.to(blurProxy, { b: CARDCFG.blur, duration: 0.6, ease: 'power2.out', overwrite: true, onUpdate: applyHeroBlur });
+    }
+
+    function closeCard(){
+      if (!cardOpen) return;
+      cardOpen = false;
+      projOverlay.classList.remove('open');       // → CSS: la card se va (fade/scale)
+      lockScroll(false);
+      retract();                                  // la esfera retrae su protuberancia
+      animateHintText(T.hint);
+      window.cruzCursorHint && window.cruzCursorHint(null);   // cursor vuelve al hint por defecto
+      gsap.to(blurProxy, { b: 0, duration: 0.5, ease: 'power2.in', overwrite: true, onUpdate: applyHeroBlur });
+    }
 
     // ── Bloqueo de scroll mientras la card está abierta ──────────────────────
     // No alcanza con overflow:hidden en <body> (el scroller real es <html>) ni
@@ -388,11 +485,12 @@ document.addEventListener("DOMContentLoaded", () => {
       window[method]('keydown', blockKeys, { passive: false });
     }
     
-    document.getElementById('card-close').addEventListener('click',e=>{
-      e.stopPropagation(); hideCard(); retract(); animateHintText('[CLICK EN LA ESFERA]');
-    });
-    
-    let currentProjectIndex = 0; 
+    // ── Interacción de la card ───────────────────────────────────────────
+    document.getElementById('proj-close').addEventListener('click', e => { e.stopPropagation(); closeCard(); });
+    // Click en el fondo (fuera de la card) también cierra → así se libera la
+    // esfera para elegir otro sector.
+    projOverlay.addEventListener('click', e => { if (e.target === projOverlay) closeCard(); });
+    window.addEventListener('keydown', e => { if (cardOpen && e.key === 'Escape') closeCard(); });
 
     const animateHintText = (newText) => {
         const hintSpan = document.querySelector('#click-hint span');
@@ -407,35 +505,38 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+    // Click en la ESFERA → sale una card en ese punto. Con la card abierta el
+    // overlay tapa la esfera (no llega el click acá): hay que cerrar primero y
+    // recién ahí clickear otro sector, del que surge la card del proyecto.
     renderer.domElement.addEventListener('click', e => {
-        if (isExtruded) { 
-            retract(); hideCard(); animateHintText('[CLICK EN LA ESFERA]');
-            return; 
-        }
-        
+        if (cardOpen) return;
+
         const rect = renderer.domElement.getBoundingClientRect();
         mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
         mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
         ray.setFromCamera(mouse, camera);
         const hits = ray.intersectObject(sphere);
-    
-        if (hits.length) {
-            animateHintText('[SCROLL PARA DESCUBRIR CRUZ ESTUDIO®]');
-            const local = sphere.worldToLocal(hits[0].point.clone());
-            let pi = currentProjectIndex;
-            currentProjectIndex = (currentProjectIndex + 1) % PROJECTS.length;
-            const verts = findVerts(local, 0.88);
-            if (verts.length) extrude(verts);
-            showCard(PROJECTS[pi], e.clientX, e.clientY);
-        }
+        if (!hits.length) return;
+
+        // La esfera se extruye en el PUNTO clickeado (la card "sale de ahí").
+        const local = sphere.worldToLocal(hits[0].point.clone());
+        const verts = findVerts(local, 0.88);
+        if (verts.length) extrude(verts);
+
+        // Cada click devuelve un proyecto distinto (ciclando la lista).
+        const pi = cycleIdx;
+        cycleIdx = (cycleIdx + 1) % NP;
+        openCard(pi, e.clientX, e.clientY);
     });
-    
+
     renderer.domElement.addEventListener('mousemove', e => {
+        if (cardOpen) { renderer.domElement.style.cursor = 'default'; return; }
         const rect = renderer.domElement.getBoundingClientRect();
         mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
         mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
         ray.setFromCamera(mouse, camera);
         const isHoveringSphere = ray.intersectObject(sphere).length > 0;
+        // Cursor "crosshair" sobre la esfera: invita a clickear para ver un proyecto.
         renderer.domElement.style.cursor = (isHoveringSphere && !isExtruded) ? 'crosshair' : 'default';
     });
 
@@ -495,6 +596,8 @@ document.addEventListener("DOMContentLoaded", () => {
           camera.lookAt(0, 0, 0);
           document.body.style.overflow = ''; // siempre termina desbloqueado
           renderer.domElement.style.pointerEvents = '';
+          // Hero en reposo → mostramos ya el par estático (LOCATION + SAY HELLO).
+          revealStaticPair();
         }
       });
     }
@@ -503,7 +606,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // Respeta reduced-motion y el caso loader salteado → cámara directa al reposo
       const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduce || document.documentElement.classList.contains('skip-loader')) {
-        introDone = true; return;
+        introDone = true;
+        revealStaticPair();   // sin intro → mostramos el par estático de una
+        return;
       }
       const loaderEl = document.getElementById('loader');
       if (!loaderEl) { startIntro(); return; }
