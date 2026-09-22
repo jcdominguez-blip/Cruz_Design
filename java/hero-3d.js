@@ -660,7 +660,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let morphActive = false, morphTween = null, morphTimer = null;
     let seqIdx = 0, pendingTarget = null, curShapeName = 'sphere';
-    let spinPaused = false, spinTween = null;
 
     function morphToShape(toName, onDone) {
       const fromArr = base.slice();          // snapshot de la forma actual
@@ -680,23 +679,15 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Al mostrar la cara: pausa el giro y la lleva de frente (la cara mira +Z).
-    function faceForward(){
-      spinPaused = true;
-      if (spinTween) spinTween.kill();
-      const target = Math.round(sphere.rotation.y / (Math.PI*2)) * (Math.PI*2);
-      spinTween = gsap.to(sphere.rotation, { y: target, duration: MORPH_TIME, ease: 'power2.inOut' });
-    }
-    function resumeSpin(){ spinPaused = false; if (spinTween){ spinTween.kill(); spinTween = null; } }
-
-    // Todas las formas (incluida la cara) morfan por vértices. Al entrar/salir de
-    // la cara se muestra/oculta el crédito y se para/retoma el giro.
+    // Todas las formas (incluida la cara) morfan por vértices y GIRAN en su eje
+    // como el resto (el giro nunca se pausa). Al entrar/salir de la cara solo se
+    // muestra/oculta el crédito CC-BY.
     function transitionTo(name, onDone){
       if (name === 'face' && !faceReady) { if (onDone) onDone(); return; }  // aún no cargó → saltear
       const enteringFace = (name === 'face');
       const leavingFace  = (curShapeName === 'face' && name !== 'face');
-      if (enteringFace) { creditShow(true); faceForward(); }
-      else if (leavingFace) { creditShow(false); resumeSpin(); }
+      if (enteringFace) creditShow(true);
+      else if (leavingFace) creditShow(false);
       curShapeName = name;
       morphToShape(name, onDone);
     }
@@ -990,7 +981,7 @@ document.addEventListener("DOMContentLoaded", () => {
       requestAnimationFrame(animate);
       if (!heroVisible && !introActive) return;  // fuera del hero: no renderiza
       time+=0.003;
-      if (!spinPaused) sphere.rotation.y+=0.0013;   // se pausa mientras la cara mira de frente
+      sphere.rotation.y+=0.0013;
       sphere.rotation.x=Math.sin(time*.28)*.04;
 
       // Esfera SIEMPRE centrada; el scroll solo controla el zoom (escala).
