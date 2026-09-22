@@ -606,16 +606,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const shapeCache = { sphere: buildShape('sphere') };
     const shapeOf = n => shapeCache[n] || (shapeCache[n] = buildShape(n));
 
-    // ── MODELOS 3D REALES (GLB) ───────────────────────────────────────────────
-    // Cada modelo se RE-MUESTREA sobre la misma grilla de la esfera: por cada
-    // vértice se lanza un rayo desde el centro y se toma la superficie del modelo.
-    // Así la esfera MORFA de verdad hacia el modelo (mismo wireframe) y vuelve,
-    // sin disolución ni salto. `tilt/yaw` orientan · `fit` escala · `credit` es el
-    // aviso (HTML) que aparece solo mientras se ve ese modelo (licencias).
+    // ── MODELOS 3D REALES (targets pre-horneados) ─────────────────────────────
+    // El muestreo por raycast (miles de rayos por modelo) se hornea OFFLINE y se
+    // guarda como un binario chiquito (Float32 de N*3). En runtime solo se baja
+    // ese .bin y se usa directo como forma destino → cero raycasts, cero GLTF,
+    // cero jank (clave para mobile). Se regenera con scripts/bake si cambia el GLB.
     const MODELS = {
-      face:  { url: '/models/gregos-face.glb', tilt: 0.18, yaw: 3 * Math.PI / 2, fit: 4.0,
+      face:  { bin: '/models/face.morph.bin',
                credit: '“Wireframe Gregos face” by <a href="https://skfb.ly/U7uW" target="_blank" rel="noopener noreferrer">alban</a> · <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>' },
-      brain: { url: '/models/brain.glb',       tilt: 0,    yaw: 0,               fit: 3.9,
+      brain: { bin: '/models/brain.morph.bin',
                credit: '' }   // TODO: completar crédito/licencia del cerebro si corresponde
     };
     const creditEl = document.getElementById('hero-credit');
@@ -630,41 +629,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function loadModel(name){
       const cfg = MODELS[name];
-      if (!cfg || typeof THREE.GLTFLoader === 'undefined') return;   // sin loader → se saltea
-      new THREE.GLTFLoader().load(cfg.url, (gltf) => {
-        const cont = new THREE.Object3D();
-        cont.add(gltf.scene);
-        cont.rotation.set(cfg.tilt || 0, cfg.yaw || 0, 0);
-        cont.updateMatrixWorld(true);
-        const meshes = [];
-        gltf.scene.traverse(o => { if (o.isMesh && o.geometry) meshes.push(o); });
-        // Normaliza a la envoltura de la esfera (centro en origen).
-        const box = new THREE.Box3().setFromObject(cont);
-        const size = new THREE.Vector3(), center = new THREE.Vector3();
-        box.getSize(size); box.getCenter(center);
-        const k = (cfg.fit || 4.0) / (Math.max(size.x, size.y, size.z) || 1);
-        cont.scale.setScalar(k);
-        cont.position.set(-center.x*k, -center.y*k, -center.z*k);
-        cont.updateMatrixWorld(true);
-        // Muestreo radial en chunks (no bloquea): rayo desde el origen por cada
-        // dirección; hit más lejano = silueta externa. Sin hit → r=2 (esfera).
-        const ray = new THREE.Raycaster();
-        const arr = new Float32Array(N * 3);
-        const O = new THREE.Vector3(0,0,0), D = new THREE.Vector3();
-        let si = 0;
-        (function sampleChunk(){
-          const end = Math.min(si + 250, N);
-          for (; si < end; si++){
-            D.set(dir[si*3], dir[si*3+1], dir[si*3+2]);
-            ray.set(O, D);
-            const hits = ray.intersectObjects(meshes, true);
-            const r = hits.length ? hits[hits.length - 1].distance : 2;
-            arr[si*3] = D.x*r; arr[si*3+1] = D.y*r; arr[si*3+2] = D.z*r;
-          }
-          if (si < N) requestAnimationFrame(sampleChunk);
-          else { shapeCache[name] = arr; modelReady[name] = true; }
-        })();
-      }, undefined, (err) => { if (window.console) console.warn('[hero] GLB no cargó (' + name + '):', err); });
+      if (!cfg) return;
+      fetch(cfg.bin).then(r => r.arrayBuffer()).then(buf => {
+        const arr = new Float32Array(buf);
+        if (arr.length !== N * 3) { if (window.console) console.warn('[hero] morph size mismatch', name, arr.length, 'vs', N*3); return; }
+        shapeCache[name] = arr;
+        modelReady[name] = true;
+      }).catch(err => { if (window.console) console.warn('[hero] no cargó morph (' + name + '):', err); });
     }
     Object.keys(MODELS).forEach(loadModel);
 
