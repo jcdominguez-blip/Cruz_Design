@@ -1131,10 +1131,32 @@ body::after {
   transition: opacity 0.5s;
 }
 
-#click-hint.hide { 
-  opacity: 0; 
+#click-hint.hide {
+  opacity: 0;
   pointer-events: none; /* Asegura que no estorbe si está oculto */
 }
+
+/* Crédito CC-BY del modelo 3D — muy chico, abajo centrado. Aparece solo cuando
+   se muestra la cara (clase .show vía JS) y desaparece al volver a la esfera. */
+#hero-credit {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  font-family: 'cofo-sans-mono-variable', monospace;
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 253, 243, 0.34);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+#hero-credit.show { opacity: 1; pointer-events: auto; }
+#hero-credit a { color: rgba(255, 253, 243, 0.5); text-decoration: none; border-bottom: 1px solid rgba(255,253,243,0.2); }
+#hero-credit a:hover { color: var(--amarillo-acento); }
 
 /* La línea animada ahora es amarilla */
 .hint-line { 

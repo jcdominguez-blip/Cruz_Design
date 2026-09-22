@@ -597,12 +597,49 @@ document.addEventListener("DOMContentLoaded", () => {
     // suave de la malla, así las aristas drapean limpias y vuelve a la esfera
     // de forma natural. El morph arranca SIEMPRE desde la 'base' vigente
     // (snapshot) hacia la forma destino → se retoma suave tras abrir/cerrar card.
-    const MORPH_SEQ  = ['cross', 'sphere', 'figure', 'sphere', 'diamond', 'sphere', 'house', 'sphere', 'tree', 'sphere', 'bird', 'sphere', 'cube', 'sphere'];
+    // Híbrido: formas geométricas por morph de vértices (cruz/diamante/cubo) +
+    // modelo 3D real 'face' por disolución. Siempre vuelve a la esfera entre cada una.
+    const MORPH_SEQ  = ['cross', 'sphere', 'face', 'sphere', 'diamond', 'sphere', 'cube', 'sphere'];
     const MORPH_HOLD = 3.0;    // segundos que se sostiene cada forma
     const MORPH_TIME = 1.15;   // segundos de la transición
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const shapeCache = { sphere: buildShape('sphere') };
     const shapeOf = n => shapeCache[n] || (shapeCache[n] = buildShape(n));
+
+    // ── MODELO 3D REAL: cara wireframe (GLB · "Gregos face" de alban · CC-BY) ──
+    // Distinta topología que la esfera → se muestra por DISOLUCIÓN (la esfera se
+    // desvanece y aparece el modelo con su propio wireframe), no por morph de
+    // vértices. Crédito CC-BY visible solo mientras se ve la cara.
+    const creditEl = document.getElementById('hero-credit');
+    const faceMat = new THREE.MeshBasicMaterial({ color:0xffffff, wireframe:true, transparent:true, opacity:0 });
+    let faceModel = null, faceReady = false, faceActive = false;
+    const visMix = { sph: 1, face: 0 };   // opacidades (leídas por el render loop)
+    let visTween = null;
+
+    (function loadFace(){
+      if (typeof THREE.GLTFLoader === 'undefined') return;   // sin loader → 'face' se saltea
+      new THREE.GLTFLoader().load('/models/gregos-face.glb', (gltf) => {
+        const inner = new THREE.Group();
+        gltf.scene.updateMatrixWorld(true);
+        gltf.scene.traverse(o => {
+          if (o.isMesh && o.geometry) inner.add(new THREE.Mesh(o.geometry, faceMat));
+        });
+        // Normaliza: centra y escala para encajar como la esfera.
+        const box = new THREE.Box3().setFromObject(inner);
+        const size = new THREE.Vector3(), center = new THREE.Vector3();
+        box.getSize(size); box.getCenter(center);
+        const k = 3.2 / (Math.max(size.x, size.y, size.z) || 1);
+        inner.scale.setScalar(k);
+        inner.position.set(-center.x*k, -center.y*k, -center.z*k);
+        faceModel = new THREE.Group();
+        faceModel.add(inner);
+        faceModel.visible = false;
+        sphere.add(faceModel);            // hereda rotación/escala de la esfera
+        faceReady = true;
+      }, undefined, (err) => { if (window.console) console.warn('[hero] GLB cara no cargó:', err); });
+    })();
+
+    function creditShow(on){ if (creditEl) creditEl.classList.toggle('show', on); }
 
     let morphActive = false, morphTween = null, morphTimer = null;
     let seqIdx = 0, pendingTarget = null;
@@ -625,6 +662,39 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
+    // Disolución esfera ↔ modelo. on=true muestra la cara; false vuelve a la esfera.
+    function dissolveFace(on, onDone){
+      faceActive = on;
+      if (on && faceModel) {
+        faceModel.visible = true;
+        // Orienta la cara hacia la cámara al aparecer; luego deriva suave con el giro.
+        faceModel.rotation.y = Math.PI - (sphere.rotation.y % (Math.PI * 2));
+      }
+      creditShow(on);
+      if (visTween) visTween.kill();
+      visTween = gsap.to(visMix, {
+        sph: on ? 0 : 1, face: on ? 1 : 0,
+        duration: MORPH_TIME, ease: 'power2.inOut',
+        onComplete(){ visTween = null; if (!on && faceModel) faceModel.visible = false; if (onDone) onDone(); }
+      });
+    }
+
+    // Dispatcher: 'face' → disolución; el resto → morph de vértices. Al salir de la
+    // cara hacia una forma de vértices, primero disuelve de vuelta a la esfera.
+    function transitionTo(name, onDone){
+      if (name === 'face') {
+        if (!faceReady) { if (onDone) onDone(); return; }   // aún no cargó → saltear
+        dissolveFace(true, onDone);
+      } else if (faceActive) {
+        dissolveFace(false, () => {
+          if (name === 'sphere') { if (onDone) onDone(); }
+          else morphToShape(name, onDone);
+        });
+      } else {
+        morphToShape(name, onDone);
+      }
+    }
+
     function afterMorph() {
       pendingTarget = null;
       seqIdx = (seqIdx + 1) % MORPH_SEQ.length;
@@ -636,7 +706,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Espera si hay card abierta, extrusión, o el hero no está a la vista.
       if (cardOpen || isExtruded || !heroVisible) { morphTimer = setTimeout(runMorphStep, 600); return; }
       pendingTarget = MORPH_SEQ[seqIdx];
-      morphToShape(pendingTarget, afterMorph);
+      transitionTo(pendingTarget, afterMorph);
     }
     function scheduleNextMorph() {
       if (morphTimer) clearTimeout(morphTimer);
@@ -651,10 +721,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function pauseMorph() {
       if (morphTimer) { clearTimeout(morphTimer); morphTimer = null; }
       if (morphTween) { morphTween.kill(); morphTween = null; }
+      if (visTween) { visTween.kill(); visTween = null; }
     }
     function resumeMorph() {
       if (!morphActive) return;
-      if (pendingTarget) morphToShape(pendingTarget, afterMorph);  // termina la transición interrumpida
+      if (pendingTarget) transitionTo(pendingTarget, afterMorph);  // termina la transición interrumpida
       else scheduleNextMorph();
     }
 
@@ -925,8 +996,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // Opacidad: base 0.42, atenuada por 'dim' cuando aparece el texto por
       // encima (para contraste). El latido sutil se reduce al atenuarse.
       curDim += (sphereState.dim - curDim) * 0.06;
-      const base = 0.42 * (1 - curDim * 0.78);
-      mat.opacity = Math.max(0.05, base + Math.sin(time * 0.7) * 0.055 * (1 - curDim));
+      const wf = Math.max(0.05, 0.42 * (1 - curDim * 0.78) + Math.sin(time * 0.7) * 0.055 * (1 - curDim));
+      // Disolución esfera ↔ cara (modelo 3D real).
+      mat.opacity = wf * visMix.sph;
+      mat.visible = visMix.sph > 0.02;
+      faceMat.opacity = (0.45 * (1 - curDim * 0.55)) * visMix.face;
 
       // Durante la intro, la cámara sigue el recorrido orbital
       if (introActive) applyIntroCamera();
