@@ -600,6 +600,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Híbrido: formas geométricas por morph de vértices (cruz/diamante/cubo) +
     // modelos 3D reales (cara, cerebro) re-muestreados. Vuelve a la esfera entre cada una.
     const MORPH_SEQ  = ['cross', 'sphere', 'face', 'sphere', 'brain', 'sphere', 'diamond', 'sphere', 'cube', 'sphere'];
+    // Nota: 'font' está cargado en MODELS pero fuera de la secuencia: el GLB es
+    // plano (texto 2D) y el morph radial no lo representa bien (ver charla).
     const MORPH_HOLD = 3.0;    // segundos que se sostiene cada forma
     const MORPH_TIME = 1.15;   // segundos de la transición
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -615,6 +617,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const MODELS = {
       face:  { url: '/models/gregos-face.glb', tilt: 0.18, yaw: 3 * Math.PI / 2, fit: 4.0,
                credit: '“Wireframe Gregos face” by <a href="https://skfb.ly/U7uW" target="_blank" rel="noopener noreferrer">alban</a> · <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>' },
+      font:  { url: '/models/font.glb',        tilt: 0,    yaw: 0,               fit: 3.6,
+               credit: '' },  // TODO: crédito/licencia del font si corresponde
       brain: { url: '/models/brain.glb',       tilt: 0,    yaw: 0,               fit: 3.9,
                credit: '' }   // TODO: completar crédito/licencia del cerebro si corresponde
     };
