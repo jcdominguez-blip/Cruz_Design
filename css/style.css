@@ -8,7 +8,7 @@
 :root {
     --bg-dark: #1D1E1C;
     --crema: #FFFDF3;
-    --amarillo-acento: #f2c335;
+    --amarillo-acento: currentColor;
 
     /* Tipografías */
     --font-header: 'Geist', sans-serif;
@@ -48,7 +48,7 @@
     --body-size: 18px;
     --detail-size: 14px;
 
-    --loader-yellow: #f2c335;
+    --loader-yellow: #FFFDF3;
     --loader-black: #1D1E1C;
     --loader-transition: cubic-bezier(0.77, 0, 0.175, 1);
     --loader-margin: 45px;
@@ -152,7 +152,7 @@ html:has(body.card-open) {
 }
 
 :root {
-    --loader-yellow: #f2c335;
+    --loader-yellow: #FFFDF3;
     --loader-black: #1D1E1C;
     --loader-transition: cubic-bezier(0.77, 0, 0.175, 1);
     --loader-margin: 45px;
@@ -800,20 +800,20 @@ body::after {
   will-change: opacity, background-color;
 }
 
-/* --- TEXTOS DEL HERO — statements centrados con reveal por líneas --- */
+/* --- TEXTOS DEL HERO — titular único alineado a la izquierda (hero estático 2026) --- */
 #hero-text {
   position: fixed;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  left: clamp(24px, 5.5vw, 108px);
+  transform: translateY(-50%);
   z-index: 20;
-  width: calc(100% - 48px);
-  max-width: 1720px;
-  text-align: center;
-  color: var(--crema);
+  width: min(58vw, 840px);
+  max-width: 840px;
+  text-align: left;
+  color: var(--bg-dark);
   opacity: 0;
   pointer-events: none;
-  will-change: opacity, color;
+  will-change: opacity;
 }
 
 .label-tag {
@@ -839,12 +839,38 @@ body::after {
   grid-area: 1 / 1;
   margin: 0;
   font-family: var(--font-header);
-  font-weight: 800;
-  font-size: clamp(42px, 7.5vw, 140px);
-  line-height: 1.02;            /* interlineado con aire (antes 0.9, se empastaba) */
-  letter-spacing: -0.035em;
-  color: inherit;               /* hereda el color invertible de #hero-text */
+  font-weight: 700;
+  font-size: clamp(29px, 3.15vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: inherit;               /* hereda el color del hero */
   opacity: 0;
+}
+
+/* Bajada del hero (IBM Plex Sans, lectura) bajo el titular. */
+.hero-lead {
+  margin-top: clamp(20px, 2.4vw, 34px);
+  max-width: 34em;
+  font-family: var(--font-reading);
+  font-weight: 300;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: rgba(29, 30, 28, 0.72);
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+/* Capa crema que barre tras el loader y queda de fondo del hero estático.
+   Vive sobre el Silk oscuro (z1) y bajo la esfera (canvas z2). Arranca
+   recortada (invisible) y se revela con clip-path de abajo hacia arriba. */
+#hero-sweep {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-color: var(--crema);
+  clip-path: inset(100% 0 0 0);
+  will-change: clip-path;
 }
 
 /* Cintillo mono sobre la frase (hereda el color invertible del hero) */
@@ -892,12 +918,16 @@ body::after {
 
 @media (max-width: 768px) {
     #hero-text {
-        width: calc(100% - 44px);
+        left: 24px;
+        width: calc(100% - 48px);
+        max-width: none;
+        top: 44%;
     }
     #hero-text h1.hero-statement {
-        font-size: clamp(28px, 7.8vw, 50px);
-        line-height: 1.06;
+        font-size: clamp(30px, 8.2vw, 46px);
+        line-height: 1.1;
     }
+    .hero-lead { font-size: 15px; margin-top: 18px; max-width: none; }
     .hs-eyebrow { margin-bottom: 12px; letter-spacing: 0.15em; }
 }
 
@@ -1207,8 +1237,29 @@ body::after {
 .pc-close { position: absolute; top: 10px; right: 14px; font-family: var(--f-mono); font-size: 10px; color: rgba(255,255,255,0.25); background: none; border: none; cursor: pointer; transition: color 0.15s; }
 .pc-close:hover { color: var(--yellow); }
 
-/* ESPACIADOR Y CUBIERTA DEL SITIO (CRÍTICO PARA EL SCROLL) */
-#spacer { height: 520vh; }
+/* ESPACIADOR Y CUBIERTA DEL SITIO (CRÍTICO PARA EL SCROLL)
+   Hero estático 2026: ocupa UNA pantalla; el contenido se desliza por encima. */
+#spacer { height: 100vh; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   HERO ESTÁTICO CREMA — contraste del "chrome" (stat-strip, hint, crédito)
+   sobre el fondo claro. Se activa con body.hero-cream (lo pone hero-3d.js al
+   terminar el reveal). Scopeado para no afectar otras páginas/estados.
+   ══════════════════════════════════════════════════════════════════════════ */
+body.hero-cream #hero-text { color: var(--bg-dark); }
+body.hero-cream .context-item .mono-tag { color: rgba(29, 30, 28, 0.42); }
+body.hero-cream .context-data { color: rgba(29, 30, 28, 0.78); }
+body.hero-cream .context-link { border-bottom-color: rgba(29, 30, 28, 0.18); }
+body.hero-cream #hero-weather-icon { color: #b58f1a; }
+body.hero-cream #click-hint { color: #b58f1a; }
+body.hero-cream .hint-line { background: linear-gradient(to bottom, #b58f1a, transparent); }
+body.hero-cream #hero-credit { color: rgba(29, 30, 28, 0.4); }
+body.hero-cream #hero-credit a { color: rgba(29, 30, 28, 0.55); border-bottom-color: rgba(29, 30, 28, 0.2); }
+
+@media (max-width: 768px) {
+  body.hero-cream .context-data { color: var(--bg-dark); }
+  body.hero-cream .context-link { color: rgba(29, 30, 28, 0.5) !important; }
+}
 .site-content-wrapper {
   position: relative;
   z-index: 100; /* Se desliza por encima de la esfera fija */
@@ -3052,7 +3103,7 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
 :root {
     --bg-dark: #1D1E1C;
     --crema: #FFFDF3;
-    --amarillo-acento: #f2c335;
+    --amarillo-acento: currentColor;
     --font-header: 'Geist', sans-serif;
     --font-reading: 'IBM Plex Sans', sans-serif;
     --font-mono: 'cofo-sans-mono-variable', monospace;
@@ -3209,10 +3260,10 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
 .ux-submit-btn {
     margin-top: 40px !important;
     padding: 16px 32px !important; /* Ajuste sutil para que la píldora respire bien */
-    background-color: var(--crema) !important; 
-    color: var(--bg-dark) !important; 
-    border: none !important;
-    border-radius: 50px !important; 
+    background-color: var(--crema) !important;
+    color: var(--bg-dark) !important;
+    border: 1px solid var(--crema) !important;   /* invisible en reposo; aparece en hover */
+    border-radius: 50px !important;
     
     /* CAMBIOS CLAVE PARA EL ANCHO: */
     width: fit-content !important; /* Se ajusta exactamente al tamaño del texto + ícono */
@@ -3239,15 +3290,21 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     transition: transform 0.4s ease;
 }
 
-/* --- ESTADO HOVER (Feedback Interactivo) --- */
+/* --- ESTADO HOVER (relleno → contorno) --- */
+/* bg crema + tinta oscura  →  transparente + borde crema + texto/ícono crema */
 .ux-submit-btn:hover {
-    background-color: var(--amarillo-acento) !important; 
-    transform: translateY(-4px); 
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
+    background-color: transparent !important;
+    border-color: var(--crema) !important;
+    color: var(--crema) !important;
+    transform: translateY(-4px);
+    box-shadow: none;
 }
-
+.ux-submit-btn:hover .cta-text,
 .ux-submit-btn:hover .material-symbols-outlined {
-    transform: translate(5px, -5px); 
+    color: var(--crema) !important;
+}
+.ux-submit-btn:hover .material-symbols-outlined {
+    transform: translate(5px, -5px);
 }
 
 
@@ -3534,10 +3591,11 @@ background-color: #696969; /* Fondo azul oscuro al pasar el ratón */
     transition: color 0.5s var(--reveal-easing);
 }
 
-.award-badge:hover { border-color: var(--bg-dark); }
+.award-badge:hover { border-color: var(--bg-dark); color: var(--crema); } /* gana al a:hover azul de Bootstrap → ícono blanco */
 .award-badge:hover::before { transform: translateY(0); }
 .award-badge:hover .award-badge-label,
-.award-badge:hover .award-badge-title { color: var(--crema); }
+.award-badge:hover .award-badge-title,
+.award-badge:hover .award-badge-icon { color: var(--crema); }
 
 .award-badge:focus,
 .award-badge:focus-visible {
@@ -3874,7 +3932,7 @@ body[data-bg] .footer-global .footer-line[data-reveal].is-visible {
 :root {
     --bg-dark: #1D1E1C;
     --crema: #FFFDF3;
-    --amarillo-acento: #f2c335;
+    --amarillo-acento: currentColor;
     --font-header: 'Geist', sans-serif;
     --font-reading: 'IBM Plex Sans', sans-serif;
     --font-mono: 'cofo-sans-mono-variable', monospace;
@@ -5494,7 +5552,7 @@ h2.section-display-title {
     
     /* 3. LO PONEMOS EN AMARILLO INSTITUCIONAL DENTRO DEL MENÚ */
     .mobile-contact-item a {
-        color: #f2c335 !important; 
+        color: currentColor !important; 
     }
 }
 
@@ -5524,7 +5582,7 @@ h2.section-display-title {
     right: 0;
     bottom: 22px;
     height: 1px;
-    background: #f2c335;
+    background: currentColor;
     opacity: 0.9;
 }
 
@@ -5710,4 +5768,205 @@ body.card-open #click-hint{ opacity: 0 !important; pointer-events: none !importa
 @media (max-width: 768px){
   #proj-card{ width: 300px; height: 440px; }
   .pj-title{ font-size: 23px; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SIN AMARILLO — paleta mono (2026). El acento (--amarillo-acento) pasó a
+   currentColor en todo el sistema. Acá fijamos los pocos componentes RELLENOS
+   (fondo con texto/ícono encima) donde currentColor no sirve como fondo.
+   ══════════════════════════════════════════════════════════════════════════ */
+/* Pill blanco con hover relleno → contorno (misma convención que .ux-submit-btn). */
+.nav-cta-btn { background-color: var(--crema); border: 1px solid var(--crema); }
+.nav-cta-btn:hover { background-color: transparent; border-color: var(--crema); color: var(--crema) !important; }
+.view-all-v2:hover { background-color: var(--bg-dark); color: var(--crema); }
+.wa-tooltip { background-color: var(--crema); color: var(--bg-dark); }
+.whatsapp-fixed:hover { background-color: #2a2b28; }
+.sv4-cta:hover { background-color: var(--bg-dark); color: var(--crema); }
+.loader-progress-fill { background: var(--crema); }
+.pj-tag { background: var(--bg-dark); color: var(--crema); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SERVICIOS — subtítulo del header (bajada bajo el H2)
+   ══════════════════════════════════════════════════════════════════════════ */
+.sva-sub {
+  margin-top: clamp(16px, 1.8vw, 26px);
+  max-width: 46ch;
+  font-family: var(--font-reading);
+  font-weight: 300;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: rgba(29, 30, 28, 0.7);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PROCESO DE TRABAJO — grilla 2 columnas (ref. maqueta Motto) + acordeón.
+   Mismo contenedor que el resto del sitio (= .faq-inner) → bordes alineados.
+   Sección oscura sobre Silk. Acordeón: java/proceso.js.
+   ══════════════════════════════════════════════════════════════════════════ */
+.proceso-section {
+  position: relative;
+  background: var(--bg-dark);
+  color: var(--crema);
+  overflow: hidden;
+  z-index: 4;
+  padding: clamp(72px, 10vw, 140px) 0;   /* mismo ritmo vertical que el FAQ */
+}
+.proceso-inner {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, 90vw);              /* = .faq-inner → alineación perfecta */
+  margin: 0 auto;
+}
+
+/* Grilla: label (izq) + contenido (der), dentro del contenedor alineado. */
+.proceso-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.95fr);
+  gap: clamp(28px, 4.5vw, 88px);
+  align-items: start;
+}
+.proceso-aside { position: sticky; top: clamp(96px, 14vh, 160px); }
+.proceso-eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: rgba(255, 253, 243, 0.55);
+  font-weight: 400;
+}
+
+.proceso-title { color: var(--crema); }   /* tamaño = h2.section-display-title (fs-h2) */
+.proceso-lead {
+  margin: clamp(22px, 2.4vw, 34px) 0 0;
+  max-width: 52ch;
+  font-family: var(--font-reading);
+  font-weight: 300;
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: rgba(255, 253, 243, 0.68);
+}
+
+/* ── Acordeón ── */
+.proceso-acc {
+  --proc-numw: clamp(2rem, 3vw, 2.6rem);
+  --proc-gap: clamp(16px, 2vw, 30px);
+  list-style: none;
+  margin: clamp(40px, 5vw, 72px) 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(255, 253, 243, 0.16);
+}
+.proceso-item { border-bottom: 1px solid rgba(255, 253, 243, 0.16); }
+.proceso-row {
+  display: grid;
+  grid-template-columns: var(--proc-numw) 1fr auto;
+  align-items: baseline;
+  column-gap: var(--proc-gap);
+  width: 100%;
+  padding: clamp(20px, 2.4vw, 30px) 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  color: var(--crema);
+  -webkit-tap-highlight-color: transparent;
+}
+.proceso-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: rgba(255, 253, 243, 0.4);
+  transition: color 0.4s ease;
+}
+.proceso-name {
+  font-family: var(--font-header);
+  font-weight: 500;
+  font-size: var(--fs-h3);
+  line-height: 1.3;
+  letter-spacing: var(--ls-h);
+  color: var(--crema);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.proceso-icon {
+  position: relative;
+  width: clamp(18px, 1.6vw, 22px);
+  height: clamp(18px, 1.6vw, 22px);
+  align-self: center;
+  color: rgba(255, 253, 243, 0.55);
+  transition: color 0.4s ease;
+  transform: translateY(0.15em);
+}
+.proceso-icon::before,
+.proceso-icon::after {
+  content: "";
+  position: absolute; top: 50%; left: 50%;
+  background: currentColor;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease;
+}
+.proceso-icon::before { width: 100%; height: 1.5px; transform: translate(-50%, -50%); }
+.proceso-icon::after  { width: 1.5px; height: 100%; transform: translate(-50%, -50%); }
+
+@media (hover: hover) and (pointer: fine) {
+  .proceso-item:hover .proceso-name { transform: translateX(8px); }
+  .proceso-item:hover .proceso-num,
+  .proceso-item:hover .proceso-icon { color: var(--crema); }
+}
+.proceso-row:focus, .proceso-row:focus-visible { outline: none; }
+.proceso-row:focus-visible .proceso-name { transform: translateX(8px); }
+
+.proceso-item.open .proceso-num,
+.proceso-item.open .proceso-icon { color: var(--crema); }
+.proceso-item.open .proceso-icon::after { transform: translate(-50%, -50%) scaleY(0); opacity: 0; }
+
+/* Panel desplegable: grid 0fr→1fr (anima el alto sin medir). */
+.proceso-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.proceso-item.open .proceso-panel { grid-template-rows: 1fr; }
+.proceso-panel-inner {
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  padding-left: calc(var(--proc-numw) + var(--proc-gap)); /* indentado bajo el nombre */
+}
+.proceso-item.open .proceso-panel-inner { opacity: 1; transform: none; }
+
+.proceso-step-lead {
+  margin: 0 0 clamp(10px, 1.2vw, 16px);
+  font-family: var(--font-header);
+  font-weight: 400;
+  font-size: var(--fs-body-lg);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: rgba(255, 253, 243, 0.9);
+}
+.proceso-step-desc {
+  margin: 0;
+  max-width: 60ch;
+  font-family: var(--font-reading);
+  font-weight: 300;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: rgba(255, 253, 243, 0.58);
+}
+.proceso-step-tags {
+  margin: clamp(16px, 1.8vw, 24px) 0 clamp(24px, 3vw, 36px);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  color: rgba(255, 253, 243, 0.42);
+}
+
+/* Stack en tablet/móvil: label arriba, contenido debajo. */
+@media (max-width: 900px) {
+  .proceso-grid { grid-template-columns: 1fr; gap: clamp(18px, 4vw, 30px); }
+  .proceso-aside { position: static; }
+}
+@media (max-width: 768px) {
+  .proceso-panel-inner { padding-left: 0; }
 }

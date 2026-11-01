@@ -20,74 +20,139 @@
     if (typeof CustomEase !== 'undefined') plugins.push(CustomEase);
     if (typeof gsap !== 'undefined' && plugins.length) gsap.registerPlugin.apply(gsap, plugins);
 
+    // ── i18n: idioma sincronizado con el switch del nav (localStorage 'cruz-lang') ──
+    var CX_LANG = (function () {
+        try { return localStorage.getItem('cruz-lang') === 'en' ? 'en' : 'es'; }
+        catch (e) { return 'es'; }
+    })();
+    // Micro-copy de la galería según idioma.
+    var CX_UI = {
+        es: { clientPre: '[ CLIENTE: ', clientPost: ' ]', soundOn: 'SÍ', soundOff: 'NO',
+              hintDrag: 'arrastrá para explorar <em>↔</em>', hintSwipe: 'deslizá para explorar <em>↔</em>' },
+        en: { clientPre: '[ CLIENT: ', clientPost: ' ]', soundOn: 'ON', soundOff: 'OFF',
+              hintDrag: 'drag to explore <em>↔</em>', hintSwipe: 'swipe to explore <em>↔</em>' }
+    }[CX_LANG];
+
     // ── DATOS: 13 proyectos (portada + copy provisto + link al case) ──
     var CX_PROJECTS = [
-        { num: '01', img: 'https://i.ibb.co/dmkbM0K/tac.jpg', href: './trenescargas.html',
+        { num: '01', img: '/img/cover-tac.jpg', href: '/trenescargas',
           client: 'Trenes Argentinos Cargas',
           title: 'Sistematización visual para la mayor red logística nacional.',
           desc: 'Desarrollamos un ecosistema visual robusto y escalable que unifica la comunicación de la entidad, proyectando absoluto orden, peso institucional y eficiencia operativa.',
           ficha: ['Branding', 'Web Design', '2025'] },
-        { num: '02', img: '../img/estacion-sur-img-1.jpg', href: './estacion-sur.html',
+        { num: '02', img: '/img/estacion-sur-img-1.jpg', href: '/estacion-sur',
           client: 'Estación Sur Vinos',
           title: 'Elevando la experiencia retail en el sector vitivinícola.',
           desc: 'Articulamos una identidad y estrategia de contenido que aleja a la marca del clásico bodegón, posicionándola como una boutique especializada de alto valor percibido.',
           ficha: ['Branding', 'Estrategia de Contenido', '2024'] },
-        { num: '03', img: 'https://i.ibb.co/8BbCKvj/1.jpg', href: './suuam.html',
+        { num: '03', img: '/img/cover-suuam.jpg', href: '/suuam',
           client: 'SUUAM®',
           title: 'Interfaz de confianza para transformar la asistencia vehicular.',
           desc: 'Diseñamos un entorno digital estructurado que transmite seguridad inmediata y respaldo tecnológico, optimizando la experiencia de los usuarios en situación de emergencia.',
           ficha: ['UX/UI', 'Product', '2024'] },
-        { num: '04', img: 'https://i.ibb.co/svwVxV1L/pr13.jpg', href: './prisma.html',
+        { num: '04', img: '/img/cover-prisma.jpg', href: '/prisma',
           client: 'Prisma',
           title: 'Reducción de carga cognitiva para plataformas de gestión B2B.',
           desc: 'Estructuramos un entorno de producto enfocado en la visualización clara de datos y la fluidez operativa, facilitando la toma de decisiones gerenciales sin fricción visual.',
           ficha: ['Product Design', '2024'] },
-        { num: '05', img: 'https://i.ibb.co/GfT5Pyk2/ejmUF.jpg', href: './union-ferroviaria.html',
+        { num: '05', img: '/img/cover-union.jpg', href: '/union-ferroviaria',
           client: 'Unión Ferroviaria',
           title: 'Modernización institucional y conexión digital para el afiliado.',
           desc: 'Transformamos un legado de peso histórico en un ecosistema visual y digital ágil, acercando los beneficios y servicios al usuario mediante una interfaz contemporánea.',
           ficha: ['Branding', 'App', '2023'] },
-        { num: '06', img: '../img/header-rovex.png', href: './rovex.html',
+        { num: '06', img: '/img/header-rovex.png', href: '/rovex',
           client: 'ROVEX',
           title: 'Solidez gráfica industrial para el mercado de maquinaria pesada.',
           desc: 'Construimos una identidad corporativa que proyecta fuerza y continuidad operativa, posicionando a la marca como el socio técnico definitivo frente a la competencia.',
           ficha: ['Branding', 'Diseño Web', '2026'] },
-        { num: '07', img: 'https://i.ibb.co/qMQcwjt/SC.jpg', href: './sc.html',
+        { num: '07', img: '/img/cover-sc.jpg', href: '/sc',
           client: 'Municipio San Cristóbal',
           title: 'Ordenamiento cívico: de la dispersión visual a la autoridad.',
           desc: 'Reestructuramos la identidad del municipio para separar la comunicación ciudadana del ruido político, mediante un sistema visual transparente y de alto rendimiento.',
           ficha: ['Government Branding', '2023'] },
-        { num: '08', img: '../img/pinta-02.jpg', href: './pinta-gaucha.html',
+        { num: '08', img: '/img/pinta-02.jpg', href: '/pinta-gaucha',
           client: 'Pinta Gaucha',
           title: 'Diferenciación estratégica en un mercado gastronómico saturado.',
           desc: 'Diseñamos una experiencia de marca integral —desde el espacio físico hasta la interfaz digital— que proyecta carácter corporativo, superando los clichés visuales del rubro.',
           ficha: ['Branding', 'Retail Experience', 'UI-UX', '2024'] },
-        { num: '09', img: 'https://i.ibb.co/tPZ8KBHk/VD15.jpg', href: './vientos-de-ruta.html',
+        { num: '09', img: '/img/cover-vdr.jpg', href: '/vientos-de-ruta',
           client: 'VDR',
           title: 'Ecosistema digital para dinamizar la captación en turismo.',
           desc: 'Desarrollamos una identidad sólida y una plataforma web optimizada para conversión, garantizando que el rigor operativo de la empresa se refleje en cada punto de contacto.',
           ficha: ['Development', 'Brand', '2022'] },
-        { num: '10', img: 'https://i.ibb.co/RYZ1CJ7/sh-1.jpg', href: './sohat.html',
+        { num: '10', img: '/img/cover-sohat.jpg', href: '/sohat',
           client: 'So Hat',
           title: 'Sofisticación visual para el sector de accesorios premium.',
           desc: 'Construimos un sistema de marca minimalista y elegante que cede el protagonismo al producto, asegurando un posicionamiento estético de alta gama en canales digitales.',
           ficha: ['Branding', 'Fashion', '2024'] },
-        { num: '11', img: 'https://i.ibb.co/1tBtbRyC/TF14.jpg', href: './typefusion.html',
+        { num: '11', img: '/img/cover-typefusion.jpg', href: '/typefusion',
           client: 'Typefusion®',
           title: 'Interfaz de precisión técnica para herramientas creativas.',
           desc: 'Diseñamos una arquitectura de producto intuitiva y de alto rendimiento, optimizando el flujo de trabajo de los usuarios sin comprometer la limpieza visual del entorno.',
           ficha: ['Product Design', '2022'] },
-        { num: '12', img: 'https://i.ibb.co/2YChXbhZ/tp2.jpg', href: './runakay.html',
+        { num: '12', img: '/img/cover-runakay.jpg', href: '/runakay',
           client: 'Runakay',
           title: 'Articulación visual de valores esenciales y corporativos.',
           desc: 'Desarrollamos una identidad sólida y atemporal que traduce los principios fundamentales de la marca en un lenguaje gráfico estructurado para liderar en su sector.',
           ficha: ['Brand Design', '2023'] },
-        { num: '13', img: 'https://i.ibb.co/XxgN2CDM/AUR1.png', href: './aurea.html',
+        { num: '13', img: '/img/cover-aurea.jpg', href: '/aurea',
           client: 'Aurea®',
           title: 'Rigor geométrico y posicionamiento estratégico superior.',
           desc: 'Implementamos un sistema visual basado en la proporción y el equilibrio técnico, sentando las bases para proyectar autoridad, confianza y un estándar de calidad corporativa.',
           ficha: ['Branding', 'Strategy', '2024'] }
     ];
+
+    // Traducción EN de los proyectos (title · desc · ficha). Se aplica sobre CX_PROJECTS.
+    var CX_PROJECTS_EN = {
+        '01': { title: 'Visual systematization for the country’s largest logistics network.',
+                desc: 'We developed a robust, scalable visual ecosystem that unifies the entity’s communication, projecting absolute order, institutional weight and operational efficiency.',
+                ficha: ['Branding', 'Web Design', '2025'] },
+        '02': { title: 'Elevating the retail experience in the wine sector.',
+                desc: 'We articulated an identity and content strategy that moves the brand away from the classic tavern, positioning it as a specialized boutique with high perceived value.',
+                ficha: ['Branding', 'Content Strategy', '2024'] },
+        '03': { title: 'A trustworthy interface to transform roadside assistance.',
+                desc: 'We designed a structured digital environment that conveys immediate reassurance and technological backing, optimizing the experience of users in emergency situations.',
+                ficha: ['UX/UI', 'Product', '2024'] },
+        '04': { title: 'Reducing cognitive load for B2B management platforms.',
+                desc: 'We structured a product environment focused on clear data visualization and operational fluidity, enabling frictionless managerial decision-making.',
+                ficha: ['Product Design', '2024'] },
+        '05': { title: 'Institutional modernization and digital connection for members.',
+                desc: 'We turned a legacy of historical weight into an agile visual and digital ecosystem, bringing benefits and services closer to the user through a contemporary interface.',
+                ficha: ['Branding', 'App', '2023'] },
+        '06': { title: 'Industrial graphic strength for the heavy machinery market.',
+                desc: 'We built a corporate identity that projects strength and operational continuity, positioning the brand as the definitive technical partner over the competition.',
+                ficha: ['Branding', 'Web Design', '2026'] },
+        '07': { title: 'Civic order: from visual dispersion to authority.',
+                desc: 'We restructured the municipality’s identity to separate citizen communication from political noise, through a transparent, high-performance visual system.',
+                ficha: ['Government Branding', '2023'] },
+        '08': { title: 'Strategic differentiation in a saturated gastronomic market.',
+                desc: 'We designed a comprehensive brand experience —from the physical space to the digital interface— that projects corporate character, overcoming the sector’s visual clichés.',
+                ficha: ['Branding', 'Retail Experience', 'UI-UX', '2024'] },
+        '09': { title: 'A digital ecosystem to boost lead generation in tourism.',
+                desc: 'We developed a solid identity and a conversion-optimized website, ensuring the company’s operational rigor is reflected at every touchpoint.',
+                ficha: ['Development', 'Brand', '2022'] },
+        '10': { title: 'Visual sophistication for the premium accessories sector.',
+                desc: 'We built a minimal, elegant brand system that gives the spotlight to the product, securing a high-end aesthetic positioning across digital channels.',
+                ficha: ['Branding', 'Fashion', '2024'] },
+        '11': { title: 'A technically precise interface for creative tools.',
+                desc: 'We designed an intuitive, high-performance product architecture, optimizing users’ workflow without compromising the visual cleanliness of the environment.',
+                ficha: ['Product Design', '2022'] },
+        '12': { title: 'Visual articulation of essential, corporate values.',
+                desc: 'We developed a solid, timeless identity that translates the brand’s core principles into a structured graphic language to lead in its sector.',
+                ficha: ['Brand Design', '2023'] },
+        '13': { title: 'Geometric rigor and superior strategic positioning.',
+                desc: 'We implemented a visual system based on proportion and technical balance, laying the groundwork to project authority, trust and a corporate quality standard.',
+                ficha: ['Branding', 'Strategy', '2024'] }
+    };
+    if (CX_LANG === 'en') {
+        CX_PROJECTS.forEach(function (p) {
+            var e = CX_PROJECTS_EN[p.num];
+            if (!e) return;
+            if (e.title) p.title = e.title;
+            if (e.desc) p.desc = e.desc;
+            if (e.ficha) p.ficha = e.ficha;
+        });
+    }
 
     function CruzCanvasGallery() {
         this.viewport = document.getElementById('cg-viewport');
@@ -116,22 +181,38 @@
         this.initSound();
     }
 
-    // ── Sonido inmersivo: "Gesture Move 04" al arrastrar · "Zoom" al abrir card ──
+    // ── Sonido inmersivo: "gesture-move" al arrastrar · "zoom" al abrir card ──
+    //   Audio comprimido (AAC/m4a, ~17KB c/u vs ~350KB de los WAV originales) y
+    //   carga DIFERIDA: no descargamos nada hasta el primer gesto del usuario, para
+    //   no competir con la carga inicial de la página. Así el sonido deja de "tardar".
     CruzCanvasGallery.prototype.initSound = function () {
-        var base = '../audio/';
-        this.sound = {
-            enabled: true,
-            files: {
-                drag: new Audio(base + 'Gesture%20Move%2004.wav'),
-                zoom: new Audio(base + 'Zoom.wav')
-            }
+        var base = '/audio/';
+        var self = this;
+        this.sound = { enabled: true, ready: false, files: {} };
+
+        this._warmSound = function () {
+            if (self.sound.ready) return;
+            self.sound.ready = true;
+            var mk = function (src, vol) {
+                var a = new Audio();
+                a.preload = 'auto';
+                a.src = base + src;
+                a.volume = vol;
+                a.load();
+                return a;
+            };
+            self.sound.files.drag = mk('gesture-move.m4a', 0.35);
+            self.sound.files.zoom = mk('zoom.m4a', 0.5);
         };
-        var f = this.sound.files;
-        f.drag.preload = 'auto'; f.drag.volume = 0.35;
-        f.zoom.preload = 'auto'; f.zoom.volume = 0.5;
+
+        // El primer gesto real (pointer/touch/tecla) precarga los clips.
+        var warm = this._warmSound;
+        window.addEventListener('pointerdown', warm, { once: true, passive: true });
+        window.addEventListener('keydown', warm, { once: true, passive: true });
     };
     CruzCanvasGallery.prototype.playSound = function (name) {
         if (!this.sound || !this.sound.enabled) return;
+        if (!this.sound.ready && this._warmSound) this._warmSound();
         var a = this.sound.files[name];
         if (!a) return;
         try { a.currentTime = 0; a.play().catch(function () {}); } catch (e) { /* noop */ }
@@ -141,7 +222,7 @@
         if (!btn) return;
         btn.classList.toggle('is-on', this.sound.enabled);
         var lbl = btn.querySelector('.cg-sound-label');
-        if (lbl) lbl.textContent = this.sound.enabled ? 'SÍ' : 'NO';
+        if (lbl) lbl.textContent = this.sound.enabled ? CX_UI.soundOn : CX_UI.soundOff;
     };
     CruzCanvasGallery.prototype.toggleSound = function () {
         this.sound.enabled = !this.sound.enabled;
@@ -199,7 +280,7 @@
         var hint = document.createElement('div');
         hint.className = 'cg-hint';
         hint.setAttribute('aria-hidden', 'true');
-        hint.innerHTML = '<span class="cg-hint-inner">arrastrá para explorar <em>↔</em></span>';
+        hint.innerHTML = '<span class="cg-hint-inner">' + CX_UI.hintDrag + '</span>';
         document.body.appendChild(hint);
         this.hint = hint;
         this.hintDismissed = false;
@@ -216,6 +297,19 @@
         }, { passive: true });
         this.viewport.addEventListener('mouseenter', function () { over = true; });
         this.viewport.addEventListener('mouseleave', function () { over = false; hint.classList.remove('is-in'); });
+
+        // Touch: no hay cursor → mostramos el hint centrado abajo unos segundos.
+        var isTouch = window.matchMedia('(hover: none)').matches;
+        if (isTouch) {
+            var inner = hint.querySelector('.cg-hint-inner');
+            if (inner) inner.innerHTML = CX_UI.hintSwipe;
+            tx = window.innerWidth / 2 - 70; ty = window.innerHeight - 150;
+            setTimeout(function () {
+                if (!self.hintDismissed && !self.zoomState.isActive &&
+                    document.body.classList.contains('cg-active')) hint.classList.add('is-in');
+            }, 800);
+            setTimeout(function () { self.dismissHint(); }, 4600);
+        }
     };
     CruzCanvasGallery.prototype.dismissHint = function () {
         this.hintDismissed = true;
@@ -297,7 +391,7 @@
         var ficha = document.getElementById('cg-info-ficha');
         var link = document.getElementById('cg-info-link');
         if (num) num.textContent = project.num;
-        if (client) client.textContent = '[ CLIENTE: ' + project.client.toUpperCase() + ' ]';
+        if (client) client.textContent = CX_UI.clientPre + project.client.toUpperCase() + CX_UI.clientPost;
         if (title) title.textContent = project.title;
         if (ficha) ficha.textContent = project.ficha.join('  ·  ');
         if (link) link.setAttribute('href', project.href);

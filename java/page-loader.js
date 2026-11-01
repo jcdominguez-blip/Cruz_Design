@@ -54,7 +54,7 @@
         // Proyectos: blanco. El acento va casi al mismo tono que la base para que
         // el Silk se lea como textura y no tiña de amarillo.
         if (theme === 'light')  return { force: 'light', lightBase: '#FFFDF3', lightAccent: '#EDE9DC' };
-        if (theme === 'yellow') return { force: 'light', lightBase: '#f2c335', lightAccent: '#e8b21f' };
+        if (theme === 'yellow') return { force: 'light', lightBase: '#FFFDF3', lightAccent: '#EDE9DC' };
         return {};   // dark: comportamiento original
     }
 
@@ -101,7 +101,7 @@
             --ptx-cross: brightness(0);
         }
         .page-transition.ptx-yellow {
-            --ptx-bg: #f2c335;
+            --ptx-bg: #FFFDF3;
             --ptx-fg: #1D1E1C;
             --ptx-fg-soft: rgba(29, 30, 28, 0.62);
             --ptx-cross: brightness(0);
@@ -249,7 +249,7 @@
         if (theme === 'light') ov.classList.add('ptx-light');
         else if (theme === 'yellow') ov.classList.add('ptx-yellow');
         // Evita el flash del html detrás mientras el overlay está a full
-        const bg = theme === 'light' ? '#FFFDF3' : (theme === 'yellow' ? '#f2c335' : '#1D1E1C');
+        const bg = theme === 'light' ? '#FFFDF3' : (theme === 'yellow' ? '#FFFDF3' : '#1D1E1C');
         document.documentElement.style.setProperty('--ptx-html-bg', bg);
     }
 

@@ -82,23 +82,48 @@
 (function () {
     'use strict';
 
-    var COPY = {
-        '1': {
-            label: '01',
-            title: 'Nuestra creencia',
-            desc:  'Creemos que detrás de cada gran empresa hay directores y equipos dejando la piel. Nuestro propósito humano es honrar ese esfuerzo. No existimos para ganar premios de estética, existimos para que la verdadera calidad de tu trabajo se refleje innegablemente en tu imagen.'
+    // Copy bilingüe. El idioma se sincroniza con el switch del nav (localStorage 'cruz-lang').
+    var COPY_BY_LANG = {
+        es: {
+            '1': {
+                label: '01',
+                title: 'Nuestra creencia',
+                desc:  'Creemos que detrás de cada gran empresa hay directores y equipos dejando la piel. Nuestro propósito humano es honrar ese esfuerzo. No existimos para ganar premios de estética, existimos para que la verdadera calidad de tu trabajo se refleje innegablemente en tu imagen.'
+            },
+            '2': {
+                label: '02',
+                title: 'Nuestros valores',
+                desc:  'Trabajamos sin egos, sin romanticismos y con una honestidad brutal. Entendemos que del otro lado hay personas arriesgando capital y tiempo. Por eso, nuestra cultura interna se basa en el rigor, la transparencia y el compromiso absoluto con el crecimiento de tu negocio.'
+            },
+            '3': {
+                label: '03',
+                title: 'El estudio',
+                desc:  'Somos un grupo de mentes analíticas y creativas operando desde Buenos Aires para el mundo. No somos una fábrica de identidades ni una agencia corporativa fría; somos tu equipo externo de diseño. Personas reales obsesionadas con resolver tus problemas más complejos.'
+            }
         },
-        '2': {
-            label: '02',
-            title: 'Nuestros valores',
-            desc:  'Trabajamos sin egos, sin romanticismos y con una honestidad brutal. Entendemos que del otro lado hay personas arriesgando capital y tiempo. Por eso, nuestra cultura interna se basa en el rigor, la transparencia y el compromiso absoluto con el crecimiento de tu negocio.'
-        },
-        '3': {
-            label: '03',
-            title: 'El estudio',
-            desc:  'Somos un grupo de mentes analíticas y creativas operando desde Buenos Aires para el mundo. No somos una fábrica de identidades ni una agencia corporativa fría; somos tu equipo externo de diseño. Personas reales obsesionadas con resolver tus problemas más complejos.'
+        en: {
+            '1': {
+                label: '01',
+                title: 'Our belief',
+                desc:  "We believe that behind every great company there are directors and teams giving everything. Our human purpose is to honor that effort. We don't exist to win aesthetic awards; we exist so the true quality of your work is undeniably reflected in your image."
+            },
+            '2': {
+                label: '02',
+                title: 'Our values',
+                desc:  "We work without egos, without romanticism and with brutal honesty. We understand that on the other side there are people risking capital and time. That's why our internal culture is built on rigor, transparency and an absolute commitment to the growth of your business."
+            },
+            '3': {
+                label: '03',
+                title: 'The studio',
+                desc:  "We're a group of analytical and creative minds operating from Buenos Aires for the world. We're not an identity factory or a cold corporate agency; we're your external design team. Real people obsessed with solving your most complex problems."
+            }
         }
     };
+    var LANG = (function () {
+        try { return localStorage.getItem('cruz-lang') === 'en' ? 'en' : 'es'; }
+        catch (e) { return 'es'; }
+    })();
+    var COPY = COPY_BY_LANG[LANG] || COPY_BY_LANG.es;
     var ORDER = ['1', '2', '3'];
 
     function init() {

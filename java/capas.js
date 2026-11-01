@@ -187,7 +187,7 @@
 
         // ── Colores corporativos ─────────────────────────────
         const COL_DEFAULT = new THREE.Color(0xfffdf3); // crema
-        const COL_ACTIVE  = new THREE.Color(0xf2c335); // amarillo
+        const COL_ACTIVE  = new THREE.Color(0xFFFDF3); // crema (sin amarillo)
 
         // ── Factory de geometrías por índice ────────────────
         function createGeometry(idx) {

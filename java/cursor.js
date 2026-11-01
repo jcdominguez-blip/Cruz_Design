@@ -10,7 +10,10 @@
 
     const INTERACTIVE = 'a, button, input, textarea, select, label, summary,' +
         '[role="button"], .nav-toggle, .project-item, .featured-work-item,' +
-        '.fwv2-item, .sw-item, [data-cursor]';
+        '.fwv2-item, .sw-item, [data-cursor], #proj-card';
+
+    // Texto por defecto del hint del cursor (hero del home).
+    const DEFAULT_HINT = 'Scroll down <span class="cx-scroll-arrow">↓</span>';
 
     function init() {
         // Solo desktop con puntero fino, y respetando reduced-motion
@@ -117,6 +120,16 @@
         // Oculta el cursor al salir de la ventana
         document.addEventListener('mouseleave', () => document.body.classList.remove('cx-ready'));
         document.addEventListener('mouseenter', () => document.body.classList.add('cx-ready'));
+
+        // API para cambiar el texto del hint del cursor desde otros scripts
+        // (p.ej. hero-3d.js muestra "Click para cambiar proyecto" con la card
+        // abierta). Sin argumento → vuelve al texto por defecto ("Scroll down").
+        window.cruzCursorHint = function (html) {
+            if (!label) return;
+            const inner = label.querySelector('.cx-scroll-inner');
+            if (inner) inner.innerHTML = html || DEFAULT_HINT;
+            label.classList.toggle('cx-scroll--alt', !!html);
+        };
 
         initMagnetic();
     }

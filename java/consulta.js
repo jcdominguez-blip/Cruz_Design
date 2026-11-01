@@ -18,6 +18,11 @@
     var CC = 'mariaritacha@gmail.com,paezotta@gmail.com';
     var ENDPOINT = 'https://formsubmit.co/ajax/' + encodeURIComponent(PRIMARY);
 
+    /* Suscripción al newsletter (EnvíaloSimple) vía proxy PHP en Donweb.
+       Si la casilla está tildada, al enviar con éxito mandamos el email acá.
+       Es fire-and-forget: si suscribir.php aún no está subido, se ignora. */
+    var SUBSCRIBE_ENDPOINT = '/suscribir.php';
+
     var form = document.getElementById('consultaForm');
     if (!form) return;
 
@@ -69,14 +74,14 @@
         });
     }
 
-    /* ───────────────── Slider de inversión (ARS / USD por idioma) ───────────────── */
+    /* ───────────────── Slider de inversión (USD en ambos idiomas) ───────────────── */
     (function investmentSlider() {
         var range = document.getElementById('csRange');
         if (!range) return;
 
         var CFG = {
-            es: { code: 'ARS', locale: 'es-AR', min: 1500000, max: 8000000, step: 500000 },
-            en: { code: 'USD', locale: 'en-US', min: 1500,    max: 8000,    step: 500 }
+            es: { code: 'USD', locale: 'es-AR', min: 2000, max: 10000, step: 500 },
+            en: { code: 'USD', locale: 'en-US', min: 2000, max: 10000, step: 500 }
         };
         var lang = (window.CruzI18n && window.CruzI18n.get) ? window.CruzI18n.get() : 'es';
         var cfg = CFG[lang] || CFG.es;
@@ -86,6 +91,12 @@
         var minEl = document.getElementById('csMin');
         var maxEl = document.getElementById('csMax');
         var hidden = document.getElementById('csInversion');
+        var sliderEl = document.querySelector('[data-cs-slider]');
+        var underBtn = document.getElementById('csUnderBudget');
+
+        // Texto que viaja en el mail cuando el presupuesto es menor al rango
+        var underLabel = (window.CRUZ_I18N && window.CRUZ_I18N[lang] && window.CRUZ_I18N[lang]['consulta.q9.under'])
+            || 'Menor al presupuesto establecido';
 
         var fmt = new Intl.NumberFormat(cfg.locale, { maximumFractionDigits: 0 });
         function money(n) { return '$' + fmt.format(n); }
@@ -102,7 +113,10 @@
         if (maxEl) maxEl.textContent = money(cfg.max);
         range.setAttribute('aria-valuetext', money(+range.value) + ' ' + cfg.code);
 
+        var under = false;
+
         function update() {
+            if (under) return; // el toggle "menor al presupuesto" manda sobre el slider
             var v = +range.value;
             var pct = ((v - cfg.min) / (cfg.max - cfg.min)) * 100;
             range.style.setProperty('--cs-fill', pct + '%');
@@ -111,7 +125,24 @@
             range.setAttribute('aria-valuetext', money(v) + ' ' + cfg.code);
         }
 
-        range.addEventListener('input', update);
+        function setUnder(on) {
+            under = on;
+            if (underBtn) underBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+            if (sliderEl) sliderEl.classList.toggle('cs-slider-dim', on);
+            if (on) {
+                if (hidden) hidden.value = underLabel;
+            } else {
+                update();
+            }
+        }
+
+        // Reengancharse al slider cancela el modo "menor al presupuesto"
+        range.addEventListener('input', function () {
+            if (under) setUnder(false);
+            update();
+        });
+        if (underBtn) underBtn.addEventListener('click', function () { setUnder(!under); });
+
         update();
     })();
 
@@ -192,6 +223,44 @@
     }
     function hideError() { if (errBox) errBox.hidden = true; }
 
+    /* Fallback anti-lead-perdido: si el envío automático (FormSubmit) falla,
+       en vez de un error muerto le damos al cliente un mail YA PRECARGADO con
+       todos sus datos (To = casilla principal, CC = las otras dos). Así, aunque
+       el backend de terceros se caiga, la consulta llega igual. */
+    function buildMailto(payload) {
+        var SKIP = { _subject: 1, _cc: 1, _template: 1, _captcha: 1, _honey: 1, _honeypot: 1 };
+        var lines = [];
+        for (var k in payload) {
+            if (!Object.prototype.hasOwnProperty.call(payload, k) || SKIP[k]) continue;
+            var v = payload[k];
+            if (v == null || String(v).trim() === '') continue;
+            lines.push(k + ': ' + v);
+        }
+        var subject = i18nText('consulta.mail.subject', 'Consulta — Cliente potencial (cruzestudio.com.ar)');
+        var intro = i18nText('consulta.mail.intro', 'Hola, quiero hacerles una consulta. Estos son mis datos:');
+        var body = intro + '\n\n' + lines.join('\n');
+        return 'mailto:' + PRIMARY +
+            '?cc=' + encodeURIComponent(CC) +
+            '&subject=' + encodeURIComponent(subject) +
+            '&body=' + encodeURIComponent(body);
+    }
+
+    function showFallback(payload) {
+        if (!errBox) { window.location.href = buildMailto(payload); return; }
+        errBox.textContent = '';
+        var msg = document.createElement('span');
+        msg.className = 'cs-error-msg';
+        msg.textContent = i18nText('consulta.err.fallback',
+            'No pudimos enviar tu consulta automáticamente. Escribinos directo y te respondemos igual:');
+        var a = document.createElement('a');
+        a.className = 'cs-error-mailto';
+        a.setAttribute('href', buildMailto(payload));
+        a.textContent = i18nText('consulta.err.fallbackBtn', 'Enviar por email →');
+        errBox.appendChild(msg);
+        errBox.appendChild(a);
+        errBox.hidden = false;
+    }
+
     /* ───────────────── Envío ───────────────── */
     var submitBtn = document.getElementById('csSubmit');
     var ctaText = submitBtn ? submitBtn.querySelector('.cta-text') : null;
@@ -245,6 +314,12 @@
             }
         });
 
+        // Opt-in al newsletter: capturamos antes del reset()
+        var newsChk = form.querySelector('input[name="Newsletter"]');
+        var wantsNews = !!(newsChk && newsChk.checked);
+        var emailEl = document.getElementById('csEmail');
+        var newsEmail = (emailEl && emailEl.value) ? emailEl.value.trim() : '';
+
         sending = true;
         if (submitBtn) submitBtn.classList.add('is-sending');
         if (ctaText) ctaText.textContent = i18nText('consulta.sending', 'ENVIANDO…');
@@ -259,13 +334,22 @@
             return res.json();
         })
         .then(function () {
+            // Suscripción al newsletter (no bloquea la UX; errores ignorados)
+            if (wantsNews && newsEmail) {
+                fetch(SUBSCRIBE_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: newsEmail })
+                }).catch(function () {});
+            }
             form.reset();
             openModal();
         })
         .catch(function (err) {
             /* eslint-disable no-console */
             if (window.console) console.error('[consulta] envío falló:', err);
-            showError('consulta.err.generic');
+            // No perdemos el lead: mostramos un mail precargado con todos los datos.
+            showFallback(payload);
         })
         .finally(function () {
             sending = false;

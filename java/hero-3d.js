@@ -280,13 +280,28 @@ document.addEventListener("DOMContentLoaded", () => {
     // solo controla su escala (zoom) y su atenuación (dim). Los reveals de
     // texto NO son scrubbeados: se disparan por umbral y se reproducen solos,
     // dejando el H1 estático y legible durante toda la banda de la fase.
-    const sphereState = { scale: 1, dim: 0 };
-    let curScale = 1, curDim = 0;
+    const sphereState = { scale: 1, offsetX: 0, opacity: 0.5 };
+    let curScale = 1, curOffsetX = 0, curOpacity = 0.5;
 
-    const heroText   = document.getElementById('hero-text');
-    const statStrip  = document.getElementById('stat-strip');
-    const invertBg   = document.getElementById('hero-invert-bg');
-    const statements = gsap.utils.toArray('.hero-statement');
+    const heroText      = document.getElementById('hero-text');
+    const heroLead      = document.querySelector('.hero-lead');
+    const heroSweep     = document.getElementById('hero-sweep');
+    const statStrip     = document.getElementById('stat-strip');
+    const invertBg      = document.getElementById('hero-invert-bg');
+    const statements    = gsap.utils.toArray('.hero-statement');
+    const heroStatement = statements[0];
+
+    // Encuadre de la esfera: offset a la DERECHA + escala de reposo según el
+    // viewport, para que quede grande y sangrando por el borde derecho (modelo).
+    const REST_SCALE_DESK = 1.22, REST_SCALE_MOB = 1.05;
+    let restScale = REST_SCALE_DESK, restOffsetX = 2.1, neutralRGB = { r: 1, g: 1, b: 1 };
+    function computeFraming() {
+      if (window.innerWidth <= 768) { restScale = REST_SCALE_MOB; restOffsetX = 0; return; }
+      const halfW = Math.tan((camera.fov * Math.PI / 180) / 2) * camera.position.z * (W / H);
+      restScale = REST_SCALE_DESK;
+      restOffsetX = halfW * 0.6;    // centro de la esfera ~80% del ancho (más a la derecha)
+    }
+    computeFraming();
 
     // Stat-strip dividido en dos grupos:
     //  · par estático (LOCATION + SAY HELLO): visible ya al ingresar al hero.
@@ -329,45 +344,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     const wordsOf = el => el.querySelectorAll('.hs-word');
 
-    // Configuración de las 3 fases (fondo / texto / color de esfera / statement)
-    const PHASES = [
-      { bg: C_DARK,  fg: C_CREMA, sphere: RGB_WHITE, stmt: statements[0] },
-      { bg: C_CREMA, fg: C_DARK,  sphere: RGB_DARK,  stmt: statements[1] },
-      { bg: C_DARK,  fg: C_CREMA, sphere: RGB_WHITE, stmt: statements[2] },
-    ];
-
-    // Estado inicial: sin texto, fondo transparente (se ve el Silk original)
+    // Estado inicial: textos ocultos (se revelan tras el barrido crema). El Silk
+    // oscuro queda a la vista durante el intro (círculo centrado sobre negro).
     statements.forEach(st => {
       gsap.set(st, { opacity: 0 });
       gsap.set(wordsOf(st), { yPercent: 115, opacity: 0, filter: 'blur(10px)' });
     });
-    gsap.set(heroText, { color: C_CREMA, opacity: 0 });
-    gsap.set(invertBg, { backgroundColor: C_DARK, opacity: 0 });
+    gsap.set(heroText, { opacity: 0 });
+    if (heroLead) gsap.set(heroLead, { opacity: 0, y: 16, filter: 'blur(6px)' });
+    if (invertBg) gsap.set(invertBg, { opacity: 0 });
+    if (heroSweep) gsap.set(heroSweep, { clipPath: 'inset(100% 0 0 0)' });
 
     // El contenedor queda visible; la visibilidad se maneja por grupo de items.
-    // Par estático y LIVE DATA arrancan ocultos (el par se revela tras el intro).
     if (statStrip) gsap.set(statStrip, { opacity: 1 });
     if (staticItems.length) gsap.set(staticItems, { opacity: 0 });
     if (liveItem) gsap.set(liveItem, { opacity: 0 });
-
-    let currentPhase = -1, phaseTween = null;
-
-    function resetHero() {
-      if (currentPhase === -1) return;
-      currentPhase = -1;
-      if (phaseTween) phaseTween.kill();
-      gsap.set(heroText, { opacity: 0 });
-      gsap.set(invertBg, { opacity: 0 });
-      gsap.to(mat.color, { r: 1, g: 1, b: 1, duration: 0.4 });
-      // En el tope (estado de ingreso) el par estático permanece visible y el
-      // LIVE DATA se oculta: reaparece solo al volver a scrollear hacia abajo.
-      revealStaticPair();
-      hideLiveData();
-      statements.forEach(st => {
-        gsap.set(st, { opacity: 0 });
-        gsap.set(wordsOf(st), { yPercent: 115, opacity: 0, filter: 'blur(10px)' });
-      });
-    }
 
     // ── SCRAMBLE REVEAL del stat-strip (LOCATION / LIVE DATA / SAY HELLO) ──
     // Efecto tipo GSAP ScrambleText hecho a mano (el plugin oficial es de pago).
@@ -428,94 +419,62 @@ document.addEventListener("DOMContentLoaded", () => {
       if (liveItem) gsap.to(liveItem, { opacity: 0, duration: 0.4, overwrite: 'auto' });
     }
 
-    // Reveal autónomo de una fase (dinámico, tipo ouro-labs). Al cruzar el
-    // umbral: sale el statement previo, se invierte el fondo SIN texto en
-    // pantalla, y entra el nuevo palabra por palabra.
-    function goToPhase(n) {
-      if (n === currentPhase) return;
-      const prev = currentPhase;
-      currentPhase = n;
-      const ph = PHASES[n];
-      if (phaseTween) phaseTween.kill();
+    // ── REVEAL DEL HERO ESTÁTICO (automático) ──
+    // Tras aterrizar la cámara (círculo centrado sobre negro), la capa crema
+    // BARRE de abajo hacia arriba y queda de fondo; la esfera se corre a la
+    // derecha y vira a wireframe oscuro; luego entra el titular palabra por
+    // palabra, la bajada y los datos/reconocimientos. Secuencia sin interacción.
+    let heroRevealed = false;
+    function setNavCream(on) {
+      if (on) document.body.setAttribute('data-nav-force', 'light');
+      else document.body.removeAttribute('data-nav-force');
+      window.cruzNavContrast && window.cruzNavContrast();
+    }
+    function startHeroReveal(instant) {
+      if (heroRevealed) return;
+      heroRevealed = true;
+      neutralRGB = RGB_DARK;                 // color de reposo del wireframe sobre crema
+      document.body.classList.add('hero-cream');
+      setNavCream(true);
+
+      computeFraming();
+      sphereState.offsetX = restOffsetX;
+      sphereState.scale   = restScale;
+      sphereState.opacity = (window.innerWidth <= 768) ? 0.13 : 0.17;
+
+      if (instant) {
+        if (heroSweep) gsap.set(heroSweep, { clipPath: 'inset(0% 0 0 0)' });
+        gsap.set(mat.color, { r: RGB_DARK.r, g: RGB_DARK.g, b: RGB_DARK.b });
+        curOffsetX = restOffsetX; curScale = restScale; curOpacity = sphereState.opacity;
+        gsap.set(heroText, { opacity: 1 });
+        gsap.set(heroStatement, { opacity: 1 });
+        gsap.set(wordsOf(heroStatement), { yPercent: 0, opacity: 1, filter: 'blur(0px)' });
+        if (heroLead) gsap.set(heroLead, { opacity: 1, y: 0, filter: 'blur(0px)' });
+        revealStaticPair(); revealLiveData();
+        startMorphCycle();
+        return;
+      }
 
       const tl = gsap.timeline();
-      gsap.set(heroText, { opacity: 1 });
-      // La franja de datos acompaña solo los estados oscuros (0 y 2). En la fase
-      // clara (1) se oculta todo por legibilidad. Al scrollear a un estado oscuro
-      // se muestra el par estático y además el LIVE DATA (pedido del hero).
-      if (n === 1) {
-        hideStaticPair();
-        hideLiveData();
-      } else {
-        revealStaticPair();
-        revealLiveData();
-      }
-
-      const first = prev < 0;
-
-      // 1. Salida del statement anterior (rápida, hacia arriba con blur)
-      if (!first) {
-        const pst = PHASES[prev].stmt;
-        tl.to(wordsOf(pst), {
-          yPercent: -115, opacity: 0, filter: 'blur(8px)',
-          duration: 0.4, stagger: 0.035, ease: 'power3.in'
-        }, 0);
-        tl.set(pst, { opacity: 0 });
-      }
-
-      // 2. Inversión de fondo + esfera + color de texto (cuando ya no hay texto)
-      const flipAt = first ? 0 : 0.28;
-      tl.to(invertBg,  { backgroundColor: ph.bg, opacity: 1, duration: 0.55, ease: 'power2.inOut' }, flipAt);
-      tl.to(mat.color, { r: ph.sphere.r, g: ph.sphere.g, b: ph.sphere.b, duration: 0.55, ease: 'power2.inOut' }, flipAt);
-      tl.set(heroText, { color: ph.fg }, first ? 0 : flipAt + 0.12);
-
-      // 3. Entrada del nuevo statement palabra por palabra (blur → nítido)
-      const enterAt = first ? 0.15 : 0.5;
-      tl.set(ph.stmt, { opacity: 1 }, enterAt - 0.01);
-      tl.set(wordsOf(ph.stmt), { yPercent: 115, opacity: 0, filter: 'blur(10px)' }, enterAt - 0.01);
-      tl.to(wordsOf(ph.stmt), {
+      // 1) Barrido crema (abajo → arriba) que queda de fondo del hero.
+      if (heroSweep) tl.to(heroSweep, { clipPath: 'inset(0% 0 0 0)', duration: 0.95, ease: 'power3.inOut' }, 0);
+      // 2) La esfera vira a oscuro mientras llega el crema (el desplazamiento a la
+      //    derecha + escala lo interpola el render loop hacia sphereState).
+      tl.to(mat.color, { r: RGB_DARK.r, g: RGB_DARK.g, b: RGB_DARK.b, duration: 1.0, ease: 'power2.inOut' }, 0.15);
+      // 3) Titular palabra por palabra + bajada.
+      tl.set(heroText, { opacity: 1 }, 0.5);
+      tl.set(heroStatement, { opacity: 1 }, 0.5);
+      tl.to(wordsOf(heroStatement), {
         yPercent: 0, opacity: 1, filter: 'blur(0px)',
-        duration: 0.9, stagger: 0.055, ease: 'power4.out'
-      }, enterAt);
-
-      phaseTween = tl;
+        duration: 0.9, stagger: 0.05, ease: 'power4.out'
+      }, 0.55);
+      if (heroLead) tl.to(heroLead, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 0.95);
+      // 4) Datos (LOCATION / LIVE DATA / SAY HELLO) con scramble.
+      tl.add(() => { revealStaticPair(); revealLiveData(); }, 0.7);
+      // 5) Arranca el ciclo de morph del keyvisual (rota + cambia de forma).
+      tl.add(() => startMorphCycle(), 1.15);
     }
-
-    // ── DRIVER DE SCROLL ── zoom/dim scrubbeados + fases por umbral.
-    ScrollTrigger.create({
-      trigger: '#spacer', start: 'top top', end: 'bottom bottom',
-      // Al salir del hero, el detector genérico (nav-contrast.js) retoma el control
-      onLeave() {
-        document.body.removeAttribute('data-nav-force');
-        window.cruzNavContrast?.();
-      },
-      onUpdate(self) {
-        const p = self.progress;
-
-        // Zoom centrado: llega a tope antes de que aparezca el texto.
-        sphereState.scale = 1 + Math.min(p / 0.14, 1) * 0.55;
-
-        // Umbrales de fase (bandas anchas → mucho tiempo de lectura estático).
-        let target;
-        if (p < 0.15)      target = -1;   // solo zoom, sin texto
-        else if (p < 0.43) target = 0;    // negro / crema
-        else if (p < 0.71) target = 1;    // crema / negro (invertido)
-        else               target = 2;    // negro / crema (cierre)
-
-        sphereState.dim = target >= 0 ? 0.72 : 0;
-
-        if (target < 0) resetHero();
-        else            goToPhase(target);
-
-        // Chrome del hero
-        document.getElementById('click-hint')?.classList.toggle('hide', p > 0.01);
-        heroText.style.pointerEvents = target >= 0 ? 'auto' : 'none';
-
-        // Contraste de la nav: durante el hero manda la fase (la 1 es crema).
-        document.body.setAttribute('data-nav-force', target === 1 ? 'light' : 'dark');
-        window.cruzNavContrast?.();
-      }
-    });
+    window.cruzStartHeroReveal = startHeroReveal;
     
     // ── EXTRUSION LOGIC ─────────────────────────────────────────────
     let extVerts=[], extTween=null, isExtruded=false;
@@ -546,7 +505,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const o={t:1};
       extTween=gsap.to(o,{t:0,duration:.5,ease:'power2.inOut',
         onUpdate(){ applyExt(extVerts,o.t,0.72); },
-        onComplete(){ isExtruded=false; extVerts=[]; gsap.to(mat.color,{r:1,g:1,b:1,duration:.5}); }
+        onComplete(){ isExtruded=false; extVerts=[]; gsap.to(mat.color,{r:neutralRGB.r,g:neutralRGB.g,b:neutralRGB.b,duration:.5}); }
       });
     }
     
@@ -557,8 +516,8 @@ document.addEventListener("DOMContentLoaded", () => {
       extTween=gsap.to(o,{t:1,duration:.65,ease:'power3.out',
         onUpdate(){ applyExt(verts,o.t,0.72); }
       });
-      gsap.to(mat.color,{r:242/255,g:195/255,b:53/255,duration:.25,
-        onComplete:()=>gsap.to(mat.color,{r:1,g:1,b:1,duration:1.2,delay:.5})
+      gsap.to(mat.color,{r:neutralRGB.r,g:neutralRGB.g,b:neutralRGB.b,duration:.25,
+        onComplete:()=>gsap.to(mat.color,{r:neutralRGB.r,g:neutralRGB.g,b:neutralRGB.b,duration:1.2,delay:.5})
       });
     }
     
@@ -815,40 +774,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Click en la ESFERA → sale una card en ese punto. Con la card abierta el
-    // overlay tapa la esfera (no llega el click acá): hay que cerrar primero y
-    // recién ahí clickear otro sector, del que surge la card del proyecto.
-    renderer.domElement.addEventListener('click', e => {
-        if (cardOpen) return;
-
-        const rect = renderer.domElement.getBoundingClientRect();
-        mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-        ray.setFromCamera(mouse, camera);
-        const hits = ray.intersectObject(sphere);
-        if (!hits.length) return;
-
-        // La esfera se extruye en el PUNTO clickeado (la card "sale de ahí").
-        const local = sphere.worldToLocal(hits[0].point.clone());
-        const verts = findVerts(local, 0.88);
-        if (verts.length) extrude(verts);
-
-        // Cada click devuelve un proyecto distinto (ciclando la lista).
-        const pi = cycleIdx;
-        cycleIdx = (cycleIdx + 1) % NP;
-        openCard(pi, e.clientX, e.clientY);
-    });
-
-    renderer.domElement.addEventListener('mousemove', e => {
-        if (cardOpen) { renderer.domElement.style.cursor = 'default'; return; }
-        const rect = renderer.domElement.getBoundingClientRect();
-        mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-        ray.setFromCamera(mouse, camera);
-        const isHoveringSphere = ray.intersectObject(sphere).length > 0;
-        // Cursor "crosshair" sobre la esfera: invita a clickear para ver un proyecto.
-        renderer.domElement.style.cursor = (isHoveringSphere && !isExtruded) ? 'crosshair' : 'default';
-    });
+    // La esfera es puramente decorativa (keyvisual que rota y morfa). La
+    // interacción de "click en la esfera → card de proyecto" se retiró: el canvas
+    // no captura el puntero y no muestra cursor de click.
+    renderer.domElement.style.pointerEvents = 'none';
 
     // ── INTRO CINEMÁTICA DE CÁMARA ────────────────────────────────
     // Tras el loader de ingreso, la cámara hace un recorrido orbitando la
@@ -905,10 +834,9 @@ document.addEventListener("DOMContentLoaded", () => {
           camera.position.set(0, 0, REST_Z);
           camera.lookAt(0, 0, 0);
           document.body.style.overflow = ''; // siempre termina desbloqueado
-          renderer.domElement.style.pointerEvents = '';
-          // Hero en reposo → mostramos ya el par estático (LOCATION + SAY HELLO).
-          revealStaticPair();
-          startMorphCycle();   // y arranca la transformación del keyvisual
+          renderer.domElement.style.pointerEvents = 'none'; // esfera decorativa (sin interacción)
+          // Cámara aterrizada (círculo centrado sobre negro) → barrido crema + reveal.
+          startHeroReveal(false);
         }
       });
     }
@@ -918,8 +846,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduce || document.documentElement.classList.contains('skip-loader')) {
         introDone = true;
-        revealStaticPair();   // sin intro → mostramos el par estático de una
-        startMorphCycle();    // y arrancamos igual el ciclo de morph
+        startHeroReveal(true);   // sin intro → hero crema directo (sin barrido)
         return;
       }
       const loaderEl = document.getElementById('loader');
@@ -949,6 +876,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const spacerEl = document.getElementById('spacer');
     const updateHeroVisible = () => {
       heroVisible = !spacerEl || spacerEl.getBoundingClientRect().bottom > 0;
+      if (!heroRevealed) return;
+      // Dentro del hero manda el crema (nav oscura); fuera, el contenido oscuro
+      // retoma el contraste genérico (nav-contrast.js).
+      if (heroVisible) {
+        if (document.body.getAttribute('data-nav-force') !== 'light') setNavCream(true);
+      } else if (document.body.hasAttribute('data-nav-force')) {
+        setNavCream(false);
+      }
     };
     window.addEventListener('scroll', updateHeroVisible, { passive: true });
     window.addEventListener('resize', updateHeroVisible, { passive: true });
@@ -962,16 +897,16 @@ document.addEventListener("DOMContentLoaded", () => {
       sphere.rotation.y+=0.0013;
       sphere.rotation.x=Math.sin(time*.28)*.04;
 
-      // Esfera SIEMPRE centrada; el scroll solo controla el zoom (escala).
-      curScale += (sphereState.scale - curScale) * .08;
-      sphere.position.x = 0;
+      // Esfera: se desplaza suave a su encuadre (derecha) y escala de reposo.
+      curScale   += (sphereState.scale   - curScale)   * .06;
+      curOffsetX += (sphereState.offsetX - curOffsetX) * .06;
+      sphere.position.x = curOffsetX;
       sphere.scale.setScalar(curScale);
 
-      // Opacidad: base 0.42, atenuada por 'dim' cuando aparece el texto por
-      // encima (para contraste). El latido sutil se reduce al atenuarse.
-      curDim += (sphereState.dim - curDim) * 0.06;
-      const base = 0.42 * (1 - curDim * 0.78);
-      mat.opacity = Math.max(0.05, base + Math.sin(time * 0.7) * 0.055 * (1 - curDim));
+      // Opacidad: objetivo de reposo (tenue sobre crema, visible sobre negro en
+      // el intro) + latido muy sutil. Lectura de segundo nivel.
+      curOpacity += (sphereState.opacity - curOpacity) * 0.05;
+      mat.opacity = Math.max(0.04, curOpacity + Math.sin(time * 0.7) * 0.03);
 
       // Durante la intro, la cámara sigue el recorrido orbital
       if (introActive) applyIntroCamera();
@@ -983,5 +918,11 @@ document.addEventListener("DOMContentLoaded", () => {
       W=window.innerWidth; H=window.innerHeight;
       camera.aspect=W/H; camera.updateProjectionMatrix();
       renderer.setSize(W,H);
+      computeFraming();
+      if (heroRevealed) {
+        sphereState.offsetX = restOffsetX;
+        sphereState.scale   = restScale;
+        sphereState.opacity = (W <= 768) ? 0.13 : 0.17;
+      }
     });
 });

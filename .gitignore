@@ -4,9 +4,16 @@
 
 # Editor / herramientas
 .claude/
+.agents/
 .vscode/
 .idea/
+
+# Dev local (no es parte del sitio)
+dev-server.py
 
 # Logs y temporales
 *.log
 Thumbs.db
+
+# Contiene la API key de EnvíaloSimple — NO commitear (vive solo en el server)
+suscribir.php

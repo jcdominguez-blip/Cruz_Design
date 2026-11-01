@@ -11,13 +11,12 @@
  */
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* ---------- 1. VIEW SWITCHER (Inmersiva / Grid / List) ----------
-       La vista INMERSIVA (canvas arrastrable) es la default en desktop; en mobile
-       arranca en GRID (la inmersiva no aplica en touch). El canvas lo controla
+    /* ---------- 1. VIEW SWITCHER (Explorar / Grid / List) ----------
+       La vista EXPLORAR (canvas arrastrable) es la default en TODOS los dispositivos
+       — también en mobile (arrastre táctil). El canvas lo controla
        window.CruzCanvas (java/trabajos-canvas.js). */
     const viewBtns  = document.querySelectorAll('.cg-viewswitch .view-btn');
     const container = document.getElementById('archive-main');
-    const isDesktop = window.matchMedia('(min-width: 769px)').matches;
 
     function setView(view) {
         viewBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-view') === view));
@@ -34,8 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => setView(btn.getAttribute('data-view')));
     });
 
-    // Vista por defecto: inmersiva en desktop, grid en mobile.
-    if (isDesktop && window.CruzCanvas) setView('canvas');
+    // Vista por defecto: EXPLORAR (inmersiva) en TODOS los dispositivos.
+    if (window.CruzCanvas) setView('canvas');
     else setView('grid');
 
     /* ---------- 2. MENÚ HAMBURGUESA (match index) ---------- */

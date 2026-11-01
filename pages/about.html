@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estudio — Cruz Estudio ®</title>
-    <meta name="description" content="Cruz Estudio: no hacemos estética vacía, construimos identidades que perduran. Diagnóstico, estrategia y producción visual con rigor técnico.">
+    <title data-i18n="about.meta.title">Estudio — Cruz Estudio ®</title>
+    <meta name="description" data-i18n-attr="content:about.meta.desc" content="Cruz Estudio: no hacemos estética vacía, construimos identidades que perduran. Diagnóstico, estrategia y producción visual con rigor técnico.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -13,16 +13,23 @@
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/style.css?v=31">
-    <link rel="stylesheet" href="../css/styleabout.css?v=48">
-    <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png">
+    <link rel="stylesheet" href="/css/style.css?v=49">
+    <link rel="stylesheet" href="/css/styleabout.css?v=48">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png?v=2">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png?v=2">
+    <link rel="shortcut icon" href="/img/favicon.ico?v=2">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-    <script src="../java/page-loader.js?v=26"></script>
-    <link rel="stylesheet" href="../css/nav-menu.css?v=26">
-    <link rel="stylesheet" href="../css/cursor.css?v=26">
+    <script src="/java/page-loader.js?v=27"></script>
+    <link rel="stylesheet" href="/css/nav-menu.css?v=28">
+    <link rel="stylesheet" href="/css/cursor.css?v=26">
+    <link rel="canonical" href="https://www.cruzestudio.com.ar/about">
+    <!-- i18n: defer al final del head → corre antes que los scripts defer del body -->
+    <script defer src="/java/i18n-dict.js?v=1"></script>
+    <script defer src="/java/i18n.js?v=1"></script>
 </head>
 <body class="about-page">
 
@@ -33,12 +40,20 @@
 
 <nav class="navbar-brand navbar-modern">
     <div class="containerNav">
-        <a href="../index.html" class="logo link-location">
-            <img decoding="async" src="../img/nuevo-logo-cre.svg" alt="Cruz Estudio Logo" class="logo-vectorial">
+        <a href="/" class="logo link-location">
+            <img decoding="async" src="/img/nuevo-logo-cre.svg" alt="Cruz Estudio Logo" class="logo-vectorial">
         </a>
-        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navOverlay">
-            <span class="nav-toggle-box" aria-hidden="true"><i></i><i></i><i></i></span>
-        </button>
+        <div class="nav-actions">
+            <div class="lang-switch" data-lang-switch role="group" data-i18n-attr="aria-label:nav.lang" aria-label="Idioma">
+                <button type="button" class="lang-opt" data-lang-opt="es" aria-pressed="true">ES</button>
+                <span class="lang-sep" aria-hidden="true"></span>
+                <button type="button" class="lang-opt" data-lang-opt="en" aria-pressed="false">EN</button>
+            </div>
+
+            <button class="nav-toggle" id="navToggle" data-i18n-attr="aria-label:nav.toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navOverlay">
+                <span class="nav-toggle-box" aria-hidden="true"><i></i><i></i><i></i></span>
+            </button>
+        </div>
     </div>
 </nav>
 
@@ -47,14 +62,14 @@
     <div class="nav-overlay-bg"></div>
     <div class="nav-overlay-inner">
         <ul class="nav-overlay-links">
-            <li><a href="./trabajos.html"><span class="nol-idx">01</span><span class="nol-txt">Proyectos</span></a></li>
-            <li><a href="./metodologia.html"><span class="nol-idx">02</span><span class="nol-txt">Metodología</span></a></li>
-            <li><a href="./about.html"><span class="nol-idx">03</span><span class="nol-txt">Estudio</span></a></li>
-            <li><a href="./contacto.html"><span class="nol-idx">04</span><span class="nol-txt">Contacto</span></a></li>
+            <li><a href="/trabajos"><span class="nol-idx">01</span><span class="nol-txt" data-i18n="nav.projects">Proyectos</span></a></li>
+            <li><a href="/metodologia"><span class="nol-idx">02</span><span class="nol-txt" data-i18n="nav.methodology">Metodología</span></a></li>
+            <li><a href="/about"><span class="nol-idx">03</span><span class="nol-txt" data-i18n="nav.studio">Estudio</span></a></li>
+            <li><a href="/contacto"><span class="nol-idx">04</span><span class="nol-txt" data-i18n="nav.contact">Contacto</span></a></li>
         </ul>
         <div class="nav-overlay-foot">
             <a href="mailto:estudiocruzdesign@gmail.com" class="nof-mail">estudiocruzdesign@gmail.com</a>
-            <span class="nof-loc">Buenos Aires, ARG · GMT-3</span>
+            <span class="nof-loc" data-i18n="nav.loc">Buenos Aires, ARG · GMT-3</span>
         </div>
     </div>
 </div>
@@ -63,20 +78,20 @@
 
     <!-- ═══════════ 1 · HERO MANIFESTO ═══════════ -->
     <section class="about-hero">
-        <p class="about-eyebrow">// el estudio</p>
+        <p class="about-eyebrow" data-i18n="about.eyebrow.studio">// el estudio</p>
         <h1 class="about-hero-title">
-            <span class="line-mask"><span class="reveal-text">No es sobre diseño,</span></span>
-            <span class="line-mask"><span class="reveal-text">es sobre visión.</span></span>
+            <span class="line-mask"><span class="reveal-text" data-i18n="about.hero.l1">No es sobre diseño,</span></span>
+            <span class="line-mask"><span class="reveal-text" data-i18n="about.hero.l2">es sobre visión.</span></span>
         </h1>
         <p class="about-hero-sub">
-            <span class="line-mask"><span class="reveal-text">Nacimos con una convicción clara: las empresas de alto nivel merecen identidades que les hagan justicia.</span></span>
+            <span class="line-mask"><span class="reveal-text" data-i18n="about.hero.sub">Nacimos con una convicción clara: las empresas de alto nivel merecen identidades que les hagan justicia.</span></span>
         </p>
     </section>
 
     <!-- ═══════════ 2 · INMERSIÓN VISUAL (PARALLAX) ═══════════ -->
     <section class="about-image-section" aria-label="El estudio">
         <div class="image-wrapper">
-            <img class="studio-photo" src="../img/estudioref.png" alt="Interior del estudio Cruz" decoding="async">
+            <img class="studio-photo" src="/img/estudioref.png" alt="Interior del estudio Cruz" decoding="async">
         </div>
     </section>
 
@@ -84,14 +99,14 @@
     <section class="about-golden-circle" aria-label="La profundidad de nuestro pensamiento">
         <!-- Columna texto · jerarquía H2 (sección) → H3 (estado) → P (cuerpo) -->
         <div class="golden-text-wrapper">
-            <span class="about-eyebrow">// nuestros valores</span>
-            <h2 class="golden-section-title">La profundidad de nuestro pensamiento.</h2>
+            <span class="about-eyebrow" data-i18n="about.values.eyebrow">// nuestros valores</span>
+            <h2 class="golden-section-title" data-i18n="about.values.title">La profundidad de nuestro pensamiento.</h2>
             <div class="golden-state">
                 <span class="golden-label" data-golden-label>01</span>
-                <h3 class="golden-title line-mask"><span class="reveal-text" data-golden-title>Nuestra creencia</span></h3>
-                <p class="golden-desc" data-golden-desc>Creemos que detrás de cada gran empresa hay directores y equipos dejando la piel. Nuestro propósito humano es honrar ese esfuerzo. No existimos para ganar premios de estética, existimos para que la verdadera calidad de tu trabajo se refleje innegablemente en tu imagen.</p>
+                <h3 class="golden-title line-mask"><span class="reveal-text" data-golden-title data-i18n="about.golden.1.title">Nuestra creencia</span></h3>
+                <p class="golden-desc" data-golden-desc data-i18n="about.golden.1.desc">Creemos que detrás de cada gran empresa hay directores y equipos dejando la piel. Nuestro propósito humano es honrar ese esfuerzo. No existimos para ganar premios de estética, existimos para que la verdadera calidad de tu trabajo se refleje innegablemente en tu imagen.</p>
             </div>
-            <span class="golden-hint" aria-hidden="true">// scrolleá para recorrer las tres capas</span>
+            <span class="golden-hint" aria-hidden="true" data-i18n="about.golden.hint">// scrolleá para recorrer las tres capas</span>
         </div>
 
         <!-- Columna gráfica: 3 anillos concéntricos con nombre (llenado acumulativo) -->
@@ -113,9 +128,9 @@
                     <circle class="ring-shape ring-inner" cx="200" cy="200" r="64"></circle>
                 </g>
                 <!-- Nombres de cada capa (reemplazan a los números) -->
-                <text class="ring-name" x="200" y="48" data-name="3">Quiénes somos</text>
-                <text class="ring-name" x="200" y="108" data-name="2">La cultura</text>
-                <text class="ring-name ring-name--center is-filled" x="200" y="200" data-name="1">La convicción</text>
+                <text class="ring-name" x="200" y="48" data-name="3" data-i18n="about.ring.3">Quiénes somos</text>
+                <text class="ring-name" x="200" y="108" data-name="2" data-i18n="about.ring.2">La cultura</text>
+                <text class="ring-name ring-name--center is-filled" x="200" y="200" data-name="1" data-i18n="about.ring.1">La convicción</text>
             </svg>
         </div>
     </section>
@@ -123,36 +138,36 @@
     <!-- ═══════════ 4 · EL ORIGEN Y EL EQUIPO ═══════════ -->
     <section class="about-team">
         <div class="about-team-head">
-            <span class="about-eyebrow gsap-reveal">// el origen</span>
-            <h2 class="about-team-title gsap-reveal">Los rostros detrás del sistema.</h2>
+            <span class="about-eyebrow gsap-reveal" data-i18n="about.origin.eyebrow">// el origen</span>
+            <h2 class="about-team-title gsap-reveal" data-i18n="about.team.title">Los rostros detrás del sistema.</h2>
         </div>
         <div class="about-origin">
-            <p class="about-origin-lead gsap-reveal">Estudio cruz nació al detectar un problema recurrente en el mercado: pymes e instituciones con servicios de excelencia, pero con identidades que los hacían lucir como uno más del montón. nos consolidamos como un estudio de diseño independiente para tender un puente definitivo entre la estrategia de negocios y el alto rendimiento visual.</p>
-            <p class="about-origin-sec gsap-reveal">Hoy, conectamos el rigor técnico de nuestra disciplina con la visión de empresarios audaces. somos una estructura ágil y nos involucramos hasta la médula en cada proyecto que elegimos tomar.</p>
+            <p class="about-origin-lead gsap-reveal" data-i18n="about.origin.lead">Estudio cruz nació al detectar un problema recurrente en el mercado: pymes e instituciones con servicios de excelencia, pero con identidades que los hacían lucir como uno más del montón. nos consolidamos como un estudio de diseño independiente para tender un puente definitivo entre la estrategia de negocios y el alto rendimiento visual.</p>
+            <p class="about-origin-sec gsap-reveal" data-i18n="about.origin.sec">Hoy, conectamos el rigor técnico de nuestra disciplina con la visión de empresarios audaces. somos una estructura ágil y nos involucramos hasta la médula en cada proyecto que elegimos tomar.</p>
         </div>
         <div class="about-team-grid">
             <article class="team-member gsap-reveal">
-                <div class="team-photo"><img loading="lazy" decoding="async" src="../img/juan_cruz_.jpg" alt="Juan Cruz Dominguez Barco"></div>
+                <div class="team-photo"><img loading="lazy" decoding="async" src="/img/juan_cruz_.jpg" alt="Juan Cruz Dominguez Barco"></div>
                 <p class="member-name">Juan Cruz Dominguez Barco</p>
-                <p class="member-role">Diseñador gráfico</p>
+                <p class="member-role" data-i18n="about.role.juan">Diseñador gráfico</p>
                 <div class="member-links">
                     <a href="https://www.linkedin.com/in/juan-cruz-dominguez-barco" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                     <a href="mailto:jcdominguezbarco@gmail.com">Mail</a>
                 </div>
             </article>
             <article class="team-member gsap-reveal">
-                <div class="team-photo"><img loading="lazy" decoding="async" src="../img/rita_maria.jpg" alt="María Rita Cha"></div>
+                <div class="team-photo"><img loading="lazy" decoding="async" src="/img/rita_maria.jpg" alt="María Rita Cha"></div>
                 <p class="member-name">María Rita Cha</p>
-                <p class="member-role">Lic. en Comunicación</p>
+                <p class="member-role" data-i18n="about.role.rita">Lic. en Comunicación</p>
                 <div class="member-links">
                     <a href="https://www.linkedin.com/in/mar%C3%ADa-rita-cha/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                     <a href="mailto:mariaritacha@gmail.com">Mail</a>
                 </div>
             </article>
             <article class="team-member gsap-reveal">
-                <div class="team-photo"><img loading="lazy" decoding="async" src="../img/paula_zotta.jpg" alt="Paula Zotta"></div>
+                <div class="team-photo"><img loading="lazy" decoding="async" src="/img/paula_zotta.jpg" alt="Paula Zotta"></div>
                 <p class="member-name">Paula Zotta</p>
-                <p class="member-role">Diseñadora de imagen y sonido</p>
+                <p class="member-role" data-i18n="about.role.paula">Diseñadora de imagen y sonido</p>
                 <div class="member-links">
                     <a href="https://www.linkedin.com/in/paulazotta/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                     <a href="mailto:paezotta@gmail.com">Mail</a>
@@ -167,7 +182,7 @@
     <div class="footer-line" data-reveal></div>
     <div class="footer-grid">
         <div class="footer-col" data-reveal>
-            <span class="mono-label">UBICACIÓN</span>
+            <span class="mono-label" data-i18n="footer.location">UBICACIÓN</span>
             <div class="col-content">
                 <p class="reading-small">Buenos Aires, ARG <br> (GMT-3) <span id="footer-clock">00:00</span></p>
             </div>
@@ -176,11 +191,11 @@
             <span class="mono-label">SAY HELLO</span>
             <div class="col-content">
                 <a href="mailto:estudiocruzdesign@gmail.com" class="footer-link">estudiocruzdesign@gmail.com </a>
-                <p class="reading-small">Branding & Estrategia de marca</p>
+                <p class="reading-small" data-i18n="footer.hello.sub">Branding & Estrategia de marca</p>
             </div>
         </div>
         <div class="footer-col" data-reveal>
-            <span class="mono-label">SEGUINOS</span>
+            <span class="mono-label" data-i18n="footer.follow">SEGUINOS</span>
             <div class="col-content">
                 <a href="https://www.instagram.com/cruzestudio_/" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram</a>
                 <a href="https://www.linkedin.com/company/cruzdesign" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
@@ -189,13 +204,13 @@
         <div class="footer-col footer-brand-end" data-reveal>
             <span class="mono-label">©2018—2026</span>
             <div class="col-content">
-                <img loading="lazy" decoding="async" src="../img/positivo-pluma.svg" alt="Sello Cruz Estudio" class="pluma-seal">
+                <img loading="lazy" decoding="async" src="/img/positivo-pluma.svg" alt="Sello Cruz Estudio" class="pluma-seal">
             </div>
         </div>
     </div>
 </footer>
 
-<script src="../java/script.js?v=26" defer></script>
+<script src="/java/script.js?v=26" defer></script>
 <script>
     var _clk = document.getElementById('footer-clock');
     if (_clk) _clk.textContent = new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hour12: false });
@@ -205,13 +220,13 @@
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.658 1.43 5.63 1.43h.004c6.557 0 11.892-5.335 11.895-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
     </svg>
 </a>
-<script defer src="../java/silk-bg.js?v=26"></script>
-<script defer src="../java/about.js?v=43"></script>
-<script defer src="../java/gsap-reveal.js?v=34"></script>
-<script defer src="../java/nav-menu.js?v=26"></script>
-<script defer src="../java/nav-contrast.js?v=26"></script>
-<script defer src="../java/cursor.js?v=26"></script>
-<script defer src="../java/lib/lenis.min.js?v=26"></script>
-<script defer src="../java/smooth-scroll.js?v=34"></script>
+<script defer src="/java/silk-bg.js?v=27"></script>
+<script defer src="/java/about.js?v=44"></script>
+<script defer src="/java/gsap-reveal.js?v=34"></script>
+<script defer src="/java/nav-menu.js?v=26"></script>
+<script defer src="/java/nav-contrast.js?v=26"></script>
+<script defer src="/java/cursor.js?v=26"></script>
+<script defer src="/java/lib/lenis.min.js?v=26"></script>
+<script defer src="/java/smooth-scroll.js?v=34"></script>
 </body>
 </html>

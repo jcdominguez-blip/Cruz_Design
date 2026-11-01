@@ -24,11 +24,34 @@ html:has(.consulta-page) {
     height: auto;
 }
 
+/* Fondo Silk oscuro a pantalla completa (mismo patrón que #about-bg).
+   El body dark queda de fallback si no hay WebGL o en móvil. */
+#cs-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+#cs-bg canvas { display: block; width: 100%; height: 100%; }
+
+/* Contenido por encima del fondo */
+.cs-main,
+.consulta-page .footer-global { position: relative; z-index: 1; }
+
 /* ───────────────── LAYOUT GENERAL ───────────────── */
 .cs-main {
-    max-width: 820px;
+    max-width: 1180px;
     margin: 0 auto;
     padding: clamp(130px, 16vh, 200px) 28px 120px;
+}
+
+/* Grilla de dos columnas: formulario + aside (maquetación tipo Kreativy) */
+.cs-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(250px, 0.9fr);
+    gap: clamp(48px, 7vw, 120px);
+    align-items: start;
 }
 
 /* ───────────────── HERO ───────────────── */
@@ -45,11 +68,12 @@ html:has(.consulta-page) {
 .cs-title {
     font-family: var(--font-header);
     font-weight: 700;
-    font-size: clamp(2.8rem, 7.5vw, 5.6rem);
-    line-height: 0.95;
-    letter-spacing: -0.035em;
+    /* Tamaño display: la mayor jerarquía del sistema (design-system --fs-display) */
+    font-size: var(--fs-display);
+    line-height: 0.92;
+    letter-spacing: var(--ls-display, -0.03em);
     color: var(--crema);
-    margin: 0 0 32px;
+    margin: 0 0 36px;
     max-width: 14ch;
 }
 
@@ -67,10 +91,10 @@ html:has(.consulta-page) {
 
 .cs-lead {
     font-family: var(--font-reading);
-    font-weight: 300;
+    font-weight: 400;
     font-size: var(--fs-body-lg);
     line-height: 1.55;
-    color: rgba(255, 253, 243, 0.72);
+    color: rgba(255, 253, 243, 0.85);
     max-width: 52ch;
 }
 
@@ -93,18 +117,100 @@ html:has(.consulta-page) {
 
 .cs-hint {
     font-family: var(--font-reading);
-    font-weight: 300;
+    font-weight: 400;
     font-size: var(--fs-body);
-    color: rgba(255, 253, 243, 0.7);
+    color: rgba(255, 253, 243, 0.82);
     margin: -12px 0 20px;
+}
+
+/* Etiquetas flotantes = prompts para completar: peso 400 y un grado de
+   transparencia que deja claro que el usuario debe escribir ahí. Al enfocar/
+   completar, la etiqueta sube y pasa a amarillo (regla del design system). */
+.consulta-page .input-container label {
+    font-weight: 400;
+    color: rgba(255, 253, 243, 0.42);
+}
+
+/* Grupo de campos apilados dentro de un mismo bloque (ej. identidad) */
+.cs-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 42px;
+}
+
+/* Textarea del mensaje abierto: hereda el input flotante del design system */
+.cs-block textarea {
+    resize: vertical;
+    min-height: 3.2em;
+    line-height: 1.45;
+}
+
+/* ───────────────── ASIDE (datos de contacto, sticky) ───────────────── */
+.cs-aside {
+    position: sticky;
+    top: 132px;
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+}
+
+.cs-aside-reassure {
+    font-family: var(--font-reading);
+    font-weight: 400;
+    font-size: var(--fs-body);
+    line-height: 1.55;
+    color: rgba(255, 253, 243, 0.85);
+    margin: 0;
+    max-width: 34ch;
+}
+
+.cs-aside-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 22px;
+    border-top: 1px solid var(--cs-hair);
+}
+
+.cs-aside-label {
+    color: var(--amarillo-acento);
+    margin: 0;
+}
+
+.cs-aside-mail {
+    font-family: var(--font-header);
+    font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+    letter-spacing: -0.01em;
+    color: var(--crema);
+    text-decoration: none;
+    line-height: 1.25;
+    width: fit-content;
+    background-image: linear-gradient(var(--amarillo-acento), var(--amarillo-acento));
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.4s var(--cs-ease), color 0.3s var(--cs-ease);
+}
+.cs-aside-mail:hover {
+    color: var(--amarillo-acento);
+    background-size: 100% 1px;
+}
+
+.cs-aside-value {
+    font-family: var(--font-reading);
+    font-weight: 400;
+    font-size: var(--fs-small);
+    line-height: 1.5;
+    color: rgba(255, 253, 243, 0.82);
+    margin: 0;
 }
 
 .cs-note {
     font-family: var(--font-reading);
-    font-weight: 300;
+    font-weight: 400;
     font-size: var(--fs-small);
     line-height: 1.55;
-    color: rgba(255, 253, 243, 0.5);
+    color: rgba(255, 253, 243, 0.6);
     margin: 22px 0 0;
     max-width: 58ch;
 }
@@ -193,6 +299,52 @@ html:has(.consulta-page) {
     color: rgba(255, 253, 243, 0.45);
 }
 
+/* Slider atenuado cuando el cliente marca "menor al presupuesto establecido" */
+.cs-slider.cs-slider-dim {
+    opacity: 0.35;
+    pointer-events: none;
+    transition: opacity 0.35s var(--cs-ease);
+}
+
+/* Botón/toggle "Menor al presupuesto establecido" */
+.cs-under-budget {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    margin-top: 26px;
+    padding: 13px 24px;
+    border: 1px solid var(--cs-hair);
+    border-radius: 50px;
+    background: transparent;
+    color: rgba(255, 253, 243, 0.82);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.35s var(--cs-ease);
+}
+.cs-under-budget:hover { border-color: var(--crema); color: var(--crema); }
+.cs-under-budget:focus-visible { outline: 2px solid var(--amarillo-acento); outline-offset: 3px; }
+
+.cs-under-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 253, 243, 0.5);
+    flex: none;
+    transition: all 0.35s var(--cs-ease);
+}
+.cs-under-budget[aria-pressed="true"] {
+    background: var(--amarillo-acento);
+    border-color: var(--amarillo-acento);
+    color: var(--bg-dark);
+}
+.cs-under-budget[aria-pressed="true"] .cs-under-dot {
+    background: var(--bg-dark);
+    border-color: var(--bg-dark);
+}
+
 /* Honeypot: fuera de la vista, no lo completan humanos */
 .cs-honey {
     position: absolute !important;
@@ -221,6 +373,61 @@ html:has(.consulta-page) {
 .cs-block.cs-invalid .mono-tag { color: #ff6b5e; }
 .cs-block.cs-invalid .input-container { border-bottom-color: #ff6b5e; }
 
+/* ───────────────── SUSCRIPCIÓN NEWSLETTER (checkbox) ───────────────── */
+.cs-newsletter {
+    margin-top: clamp(6px, 2vh, 20px);
+}
+
+.cs-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    user-select: none;
+}
+.cs-check input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+.cs-check-box {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--cs-hair);
+    border-radius: 6px;
+    position: relative;
+    transition: all 0.3s var(--cs-ease);
+}
+.cs-check:hover .cs-check-box { border-color: var(--crema); }
+
+/* Tilde */
+.cs-check-box::after {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid var(--bg-dark);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    transition: transform 0.25s var(--cs-ease);
+}
+.cs-check input:checked + .cs-check-box {
+    background: var(--amarillo-acento);
+    border-color: var(--amarillo-acento);
+}
+.cs-check input:checked + .cs-check-box::after { transform: rotate(45deg) scale(1); }
+.cs-check input:focus-visible + .cs-check-box {
+    outline: 2px solid var(--amarillo-acento);
+    outline-offset: 3px;
+}
+
+.cs-check-text {
+    font-family: var(--font-reading);
+    font-weight: 400;
+    font-size: var(--fs-body);
+    color: rgba(255, 253, 243, 0.82);
+}
+
 /* ───────────────── ACCIÓN FINAL ───────────────── */
 .cs-actions {
     display: flex;
@@ -235,6 +442,32 @@ html:has(.consulta-page) {
     font-size: var(--fs-small);
     color: #ff6b5e;
     margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+}
+.cs-error-msg { flex: 1 1 auto; min-width: 200px; }
+/* Fallback: botón que abre el mail del cliente con la consulta precargada */
+.cs-error-mailto {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--bg-dark);
+    background: var(--amarillo-acento);
+    padding: 10px 16px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+.cs-error-mailto:hover {
+    filter: brightness(1.05);
+    box-shadow: 0 8px 22px rgba(242, 195, 53, .28);
+    transform: translateY(-1px);
 }
 
 .cs-required {
@@ -388,6 +621,20 @@ html:has(.consulta-page) {
 }
 
 /* ───────────────── RESPONSIVE ───────────────── */
+/* Una sola columna: el aside baja debajo del formulario y deja de ser sticky */
+@media (max-width: 900px) {
+    .cs-layout {
+        grid-template-columns: 1fr;
+        gap: clamp(56px, 9vh, 90px);
+    }
+    .cs-aside {
+        position: static;
+        top: auto;
+        padding-top: clamp(24px, 4vh, 40px);
+        border-top: 1px solid var(--cs-hair);
+    }
+}
+
 @media (max-width: 560px) {
     .cs-main { padding-top: 120px; }
     .cs-block .chip-box { padding: 14px 24px; }
@@ -404,3 +651,9 @@ html:has(.consulta-page) {
     .cs-modal-symbol path { animation: none !important; stroke-dashoffset: 0 !important; }
     .cs-title .cs-word > span { transform: none !important; }
 }
+
+/* ── Sin amarillo (2026): acentos rellenos del form → crema con tinta oscura ── */
+.cs-under-budget[aria-pressed="true"] { background: var(--crema); border-color: var(--crema); color: var(--bg-dark); }
+.cs-check input:checked + .cs-check-box { background: var(--crema); border-color: var(--crema); }
+.cs-error-mailto { background: var(--crema); }
+.cs-modal-home:hover { background: var(--crema); color: var(--bg-dark); }

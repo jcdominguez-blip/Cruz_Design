@@ -23,7 +23,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
-    <link rel="stylesheet" href="/css/style.css?v=42">
+    <link rel="stylesheet" href="/css/style.css?v=49">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png?v=2">
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png?v=2">
     <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png?v=2">
@@ -52,8 +52,8 @@
         .skip-loader #loader, .skip-loader .loader { display: none !important; visibility: hidden !important; }
         .skip-loader body:not(.menu-open) { overflow-y: auto !important; height: auto !important; }
     </style>
-    <script src="/java/page-loader.js?v=24"></script>
-    <link rel="stylesheet" href="/css/nav-menu.css?v=27">
+    <script src="/java/page-loader.js?v=27"></script>
+    <link rel="stylesheet" href="/css/nav-menu.css?v=28">
     <link rel="stylesheet" href="/css/cursor.css?v=25">
     <link rel="stylesheet" href="/css/faq.css?v=30">
     <link rel="canonical" href="https://www.cruzestudio.com.ar/">
@@ -124,26 +124,19 @@
 <div class="grid-bg"></div>
 <div id="silk-bg" aria-hidden="true"></div>
 <div id="hero-invert-bg" aria-hidden="true"></div>
+<!-- Capa crema que "barre" tras el loader y queda de fondo del hero estático. -->
+<div id="hero-sweep" aria-hidden="true"></div>
 <div id="canvas-wrap"></div>
 
 <div id="hero-text">
   <div class="hero-statements">
     <h1 class="hero-statement" data-step="0">
-      <span class="hs-line"><span class="hs-inner" data-i18n="hero.s0.l1">No somos una</span></span>
-      <span class="hs-line"><span class="hs-inner" data-i18n="hero.s0.l2">agencia de diseño</span></span>
-      <span class="hs-line"><span class="hs-inner" data-i18n-html="hero.s0.l3"><span class="hl">cualquiera</span>.</span></span>
-    </h1>
-    <h1 class="hero-statement" data-step="1">
-      <span class="hs-eyebrow"><span class="hs-inner" data-i18n="hero.s1.eyebrow">// No diseñamos logos</span></span>
-      <span class="hs-line"><span class="hs-inner" data-i18n-html="hero.s1.l1">Construimos <span class="hl">identidades</span></span></span>
-      <span class="hs-line"><span class="hs-inner" data-i18n="hero.s1.l2">que perduran.</span></span>
-    </h1>
-    <h1 class="hero-statement" data-step="2">
-      <span class="hs-line"><span class="hs-inner" data-i18n="hero.s2.l1">Integramos diseño y</span></span>
-      <span class="hs-line"><span class="hs-inner" data-i18n="hero.s2.l2">estrategia para que</span></span>
-      <span class="hs-line"><span class="hs-inner" data-i18n-html="hero.s2.l3">tu marca <span class="hl">compita</span>.</span></span>
+      <span class="hs-line"><span class="hs-inner" data-i18n="hero.title.l1">Estudio de branding y comunicación.</span></span>
+      <span class="hs-line"><span class="hs-inner" data-i18n="hero.title.l2">Integramos diseño y estrategia para</span></span>
+      <span class="hs-line"><span class="hs-inner" data-i18n="hero.title.l3">potenciar marcas.</span></span>
     </h1>
   </div>
+  <p class="hero-lead" data-i18n="hero.lead">Transformamos y desarrollamos marcas para las empresas que construyen el futuro de la tecnología, la cultura y la innovación.</p>
 </div>
 
 <!-- Reconocimientos: par de listones apilados en el borde derecho.
@@ -208,11 +201,6 @@
   </article>
 </div>
 
-<div id="click-hint">
-  <div class="hint-line"></div>
-  <span data-i18n="hero.hint">[CLICk EN LA ESFERA]</span>
-</div>
-
 <!-- Crédito CC-BY del modelo 3D (visible solo cuando se muestra la cara). -->
 <div id="hero-credit" aria-hidden="true">
   <a href="https://skfb.ly/U7uW" target="_blank" rel="noopener noreferrer">“Wireframe Gregos face”</a>
@@ -242,8 +230,8 @@
                         <span class="studio-eyebrow" data-i18n="studio.eyebrow">// QUIÉNES SOMOS</span>
 
                         <h3 class="studio-title-v2">
-                            <span class="studio-reveal-line"><span data-i18n="studio.title.l1">Democratizando el diseño</span></span>
-                            <span class="studio-reveal-line"><span data-i18n="studio.title.l2">de alto rendimiento.</span></span>
+                            <span class="studio-reveal-line"><span data-i18n="studio.title.l1">Ideas que toman</span></span>
+                            <span class="studio-reveal-line"><span data-i18n="studio.title.l2">forma.</span></span>
                         </h3>
 
                         <p class="studio-statement-v2">
@@ -382,8 +370,9 @@
         <div class="sva-cover" aria-hidden="true"></div>
         <div class="sva-container">
             <header class="sva-header" data-rh>
-                <span class="mono-tag sva-eyebrow" data-i18n="sva.eyebrow">// PROGRAMA DE SERVICIOS</span>
-                <h2 class="sva-title section-display-title" data-split data-i18n="sva.title">Hacemos más que logos.</h2>
+                <span class="mono-tag sva-eyebrow" data-i18n="sva.eyebrow">// SERVICIOS</span>
+                <h2 class="sva-title section-display-title" data-split data-i18n="sva.title">Hacemos más que logos. Convertimos ideas en marcas.</h2>
+                <p class="sva-sub" data-i18n="sva.sub">Combinamos estrategia, creatividad y diseño para construir identidades que tengan sentido, personalidad y posibilidades de crecer.</p>
             </header>
 
             <div class="sva-list" data-sva-list>
@@ -421,7 +410,7 @@
                     <h3 class="sva-heading">
                         <button type="button" class="sva-row" id="sva-btn-03" aria-expanded="false" aria-controls="sva-panel-03">
                             <span class="sva-num">03</span>
-                            <span class="sva-name" data-split data-i18n="sva.03.name">Producción visual</span>
+                            <span class="sva-name" data-split data-i18n="sva.03.name">Producción audiovisual</span>
                             <span class="sva-toggle" aria-hidden="true"></span>
                         </button>
                     </h3>
@@ -436,7 +425,7 @@
                     <h3 class="sva-heading">
                         <button type="button" class="sva-row" id="sva-btn-04" aria-expanded="false" aria-controls="sva-panel-04">
                             <span class="sva-num">04</span>
-                            <span class="sva-name" data-split data-i18n="sva.04.name">Diseño UX/UI &amp; web</span>
+                            <span class="sva-name" data-split data-i18n="sva.04.name">UX/UI &amp; Diseño web</span>
                             <span class="sva-toggle" aria-hidden="true"></span>
                         </button>
                     </h3>
@@ -467,15 +456,85 @@
          y los caracteres del H2 + P se iluminan uno a uno en
          secuencia, atados directamente al scroll wheel (scrub: true).
          ========================================================== -->
-    <section class="why-us" id="why-us" data-type-pin data-theme="dark">
+    <!-- ==========================================================
+         PROCESO DE TRABAJO — Grilla 2 columnas (ref. maqueta Motto): label a la
+         izquierda + contenido a la derecha, dentro del MISMO contenedor que el
+         resto del sitio (bordes alineados). Cada paso es un ACORDEÓN. Dark/Silk.
+         Acordeón: java/proceso.js (uno abierto a la vez).
+         ========================================================== -->
+    <section class="proceso-section" id="proceso" data-theme="dark">
         <!-- Fondo Silk oscuro (mismo efecto reactbits que el hero). Opaco. -->
         <div class="section-silk" data-dark-silk aria-hidden="true"></div>
-        <div class="why-us-container">
-            <span class="mono-tag why-us-eyebrow" data-type-reveal data-i18n="why.eyebrow">// POR QUÉ NOSOTROS</span>
+        <div class="proceso-inner">
+            <div class="proceso-grid" data-rh>
+                <aside class="proceso-aside">
+                    <span class="mono-tag proceso-eyebrow" data-i18n="proc.eyebrow">// PROCESO DE TRABAJO</span>
+                </aside>
 
-            <h2 class="why-us-title section-display-title" data-type-reveal data-i18n="why.title">Integramos el diseño y la estrategia para que las empresas compitan en el mercado.</h2>
+                <div class="proceso-main">
+                    <h2 class="proceso-title section-display-title" data-split data-i18n="proc.title">Primero entendemos. Después creamos.</h2>
+                    <p class="proceso-lead" data-i18n="proc.lead">Cada marca tiene una historia, un contexto y algo que la hace diferente. Nuestro trabajo es descubrirlo, encontrar una idea y convertirla en una identidad que pueda crecer.</p>
 
-            <p class="why-us-body" data-type-reveal data-i18n="why.body">No hacemos estética vacía. Muchos rediseños se quedan cortos porque solo maquillan la superficie. Nosotros vamos un paso más allá: construimos identidades preparadas para escalar, competir y perdurar. Entendemos la marca no como un simple dibujo, sino como la firma institucional que avala la calidad de tus servicios. ¿El resultado? Una identidad inconfundible que deja de pedir atención y empieza a inspirar respeto.</p>
+                    <ul class="proceso-acc" data-proc-list>
+                        <li class="proceso-item" data-proc-item>
+                            <button type="button" class="proceso-row" id="proc-b1" aria-expanded="false" aria-controls="proc-p1">
+                                <span class="proceso-num">01</span>
+                                <span class="proceso-name" data-i18n="proc.01.title">Entender</span>
+                                <span class="proceso-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="proceso-panel" id="proc-p1" role="region" aria-labelledby="proc-b1">
+                                <div class="proceso-panel-inner">
+                                    <p class="proceso-step-lead" data-i18n="proc.01.lead">Antes de diseñar, hacemos preguntas.</p>
+                                    <p class="proceso-step-desc" data-i18n="proc.01.desc">Conocemos el proyecto, su historia, sus objetivos, sus personas y el contexto en el que se mueve. Investigamos la competencia y buscamos entender qué hace propia a la marca.</p>
+                                    <p class="proceso-step-tags" data-i18n="proc.01.tags">Exploramos: contexto · competencia · públicos · atributos</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="proceso-item" data-proc-item>
+                            <button type="button" class="proceso-row" id="proc-b2" aria-expanded="false" aria-controls="proc-p2">
+                                <span class="proceso-num">02</span>
+                                <span class="proceso-name" data-i18n="proc.02.title">Encontrar la idea</span>
+                                <span class="proceso-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="proceso-panel" id="proc-p2" role="region" aria-labelledby="proc-b2">
+                                <div class="proceso-panel-inner">
+                                    <p class="proceso-step-lead" data-i18n="proc.02.lead">Definimos qué queremos decir y cómo queremos decirlo.</p>
+                                    <p class="proceso-step-desc" data-i18n="proc.02.desc">Transformamos todo lo que descubrimos en una dirección creativa: posicionamiento, personalidad, tono y una idea que pueda guiar las decisiones de la marca.</p>
+                                    <p class="proceso-step-tags" data-i18n="proc.02.tags">Definimos: concepto · posicionamiento · personalidad · tono</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="proceso-item" data-proc-item>
+                            <button type="button" class="proceso-row" id="proc-b3" aria-expanded="false" aria-controls="proc-p3">
+                                <span class="proceso-num">03</span>
+                                <span class="proceso-name" data-i18n="proc.03.title">Darle forma</span>
+                                <span class="proceso-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="proceso-panel" id="proc-p3" role="region" aria-labelledby="proc-b3">
+                                <div class="proceso-panel-inner">
+                                    <p class="proceso-step-lead" data-i18n="proc.03.lead">Convertimos la idea en una identidad.</p>
+                                    <p class="proceso-step-desc" data-i18n="proc.03.desc">Exploramos caminos visuales y construimos el sistema de identidad: logotipo, tipografías, colores, recursos gráficos y todos los elementos que hacen que una marca pueda reconocerse y diferenciarse.</p>
+                                    <p class="proceso-step-tags" data-i18n="proc.03.tags">Creamos: logotipo · tipografía · color · sistema visual</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="proceso-item" data-proc-item>
+                            <button type="button" class="proceso-row" id="proc-b4" aria-expanded="false" aria-controls="proc-p4">
+                                <span class="proceso-num">04</span>
+                                <span class="proceso-name" data-i18n="proc.04.title">Hacerla realidad</span>
+                                <span class="proceso-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="proceso-panel" id="proc-p4" role="region" aria-labelledby="proc-b4">
+                                <div class="proceso-panel-inner">
+                                    <p class="proceso-step-lead" data-i18n="proc.04.lead">Una marca no termina cuando se presenta. Empieza ahí.</p>
+                                    <p class="proceso-step-desc" data-i18n="proc.04.desc">Llevamos la identidad a los distintos puntos de contacto y dejamos las herramientas necesarias para que pueda aplicarse de manera consistente y seguir creciendo.</p>
+                                    <p class="proceso-step-tags" data-i18n="proc.04.tags">Desarrollamos: aplicaciones · piezas · guía de marca · activos digitales</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -491,15 +550,15 @@
         <div class="faq-inner">
             <div class="faq-head" data-faq-reveal>
                 <span class="faq-eyebrow" data-i18n="faq.eyebrow">// PREGUNTAS FRECUENTES</span>
-                <h2 class="faq-title" id="faq-title" data-i18n="faq.title">Preguntas frecuentes</h2>
-                <p class="faq-sub" data-i18n="faq.sub">Respuestas directas para decisiones estratégicas. Todo lo que necesitás saber sobre nuestra metodología, tiempos de trabajo y cómo empezar a potenciar el rendimiento visual de tu empresa.</p>
+                <h2 class="faq-title" id="faq-title" data-i18n="faq.title">Lo que necesitás saber antes de empezar.</h2>
+                <p class="faq-sub" data-i18n="faq.sub">Si estás pensando en trabajar con nosotros, probablemente tengas algunas preguntas. Acá respondemos las más frecuentes. Y si la tuya no aparece, conversemos.</p>
             </div>
 
             <ul class="faq-list" data-faq-list>
                 <li class="faq-item" data-faq-item data-faq-reveal>
                     <button class="faq-q" id="faq-b1" aria-expanded="false" aria-controls="faq-a1">
                         <span class="faq-q-num">01</span>
-                        <span class="faq-q-text" data-i18n="faq.q1">¿Cuánto cuesta trabajar con Cruz Estudio?</span>
+                        <span class="faq-q-text" data-i18n="faq.q1">¿Cuánto cuesta trabajar con Cruz?</span>
                         <span class="faq-icon" aria-hidden="true"></span>
                     </button>
                     <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-b1">
@@ -512,7 +571,7 @@
                 <li class="faq-item" data-faq-item data-faq-reveal>
                     <button class="faq-q" id="faq-b2" aria-expanded="false" aria-controls="faq-a2">
                         <span class="faq-q-num">02</span>
-                        <span class="faq-q-text" data-i18n="faq.q2">Solo necesito un "logo", ¿pueden hacerlo?</span>
+                        <span class="faq-q-text" data-i18n="faq.q2">Solo necesito un logo, ¿pueden hacerlo?</span>
                         <span class="faq-icon" aria-hidden="true"></span>
                     </button>
                     <div class="faq-a" id="faq-a2" role="region" aria-labelledby="faq-b2">
@@ -525,7 +584,7 @@
                 <li class="faq-item" data-faq-item data-faq-reveal>
                     <button class="faq-q" id="faq-b3" aria-expanded="false" aria-controls="faq-a3">
                         <span class="faq-q-num">03</span>
-                        <span class="faq-q-text" data-i18n="faq.q3">Mi empresa ya está funcionando hace años, ¿tengo que cambiar todo desde cero?</span>
+                        <span class="faq-q-text" data-i18n="faq.q3">Mi empresa ya existe hace años. ¿Tengo que cambiar todo?</span>
                         <span class="faq-icon" aria-hidden="true"></span>
                     </button>
                     <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-b3">
@@ -538,7 +597,7 @@
                 <li class="faq-item" data-faq-item data-faq-reveal>
                     <button class="faq-q" id="faq-b4" aria-expanded="false" aria-controls="faq-a4">
                         <span class="faq-q-num">04</span>
-                        <span class="faq-q-text" data-i18n="faq.q4">¿Cuánto tiempo lleva desarrollar un sistema de identidad visual?</span>
+                        <span class="faq-q-text" data-i18n="faq.q4">¿Cuánto tiempo lleva desarrollar una identidad?</span>
                         <span class="faq-icon" aria-hidden="true"></span>
                     </button>
                     <div class="faq-a" id="faq-a4" role="region" aria-labelledby="faq-b4">
@@ -551,7 +610,7 @@
                 <li class="faq-item" data-faq-item data-faq-reveal>
                     <button class="faq-q" id="faq-b5" aria-expanded="false" aria-controls="faq-a5">
                         <span class="faq-q-num">05</span>
-                        <span class="faq-q-text" data-i18n="faq.q5">¿Trabajan solo con grandes corporaciones o también con PyMEs?</span>
+                        <span class="faq-q-text" data-i18n="faq.q5">¿Trabajan con PyMEs o solo con empresas grandes?</span>
                         <span class="faq-icon" aria-hidden="true"></span>
                     </button>
                     <div class="faq-a" id="faq-a5" role="region" aria-labelledby="faq-b5">
@@ -564,7 +623,7 @@
                 <li class="faq-item" data-faq-item data-faq-reveal>
                     <button class="faq-q" id="faq-b6" aria-expanded="false" aria-controls="faq-a6">
                         <span class="faq-q-num">06</span>
-                        <span class="faq-q-text" data-i18n="faq.q6">No sé bien qué servicio necesito, ¿cómo empezamos?</span>
+                        <span class="faq-q-text" data-i18n="faq.q6">No sé exactamente qué servicio necesito. ¿Cómo empezamos?</span>
                         <span class="faq-icon" aria-hidden="true"></span>
                     </button>
                     <div class="faq-a" id="faq-a6" role="region" aria-labelledby="faq-b6">
@@ -693,10 +752,10 @@
 
 </div> <!-- i18n: PRIMERO entre los defer → traduce el DOM antes de que los
      splitters (split-reveal/type/faq) partan los titulares en spans. -->
-<script defer src="/java/i18n-dict.js?v=1"></script>
+<script defer src="/java/i18n-dict.js?v=3"></script>
 <script defer src="/java/i18n.js?v=1"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script defer src="/java/silk-bg.js?v=25"></script>
+<script defer src="/java/silk-bg.js?v=27"></script>
 <script defer src="/java/intro-loader.js?v=24"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
@@ -705,7 +764,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <script defer src="/java/loader.js?v=24"></script>
-<script defer src="/java/hero-3d.js?v=55"></script>
+<script defer src="/java/hero-3d.js?v=58"></script>
 <script defer src="/java/script.js?v=24"></script>
 <script defer src="/java/nav-menu.js?v=24"></script>
 <!-- IMPORTANTE: studio-scroll.js DEBE ir antes que type.js y capas.js.
@@ -723,6 +782,7 @@
 <script defer src="/java/cursor-preview.js?v=24"></script>
 <script defer src="/java/theme-watcher.js?v=24"></script>
 <script defer src="/java/faq.js?v=25"></script>
+<script defer src="/java/proceso.js?v=1"></script>
 
 <a href="https://wa.me/5491161105751?text=Hola%20Cruz%20Estudio,%20me%20gustaría%20consultar%20por%20un%20proyecto." class="whatsapp-fixed" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:nav.whatsapp" aria-label="Contacto por WhatsApp">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

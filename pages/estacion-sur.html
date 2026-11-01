@@ -3,20 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estación Sur Vinos — Cruz Estudio ®</title>
+    <title data-i18n="p.esur.meta">Estación Sur Vinos — Cruz Estudio ®</title>
     <meta name="description" content="Branding y estrategia de contenido para Estación Sur Vinos: desmitificando la cultura del vino con un ecosistema rupturista y cercano.">
     <link rel="preconnect" href="https://use.typekit.net" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://i.ibb.co">
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
     <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/styleproyect.css?v=13">
-    <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png">
-    <script src="../java/page-loader.js?v=13"></script>
-    <link rel="stylesheet" href="../css/nav-menu.css?v=13">
-    <link rel="stylesheet" href="../css/cursor.css?v=13">
+    <link rel="stylesheet" href="/css/styleproyect.css?v=16">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png?v=2">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png?v=2">
+    <link rel="shortcut icon" href="/img/favicon.ico?v=2">
+    <script src="/java/page-loader.js?v=27"></script>
+    <link rel="stylesheet" href="/css/nav-menu.css?v=28">
+    <link rel="stylesheet" href="/css/cursor.css?v=13">
+    <link rel="canonical" href="https://www.cruzestudio.com.ar/estacion-sur">
+    <!-- i18n: defer al final del head → corre antes que los scripts defer del body -->
+    <script defer src="/java/i18n-dict.js?v=1"></script>
+    <script defer src="/java/i18n.js?v=1"></script>
 </head>
 <body class="project-page site-wrapper">
     <div class="page-transition"></div>
@@ -24,12 +30,20 @@
     <!-- NAVBAR — glass style match index, [PROYECTOS] active -->
     <nav class="navbar-brand navbar-modern">
     <div class="containerNav">
-        <a href="../index.html" class="logo link-location">
-            <img decoding="async" src="../img/nuevo-logo-cre.svg" alt="Cruz Estudio Logo" class="logo-vectorial">
+        <a href="/" class="logo link-location">
+            <img decoding="async" src="/img/nuevo-logo-cre.svg" alt="Cruz Estudio Logo" class="logo-vectorial">
         </a>
-        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navOverlay">
-            <span class="nav-toggle-box" aria-hidden="true"><i></i><i></i><i></i></span>
-        </button>
+        <div class="nav-actions">
+            <div class="lang-switch" data-lang-switch role="group" data-i18n-attr="aria-label:nav.lang" aria-label="Idioma">
+                <button type="button" class="lang-opt" data-lang-opt="es" aria-pressed="true">ES</button>
+                <span class="lang-sep" aria-hidden="true"></span>
+                <button type="button" class="lang-opt" data-lang-opt="en" aria-pressed="false">EN</button>
+            </div>
+
+            <button class="nav-toggle" id="navToggle" data-i18n-attr="aria-label:nav.toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navOverlay">
+                <span class="nav-toggle-box" aria-hidden="true"><i></i><i></i><i></i></span>
+            </button>
+        </div>
     </div>
 </nav>
 
@@ -38,20 +52,20 @@
     <div class="nav-overlay-bg"></div>
     <div class="nav-overlay-inner">
         <ul class="nav-overlay-links">
-            <li><a href="./trabajos.html"><span class="nol-idx">01</span><span class="nol-txt">Proyectos</span></a></li>
-            <li><a href="./metodologia.html"><span class="nol-idx">02</span><span class="nol-txt">Metodología</span></a></li>
-            <li><a href="./about.html"><span class="nol-idx">03</span><span class="nol-txt">Estudio</span></a></li>
-            <li><a href="./contacto.html"><span class="nol-idx">04</span><span class="nol-txt">Contacto</span></a></li>
+            <li><a href="/trabajos"><span class="nol-idx">01</span><span class="nol-txt" data-i18n="nav.projects">Proyectos</span></a></li>
+            <li><a href="/metodologia"><span class="nol-idx">02</span><span class="nol-txt" data-i18n="nav.methodology">Metodología</span></a></li>
+            <li><a href="/about"><span class="nol-idx">03</span><span class="nol-txt" data-i18n="nav.studio">Estudio</span></a></li>
+            <li><a href="/contacto"><span class="nol-idx">04</span><span class="nol-txt" data-i18n="nav.contact">Contacto</span></a></li>
         </ul>
         <div class="nav-overlay-foot">
             <a href="mailto:estudiocruzdesign@gmail.com" class="nof-mail">estudiocruzdesign@gmail.com</a>
-            <span class="nof-loc">Buenos Aires, ARG · GMT-3</span>
+            <span class="nof-loc" data-i18n="nav.loc">Buenos Aires, ARG · GMT-3</span>
         </div>
     </div>
 </div>
 
     <div class="back-nav-container">
-        <a href="./trabajos.html" class="back-arrow-cta" aria-label="Volver a Trabajos">
+        <a href="/trabajos" class="back-arrow-cta" aria-label="Volver a Trabajos">
             <span class="material-symbols-outlined">arrow_back</span>
         </a>
     </div>
@@ -63,10 +77,10 @@
              ============================================================ -->
         <header class="projv2-hero">
             <div class="projv2-hero-image">
-                <img loading="eager" fetchpriority="high" decoding="async" src="../img/estacion-sur-img-1.jpg" alt="Estación Sur Vinos — Identidad">
+                <img loading="eager" fetchpriority="high" decoding="async" src="/img/estacion-sur-img-1.jpg" alt="Estación Sur Vinos — Identidad">
             </div>
             <div class="projv2-hero-content scroll-reveal">
-                <span class="projv2-hero-eyebrow">// DESMITIFICANDO LA CULTURA DEL VINO</span>
+                <span class="projv2-hero-eyebrow" data-i18n="p.esur.tag">// DESMITIFICANDO LA CULTURA DEL VINO</span>
                 <h1 class="projv2-hero-title">Estación Sur<br>Vinos</h1>
             </div>
         </header>
@@ -77,16 +91,16 @@
         <section class="projv2-meta scroll-reveal-stagger">
             <div class="projv2-meta-grid">
                 <div class="projv2-meta-cell">
-                    <span class="label">// Cliente</span>
+                    <span class="label" data-i18n="projv2.lbl.client">// Cliente</span>
                     <p>Estación Sur Vinos</p>
                 </div>
                 <div class="projv2-meta-cell">
-                    <span class="label">// Año</span>
-                    <p>2024 — Presente</p>
+                    <span class="label" data-i18n="projv2.lbl.year">// Año</span>
+                    <p data-i18n="p.esur.year">2024 — Presente</p>
                 </div>
                 <div class="projv2-meta-cell">
-                    <span class="label">// Servicios</span>
-                    <p>Branding · Estrategia de contenido · Social Media</p>
+                    <span class="label" data-i18n="projv2.lbl.services">// Servicios</span>
+                    <p data-i18n="p.esur.svc">Branding · Estrategia de contenido · Social Media</p>
                 </div>
             </div>
         </section>
@@ -95,11 +109,11 @@
              NUESTRO ENFOQUE
              ============================================================ -->
         <section class="projv2-statement scroll-reveal">
-            <span class="label">// Nuestro enfoque</span>
-            <h2 class="projv2-statement-title">
+            <span class="label" data-i18n="projv2.lbl.approach">// Nuestro enfoque</span>
+            <h2 class="projv2-statement-title" data-i18n="p.esur.stitle">
                 Diseñamos un ecosistema de marca rupturista y cercano para democratizar el consumo de vinos de autor.
             </h2>
-            <p class="projv2-statement-body">
+            <p class="projv2-statement-body" data-i18n="p.esur.sbody">
                 Creamos una identidad que invita a explorar etiquetas no tradicionales sin solemnidades. La premisa es clara: para apreciar un buen vino no hace falta ser un experto, solo hace falta probar, probar y probar.
             </p>
         </section>
@@ -112,39 +126,39 @@
         <section class="projv2-gallery">
             <!-- Row 1: PANORÁMICAS 16:9 — img-6 (1.76) + img-9 (1.79) -->
             <figure class="reveal-frame span-6 ratio-16 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-6.jpg" alt="Estación Sur — pieza 06">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-6.jpg" alt="Estación Sur — pieza 06">
             </figure>
             <figure class="reveal-frame span-6 ratio-16 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-9.jpg" alt="Estación Sur — pieza 09">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-9.jpg" alt="Estación Sur — pieza 09">
             </figure>
 
             <!-- Row 2: PANORÁMICA full — img-10 (1.71 ≈ 16:9) -->
             <figure class="reveal-frame span-12 ratio-16 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-10.jpg" alt="Estación Sur — pieza 10">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-10.jpg" alt="Estación Sur — pieza 10">
             </figure>
 
             <!-- Row 3: TRÍO VERTICAL 4:5 — img-2, img-3, img-7 (todas ~0.80) -->
             <figure class="reveal-frame span-4 ratio-45 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-2.jpg" alt="Estación Sur — pieza 02">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-2.jpg" alt="Estación Sur — pieza 02">
             </figure>
             <figure class="reveal-frame span-4 ratio-45 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-3.jpg" alt="Estación Sur — pieza 03">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-3.jpg" alt="Estación Sur — pieza 03">
             </figure>
             <figure class="reveal-frame span-4 ratio-45 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-7.jpg" alt="Estación Sur — pieza 07">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-7.jpg" alt="Estación Sur — pieza 07">
             </figure>
 
             <!-- Row 4: split CUADRADA + STORY — img-4 (1.02 ≈ 1:1) + img-8 (0.56 = 9:16) -->
             <figure class="reveal-frame span-8 ratio-11 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-4.jpg" alt="Estación Sur — pieza 04">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-4.jpg" alt="Estación Sur — pieza 04">
             </figure>
             <figure class="reveal-frame span-4 ratio-916 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-8.png" alt="Estación Sur — pieza 08">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-8.png" alt="Estación Sur — pieza 08">
             </figure>
 
             <!-- Row 5: HORIZONTAL 3:2 full — img-5 (1.50 = 3:2 perfecto) -->
             <figure class="reveal-frame span-12 ratio-32 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-5.jpg" alt="Estación Sur — pieza 05">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-5.jpg" alt="Estación Sur — pieza 05">
             </figure>
         </section>
 
@@ -179,31 +193,31 @@
         <section class="projv2-gallery">
             <!-- Row 1: ULTRA-PANO full — img-11 (2.09 ≈ 21:9) -->
             <figure class="reveal-frame span-12 ratio-21 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-11.png" alt="Estación Sur — aplicación 11">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-11.png" alt="Estación Sur — aplicación 11">
             </figure>
 
             <!-- Row 2: PANORÁMICAS 16:9 — img-15 (1.73) + img-16 (1.61) -->
             <figure class="reveal-frame span-6 ratio-16 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-15.png" alt="Estación Sur — aplicación 15">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-15.png" alt="Estación Sur — aplicación 15">
             </figure>
             <figure class="reveal-frame span-6 ratio-16 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-16.png" alt="Estación Sur — aplicación 16">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-16.png" alt="Estación Sur — aplicación 16">
             </figure>
 
             <!-- Row 3: HORIZONTALES 3:2 — img-12 (1.52) + img-13 (1.49) -->
             <figure class="reveal-frame span-6 ratio-32 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-12.png" alt="Estación Sur — aplicación 12">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-12.png" alt="Estación Sur — aplicación 12">
             </figure>
             <figure class="reveal-frame span-6 ratio-32 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-13.png" alt="Estación Sur — aplicación 13">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-13.png" alt="Estación Sur — aplicación 13">
             </figure>
 
             <!-- Row 4: HORIZONTALES 3:2 — img-14 (1.41) + img-17 (1.48) -->
             <figure class="reveal-frame span-6 ratio-32 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-14.png" alt="Estación Sur — aplicación 14">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-14.png" alt="Estación Sur — aplicación 14">
             </figure>
             <figure class="reveal-frame span-6 ratio-32 fit-contain">
-                <img loading="lazy" decoding="async" src="../img/estacion-sur-img-17.png" alt="Estación Sur — aplicación 17">
+                <img loading="lazy" decoding="async" src="/img/estacion-sur-img-17.png" alt="Estación Sur — aplicación 17">
             </figure>
         </section>
 
@@ -211,7 +225,7 @@
              BREAK QUOTE — Cierre conceptual
              ============================================================ -->
         <section class="projv2-break scroll-reveal">
-            <h3 class="projv2-break-quote">
+            <h3 class="projv2-break-quote" data-i18n="p.esur.quote">
                 "Un viaje sensorial que conecta la tradición ferroviaria con las nuevas formas de vivir el vino."
             </h3>
         </section>
@@ -220,13 +234,13 @@
 
     <!-- FOOTER NAV — siguiente proyecto -->
     <footer class="footer-project-nav">
-        <a href="./pinta-gaucha.html" class="next-link">
-            <span class="mono-label-footer">SIGUIENTE PROYECTO</span>
+        <a href="/pinta-gaucha" class="next-link">
+            <span class="mono-label-footer" data-i18n="proj.lbl.next">SIGUIENTE PROYECTO</span>
             <h2 class="next-title-display">Pinta Gaucha →</h2>
         </a>
     </footer>
 
-    <script src="../java/script.js?v=13"></script>
+    <script src="/java/script.js?v=13"></script>
     <script>
         // Toggle menú mobile
         document.addEventListener('DOMContentLoaded', () => {
@@ -251,10 +265,71 @@
             }, 4500);
         });
     </script>
-<script defer src="../java/nav-menu.js?v=13"></script>
-<script defer src="../java/nav-contrast.js?v=13"></script>
-<script defer src="../java/cursor.js?v=13"></script>
-<script defer src="../java/lib/lenis.min.js?v=13"></script>
-<script defer src="../java/smooth-scroll.js?v=13"></script>
+<script defer src="/java/nav-menu.js?v=13"></script>
+<script defer src="/java/nav-contrast.js?v=13"></script>
+<script defer src="/java/cursor.js?v=13"></script>
+<script defer src="/java/lib/lenis.min.js?v=13"></script>
+<script defer src="/java/smooth-scroll.js?v=13"></script>
+
+<!-- ═══════════ FOOTER GLOBAL (portado del home) ═══════════ -->
+<footer class="footer-global">
+    <div class="footer-line scroll-reveal"></div>
+
+    <div class="awards-row scroll-reveal" role="list" aria-label="Reconocimientos">
+        <a href="https://we.directory/collection" target="_blank" rel="noopener noreferrer" class="award-badge" role="listitem" aria-label="Website of the day — WE.directory">
+            <span class="award-badge-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M280-120v-80h160v-124q-49-11-87.5-41.5T296-442q-75-9-125.5-65.5T120-640v-40q0-33 23.5-56.5T200-760h80v-80h400v80h80q33 0 56.5 23.5T840-680v40q0 76-50.5 132.5T664-442q-18 46-56.5 76.5T520-324v124h160v80H280Zm0-408v-152h-80v40q0 38 22 68.5t58 43.5Zm200 210q50 0 85-35t35-85v-240H360v240q0 50 35 85t85 35Zm200-210q36-13 58-43.5t22-68.5v-40h-80v152Z"/></svg></span>
+            <span class="award-badge-text">
+                <span class="award-badge-label" data-i18n="footer.we.label">RECONOCIMIENTO</span>
+                <span class="award-badge-title">Website of the day · WE.directory</span>
+            </span>
+        </a>
+        <a href="https://www.awwwards.com/sites/cruz-estudio" target="_blank" rel="noopener noreferrer" class="award-badge" role="listitem" aria-label="Nominee — Awwwards">
+            <span class="award-badge-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M160-120v-375h175v375H160Zm242 0v-720h175v720H402Zm243 0v-478h175v478H645Z"/></svg></span>
+            <span class="award-badge-text">
+                <span class="award-badge-label" data-i18n="footer.we.label">RECONOCIMIENTO</span>
+                <span class="award-badge-title">Nominee · Awwwards</span>
+            </span>
+        </a>
+        <a href="https://www.awwwards.com/sites/cruz-estudio" target="_blank" rel="noopener noreferrer" class="award-badge" role="listitem" aria-label="Honorable Mention — Awwwards">
+            <span class="award-badge-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M335.38-160v-40H460v-150.15q-51.31-4.08-94.42-41.89-43.12-37.81-52.66-88.42-63.46-7.46-108.19-52.04T160-640v-80h146.15v-80h347.7v80H800v80q0 62.92-44.73 107.5t-108.19 52.04q-9.54 50.61-52.66 88.42-43.11 37.81-94.42 41.89V-200h124.62v40H335.38Zm-29.23-363.38V-680H200v40q0 45.69 30.46 78.5t75.69 38.12Zm267.7 95.56q38.46-38.59 38.46-93.72V-760H347.69v238.46q0 55.13 38.64 93.72 38.65 38.59 93.85 38.59 55.2 0 93.67-38.59Zm80-95.56q45.23-5.31 75.69-38.12Q760-594.31 760-640v-40H653.85v156.62ZM480-574.62Z"/></svg></span>
+            <span class="award-badge-text">
+                <span class="award-badge-label" data-i18n="footer.we.label">RECONOCIMIENTO</span>
+                <span class="award-badge-title">Honorable Mention · Awwwards</span>
+            </span>
+        </a>
+    </div>
+
+    <div class="footer-grid scroll-reveal-stagger">
+        <div class="footer-col">
+            <span class="mono-label" data-i18n="footer.location">UBICACIÓN</span>
+            <div class="col-content">
+                <p class="reading-small">Buenos Aires, ARG <br> (GMT-3) <span id="footer-clock">00:00</span></p>
+            </div>
+        </div>
+        <div class="footer-col">
+            <span class="mono-label">SAY HELLO</span>
+            <div class="col-content">
+                <a href="mailto:estudiocruzdesign@gmail.com" class="footer-link">estudiocruzdesign@gmail.com </a>
+                <p class="reading-small" data-i18n="footer.hello.sub">Branding & Estrategia de marca</p>
+            </div>
+        </div>
+        <div class="footer-col">
+            <span class="mono-label" data-i18n="footer.follow">SEGUINOS</span>
+            <div class="col-content">
+                <a href="https://www.instagram.com/cruzestudio_/" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram</a>
+                <a href="https://www.linkedin.com/company/cruzdesign" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+            </div>
+        </div>
+        <div class="footer-col footer-brand-end">
+            <span class="mono-label">©2018—2026</span>
+            <div class="col-content">
+                <img loading="lazy" decoding="async" src="/img/positivo-pluma.svg" alt="Sello Cruz Estudio" class="pluma-seal">
+            </div>
+        </div>
+    </div>
+</footer>
+<script defer src="/java/footer.js?v=1"></script>
+<script defer src="/java/media-loader.js?v=1"></script>
+
 </body>
 </html>

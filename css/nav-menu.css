@@ -8,7 +8,7 @@
 :root {
   --bg-dark: #1D1E1C;
   --crema: #FFFDF3;
-  --amarillo-acento: #f2c335;
+  --amarillo-acento: currentColor;
   --font-header: 'Geist', sans-serif;
   --font-mono: 'cofo-sans-mono-variable', monospace;
 }
@@ -68,6 +68,59 @@ body.nav-open .navbar-modern .nav-toggle { color: var(--crema); }
 .nav-toggle.is-open .nav-toggle-box i:nth-child(2) { opacity: 0; }
 .nav-toggle.is-open .nav-toggle-box i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 .nav-toggle:focus:not(:focus-visible) { outline: none; }
+
+/* ── Acciones a la derecha: switch de idioma + toggle ── */
+.nav-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ── Switch de idioma ES/EN (design system: Cofo Sans Mono) ── */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  line-height: 1;
+  color: var(--crema);
+  user-select: none;
+  transition: color .45s ease;
+}
+.lang-switch .lang-opt {
+  background: none;
+  border: none;
+  padding: 3px 1px;
+  margin: 0;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  color: currentColor;
+  opacity: .5;
+  transition: opacity .3s ease, color .3s ease;
+}
+.lang-switch .lang-opt:hover { opacity: 1; color: var(--amarillo-acento); }
+.lang-switch .lang-opt.is-active { opacity: 1; color: var(--amarillo-acento); }
+.lang-switch .lang-opt:focus:not(:focus-visible) { outline: none; }
+.lang-switch .lang-sep {
+  width: 1px;
+  height: 11px;
+  background: currentColor;
+  opacity: .3;
+}
+
+/* Contraste dinámico: sobre fondos claros → tinta (igual que logo/toggle) */
+body.nav-light .lang-switch { color: var(--bg-dark); }
+/* Con el menú abierto el overlay es oscuro → siempre claro */
+body.nav-open .lang-switch { color: var(--crema); }
+
+/* Móvil: switch un poco más compacto */
+@media (max-width: 640px) {
+  .nav-actions { gap: 14px; }
+  .lang-switch { font-size: 11px; gap: 6px; }
+}
 
 /* ── Overlay del menú ── */
 .nav-overlay {

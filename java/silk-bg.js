@@ -139,7 +139,7 @@
             uResolution: { value: new THREE.Vector2(1, 1) },
             uDarkColor: { value: new THREE.Color(opts.darkColor || '#404040') },
             uLightBase: { value: new THREE.Color(opts.lightBase || '#FFFDF3') },
-            uLightAccent: { value: new THREE.Color(opts.lightAccent || '#f2c335') },
+            uLightAccent: { value: new THREE.Color(opts.lightAccent || '#EDE9DC') },
             uThemed: { value: themed ? 1 : 0 },
             uForceLight: { value: opts.force === 'light' ? 1 : 0 },
             uLightCount: { value: 0 },

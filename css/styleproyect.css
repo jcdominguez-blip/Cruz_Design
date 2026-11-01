@@ -188,7 +188,7 @@ body::after {
     left: 0; right: 0;
     bottom: 20px;
     height: 1px;
-    background: #f2c335;
+    background: currentColor;
     opacity: 0.9;
 }
 
@@ -220,7 +220,7 @@ body::after {
     font-weight: 700;
     letter-spacing: 0.14em;
     color: var(--bg-dark);
-    background: #f2c335;
+    background: var(--crema);
     text-decoration: none !important;
     padding: 12px 22px;
     border-radius: 50px;
@@ -287,7 +287,7 @@ body::after {
     font-family: "cofo-sans-mono-variable", monospace;
     font-size: var(--fs-eyebrow);
     letter-spacing: var(--ls-eyebrow);
-    color: #f2c335;
+    color: currentColor;
     margin-top: 28px;
     text-transform: uppercase;
     opacity: 1;
@@ -489,7 +489,7 @@ body::after {
 
     /* Mostrar contacto dentro del menú overlay, destacado */
     .mobile-contact-item { display: block; }
-    .mobile-contact-item a { color: #f2c335; }
+    .mobile-contact-item a { color: currentColor; }
 
     /* Quitar subrayado de active state en mobile (el overlay no lo necesita) */
     .nav-links-brands a.is-active::after { display: none; }
@@ -674,7 +674,7 @@ body::after {
     font-family: "cofo-sans-mono-variable", monospace;
     font-size: var(--fs-eyebrow);
     letter-spacing: var(--ls-eyebrow);
-    color: #f2c335;
+    color: currentColor;
     margin-bottom: 28px;
 }
 .projv2-hero-title {
@@ -724,7 +724,7 @@ body::after {
     font-family: "cofo-sans-mono-variable", monospace;
     font-size: 11px;
     letter-spacing: 0.16em;
-    color: #f2c335;
+    color: currentColor;
     margin-bottom: 36px;
 }
 .projv2-statement-title {
@@ -792,7 +792,7 @@ body::after {
     font-family: "cofo-sans-mono-variable", monospace;
     font-size: 11px;
     letter-spacing: 0.16em;
-    color: #f2c335;
+    color: currentColor;
     text-transform: uppercase;
     margin-top: 8px;
 }
@@ -836,7 +836,7 @@ body::after {
     font-family: "cofo-sans-mono-variable", monospace;
     font-size: 11px;
     letter-spacing: 0.16em;
-    color: #f2c335;
+    color: currentColor;
     margin-bottom: 16px;
 }
 .projv2-asset h3 {
@@ -872,7 +872,7 @@ body::after {
     font-family: "cofo-sans-mono-variable", monospace;
     font-size: 11px;
     letter-spacing: 0.16em;
-    color: #f2c335;
+    color: currentColor;
     margin-bottom: 40px;
 }
 .projv2-tone-grid {
@@ -1029,4 +1029,219 @@ figure.fit-contain video,
 .reveal-frame.fit-contain:hover img,
 .reveal-frame.fit-contain:hover video {
     transform: scale(1.02) !important;
-}
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FOOTER GLOBAL — portado del home. Self-contained (estas páginas NO cargan
+   style.css). Fondo crema al cierre del proyecto, debajo del footer-project-nav.
+   Reveal reusando .scroll-reveal / .scroll-reveal-stagger (el IntersectionObserver
+   inline de cada página agrega .visible). Todo scopeado bajo .footer-global para
+   no pisar el .mono-label oscuro que ya usan las páginas de proyecto.
+   ═══════════════════════════════════════════════════════════════════════ */
+.footer-global {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    background-color: var(--crema);
+    color: var(--bg-dark);
+    padding: 100px var(--grid-margin) 60px;
+    border-top: 1px solid rgba(29, 30, 28, 0.1);
+}
+
+.footer-global .footer-line {
+    width: 100%;
+    height: 1px;
+    background-color: var(--bg-dark);
+    opacity: 0.1;
+    margin-bottom: 60px;
+}
+
+/* ── Fila de reconocimientos ── */
+.footer-global .awards-row {
+    display: flex;
+    gap: 16px;
+    margin: 0 0 60px 0;
+}
+.footer-global .award-badge {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px 24px;
+    border: 1px solid rgba(29, 30, 28, 0.15);
+    border-radius: 4px;
+    color: var(--bg-dark);
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    transition: border-color 0.5s var(--reveal-curve), transform 0.6s var(--reveal-curve);
+    -webkit-tap-highlight-color: transparent;
+}
+.footer-global .award-badge,
+.footer-global .award-badge * { text-decoration: none; }
+.footer-global .award-badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--bg-dark);
+    transform: translateY(101%);
+    transition: transform 0.6s var(--reveal-curve);
+    z-index: 0;
+}
+.footer-global .award-badge > * {
+    position: relative;
+    z-index: 1;
+    transition: color 0.5s var(--reveal-curve);
+}
+.footer-global .award-badge:hover { border-color: var(--bg-dark); color: var(--crema); } /* gana al a:hover azul de Bootstrap */
+.footer-global .award-badge:hover::before { transform: translateY(0); }
+.footer-global .award-badge:hover .award-badge-label,
+.footer-global .award-badge:hover .award-badge-title,
+.footer-global .award-badge:hover .award-badge-icon { color: var(--crema); }
+.footer-global .award-badge:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.footer-global .award-badge-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+}
+.footer-global .award-badge-icon svg { width: 27px; height: 27px; display: block; fill: currentColor; }
+.footer-global .award-badge-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.footer-global .award-badge-label {
+    font-family: "cofo-sans-mono-variable", monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(29, 30, 28, 0.5);
+    line-height: 1;
+}
+.footer-global .award-badge-title {
+    font-family: "Geist", sans-serif;
+    font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: var(--bg-dark);
+}
+
+/* ── Grilla de contacto ── */
+.footer-global .footer-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1.5fr 1fr 1.5fr;
+    gap: 40px;
+    align-items: flex-start;
+}
+.footer-global .mono-label {
+    font-family: "cofo-sans-mono-variable", monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #1D1E1C;
+    opacity: 0.5;
+    display: block;
+    margin-bottom: 30px;
+}
+.footer-global .footer-link {
+    font-family: "Geist", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bg-dark);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    transition: color 0.3s var(--reveal-curve);
+}
+.footer-global .footer-link:hover { color: currentColor; }
+.footer-global .reading-small {
+    font-family: "Geist", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(29, 30, 28, 0.7);
+}
+.footer-global .pluma-seal {
+    height: 45px;
+    width: auto;
+    display: block;
+    filter: brightness(0);
+    margin-bottom: 20px;
+}
+
+@media (max-width: 1024px) {
+    .footer-global .footer-grid { grid-template-columns: 1fr 1fr; gap: 60px 40px; }
+    .footer-global .awards-row { flex-wrap: wrap; }
+    .footer-global .award-badge { flex: 1 1 45%; }
+}
+@media (max-width: 768px) {
+    .footer-global { padding: 60px 28px; }
+    .footer-global .awards-row { flex-direction: column; gap: 12px; }
+    .footer-global .award-badge { flex: 1 1 auto; padding: 18px 20px; }
+    .footer-global .footer-grid { grid-template-columns: 1fr; gap: 50px; }
+    .footer-global .footer-col,
+    .footer-global .footer-brand-end { align-items: flex-start; text-align: left; }
+    .footer-global .pluma-seal { height: 30px; margin-bottom: 15px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FIX RESPONSIVE MOBILE DE IMÁGENES/GALERÍAS
+   Van al FINAL del archivo a propósito: había reglas de apilado (líneas ~537)
+   que quedaban pisadas por la regla base de 2 columnas (línea ~550) porque el
+   navegador, a igual especificidad, aplica la última en el orden del archivo.
+   Al estar acá al final, ganan sin necesidad de !important.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Ninguna imagen/video desborda su contenedor en ningún ancho */
+img, video { max-width: 100%; }
+
+/* Tablet: los splits de a dos siguen bien; a partir de acá recuperamos el
+   apilado que la cascada rompía. */
+@media (max-width: 900px) {
+    .gallery-row.split-equal { grid-template-columns: 1fr; gap: 22px; }
+}
+
+/* Móvil: galerías a una sola columna, imágenes a ancho completo. */
+@media (max-width: 768px) {
+    .gallery-row.split-equal { grid-template-columns: 1fr; gap: 18px; }
+    .modular-grid-gallery { gap: 14px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   LOADER POR IMAGEN (java/media-loader.js) — la cruz del sitio girando + un
+   contador porcentual real, dentro del encuadre, mientras baja la imagen.
+   ═══════════════════════════════════════════════════════════════════════ */
+.ml-frame { position: relative; }
+.ml-loader {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #151515;
+    transition: opacity 0.55s ease;
+}
+.ml-loader.is-done { opacity: 0; pointer-events: none; }
+.ml-cross {
+    width: 34px;
+    height: 34px;
+    display: block;
+    /* el signo-cruz es casi negro → lo llevamos a claro para el fondo oscuro */
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+    animation: ml-spin 7s linear infinite;
+    will-change: transform;
+}
+.ml-pct {
+    font-family: "cofo-sans-mono-variable", monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: rgba(255, 253, 243, 0.55);
+    font-variant-numeric: tabular-nums;
+}
+.ml-pct::after { content: "%"; }
+@keyframes ml-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .ml-cross { animation: none; } }

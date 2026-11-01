@@ -6,27 +6,41 @@
     <title>RUNAKAY — Cruz Estudio ®</title>
     <link rel="preconnect" href="https://use.typekit.net" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://i.ibb.co">
     <link rel="stylesheet" href="https://use.typekit.net/dfq7pmd.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styleproyect.css?v=13">
-    <link rel="icon" sizes="32x32" href="../img/favicon-32x32.png">
-    <script src="../java/page-loader.js?v=13"></script>
-    <link rel="stylesheet" href="../css/nav-menu.css?v=13">
-    <link rel="stylesheet" href="../css/cursor.css?v=13">
+    <link rel="stylesheet" href="/css/styleproyect.css?v=16">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png?v=2">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png?v=2">
+    <link rel="shortcut icon" href="/img/favicon.ico?v=2">
+    <script src="/java/page-loader.js?v=27"></script>
+    <link rel="stylesheet" href="/css/nav-menu.css?v=28">
+    <link rel="stylesheet" href="/css/cursor.css?v=13">
+    <link rel="canonical" href="https://www.cruzestudio.com.ar/runakay">
+    <!-- i18n: defer al final del head → corre antes que los scripts defer del body -->
+    <script defer src="/java/i18n-dict.js?v=1"></script>
+    <script defer src="/java/i18n.js?v=1"></script>
 </head>
 <body class="project-page">
     <div class="page-transition"></div>
 
     <nav class="navbar-brand navbar-modern">
     <div class="containerNav">
-        <a href="../index.html" class="logo link-location">
-            <img decoding="async" src="../img/nuevo-logo-cre.svg" alt="Cruz Estudio Logo" class="logo-vectorial">
+        <a href="/" class="logo link-location">
+            <img decoding="async" src="/img/nuevo-logo-cre.svg" alt="Cruz Estudio Logo" class="logo-vectorial">
         </a>
-        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navOverlay">
-            <span class="nav-toggle-box" aria-hidden="true"><i></i><i></i><i></i></span>
-        </button>
+        <div class="nav-actions">
+            <div class="lang-switch" data-lang-switch role="group" data-i18n-attr="aria-label:nav.lang" aria-label="Idioma">
+                <button type="button" class="lang-opt" data-lang-opt="es" aria-pressed="true">ES</button>
+                <span class="lang-sep" aria-hidden="true"></span>
+                <button type="button" class="lang-opt" data-lang-opt="en" aria-pressed="false">EN</button>
+            </div>
+
+            <button class="nav-toggle" id="navToggle" data-i18n-attr="aria-label:nav.toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navOverlay">
+                <span class="nav-toggle-box" aria-hidden="true"><i></i><i></i><i></i></span>
+            </button>
+        </div>
     </div>
 </nav>
 
@@ -35,20 +49,20 @@
     <div class="nav-overlay-bg"></div>
     <div class="nav-overlay-inner">
         <ul class="nav-overlay-links">
-            <li><a href="./trabajos.html"><span class="nol-idx">01</span><span class="nol-txt">Proyectos</span></a></li>
-            <li><a href="./metodologia.html"><span class="nol-idx">02</span><span class="nol-txt">Metodología</span></a></li>
-            <li><a href="./about.html"><span class="nol-idx">03</span><span class="nol-txt">Estudio</span></a></li>
-            <li><a href="./contacto.html"><span class="nol-idx">04</span><span class="nol-txt">Contacto</span></a></li>
+            <li><a href="/trabajos"><span class="nol-idx">01</span><span class="nol-txt" data-i18n="nav.projects">Proyectos</span></a></li>
+            <li><a href="/metodologia"><span class="nol-idx">02</span><span class="nol-txt" data-i18n="nav.methodology">Metodología</span></a></li>
+            <li><a href="/about"><span class="nol-idx">03</span><span class="nol-txt" data-i18n="nav.studio">Estudio</span></a></li>
+            <li><a href="/contacto"><span class="nol-idx">04</span><span class="nol-txt" data-i18n="nav.contact">Contacto</span></a></li>
         </ul>
         <div class="nav-overlay-foot">
             <a href="mailto:estudiocruzdesign@gmail.com" class="nof-mail">estudiocruzdesign@gmail.com</a>
-            <span class="nof-loc">Buenos Aires, ARG · GMT-3</span>
+            <span class="nof-loc" data-i18n="nav.loc">Buenos Aires, ARG · GMT-3</span>
         </div>
     </div>
 </div>
 
      <div class="back-nav-container">
-        <a href="trabajos.html" class="back-arrow-cta" aria-label="Volver a Trabajos">
+        <a href="/trabajos" class="back-arrow-cta" aria-label="Volver a Trabajos">
             <span class="material-symbols-outlined">arrow_back</span>
         </a>
     </div>
@@ -56,94 +70,94 @@
     <main class="gretel-container">
         <header class="gretel-hero">
             <div class="hero-visual">
-                <img loading="eager" fetchpriority="high" decoding="async" src="https://i.ibb.co/2YChXbhZ/tp2.jpg" alt="RUNAKAY Hero" class="bg-video" style="object-fit: cover; width: 100%; height: 100%;">
+                <img loading="eager" fetchpriority="high" decoding="async" src="/img/cover-runakay.jpg" alt="RUNAKAY Hero" class="bg-video" style="object-fit: cover; width: 100%; height: 100%;">
                 <div class="hero-overlay"></div>
             </div>
             <div class="hero-content">
                 <h1 class="display-title">Runakay<br>Outdoor</h1>
-                <p class="hero-tagline">// NATURALEZA Y CULTURA ARGENTINA</p>
+                <p class="hero-tagline" data-i18n="p.runakay.tag">// NATURALEZA Y CULTURA ARGENTINA</p>
             </div>
         </header>
 
         <section class="gretel-brief-column">
             <div class="brief-meta-list">
                 <div class="meta-item">
-                    <span class="mono-label">CLIENTE</span>
+                    <span class="mono-label" data-i18n="proj.lbl.client">CLIENTE</span>
                     <p>RUNAKAY ARG.</p>
                 </div>
                 <div class="meta-item">
-                    <span class="mono-label">AÑO</span>
+                    <span class="mono-label" data-i18n="proj.lbl.year">AÑO</span>
                     <p>2023 — 2024</p>
                 </div>
                 <div class="meta-item">
-                    <span class="mono-label">SERVICIOS</span>
-                    <p>BRANDING / ESTRATEGIA / ILUSTRACIÓN</p>
+                    <span class="mono-label" data-i18n="proj.lbl.services">SERVICIOS</span>
+                    <p data-i18n="p.runakay.svc">BRANDING / ESTRATEGIA / ILUSTRACIÓN</p>
                 </div>
             </div>
 
             <div class="brief-description scroll-reveal">
-                <h2 class="mono-label">NUESTRO ENFOQUE</h2>
-                <p class="lectura-proyect">Resaltamos la identidad cultural y el compromiso ambiental de Runakay. Desarrollamos una comprensión profunda de los valores y tradiciones locales para crear una marca global, alineada con la conciencia ecológica y la esencia del outdoor argentino.</p>
+                <h2 class="mono-label" data-i18n="proj.lbl.approach">NUESTRO ENFOQUE</h2>
+                <p class="lectura-proyect" data-i18n="p.runakay.desc">Resaltamos la identidad cultural y el compromiso ambiental de Runakay. Desarrollamos una comprensión profunda de los valores y tradiciones locales para crear una marca global, alineada con la conciencia ecológica y la esencia del outdoor argentino.</p>
             </div>
         </section>
 
         <section class="modular-grid-gallery">
             <div class="gallery-row full">
                 <figure class="reveal-frame fit-contain">
-                    <img loading="lazy" decoding="async" src="https://i.ibb.co/TxsN84kL/Mesa-de-trabajo-4-copia-3.jpg" alt="Runakay Landscape">
+                    <img loading="lazy" decoding="async" src="/img/w-Mesa-de-trabajo-4-copia-3.jpg" alt="Runakay Landscape">
                 </figure>
             </div>
 
             <div class="gallery-row split-equal">
-                <figure class="reveal-frame aspect-framed fit-contain"><img loading="lazy" decoding="async" src="https://i.ibb.co/zq2f5zH/Mesa-de-trabajo-4-copia-2.jpg" alt="Runakay Symbol"></figure>
-                <figure class="reveal-frame aspect-framed fit-contain"><img loading="lazy" decoding="async" src="https://i.ibb.co/sJpnWh7W/Mesa-de-trabajo-8-copia.jpg" alt="Product Preview"></figure>
+                <figure class="reveal-frame aspect-framed fit-contain"><img loading="lazy" decoding="async" src="/img/w-Mesa-de-trabajo-4-copia-2.jpg" alt="Runakay Symbol"></figure>
+                <figure class="reveal-frame aspect-framed fit-contain"><img loading="lazy" decoding="async" src="/img/w-Mesa-de-trabajo-8-copia.jpg" alt="Product Preview"></figure>
             </div>
 
             <div class="gallery-row split-equal">
-                <figure class="reveal-frame aspect-framed fit-contain"><img loading="lazy" decoding="async" src="https://i.ibb.co/SGXX6g7/Mesa-de-trabajo-8.jpg" alt="Detail Piece"></figure>
-                <figure class="reveal-frame aspect-framed fit-contain"><img loading="lazy" decoding="async" src="https://i.ibb.co/zHNrqMcP/Mesa-de-trabajo-4-copia.jpg" alt="Branding Concept"></figure>
+                <figure class="reveal-frame aspect-framed fit-contain"><img loading="lazy" decoding="async" src="/img/w-Mesa-de-trabajo-8.jpg" alt="Detail Piece"></figure>
+                <figure class="reveal-frame aspect-framed fit-contain"><img loading="lazy" decoding="async" src="/img/w-Mesa-de-trabajo-4-copia.jpg" alt="Branding Concept"></figure>
             </div>
 
             <div class="gallery-row full">
                 <figure class="reveal-frame long-frame fit-contain">
                     <video preload="metadata" autoplay muted loop playsinline style="width: 100%; display: block;">
-                        <source src="../video/runakay02.mp4" type="video/mp4">
+                        <source src="/video/runakay02.mp4" type="video/mp4">
                     </video>
                 </figure>
             </div>
 
             <div class="gallery-row full">
                 <figure class="reveal-frame long-frame fit-contain">
-                    <img loading="lazy" decoding="async" src="https://i.ibb.co/GQB7yL16/Mesa-de-trabajo-4-copia-6.jpg" alt="Runakay Illustrations">
+                    <img loading="lazy" decoding="async" src="/img/w-Mesa-de-trabajo-4-copia-6.jpg" alt="Runakay Illustrations">
                 </figure>
             </div>
 
             <div class="gallery-row full">
                 <figure class="reveal-frame fit-contain">
-                    <img loading="lazy" decoding="async" src="https://i.ibb.co/5gZzz7P2/Mesa-de-trabajo-4-copia-5.jpg" alt="Creative Process Illustrations" style="width: 100%; height: auto;">
+                    <img loading="lazy" decoding="async" src="/img/w-Mesa-de-trabajo-4-copia-5.jpg" alt="Creative Process Illustrations" style="width: 100%; height: auto;">
                 </figure>
             </div>
 
             <div class="gallery-row full">
                 <figure class="reveal-frame fit-contain">
-                    <img loading="lazy" decoding="async" src="https://i.ibb.co/vxxhfz6P/Mesa-de-trabajo-4.jpg" alt="Outdoor Experience View" style="width: 100%; height: auto;">
+                    <img loading="lazy" decoding="async" src="/img/w-Mesa-de-trabajo-4.jpg" alt="Outdoor Experience View" style="width: 100%; height: auto;">
                 </figure>
             </div>
         </section>
 
         <section class="gretel-break">
-            <h3 class="break-text">"Mostrar los diferentes paisajes de nuestro país a través de la indumentaria."</h3>
+            <h3 class="break-text" data-i18n="p.runakay.quote">"Mostrar los diferentes paisajes de nuestro país a través de la indumentaria."</h3>
         </section>
     </main>
 
     <footer class="footer-project-nav">
-        <a href="./suuam.html" class="next-link">
-            <span class="mono-label-footer">SIGUIENTE PROYECTO</span>
+        <a href="/suuam" class="next-link">
+            <span class="mono-label-footer" data-i18n="proj.lbl.next">SIGUIENTE PROYECTO</span>
             <h2 class="next-title-display">SUUAM →</h2>
         </a>
     </footer>
 
-    <script src="../java/script.js?v=13"></script>
+    <script src="/java/script.js?v=13"></script>
         <script>
         // Menú hamburguesa + scroll reveal sistematizado
         document.addEventListener('DOMContentLoaded', () => {
@@ -166,10 +180,71 @@ const io = new IntersectionObserver((entries) => {
             }, 4500);
         });
     </script>
-<script defer src="../java/nav-menu.js?v=13"></script>
-<script defer src="../java/nav-contrast.js?v=13"></script>
-<script defer src="../java/cursor.js?v=13"></script>
-<script defer src="../java/lib/lenis.min.js?v=13"></script>
-<script defer src="../java/smooth-scroll.js?v=13"></script>
+<script defer src="/java/nav-menu.js?v=13"></script>
+<script defer src="/java/nav-contrast.js?v=13"></script>
+<script defer src="/java/cursor.js?v=13"></script>
+<script defer src="/java/lib/lenis.min.js?v=13"></script>
+<script defer src="/java/smooth-scroll.js?v=13"></script>
+
+<!-- ═══════════ FOOTER GLOBAL (portado del home) ═══════════ -->
+<footer class="footer-global">
+    <div class="footer-line scroll-reveal"></div>
+
+    <div class="awards-row scroll-reveal" role="list" aria-label="Reconocimientos">
+        <a href="https://we.directory/collection" target="_blank" rel="noopener noreferrer" class="award-badge" role="listitem" aria-label="Website of the day — WE.directory">
+            <span class="award-badge-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M280-120v-80h160v-124q-49-11-87.5-41.5T296-442q-75-9-125.5-65.5T120-640v-40q0-33 23.5-56.5T200-760h80v-80h400v80h80q33 0 56.5 23.5T840-680v40q0 76-50.5 132.5T664-442q-18 46-56.5 76.5T520-324v124h160v80H280Zm0-408v-152h-80v40q0 38 22 68.5t58 43.5Zm200 210q50 0 85-35t35-85v-240H360v240q0 50 35 85t85 35Zm200-210q36-13 58-43.5t22-68.5v-40h-80v152Z"/></svg></span>
+            <span class="award-badge-text">
+                <span class="award-badge-label" data-i18n="footer.we.label">RECONOCIMIENTO</span>
+                <span class="award-badge-title">Website of the day · WE.directory</span>
+            </span>
+        </a>
+        <a href="https://www.awwwards.com/sites/cruz-estudio" target="_blank" rel="noopener noreferrer" class="award-badge" role="listitem" aria-label="Nominee — Awwwards">
+            <span class="award-badge-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M160-120v-375h175v375H160Zm242 0v-720h175v720H402Zm243 0v-478h175v478H645Z"/></svg></span>
+            <span class="award-badge-text">
+                <span class="award-badge-label" data-i18n="footer.we.label">RECONOCIMIENTO</span>
+                <span class="award-badge-title">Nominee · Awwwards</span>
+            </span>
+        </a>
+        <a href="https://www.awwwards.com/sites/cruz-estudio" target="_blank" rel="noopener noreferrer" class="award-badge" role="listitem" aria-label="Honorable Mention — Awwwards">
+            <span class="award-badge-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M335.38-160v-40H460v-150.15q-51.31-4.08-94.42-41.89-43.12-37.81-52.66-88.42-63.46-7.46-108.19-52.04T160-640v-80h146.15v-80h347.7v80H800v80q0 62.92-44.73 107.5t-108.19 52.04q-9.54 50.61-52.66 88.42-43.11 37.81-94.42 41.89V-200h124.62v40H335.38Zm-29.23-363.38V-680H200v40q0 45.69 30.46 78.5t75.69 38.12Zm267.7 95.56q38.46-38.59 38.46-93.72V-760H347.69v238.46q0 55.13 38.64 93.72 38.65 38.59 93.85 38.59 55.2 0 93.67-38.59Zm80-95.56q45.23-5.31 75.69-38.12Q760-594.31 760-640v-40H653.85v156.62ZM480-574.62Z"/></svg></span>
+            <span class="award-badge-text">
+                <span class="award-badge-label" data-i18n="footer.we.label">RECONOCIMIENTO</span>
+                <span class="award-badge-title">Honorable Mention · Awwwards</span>
+            </span>
+        </a>
+    </div>
+
+    <div class="footer-grid scroll-reveal-stagger">
+        <div class="footer-col">
+            <span class="mono-label" data-i18n="footer.location">UBICACIÓN</span>
+            <div class="col-content">
+                <p class="reading-small">Buenos Aires, ARG <br> (GMT-3) <span id="footer-clock">00:00</span></p>
+            </div>
+        </div>
+        <div class="footer-col">
+            <span class="mono-label">SAY HELLO</span>
+            <div class="col-content">
+                <a href="mailto:estudiocruzdesign@gmail.com" class="footer-link">estudiocruzdesign@gmail.com </a>
+                <p class="reading-small" data-i18n="footer.hello.sub">Branding & Estrategia de marca</p>
+            </div>
+        </div>
+        <div class="footer-col">
+            <span class="mono-label" data-i18n="footer.follow">SEGUINOS</span>
+            <div class="col-content">
+                <a href="https://www.instagram.com/cruzestudio_/" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram</a>
+                <a href="https://www.linkedin.com/company/cruzdesign" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+            </div>
+        </div>
+        <div class="footer-col footer-brand-end">
+            <span class="mono-label">©2018—2026</span>
+            <div class="col-content">
+                <img loading="lazy" decoding="async" src="/img/positivo-pluma.svg" alt="Sello Cruz Estudio" class="pluma-seal">
+            </div>
+        </div>
+    </div>
+</footer>
+<script defer src="/java/footer.js?v=1"></script>
+<script defer src="/java/media-loader.js?v=1"></script>
+
 </body>
 </html>

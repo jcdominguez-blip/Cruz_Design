@@ -61,7 +61,7 @@
 
         // ── Luces ──
         scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-        var pointLight = new THREE.PointLight(0xf2c335, 3, 0); // amarillo Cruz, intensa
+        var pointLight = new THREE.PointLight(0xffffff, 3, 0); // luz neutra (sin amarillo)
         pointLight.position.set(2, 2, 4);
         scene.add(pointLight);
         // rim frío tenue para leer el borde metálico
